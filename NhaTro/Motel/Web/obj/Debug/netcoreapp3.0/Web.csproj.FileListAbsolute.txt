@@ -1,0 +1,8 @@
+C:\Project\NhaTro\Motel\Web\bin\Debug\netcoreapp3.0\Web.deps.json
+C:\Project\NhaTro\Motel\Web\bin\Debug\netcoreapp3.0\Web.dll
+C:\Project\NhaTro\Motel\Web\bin\Debug\netcoreapp3.0\Web.pdb
+C:\Project\NhaTro\Motel\Web\obj\Debug\netcoreapp3.0\Web.csprojAssemblyReference.cache
+C:\Project\NhaTro\Motel\Web\obj\Debug\netcoreapp3.0\Web.AssemblyInfoInputs.cache
+C:\Project\NhaTro\Motel\Web\obj\Debug\netcoreapp3.0\Web.AssemblyInfo.cs
+C:\Project\NhaTro\Motel\Web\obj\Debug\netcoreapp3.0\Web.dll
+C:\Project\NhaTro\Motel\Web\obj\Debug\netcoreapp3.0\Web.pdb
