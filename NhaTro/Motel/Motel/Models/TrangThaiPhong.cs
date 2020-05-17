@@ -7,10 +7,14 @@ using System.Threading.Tasks;
 
 namespace Motel.Models
 {
-    public class Customer
+    [Table("TrangThaiPhong")]
+    public class TrangThaiPhong
     {
         [Key]
-        [Column("id")]
-        public int Id { get; set; }
+        [Column("MaTTPH")]
+        public int MaTTPH { get; set; }
+
+        [Column("Ten")]
+        public string Ten { get; set; }
     }
 }
