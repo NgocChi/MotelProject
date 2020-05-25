@@ -33,6 +33,7 @@ namespace Motel
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.Build(env);
+            app.UseStaticFiles();
         }
     }
 }

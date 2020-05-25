@@ -7,7 +7,7 @@ using Motel.Repositories;
 
 namespace Motel.Controllers
 {
-    [Route("api/[controller]")]
+ 
     public class HomeController : Controller
     {
         private readonly IConfiguration Configuration = null;
@@ -18,6 +18,12 @@ namespace Motel.Controllers
             this.Configuration = configuration;
             Queries = new KhachHangQueries();
             Repository = new KhachHangRepository();
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+
         }
 
         [HttpGet]

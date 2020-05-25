@@ -12,13 +12,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\DAL\DAL.csproj" />
     <ProjectReference Include="..\Web\Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Login\" />
+    <Folder Include="wwwroot\Login\" />
+    <Folder Include="wwwroot\Shared\" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
