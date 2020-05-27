@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewData["Title"] = "CreateAccount";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tạo tài khoản</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/Login/ver01/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Login/ver01/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Login/ver01/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Login/ver01/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Login/ver01/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Login/ver01/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Login/ver01/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/Login/ver01/css/main.css">
+    <!--===============================================================================================-->
+<style>
+    .content {
+        align-content: center;
+        justify-content: center;
+        color: black;
+    }
+</style>
+</head>
+<body>
+    <div >
+        <div class="container-login100">
+            <div class="wrap-login100">
+                
+                <form method="POST" id="signup-form"  class="content">
+                    <div>
+                        <h2 class="form-title">Create account</h2>
+                        <div class="form-group">
+                            <input type="text" class="input100" name="name" id="name" placeholder="Tài khoản">
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" class="input100" name="password" id="password" placeholder="Mật khẩu">
+                            <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="input100" name="re_password" id="re_password" placeholder="Nhập lại mật khẩu">
+                        </div>
+                        @*<div class="form-group">
+            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term">
+            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in <a href="#" class="term-service">Terms of service</a></label>
+        </div>*@
+                        <div class="form-group">
+                            <input type="submit" name="submit" id="submit" class="login100-form-btn" value="Đăng Nhập">
+                        </div>
+                    </div>
+                </form>
+
+               
+             
+             
+            </div>
+        </div>
+    </div>
+    <!--===============================================================================================-->
+    <script src="~/Login/ver01/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Login/ver01/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/Login/ver01/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Login/ver01/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Login/ver01/vendor/tilt/tilt.jquery.min.js"></script>
+
+    <!--===============================================================================================-->
+    <script src="~/Login/ver01/js/main.js"></script>
+</body>
+</html>
+
