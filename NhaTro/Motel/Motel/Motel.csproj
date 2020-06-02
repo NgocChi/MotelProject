@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Assets\Login\" />
+    <Folder Include="Interfaces\Repositories\" />
     <Folder Include="wwwroot\Login\" />
     <Folder Include="wwwroot\Shared\" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using Common;
 using DAL;
 using Dapper;
+using Motel.Interfaces.Queries;
 using Motel.Models;
 using System.Collections.Generic;
 using System.Linq;

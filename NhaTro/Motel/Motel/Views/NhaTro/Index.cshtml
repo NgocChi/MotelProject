@@ -1,0 +1,441 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">DANH SÁCH NHÀ TRỌ</h5>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                            <i class="fas fa-wrench"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                            <a href="#" class="dropdown-item">Action</a>
+                            <a href="#" class="dropdown-item">Another action</a>
+                            <a href="#" class="dropdown-item">Something else here</a>
+                            <a class="dropdown-divider"></a>
+                            <a href="#" class="dropdown-item">Separated link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="text-right">
+                    <button id="myBtn" data-target="#myModal" data-toggle="modal" type="button" class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Thêm mới"><i class="fa fa-plus"></i> Thêm mới</button>
+                    <a class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Tìm kiếm" data-placement="top" data-remote="true" href="#"><i class="fa fa-search"></i>Tìm kiếm</a>
+                    <button data-toggle="confirmation" data-placement="left" type="submit" form="myForm"
+                            class="btn green btn-outline btn-circle btn-sm"
+                            data-template="<div class=&quot;popover confirmation&quot;><div class=&quot;arrow&quot;></div><h3 class=&quot;popover-title&quot;></h3><div class=&quot;popover-content text-center&quot;><div class=&quot;btn-group&quot;><a class=&quot;btn&quot; data-apply=&quot;confirmation&quot;></a><a class=&quot;btn&quot; data-dismiss=&quot;confirmation&quot;></a></div></div></div>"
+                            data-original-title="" title="">
+                        <i class="fa fa-trash font-red"></i>Xóa nhiều
+                    </button>
+
+                </div>
+                <div class="row">
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="text-center">
+                                        <div class="md-checkbox-inline service-checkbox">
+                                            <div class="icheck-primary d-inline ml-2">
+                                                <input type="checkbox" value="" name="todo1" id="todoCheck1">
+                                                <label for="todoCheck1"></label>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th>Tên khu/Tòa nhà</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Tổng số phòng</th>
+                                    <th>Tổng số phòng trống</th>
+                                    <th>Mô tả</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="item-1932 highlight">
+                                    <td class="text-center">
+                                        <a class="btn btn-circle btn-icon-only btn-default tooltips"
+                                           data-remote="true"
+                                           data-placement="top" onclick="openForm()" data-original-title="Chỉnh sửa"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="md-checkbox-inline service-checkbox">
+                                            <div class="icheck-primary d-inline ml-2">
+                                                <input type="checkbox" value="" name="todo2" id="ck-1932">
+                                                <label for="ck-1932">
+                                                    <span></span><span class="check"></span><span class="box"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>Nhà Chi chi</td>
+                                    <td>123 Lý Thường Kiệt</td>
+                                    <td>100</td>
+                                    <td>100</td>
+                                    <td></td>
+                                    <td class="text-center">
+                                        <a data-btn-ok-class="btn-success"
+                                           data-btn-cancel-class="btn-danger"
+                                           data-toggle="confirmation"
+                                           data-placement="left" data-singleton="true"
+                                           data-tooltip-title="Xóa"
+                                           data-confirm-title="Bạn chắc chắn muốn xóa dữ liệu?"
+                                           class="btn red btn-circle btn-icon-only btn-default cus-tooltips cus-confirmations"
+                                           data-remote="true" rel="nofollow" data-method="delete"
+                                          > <i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="card-tools">
+                        <ul class="pagination pagination-sm">
+                            <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
+                            <li class="page-item"><a href="#" class="page-link">1</a></li>
+                            <li class="page-item"><a href="#" class="page-link">2</a></li>
+                            <li class="page-item"><a href="#" class="page-link">3</a></li>
+                            <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+</div>
+
+<div id="myModal" role="dialog" class="modal fade in" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="caption font-green">
+                    <span class="caption-subject bold uppercase">
+
+                        <i class="fa fa-plus"></i> Thêm mới
+
+                    </span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default show-main-modal" data-dismiss="modal" id="close">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form class="simple_form form-horizontal" novalidate="novalidate" id="new_admin_building" action="/admin/buildings" accept-charset="UTF-8" data-remote="true" method="post">
+                    <input name="utf8" type="hidden" value="✓">
+
+
+                    <ul class="errors"></ul>
+                    <div class="form-group form-md-line-input row">
+                        <label class="col-md-2 control-label">
+                            Tên khu nhà
+                            <span class="required" aria-required="true"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <input class="string required bg-maxlength form-control" 
+                                   placeholder="Nhập tên Khu/Tòa nhà" maxlength="50" size="50" type="text" 
+                                    id="admin_building_name">
+                            <div class="form-control-focus"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group form-md-line-input row">
+                        <label class="col-md-2 control-label">
+                            Địa chỉ
+                            <span class="required" aria-required="true"> * </span>
+                        </label>
+                        <div class="col-md-10">
+                            <textarea class="text required bg-maxlength form-control" 
+                                      placeholder="Nhập địa chỉ" maxlength="255" name="admin_building[address]" id="admin_building_address"></textarea>
+                            <div class="form-control-focus"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-md-line-input row">
+                        <label class="col-md-2 control-label">Tổng số phòng</label>
+                        <div class="col-md-4">
+                            <input class="string required bg-maxlength form-control" placeholder="Tổng số phòng" maxlength="50" size="50" type="number" name="dmin_building[quality]" id="admin_building_quality">
+                            
+                            <div class="form-control-focus"></div>
+                        </div>
+                        <label class="col-md-2 control-label">Số phòng trống</label>
+                        <div class="col-md-4">
+                            <input class="string required bg-maxlength form-control" placeholder="Số phòng trống" maxlength="50" size="50" type="number" name="admin_building[quality_trong]" id="admin_building_quality_trong">
+                           
+                            <div class="form-control-focus"></div>
+                        </div>
+
+                    </div>
+                    
+                    <div class="form-group form-md-line-input row">
+
+                        <label class="col-md-2 control-label">Mô tả</label>
+                        <div class="col-md-10">
+                            <textarea class="text optional bg-maxlength form-control autosizeme" placeholder="Nhập mô tả" maxlength="500" name="admin_building[description]" id="admin_building_description"></textarea>
+                            <div class="form-control-focus"></div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-actions margin-top-10">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="button" onclick="closeForm()" class="btn btn-default" data-dismiss="modal">
+                                    <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Hủy bỏ
+                                </button>
+                                <button name="button" type="submit" class="btn btn-default btnFormSubmit btn green">
+                                    <i class="fa fa-floppy-o" aria-hidden="true"></i>  Lưu lại
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <script>
+                        //$(document).ready(function () {
+                        //    if ($('#checkbox_money_time').prop('checked') == false) {
+                        //        $('#money-from, #money-to').prop('readonly', true);
+                        //    }
+
+                        //    if ($('#checkbox_bill_time').prop('checked') == false) {
+                        //        $('#bill-from, #bill-to').prop('readonly', true);
+                        //    }
+
+                        //    if ($('#checkbox_ew_time').prop('checked') == false) {
+                        //        $('#ew-from, #ew-to').prop('readonly', true);
+                        //    }
+
+                        //    if ($('#checkbox_agreement_time').prop('checked') == false) {
+                        //        $('#agreement-from').prop('readonly', true);
+                        //    }
+
+                        //    $('#checkbox_ew_time').click(function () {
+                        //        if ($(this).prop('checked') == false) {
+                        //            $('#ew-from, #ew-to').prop('readonly', true).val('');
+                        //        } else {
+                        //            $('#ew-from').prop('readonly', false).val(1);
+                        //            $('#ew-to').prop('readonly', false).val(5)
+                        //        }
+                        //    });
+
+                        //    $('#checkbox_bill_time').click(function () {
+                        //        if ($(this).prop('checked') == false) {
+                        //            $('#bill-from, #bill-to').prop('readonly', true).val('');
+                        //        } else {
+                        //            $('#bill-from').prop('readonly', false).val(1);
+                        //            $('#bill-to').prop('readonly', false).val(5)
+                        //        }
+                        //    });
+
+                        //    $('#checkbox_money_time').click(function () {
+                        //        if ($(this).prop('checked') == false) {
+                        //            $('#money-from, #money-to').prop('readonly', true).val('');
+                        //        } else {
+                        //            $('#money-from').prop('readonly', false).val(1);
+                        //            $('#money-to').prop('readonly', false).val(5)
+                        //        }
+                        //    });
+
+                        //    $('#checkbox_agreement_time').click(function () {
+                        //        if ($(this).prop('checked') == false) {
+                        //            $('#agreement-from').prop('readonly', true).val('');
+                        //        } else {
+                        //            $('#agreement-from').prop('readonly', false).val(15);
+                        //        }
+                        //    });
+                        //})
+                    </script>
+            </div>
+        </div>
+
+        <script>
+                //$(document).ready(function () {
+
+                //    // Chặn cho toàn bộ các nút trong form để tránh bị thực hiện 2 lần.
+                //    $('.btnFormSubmit').click(function () {
+
+                //        // CALL LOADING
+                //        App.blockUI({
+                //            target: '#blockui_body',
+                //            zIndex: 999999999,
+                //            message: 'Đang tải ...'
+                //        });
+
+                //        $(".btnFormSubmit").submit();
+                //    });
+
+                //    $('.btnFormCreateMoreSubmit').click(function () {
+                //        // CALL LOADING
+                //        App.blockUI({
+                //            target: '#blockui_body',
+                //            zIndex: 999999999,
+                //            message: 'Đang tải ...'
+                //        });
+                //        addValue("room_cost", "room_cost_array");
+                //        addValue("number_of_floor", "number_of_floor_array");
+                //        addValue("floor", "floor_array");
+                //        addValue("room_amount", "room_amount_array");
+
+                //        $(".btnFormCreateMoreSubmit").submit();
+                //    });
+                //    function addValue(classGetValue, classAddValue) {
+                //        var array = [];
+                //        var find_class = document.getElementsByClassName(classGetValue);
+                //        var i;
+                //        for (i = 0; i < find_class.length; i++) {
+                //            array.push(find_class[i].value.split(".").join(""));
+                //        }
+                //        $('.' + classAddValue).val(array);
+
+                //    };
+
+                //    // chọn building lấy tất cả các phòng thuộc building đó, apply cho #first_modal_building, #first_modal_room
+                //    $("#first_modal_building").change(function () {
+                //        $.ajax({
+                //            type: "GET",
+                //            url: '/admin/rooms.json?building_id=' + $("#first_modal_building").val(),
+                //            data: JSON.stringify({ building_id: $("#first_modal_building").val() }),
+                //            contentType: "application/json; charset=utf-8",
+                //            dataType: "json",
+                //            success: success,
+                //            error: error
+                //        });
+
+                //        function success(data, status) {
+                //            $("#first_modal_room").html("");
+                //            $("#first_modal_room").append("<option value='0'>-- Chọn phòng trọ --</option>");
+                //            data.forEach(appendOption)
+                //        }
+
+                //        function appendOption(item, index, arr) {
+                //            var htmlOption = "<option value=" + item.id + ">" + item.name + "</option>"
+                //            $("#first_modal_room").append(htmlOption);
+                //        }
+
+                //        function error() {
+                //            console.log('Lỗi lấy dữ liệu phòng theo tòa nhà');
+                //        }
+                //    });
+
+                //    var placeholder = "-- Chọn --";
+                //    $(".select2, .select2-multiple").select2({
+                //        placeholder: placeholder,
+                //        width: '100%'
+                //    });
+
+                //    $('.number-format').priceFormat({
+                //        prefix: '',
+                //        thousandsSeparator: '.',
+                //        centsLimit: 0
+                //    });
+
+
+                //    /* Maxlength */
+                //    $('.bg-maxlength').maxlength({
+                //        limitReachedClass: "label label-danger",
+                //        alwaysShow: true,
+                //        placement: App.isRTL() ? 'top-right' : 'top-left'
+                //    });
+
+                //    /* DatePicker */
+                //    if (jQuery().datepicker) {
+                //        $('.date-picker').datepicker({
+                //            rtl: App.isRTL(),
+                //            orientation: "bottom",
+                //            todayBtn: "linked",
+                //            language: 'vi',
+                //            autoclose: true,
+                //        });
+                //    }
+
+                //    console.log('number-format-clear-empty');
+                //    $('.number-format-clear-empty').priceFormat({
+                //        prefix: '',
+                //        thousandsSeparator: '.',
+                //        centsLimit: 0,
+                //        clearOnEmpty: true
+                //    });
+                //});
+                //toastr.options = {
+                //    "closeButton": true,
+                //    "debug": false,
+                //    "positionClass": "toast-top-right",
+                //    "onclick": null,
+                //    "showDuration": "1000",
+                //    "hideDuration": "1000",
+                //    "timeOut": "3000",
+                //    "extendedTimeOut": "1000",
+                //    "showEasing": "swing",
+                //    "hideEasing": "linear",
+                //    "showMethod": "fadeIn",
+                //    "hideMethod": "fadeOut"
+                //}
+                //tinymce.init({
+                //    selector: "textarea.editor",
+                //    language_url: '/js/tinymce/langs/vi_VN.js',
+                //    height: 300,
+                //    theme: 'modern',
+                //    plugins: [
+                //        "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                //        "searchreplace wordcount visualblocks visualchars code fullscreen",
+                //        "insertdatetime media nonbreaking save table contextmenu directionality",
+                //        "emoticons template paste textcolor colorpicker textpattern"
+                //    ],
+                //    init_instance_callback: "CustomInitInstance",
+                //    toolbar: "insertfile undo redo | styleselect | bold italic strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+                //});
+            </script>
+    </div>
+
+</div>
+
+
+
+
+
+<script src="~/Form/plugins/layout/layout.min.js"></script>
+<script src="~/Form/plugins/bootstrap-confirmation.min.js"></script>
+<script src="~/Form/plugins/bootstrap-fileinput.js"></script>
+<script src="~/Form/plugins/bootstrap-hover-dropdown.min.js"></script>
+<script src="~/Form/plugins/jquery.blockui.min.js"></script>
+<script src="~/Form/plugins/jquery.inputmask.bundle.min.js"></script>
+<script src="~/Form/plugins/jquery.min.js"></script>
+<script src="~/Form/plugins/jquery.priceformat.min.js"></script>
+<script src="~/Form/plugins/jquery.pulsate.min.js"></script>
+<script src="~/Form/plugins/jquery.slimscroll.min.js"></script>
+<script src="~/Form/plugins/js.cookie.min.js"></script>
+<script src="~/Form/plugins/tableHeadFixer.js"></script>
+<script src="~/Form/plugins/tinymce.min.js"></script>
+<script src="~/Form/plugins/toastr.min.js"></script>
+<script src="~/Form/plugins/ui-toastr.min.js"></script>
+<link href="~/Form/css/blog.min.css" rel="stylesheet" />
+<link href="~/Form/css/component-md.min.css" rel="stylesheet" />
+<link href="~/Form/css/custom-green.css" rel="stylesheet" />
+<link href="~/Form/css/layout.min.css" rel="stylesheet" />
+<link href="~/Form/css/plugins-md.min.css" rel="stylesheet" />
+<link href="~/Form/css/pricing.min.css" rel="stylesheet" />
+<link href="~/Form/css/search.min.css" rel="stylesheet" />
+<script src="~/Form/plugins/layout/bootstrap.min.js"></script>
