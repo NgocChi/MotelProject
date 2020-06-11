@@ -6,34 +6,66 @@ using Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Motel.Data;
+using Motel.Interfaces.Repositories;
+using Motel.Queries;
+using Motel.Repositories;
 using Web;
 
 namespace Motel
 {
     public class Startup
     {
-       
-        public IConfiguration Configuration { get; }
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+       // public IConfiguration ConfigurationRoot { get; }
+        public IConfigurationRoot ConfigurationRoot { get; }
 
-        public Startup(IConfiguration configuration)
+        public Startup( IHostingEnvironment env)
         {
-            Configuration = configuration;
+            // ConfigurationRoot = configuration;
+            ConfigurationRoot = new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json").Build();
         }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppDBContext>(options =>
+            options.UseSqlServer(ConfigurationRoot.GetConnectionString("DefaultConnectionString")));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDBContext>();
+            services.AddTransient<IKhachHangRepository, KhachHangRepository>();
+            services.AddTransient<ITaiKhoanRepository, TaiKhoanRepository>();
+            services.AddTransient<INhaTroRepository, NhaTroRepository>();
+            services.AddTransient<IPhongRepository, PhongRepository>();
             services.AddMvc();
-            GlobalConfiguration.Load(Configuration);
+            services.AddSession();
+           // GlobalConfiguration.Load(ConfigurationRoot);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory looger)
         {
-            app.Build(env);
+            app.UseDeveloperExceptionPage();
+            app.UseStatusCodePages();
             app.UseStaticFiles();
+            app.UseIdentity();
+            app.UseSession();
+            app.UseMvcWithDefaultRoute();
+           
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}");
+
+                routes.MapSpaFallbackRoute(
+                     name: "spa-fallback",
+                     defaults: new { controller = "Home", action = "Index" });
+            });
         }
     }
 }

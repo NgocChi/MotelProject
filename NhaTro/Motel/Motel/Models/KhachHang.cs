@@ -18,7 +18,7 @@ namespace Motel.Models
         public string TenKH { get; set; }
 
         [Column("GioiTinh")]
-        public int GioiTinh { get; set; }
+        public bool GioiTinh { get; set; }
 
         [Column("HinhDaiDien")]
         public string HinhDaiDien { get; set; }

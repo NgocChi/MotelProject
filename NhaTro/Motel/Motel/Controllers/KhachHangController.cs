@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Motel.Interfaces.Repositories;
+using Motel.Models;
 using Motel.Queries;
 using Motel.Repositories;
 using System;
@@ -13,9 +15,18 @@ namespace Motel.Controllers
    
     public class KhachHangController : Controller
     {
-        public IActionResult Index()
+        private readonly IKhachHangRepository Queries = null;
+       
+
+        public KhachHangController(IKhachHangRepository queries)
         {
-            return View();
+            this.Queries = queries;
+        }
+
+        public  ViewResult Index()
+        {
+            var listKh =  Queries.Gets();
+            return View(listKh);
         }
 
 

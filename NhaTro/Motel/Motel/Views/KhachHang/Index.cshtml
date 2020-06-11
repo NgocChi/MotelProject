@@ -1,8 +1,18 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_layout.cshtml";
-}
+﻿@using Motel.ViewModels
+@model KhachHangViewModel
 
-<h2>Index</h2>
+   
+
+    <h2>kHACH HANG</h2>
+@{ 
+    foreach(var kh in Model.list)
+    {
+        <div>
+            <h2>Ma: @kh.MaKh</h2>
+            <h3>Ten: @kh.TenKH</h3>
+            <h4>Mail: @kh.Mail</h4>
+            <p>Que quan: @kh.QueQuan</p>
+        </div>
+    }
+}
 
