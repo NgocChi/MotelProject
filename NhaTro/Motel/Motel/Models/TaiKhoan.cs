@@ -21,7 +21,7 @@ namespace Motel.Models
         public string GhiChu { get; set; }
 
         [Column("LoaiTaiKhoan")]
-        public bool LoaiTaiKhoan { get; set; }
+        public bool? LoaiTaiKhoan { get; set; }
 
     }
 }

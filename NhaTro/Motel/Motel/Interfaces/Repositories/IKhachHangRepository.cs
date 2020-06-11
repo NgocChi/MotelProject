@@ -10,5 +10,6 @@ namespace Motel.Interfaces.Repositories
     public interface IKhachHangRepository
     {
         KhachHangViewModel Gets();
+        void Save(KhachHang kh);
     }
 }

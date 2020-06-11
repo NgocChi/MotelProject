@@ -15,18 +15,37 @@ namespace Motel.Controllers
    
     public class KhachHangController : Controller
     {
-        private readonly IKhachHangRepository Queries = null;
+        private readonly IKhachHangRepository Repository = null;
+        public KhachHang khach;
        
 
         public KhachHangController(IKhachHangRepository queries)
         {
-            this.Queries = queries;
+            this.Repository = queries;
         }
 
         public  ViewResult Index()
         {
-            var listKh =  Queries.Gets();
+            var listKh = Repository.Gets();
             return View(listKh);
+        }
+        public ViewResult Save()
+        {
+            var listKh = Repository.Gets();
+            return View(listKh);
+        }
+        [HttpPost]
+        public IActionResult Save(KhachHang kh)
+        {
+            //if (ModelState.IsValid)
+            //{
+            //    Repository.Save(kh);
+            //    return RedirectToAction("Suscess");
+            //}
+
+            //return View(kh);
+            Repository.Save(kh);
+            return RedirectToAction("Suscess");
         }
 
 

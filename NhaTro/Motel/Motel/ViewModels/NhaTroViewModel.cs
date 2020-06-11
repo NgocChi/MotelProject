@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Motel.ViewModels
 {
-    public class PhongViewModel : Phong
+    public class NhaTroViewModel 
     {
-        public IEnumerable<Phong> listPhong { get; set; }
+        public IEnumerable<NhaTro> listNhaTro { get; set; }
+        public NhaTro nhaTro { get; set; }
     }
 }

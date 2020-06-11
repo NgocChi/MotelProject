@@ -1,6 +1,7 @@
 ﻿using Motel.Data;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
+using Motel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,11 @@ namespace Motel.Repositories
             this._appDBContext = appDBContext;
         }
 
-        public IEnumerable<NhaTro> Gets()
+        public NhaTroViewModel Gets()
         {
-            return _appDBContext.NhaTros.ToList();
+            NhaTroViewModel list = new NhaTroViewModel();
+            list.listNhaTro = _appDBContext.NhaTros.ToList();
+            return list;
         }
     }
 }

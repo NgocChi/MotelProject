@@ -17,5 +17,7 @@ namespace Motel.ViewModels
         public bool Nho { get; set; }
 
         public string ReturnUrl { get; set; }
+
+        public string PrMatKhau { get; set; }
     }
 }

@@ -1,11 +1,13 @@
 ﻿@using Motel.ViewModels
 @model KhachHangViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
 
-   
 
-    <h2>kHACH HANG</h2>
-@{ 
-    foreach(var kh in Model.list)
+
+<h2>kHACH HANG</h2>
+@{
+    foreach (var kh in Model.list)
     {
         <div>
             <h2>Ma: @kh.MaKh</h2>
@@ -15,4 +17,15 @@
         </div>
     }
 }
+
+<div>
+    <form asp-controller="KhachHang" asp-action="Save" method="post">
+        <input type="text" asp-for="khachHang.TenKH" name="TenKH" />
+        <input type="text" asp-for="khachHang.NgaySinh" name="NgaySinh" />
+        <input type="text" asp-for="khachHang.Mail" name="Mail" />
+        <input type="text" asp-for="khachHang.SoDienThoai" name="SoDienThoai" />
+        <input type="submit" value="Save" />
+    </form>
+    
+</div>
 

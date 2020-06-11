@@ -18,19 +18,19 @@ namespace Motel.Models
         public string Ten { get; set; }
 
         [Column("CSDien")]
-        public int CSDien { get; set; }
+        public Int64 CSDien { get; set; }
 
         [Column("CSNuoc")]
-        public int CSNuoc { get; set; }
+        public Int64 CSNuoc { get; set; }
 
         [Column("_MaNT")]
-        public int _MaNT { get; set; }
+        public int? _MaNT { get; set; }
 
         [Column("_MaLP")]
-        public int _MaLP { get; set; }
+        public int? _MaLP { get; set; }
 
         [Column("_MaTTPH")]
-        public int _MaTTPH { get; set; }
+        public int? _MaTTPH { get; set; }
 
      
     }

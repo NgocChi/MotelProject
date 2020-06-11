@@ -17,7 +17,7 @@ namespace Motel.Repositories
 
         public KhachHangRepository(AppDBContext appDBContext)
         {
-            this._appDBContext = appDBContext;
+            _appDBContext = appDBContext;
         }
 
         public KhachHangViewModel Gets()
@@ -28,23 +28,12 @@ namespace Motel.Repositories
             kq.list = list;
             return kq;
         }
-        #region
-        //private const string SP_Add = "KhachHangRepository_Add";
-        //public async Task<int> Add(KhachHang kh)
-        //{
-        //    var param = new DynamicParameters();
-        //    param.Add("@maKh", kh.MaKh, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
-        //    param.Add("@tenKH", kh.TenKH, System.Data.DbType.String, System.Data.ParameterDirection.Input);
-        //    param.Add("@gioiTinh", kh.GioiTinh, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
-        //    param.Add("@hinhDaiDien", kh.HinhDaiDien, System.Data.DbType.String, System.Data.ParameterDirection.Input);
-        //    param.Add("@ngaySinh", kh.NgaySinh, System.Data.DbType.DateTime, System.Data.ParameterDirection.Input);
-        //    param.Add("@mail", kh.Mail, System.Data.DbType.String, System.Data.ParameterDirection.Input);
-        //    param.Add("@maNguoiThan", kh.MaNguoiThan, System.Data.DbType.Int32, System.Data.ParameterDirection.Input);
-        //    param.Add("@soDienThoai", kh.SoDienThoai, System.Data.DbType.String, System.Data.ParameterDirection.Input);
-        //    param.Add("@tenTaiKhoan", kh.TenTaiKhoan, System.Data.DbType.String, System.Data.ParameterDirection.Input);
 
-        //    return (await DalHelper.SPExecuteQuery<int>(SP_Add, param, connection: DbConnection)).First();
-        //}
-        #endregion
+        public void Save(KhachHang kh)
+        {
+            _appDBContext.KhachHangs.Add(kh);
+            _appDBContext.SaveChanges();
+        }
+        
     }
 }

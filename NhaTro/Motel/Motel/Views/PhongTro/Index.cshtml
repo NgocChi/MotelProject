@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_layout.cshtml";
 }
 @using Motel.ViewModels
-@model IEnumerable<PhongViewModel>
+@model PhongViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
@@ -81,7 +81,7 @@
 
                             <tbody>
                                 @{
-                                    foreach (var item in Model)
+                                    foreach (var item in Model.listPhong)
                                     {
                                         <tr class="item-1932 highlight">
                                             <td class="text-center">

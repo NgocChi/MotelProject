@@ -1,6 +1,7 @@
 ﻿using Motel.Data;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
+using Motel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,11 @@ namespace Motel.Repositories
             this._appDBContext = appDBContext;
         }
 
-        public IEnumerable<Phong> Gets()
+        public PhongViewModel Gets()
         {
-            return _appDBContext.Phongs.ToList();
+            PhongViewModel phong = new PhongViewModel();
+            phong.listPhong = _appDBContext.Phongs.ToList();
+            return phong;
         }
     }
 }

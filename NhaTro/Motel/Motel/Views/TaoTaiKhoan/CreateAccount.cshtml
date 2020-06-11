@@ -1,6 +1,9 @@
-﻿
+﻿@using Motel.ViewModels
+@model TaiKhoanViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
 @{
-    ViewData["Title"] = "CreateAccount";
+    ViewData["Title"] = "Tạo tài khoản";
 }
 
 <!DOCTYPE html>
@@ -25,46 +28,43 @@
     <link rel="stylesheet" type="text/css" href="~/Login/ver01/css/util.css">
     <link rel="stylesheet" type="text/css" href="~/Login/ver01/css/main.css">
     <!--===============================================================================================-->
-<style>
-    .content {
-        align-content: center;
-        justify-content: center;
-        color: black;
-    }
-</style>
+    <style>
+        .content {
+            align-content: center;
+            justify-content: center;
+            color: black;
+        }
+    </style>
 </head>
 <body>
-    <div >
+    <div>
         <div class="container-login100">
             <div class="wrap-login100">
-                
-                <form method="POST" id="signup-form"  class="content">
+
+                <form asp-controller="TaoTaiKhoan" asp-action="Create_Account" method="POST" id="signup-form" class="content">
                     <div>
-                        <h2 class="form-title">Create account</h2>
+                        <h2 class="form-title">Tạo tài khoản</h2>
                         <div class="form-group">
-                            <input type="text" class="input100" name="name" id="name" placeholder="Tài khoản">
+                            <input asp-for="TenTaiKhoan" type="text" class="input100" name="TenTaiKhoan" id="name" placeholder="Tài khoản">
                         </div>
 
                         <div class="form-group">
-                            <input type="text" class="input100" name="password" id="password" placeholder="Mật khẩu">
+                            <input type="password" asp-for="MatKhau" class="input100" name="MatKhau" id="password" placeholder="Mật khẩu">
                             <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="input100" name="re_password" id="re_password" placeholder="Nhập lại mật khẩu">
+                            <input type="password" asp-for="PrMatKhau" class="input100" name="PrMatKhau" id="re_password" placeholder="Nhập lại mật khẩu">
                         </div>
-                        @*<div class="form-group">
-            <input type="checkbox" name="agree-term" id="agree-term" class="agree-term">
-            <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in <a href="#" class="term-service">Terms of service</a></label>
-        </div>*@
+                    
                         <div class="form-group">
-                            <input type="submit" name="submit" id="submit" class="login100-form-btn" value="Đăng Nhập">
+                            <input type="submit" name="submit" id="submit" class="login100-form-btn" value="Tạo tài khoản">
                         </div>
                     </div>
                 </form>
 
-               
-             
-             
+
+
+
             </div>
         </div>
     </div>

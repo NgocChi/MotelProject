@@ -9,5 +9,6 @@ namespace Motel.Interfaces.Repositories
     public interface ITaiKhoanRepository
     {
         TaiKhoan DangNhap(string userName, string password);
+        int Create(TaiKhoan taiKhoan);
     }
 }
