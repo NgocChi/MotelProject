@@ -9,7 +9,12 @@ namespace Motel.Interfaces.Repositories
 {
     public interface INhaTroRepository
     {
-        NhaTroViewModel Gets();
+        IEnumerable<NhaTro> Gets();
+        int Create(NhaTro nhaTro);
+
+        int Update(NhaTro nhaTro);
+
+        int UpdateSoLuongPhong(int maNt, int soluong);
 
     }
 }

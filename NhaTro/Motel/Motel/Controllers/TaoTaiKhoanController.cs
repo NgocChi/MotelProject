@@ -24,6 +24,7 @@ namespace Motel.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult Create_Account(TaiKhoanViewModel taikhoan)
         {
             int kq = -1;

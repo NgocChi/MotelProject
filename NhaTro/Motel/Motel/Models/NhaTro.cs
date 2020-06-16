@@ -25,5 +25,8 @@ namespace Motel.Models
 
         [Column("DiaChi")]
         public string DiaChi { get; set; }
+
+        [Column("Mota")]
+        public string Mota { get; set; }
     }
 }

@@ -24,11 +24,12 @@ namespace Motel.Controllers
             this.Repository = queries;
         }
 
-        public  ViewResult Index()
-        {
-            var listKh = Repository.Gets();
-            return View(listKh);
-        }
+        //public  ViewResult Index()
+        //{
+        //    var listKh = Repository.Gets();
+        //    return View(listKh);
+        //}
+
         public ViewResult Save()
         {
             var listKh = Repository.Gets();
@@ -44,7 +45,7 @@ namespace Motel.Controllers
             //}
 
             //return View(kh);
-            Repository.Save(kh);
+            //Repository.Save(kh);
             return RedirectToAction("Suscess");
         }
 

@@ -11,19 +11,25 @@ namespace Motel.Models
     public class DatPhong
     {
         [Key]
-        [Column("MaPH")]
-        public int MaPH { get; set; }
+        [Column("MaDP")]
+        public int MaDP { get; set; }
 
-        [Column("NgayVao")]
-        public DateTime NgayVao { get; set; }
+        [Column("NgayDat")]
+        public DateTime? NgayDat { get; set; }
 
-        [Column("SoTien")]
-        public double SoTien { get; set; }
+        [Column("NgayHetHan")]
+        public DateTime? NgayHetHan { get; set; }
+
+        [Column("SoTienCoc")]
+        public decimal SoTienCoc { get; set; }
 
         [Column("_MaPH")]
         public int _MaPH { get; set; }
 
         [Column("_MaKH")]
-        public int _MaKH { get; set; }
+        public int? _MaKH { get; set; }
+
+        [Column("GhiChu")]
+        public string GhiChu { get; set; }
     }
 }

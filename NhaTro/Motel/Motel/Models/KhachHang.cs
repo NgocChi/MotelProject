@@ -18,7 +18,7 @@ namespace Motel.Models
         public string TenKH { get; set; }
 
         [Column("GioiTinh")]
-        public bool GioiTinh { get; set; }
+        public int? GioiTinh { get; set; }
 
         [Column("HinhDaiDien")]
         public string HinhDaiDien { get; set; }
@@ -30,15 +30,18 @@ namespace Motel.Models
         public string SoDienThoai { get; set; }
 
         [Column("NgaySinh")]
-        public DateTime NgaySinh { get; set; }
+        public DateTime? NgaySinh { get; set; }
 
         [Column("Mail")]
         public string Mail { get; set; }
 
+        [Column("CMND")]
+        public string CMND { get; set; }
+
         [Column("_TenTaiKhoan")]
         public string TenTaiKhoan { get; set; }
 
-        [Column("_MaNguoiThan")]
-        public int MaNguoiThan { get; set; }
+        [Column("_MaNguoiThan")] 
+        public int? MaNguoiThan { get; set; }
     }
 }

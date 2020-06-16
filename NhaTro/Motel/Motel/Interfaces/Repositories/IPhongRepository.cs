@@ -9,6 +9,21 @@ namespace Motel.Interfaces.Repositories
 {
     public interface IPhongRepository
     {
-        PhongViewModel Gets();
+        IEnumerable<PhongViewModel> Gets();
+        IEnumerable<Phong> GetsPhongTrong();
+
+        IEnumerable<LoaiPhong> GetsLoaiPhong();
+
+        IEnumerable<TrangThaiPhong> GetsTrangThaiPhong();
+
+        int Create(Phong phong);
+
+        int Update(Phong phong);
+
+        int UpdateTTP(int maph, int ttph);
+
+        int CreateLoaiPhong(LoaiPhong loaiPhong);
+
+        int UpdateLoaiPhong(LoaiPhong loaiPhong);
     }
 }

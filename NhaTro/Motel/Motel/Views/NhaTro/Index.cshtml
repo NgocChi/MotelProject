@@ -5,7 +5,7 @@
 }
 @using Motel.ViewModels
 @model NhaTroViewModel
-<!-- model Tuple<IEnumerable<NhaTro>>-->
+
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
@@ -18,7 +18,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h5 class="card-title">DANH SÁCH NHÀ TRỌ</h5>
+                <span class="caption-subject font-green sbold uppercase">Danh sách nhà trọ</span>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -101,7 +101,7 @@
                                             <td>@item.DiaChi</td>
                                             <td>@item.TongPhong</td>
                                             <td>@item.PhongTrong</td>
-                                            <td></td>
+                                            <td>@item.Mota</td>
                                             <td class="text-center">
                                                 <a data-btn-ok-class="btn-success"
                                                    data-btn-cancel-class="btn-danger"
@@ -157,7 +157,9 @@
                 </div>
             </div>
             <div class="modal-body">
-                <form class="simple_form form-horizontal" novalidate="novalidate" id="new_admin_building" action="/admin/buildings" accept-charset="UTF-8" data-remote="true" method="post">
+                <form asp-controller="NhaTro" asp-action="Create" method="POST" 
+                      class="simple_form form-horizontal" novalidate="novalidate" 
+                      id="new_admin_building"  accept-charset="UTF-8" data-remote="true" >
                     <input name="utf8" type="hidden" value="✓">
 
 
@@ -170,7 +172,8 @@
                         <div class="col-md-4">
                             <input class="string required bg-maxlength form-control"
                                    placeholder="Nhập tên Khu/Tòa nhà" maxlength="50" size="50" type="text"
-                                   id="admin_building_name">
+                                   asp-for="nhaTro.Ten" name="nhaTro.Ten"
+                                   id="Ten">
                             <div class="form-control-focus"></div>
                         </div>
 
@@ -183,7 +186,8 @@
                         </label>
                         <div class="col-md-10">
                             <textarea class="text required bg-maxlength form-control"
-                                      placeholder="Nhập địa chỉ" maxlength="255" name="admin_building[address]" id="admin_building_address"></textarea>
+                                      asp-for="nhaTro.DiaChi" name="nhaTro.DiaChi"
+                                      placeholder="Nhập địa chỉ" maxlength="255"  id="DiaChi"></textarea>
                             <div class="form-control-focus"></div>
                         </div>
                     </div>
@@ -191,13 +195,20 @@
                     <div class="form-group form-md-line-input row">
                         <label class="col-md-2 control-label">Tổng số phòng</label>
                         <div class="col-md-4">
-                            <input class="string required bg-maxlength form-control" placeholder="Tổng số phòng" maxlength="50" size="50" type="number" name="dmin_building[quality]" id="admin_building_quality">
+                            <input class="string required bg-maxlength form-control" 
+                                   value="0" disabled placeholder="Tổng số phòng" 
+                                    asp-for="nhaTro.TongPhong" name="nhaTro.TongPhong"
+                                   maxlength="50" size="50" type="number"  
+                                   id="TongPhong">
 
                             <div class="form-control-focus"></div>
                         </div>
                         <label class="col-md-2 control-label">Số phòng trống</label>
                         <div class="col-md-4">
-                            <input class="string required bg-maxlength form-control" placeholder="Số phòng trống" maxlength="50" size="50" type="number" name="admin_building[quality_trong]" id="admin_building_quality_trong">
+                            <input class="string required bg-maxlength form-control" 
+                                   value="0" disabled placeholder="Số phòng trống" maxlength="50" 
+                                     asp-for="nhaTro.PhongTrong" name="nhaTro.PhongTrong"
+                                   size="50" type="number"  id="PhongTrong">
 
                             <div class="form-control-focus"></div>
                         </div>
@@ -208,7 +219,10 @@
 
                         <label class="col-md-2 control-label">Mô tả</label>
                         <div class="col-md-10">
-                            <textarea class="text optional bg-maxlength form-control autosizeme" placeholder="Nhập mô tả" maxlength="500" name="admin_building[description]" id="admin_building_description"></textarea>
+                            <textarea class="text optional bg-maxlength form-control autosizeme" 
+                                      asp-for="nhaTro.Mota" name="nhaTro.Mota"
+                                      placeholder="Nhập mô tả" maxlength="500"  
+                                      id="Mota"></textarea>
                             <div class="form-control-focus"></div>
                         </div>
                     </div>
@@ -218,7 +232,7 @@
                     <div class="form-actions margin-top-10">
                         <div class="row">
                             <div class="col-md-12 text-right">
-                                <button type="button" onclick="closeForm()" class="btn btn-default" data-dismiss="modal">
+                                <button type="button"  class="btn btn-default" data-dismiss="modal">
                                     <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Hủy bỏ
                                 </button>
                                 <button name="button" type="submit" class="btn btn-default btnFormSubmit btn green">

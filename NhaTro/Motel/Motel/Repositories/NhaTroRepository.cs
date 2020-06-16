@@ -18,11 +18,53 @@ namespace Motel.Repositories
             this._appDBContext = appDBContext;
         }
 
-        public NhaTroViewModel Gets()
+        public  IEnumerable<NhaTro> Gets()
         {
-            NhaTroViewModel list = new NhaTroViewModel();
-            list.listNhaTro = _appDBContext.NhaTros.ToList();
-            return list;
+            return _appDBContext.NhaTros.ToList();
+        }
+
+        public int Create(NhaTro nhaTro)
+        {
+            if (nhaTro != null)
+            {
+                _appDBContext.NhaTros.Add(nhaTro);
+                _appDBContext.SaveChanges();
+                return 1;
+            }
+            return 0;
+
+        }
+        public int Update(NhaTro nhaTro)
+        {
+
+            NhaTro find = _appDBContext.NhaTros.FirstOrDefault(p => p.MaNT == nhaTro.MaNT);
+            if(find != null)
+            {
+                find.Ten = nhaTro.Ten;
+                find.TongPhong = nhaTro.TongPhong;
+                find.PhongTrong = nhaTro.PhongTrong;
+                find.Mota = nhaTro.Mota;
+                find.DiaChi = nhaTro.DiaChi;
+                _appDBContext.NhaTros.Add(find);
+                _appDBContext.SaveChanges();
+                return 1;
+            }
+            return 0;
+        }
+
+        public int UpdateSoLuongPhong(int maNt , int soLuong)
+        {
+
+            NhaTro find = _appDBContext.NhaTros.FirstOrDefault(p => p.MaNT == maNt);
+            if (find != null)
+            {
+                find.TongPhong = soLuong;
+                _appDBContext.NhaTros.Add(find);
+                _appDBContext.SaveChanges();
+                return 1;
+            }
+            return 0;
+
         }
     }
 }

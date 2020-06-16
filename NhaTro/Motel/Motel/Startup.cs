@@ -27,7 +27,7 @@ namespace Motel
 
         public Startup( IHostingEnvironment env)
         {
-            // ConfigurationRoot = configuration;
+
             ConfigurationRoot = new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json").Build();
         }
@@ -47,10 +47,7 @@ namespace Motel
             services.AddTransient<IHopDongRepository, HopDongRepository>();
             services.AddMvc();
             services.AddSession();
-           // GlobalConfiguration.Load(ConfigurationRoot);
         }
-
-
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory looger)
         {
             app.UseDeveloperExceptionPage();

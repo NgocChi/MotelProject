@@ -17,6 +17,9 @@ namespace Motel.Models
         [Column("Ten")]
         public string Ten { get; set; }
 
+        [Column("Tang")]
+        public int Tang { get; set; }
+
         [Column("CSDien")]
         public Int64 CSDien { get; set; }
 
@@ -29,9 +32,12 @@ namespace Motel.Models
         [Column("_MaLP")]
         public int? _MaLP { get; set; }
 
-        [Column("_MaTTPH")]
+        [Column("_MaTTPH")] 
         public int? _MaTTPH { get; set; }
 
-     
+        [Column("SoNguoiToiDa")]
+        public int? SoNguoiToiDa { get; set; }
+
+
     }
 }

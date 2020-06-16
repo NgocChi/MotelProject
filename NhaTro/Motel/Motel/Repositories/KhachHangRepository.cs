@@ -20,20 +20,23 @@ namespace Motel.Repositories
             _appDBContext = appDBContext;
         }
 
-        public KhachHangViewModel Gets()
+        public IEnumerable<KhachHang> Gets()
         {
-            var kq = new KhachHangViewModel();
-            List<KhachHang> list = new List<KhachHang>();
-            list = _appDBContext.KhachHangs.ToList();
-            kq.list = list;
-            return kq;
+           
+            return _appDBContext.KhachHangs.ToList();
         }
 
-        public void Save(KhachHang kh)
+        public int Create(KhachHang kh)
         {
-            _appDBContext.KhachHangs.Add(kh);
-            _appDBContext.SaveChanges();
+            if (kh != null)
+            {
+                _appDBContext.KhachHangs.Add(kh);
+                _appDBContext.SaveChanges();
+                return 1;
+            }
+            return 0;
+
         }
-        
+
     }
 }

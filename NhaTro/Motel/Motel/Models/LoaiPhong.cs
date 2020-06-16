@@ -19,12 +19,15 @@ namespace Motel.Models
         public string Ten { get; set; }
 
         [Column("Gia")]
-        public double Gia { get; set; }
+        public decimal Gia { get; set; }
 
         [Column("GiaDatCoc")]
-        public double GiaDatCoc { get; set; }
+        public decimal GiaDatCoc { get; set; }
 
         [Column("ThongTin")]
         public string ThongTin { get; set; }
+
+        [Column("DienTich")]
+        public int DienTich { get; set; }
     }
 }
