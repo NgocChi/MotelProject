@@ -10,5 +10,8 @@ namespace Motel.ViewModels
     {
         public IEnumerable<NhaTro> listNhaTro { get; set; }
         public NhaTro nhaTro { get; set; }
+        public int? id { get; set; }
+
+        //PagedList.IPagedList<IEnumerable<NhaTro>> list { get; set; }
     }
 }

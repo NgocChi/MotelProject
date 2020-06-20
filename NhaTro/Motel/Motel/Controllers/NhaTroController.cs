@@ -12,17 +12,27 @@ namespace Motel.Controllers
     public class NhaTroController : Controller
     {
         private readonly INhaTroRepository Repository = null;
-
-
+        
         public NhaTroController(INhaTroRepository repository)
         {
             this.Repository = repository;
         }
 
-        public ViewResult Index()
+        public ViewResult Index(int? id)
         {
             NhaTroViewModel nt = new NhaTroViewModel();
             nt.listNhaTro = Repository.Gets();
+            if(id != 0)
+            {
+                nt.nhaTro = Repository.GetsById(id);
+            }
+            return View(nt);
+        }
+        [HttpGet]
+        public ActionResult Update(int id)
+        {
+            NhaTroViewModel nt = new NhaTroViewModel();
+
             return View(nt);
         }
 

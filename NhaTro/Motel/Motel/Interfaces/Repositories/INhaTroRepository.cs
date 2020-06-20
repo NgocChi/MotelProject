@@ -10,6 +10,9 @@ namespace Motel.Interfaces.Repositories
     public interface INhaTroRepository
     {
         IEnumerable<NhaTro> Gets();
+
+        NhaTro GetsById(int? id);
+
         int Create(NhaTro nhaTro);
 
         int Update(NhaTro nhaTro);

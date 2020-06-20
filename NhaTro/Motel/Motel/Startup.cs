@@ -22,7 +22,7 @@ namespace Motel
 {
     public class Startup
     {
-       // public IConfiguration ConfigurationRoot { get; }
+      
         public IConfigurationRoot ConfigurationRoot { get; }
 
         public Startup( IHostingEnvironment env)
@@ -43,8 +43,10 @@ namespace Motel
             services.AddTransient<INhaTroRepository, NhaTroRepository>();
             services.AddTransient<IPhongRepository, PhongRepository>();
             services.AddTransient<IDatPhongRepository, DatPhongRepository>();
-            services.AddTransient<IHoaDonRepository, HoaDonRepository>();
-            services.AddTransient<IHopDongRepository, HopDongRepository>();
+            services.AddTransient<IHoaDonRepository, HoaDonRepository>(); 
+            services.AddTransient<IHopDongRepository, HopDongRepository>(); 
+            services.AddTransient<IPhuongTienRepository, PhuongTienRepository>();
+            services.AddTransient<IDichVuRepository, DichVuRepository>();
             services.AddMvc();
             services.AddSession();
         }
@@ -55,18 +57,19 @@ namespace Motel
             app.UseIdentity();
             app.UseStaticFiles();
             app.UseSession();
-            app.UseMvcWithDefaultRoute();
-           
             app.UseMvc(routes =>
             {
+
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=DangNhap}/{action=Login}");
+                    template: "{controller=DangNhap}/{action=Login}/{id?}");
 
                 routes.MapSpaFallbackRoute(
                      name: "spa-fallback",
                      defaults: new { controller = "DangNhap", action = "Login" });
             });
+
+
         }
     }
 }

@@ -1307,8 +1307,8 @@ code {
     list-style: none;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
-    -ms-border-radius: 2px;
-    -o-border-radius: 2px;
+    /*-ms-border-radius: 2px;
+    -o-border-radius: 2px;*/
     border-radius: 2px
 }
 
@@ -7749,8 +7749,8 @@ body[ng-controller] .modal {
     padding: 0;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
-    -ms-border-radius: 2px;
-    -o-border-radius: 2px;
+    /*-ms-border-radius: 2px;
+    -o-border-radius: 2px;*/
     border-radius: 2px;
     border: 0;
     background: #fff
@@ -7822,8 +7822,8 @@ body[ng-controller] .modal {
         min-height: 41px;
         -webkit-border-radius: 2px 2px 0 0;
         -moz-border-radius: 2px 2px 0 0;
-        -ms-border-radius: 2px 2px 0 0;
-        -o-border-radius: 2px 2px 0 0;
+        /*-ms-border-radius: 2px 2px 0 0;
+        -o-border-radius: 2px 2px 0 0;*/
         border-radius: 2px 2px 0 0
     }
 
@@ -13938,8 +13938,8 @@ body[ng-controller] .modal {
 .dashboard-stat2 {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
-    -ms-border-radius: 2px;
-    -o-border-radius: 2px;
+    /*-ms-border-radius: 2px;
+    -o-border-radius: 2px;*/
     border-radius: 2px;
     background: #fff;
     padding: 15px 15px 30px
@@ -14251,12 +14251,12 @@ body[ng-controller] .modal {
     background-repeat: no-repeat;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
-    -ms-border-radius: 2px;
-    -o-border-radius: 2px;
+    /*-ms-border-radius: 2px;
+    -o-border-radius: 2px;*/
     border-radius: 2px;
     transition: all .3s ease-in-out;
     -o-transition: all .3s ease-in-out;
-    -ms-transition: all .3s ease-in-out;
+    /*-ms-transition: all .3s ease-in-out;*/
     -moz-transition: all .3s ease-in-out;
     -webkit-transition: all .3s ease-in-out
 }
@@ -14710,8 +14710,8 @@ body[ng-controller] .modal {
         font-size: 14px;
         -webkit-border-radius: 2px 2px 0 0;
         -moz-border-radius: 2px 2px 0 0;
-        -ms-border-radius: 2px 2px 0 0;
-        -o-border-radius: 2px 2px 0 0;
+        /*-ms-border-radius: 2px 2px 0 0;
+        -o-border-radius: 2px 2px 0 0;*/
         border-radius: 2px 2px 0 0
     }
 
@@ -14822,16 +14822,16 @@ body[ng-controller] .modal {
         .tabs-below > .nav-tabs > li > a .dropdown-menu {
             -webkit-border-radius: 2px;
             -moz-border-radius: 2px;
-            -ms-border-radius: 2px;
-            -o-border-radius: 2px;
+            /*-ms-border-radius: 2px;
+            -o-border-radius: 2px;*/
             border-radius: 2px
         }
 
     .tabs-below > .nav-tabs .active a, .tabs-below > .nav-tabs .active a:hover .active a:focus {
         -webkit-border-radius: 0 0 2px 2px;
         -moz-border-radius: 0 0 2px 2px;
-        -ms-border-radius: 0 0 2px 2px;
-        -o-border-radius: 0 0 2px 2px;
+        /*-ms-border-radius: 0 0 2px 2px;
+        -o-border-radius: 0 0 2px 2px;*/
         border-radius: 0 0 2px 2px;
         border-color: transparent #ddd #ddd !important
     }
@@ -14902,8 +14902,8 @@ body[ng-controller] .modal {
         padding: 10px;
         -webkit-border-radius: 0 0 2px 2px;
         -moz-border-radius: 0 0 2px 2px;
-        -ms-border-radius: 0 0 2px 2px;
-        -o-border-radius: 0 0 2px 2px;
+        /*-ms-border-radius: 0 0 2px 2px;
+        -o-border-radius: 0 0 2px 2px;*/
         border-radius: 0 0 2px 2px
     }
 
@@ -15291,8 +15291,8 @@ body[ng-controller] .modal {
     padding: 20px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
-    -ms-border-radius: 2px;
-    -o-border-radius: 2px;
+    /*-ms-border-radius: 2px;
+    -o-border-radius: 2px;*/
     border-radius: 2px
 }
 
@@ -22344,8 +22344,8 @@ body[ng-controller] .modal {
         .mt-element-card.mt-card-round .mt-card-item .mt-card-avatar .mt-overlay {
             -webkit-border-radius: 50%;
             -moz-border-radius: 50%;
-            -ms-border-radius: 50%;
-            -o-border-radius: 50%;
+            /*-ms-border-radius: 50%;
+            -o-border-radius: 50%;*/
             border-radius: 50%
         }
 

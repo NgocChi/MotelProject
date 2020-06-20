@@ -229,7 +229,7 @@
                                 <li class="nav-item">
                                     <div class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Phương tiện</p>
+                                        <p>@Html.ActionLink("Phương tiện", "Index", "PhuongTien")</p>
                                     </div>
                                 </li>
                             </ul>
@@ -243,6 +243,14 @@
                                     Điện nước
                                 </p>
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="nav-link">
+                                <i class="fa fa-bolt"></i>
+                                <p>
+                                    @Html.ActionLink("Dịch vụ", "Index", "DichVu")
+                                </p>
+                            </div>
                         </li>
 
                         <!-- Báo cáo -->

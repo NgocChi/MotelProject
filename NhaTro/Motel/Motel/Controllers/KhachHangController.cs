@@ -4,6 +4,7 @@ using Motel.Interfaces.Repositories;
 using Motel.Models;
 using Motel.Queries;
 using Motel.Repositories;
+using Motel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,28 +25,18 @@ namespace Motel.Controllers
             this.Repository = queries;
         }
 
-        //public  ViewResult Index()
-        //{
-        //    var listKh = Repository.Gets();
-        //    return View(listKh);
-        //}
-
-        public ViewResult Save()
+        public ViewResult Index()
         {
-            var listKh = Repository.Gets();
-            return View(listKh);
+            KhachHangViewModel kh = new KhachHangViewModel();
+            kh.list = Repository.Gets();
+            return View(kh);
         }
+
+       
         [HttpPost]
         public IActionResult Save(KhachHang kh)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    Repository.Save(kh);
-            //    return RedirectToAction("Suscess");
-            //}
-
-            //return View(kh);
-            //Repository.Save(kh);
+           
             return RedirectToAction("Suscess");
         }
 

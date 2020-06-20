@@ -4,16 +4,21 @@
     Layout = "~/Views/Shared/_layout.cshtml";
 }
 @using Motel.ViewModels
-@model KhachHangViewModel
+@model NhaTroViewModel
+
+
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
+
+
+
 
 
 <div class="row">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <span class="caption-subject font-green sbold uppercase">Danh sách khách thuê</span>
+                <span class="caption-subject font-green sbold uppercase">Danh sách nhà trọ</span>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -71,16 +76,17 @@
                                 </tr>
                             </thead>
 
-                            @{
-
-                                foreach (var item in Model.list)
-                                {
+                          
                                     <tbody>
                                         <tr class="item-1932 highlight">
                                             <td class="text-center">
-                                                <a class="btn btn-circle btn-icon-only btn-default tooltips"
-                                                   data-remote="true"
-                                                   data-placement="top" onclick="openForm()" data-original-title="Chỉnh sửa"><i class="fas fa-edit"></i></a>
+                                                <button class="btn btn-circle btn-icon-only btn-default tooltips"
+                                                       
+                                                        data-target="#myModalEdit" data-toggle="modal"
+                                                        data-remote="true"
+                                                        data-placement="top" data-original-title="Chỉnh sửa">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
                                             </td>
                                             <td class="text-center">
                                                 <div class="md-checkbox-inline service-checkbox">
@@ -92,11 +98,11 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>@item.TenKH</td>
-                                            <td>@item.GioiTinh</td>
-                                            <td>@item.SoDienThoai</td>
-                                            <td>@item.CMND</td>
-                                            <td>@item.Mail</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             <td class="text-center">
                                                 <a data-btn-ok-class="btn-success"
                                                    data-btn-cancel-class="btn-danger"
@@ -105,12 +111,12 @@
                                                    data-tooltip-title="Xóa"
                                                    data-confirm-title="Bạn chắc chắn muốn xóa dữ liệu?"
                                                    class="btn red btn-circle btn-icon-only btn-default cus-tooltips cus-confirmations"
-                                                   data-remote="true" data-method="delete"> <i class="fas fa-trash"></i></a>
+                                                   data-remote="true" rel="nofollow" data-method="delete"> <i class="fas fa-trash"></i></a>
                                             </td>
+
                                         </tr>
                                     </tbody>
-                                }
-                            }
+                            
                         </table>
 
 
@@ -137,7 +143,7 @@
 <div id="myModal" role="dialog" class="modal fade in" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header accent-green">
                 <div class="caption font-green">
                     <span class="caption-subject bold uppercase">
 
@@ -152,7 +158,7 @@
                 </div>
             </div>
             <div class="modal-body">
-                <form asp-controller="KhachHang" asp-action="Create" method="POST"
+                <form  method="post"
                       class="simple_form form-horizontal" novalidate="novalidate"
                       id="new_admin_building" accept-charset="UTF-8" data-remote="true">
                     <input name="utf8" type="hidden" value="✓">
@@ -167,7 +173,7 @@
                         <div class="col-md-4">
                             <input class="string required bg-maxlength form-control"
                                    placeholder="Nhập tên Khu/Tòa nhà" maxlength="50" size="50" type="text"
-                                   asp-for="khachHang.TenKH" name="nhaTro.Ten"
+                                 
                                    id="Ten">
                             <div class="form-control-focus"></div>
                         </div>
@@ -181,7 +187,7 @@
                         </label>
                         <div class="col-md-10">
                             <textarea class="text required bg-maxlength form-control"
-                                      asp-for="khachHang.QueQuan" name="nhaTro.DiaChi"
+                                   
                                       placeholder="Nhập địa chỉ" maxlength="255" id="DiaChi"></textarea>
                             <div class="form-control-focus"></div>
                         </div>
@@ -192,7 +198,7 @@
                         <div class="col-md-4">
                             <input class="string required bg-maxlength form-control"
                                    value="0" disabled placeholder="Tổng số phòng"
-                                   asp-for="khachHang.SoDienThoai" name="nhaTro.TongPhong"
+                                   
                                    maxlength="50" size="50" type="number"
                                    id="TongPhong">
 
@@ -202,7 +208,7 @@
                         <div class="col-md-4">
                             <input class="string required bg-maxlength form-control"
                                    value="0" disabled placeholder="Số phòng trống" maxlength="50"
-                                   asp-for="khachHang.CMND" name="nhaTro.PhongTrong"
+                                
                                    size="50" type="number" id="PhongTrong">
 
                             <div class="form-control-focus"></div>
@@ -215,7 +221,7 @@
                         <label class="col-md-2 control-label">Mô tả</label>
                         <div class="col-md-10">
                             <textarea class="text optional bg-maxlength form-control autosizeme"
-                                      asp-for="khachHang.Mail" name="nhaTro.Mota"
+                                    
                                       placeholder="Nhập mô tả" maxlength="500"
                                       id="Mota"></textarea>
                             <div class="form-control-focus"></div>
@@ -245,11 +251,137 @@
 
 </div>
 
-<script src="~/Form/jsController/jquery.js"></script>
+<div id="myModalEdit" role="dialog" class="modal fade in" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header accent-green">
+                <div class="caption font-green">
+                    <span class="caption-subject bold uppercase">
+
+                        <i class="fa fa-plus"></i> Thêm mới
+
+                    </span>
+                </div>
+                <div class="actions">
+                    <a class="btn btn-circle btn-icon-only btn-default show-main-modal" data-dismiss="modal" id="close">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form  method="POST"
+                      class="simple_form form-horizontal" novalidate="novalidate"
+                      id="new_admin_building" accept-charset="UTF-8" data-remote="true">
+                    <input name="utf8" type="hidden" value="✓">
+
+
+                    <ul class="errors"></ul>
+                    <div class="form-group form-md-line-input row">
+                        <label class="col-md-2 control-label">
+                            Tên khu nhà
+                            <span class="required" aria-required="true"> * </span>
+                        </label>
+                        <div class="col-md-4">
+                            <input class="string required bg-maxlength form-control"
+                                   placeholder="Nhập tên Khu/Tòa nhà" maxlength="50" size="50" type="text"
+                                 
+                                   id="Ten">
+                            <div class="form-control-focus"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group form-md-line-input row">
+                        <label class="col-md-2 control-label">
+                            Địa chỉ
+                            <span class="required" aria-required="true"> * </span>
+                        </label>
+                        <div class="col-md-10">
+                            <textarea class="text required bg-maxlength form-control"
+                                    
+                                      placeholder="Nhập địa chỉ" maxlength="255" id="DiaChi"></textarea>
+                            <div class="form-control-focus"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-md-line-input row">
+                        <label class="col-md-2 control-label">Tổng số phòng</label>
+                        <div class="col-md-4">
+                            <input class="string required bg-maxlength form-control"
+                                   value="0" disabled placeholder="Tổng số phòng"
+                                 
+                                   maxlength="50" size="50" type="number"
+                                   id="TongPhong">
+
+                            <div class="form-control-focus"></div>
+                        </div>
+                        <label class="col-md-2 control-label">Số phòng trống</label>
+                        <div class="col-md-4">
+                            <input class="string required bg-maxlength form-control"
+                                   value="0" disabled placeholder="Số phòng trống" maxlength="50"
+                                  
+                                   size="50" type="number" id="PhongTrong">
+
+                            <div class="form-control-focus"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group form-md-line-input row">
+
+                        <label class="col-md-2 control-label">Mô tả</label>
+                        <div class="col-md-10">
+                            <textarea class="text optional bg-maxlength form-control autosizeme"
+
+                                      placeholder="Nhập mô tả" maxlength="500"
+                                      id="Mota"></textarea>
+                            <div class="form-control-focus"></div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-actions margin-top-10">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">
+                                    <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Hủy bỏ
+                                </button>
+                                <button name="button" type="submit" class="btn btn-default btnFormSubmit btn green">
+                                    <i class="fa fa-floppy-o" aria-hidden="true"></i>  Lưu lại
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        toastr.success(@ViewData["error"]);
+
+    });
+</script>
+
+
 <script src="~/Form/plugins/layout/layout-min.js"></script>
 <script src="~/Form/plugins/bootstrap-confirmation-min.js"></script>
 <script src="~/Form/plugins/bootstrap-fileinput.js"></script>
 <script src="~/Form/plugins/bootstrap-hover-dropdown-min.js"></script>
+<script src="~/Form/plugins/jquery.blockui-min.js"></script>
+<script src="~/Form/plugins/jquery-inputmask-bundle-min.js"></script>
+<script src="~/Form/plugins/jquery-min.js"></script>
+<script src="~/Form/plugins/jquery-priceformat-min.js"></script>
+<script src="~/Form/plugins/jquery-pulsate-min.js"></script>
+<script src="~/Form/plugins/jquery-slimscroll-min.js"></script>
 <script src="~/Form/plugins/js-cookie-min.js"></script>
 <script src="~/Form/plugins/tableHeadFixer.js"></script>
 <script src="~/Form/plugins/tinymce-min.js"></script>
@@ -263,5 +395,3 @@
 <link href="~/Form/css/pricing-min.css" rel="stylesheet" />
 <link href="~/Form/css/search-min.css" rel="stylesheet" />
 <script src="~/Form/plugins/layout/bootstrap-min.js"></script>
-
-

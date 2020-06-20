@@ -23,6 +23,11 @@ namespace Motel.Repositories
             return _appDBContext.NhaTros.ToList();
         }
 
+        public NhaTro GetsById(int? id)
+        {
+            return _appDBContext.NhaTros.FirstOrDefault(t=>t.MaNT == id);
+        }
+
         public int Create(NhaTro nhaTro)
         {
             if (nhaTro != null)

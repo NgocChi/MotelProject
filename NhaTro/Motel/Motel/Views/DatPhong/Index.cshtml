@@ -88,9 +88,6 @@
                                                             <a data-remote="true" href="#"><i class="icon-pencil"></i> Chỉnh sửa</a>
                                                         </li>
                                                         <li>
-                                                            <a data-remote="true" href="#"><i class="fa fa-files-o"></i> Sao chép</a>
-                                                        </li>
-                                                        <li>
                                                             <a data-remote="true" href="#"><i class="fa fa-handshake-o" aria-hidden="true"></i> Tạo hợp đồng</a>
                                                         </li>
                                                         <li class="divider"></li>
@@ -99,11 +96,7 @@
                                                                 <i class="fa fa-file-word-o"></i> Giấy nhận cọc
                                                             </a>
                                                         </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i class="fa fa-file-word-o"></i> Giấy nhận cọc (Song ngữ)
-                                                            </a>
-                                                        </li>
+                                                        
                                                     </ul>
                                                 </div>
                                             </td>
@@ -114,15 +107,51 @@
                                             <td>@item.NgayDat</td>
                                             <td>@item.NgayHetHan</td>
                                             <td class="text-center">
-                                                <a data-btn-ok-class="btn-success"
-                                                   data-btn-cancel-class="btn-danger"
-                                                   data-toggle="confirmation"
-                                                   data-placement="left" data-singleton="true"
-                                                   data-tooltip-title="Xóa"
-                                                   data-confirm-title="Bạn chắc chắn muốn xóa dữ liệu?"
-                                                   class="btn red btn-circle btn-icon-only btn-default cus-tooltips cus-confirmations"
-                                                   data-remote="true" rel="nofollow" data-method="delete"> <i class="fas fa-trash"></i></a>
+                                                <a data-toggle="confirmation"
+                                                   data-placement="left" 
+                                                   id="btn_delete"
+                                                   class="btn red btn-circle btn-icon-only btn-default"
+                                                   data-remote="true" data-method="delete"> <i class="fas fa-trash"></i></a>
+                                                <div class="popover confirmation fade left in" 
+                                                     id="confirm1" style="top: 89px; left: 1241px;">
+                                                    <div class="arrow" style="top: 50%;"></div>
+                                                    <h3 class="popover-title">Bạn chắc chắn muốn xóa dữ liệu?</h3>
+                                                    <div class="popover-content text-center">
+                                                        <div class="btn-group">
+                                                            <a class="btn btn-sm btn-success" data-apply="confirmation" data-remote="true" data-method="delete" href="">
+                                                                <i class="glyphicon glyphicon-ok"></i> Có
+                                                            </a>
+                                                            <a class="btn btn-sm btn-danger" data-dismiss="confirmation">
+                                                                <i class="glyphicon glyphicon-remove"></i> Không
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
+                                            @*<td class="text-center">
+                                                    <a data-btn-ok-class="btn-success"
+                                                        data-btn-cancel-class="btn-danger"
+                                                        data-toggle="confirmation"
+                                                        data-placement="left" data-singleton="true"
+                                                        id="btn_delete"
+                                                        class="btn red btn-circle btn-icon-only btn-default cus-tooltips cus-confirmations"
+                                                        data-remote="true" data-method="delete"> <i class="fas fa-trash"></i></a>
+                                                    <div class="popover confirmation fade left in"
+                                                            id="confirmation467264" style="top: 89px; left: 1241px; display: block;">
+                                                        <div class="arrow" style="top: 50%;"></div>
+                                                        <h3 class="popover-title">Bạn chắc chắn muốn xóa dữ liệu?</h3>
+                                                        <div class="popover-content text-center">
+                                                            <div class="btn-group">
+                                                                <a class="btn btn-sm btn-success" data-apply="confirmation" data-remote="true" data-method="delete" href="">
+                                                                    <i class="glyphicon glyphicon-ok"></i> Có
+                                                                </a>
+                                                                <a class="btn btn-sm btn-danger" data-dismiss="confirmation">
+                                                                    <i class="glyphicon glyphicon-remove"></i> Không
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>*@
                                         </tr>
                                     }
                                 }
@@ -232,7 +261,7 @@
                             </select>
                             <input class="string required bg-maxlength form-control"
                                    asp-for="khachHangDatPhong.khachHang.TenKH"
-                                    placeholder="Tên Khach Hàng"
+                                   placeholder="Tên Khach Hàng"
                                    name="khachHang.TenKH"
                                    maxlength="50" size="50" type="text"
                                    id="Khachhang">
@@ -256,8 +285,8 @@
                         <label class="col-md-2 control-label">CMND</label>
                         <div class="col-md-4">
                             <input class="string required bg-maxlength form-control"
-                                    asp-for="khachHangDatPhong.khachHang.CMND"
-                                    placeholder="CMND" maxlength="50"
+                                   asp-for="khachHangDatPhong.khachHang.CMND"
+                                   placeholder="CMND" maxlength="50"
                                    name="khachHang.CMND"
                                    size="50" type="text" id="cmnd">
                             <div class="form-control-focus"></div>
@@ -295,7 +324,7 @@
                         <div class="col-md-4">
                             <input class="string required bg-maxlength form-control"
                                    asp-for="khachHangDatPhong.datPhong.NgayHetHan"
-                                    placeholder="Ngày hết hạn"
+                                   placeholder="Ngày hết hạn"
                                    name="datPhong.NgayHetHan"
                                    maxlength="50" size="50" type="date"
                                    id="NgayHetHan">
@@ -304,8 +333,8 @@
                         <label class="col-md-2 control-label">Ngày sinh</label>
                         <div class="col-md-4">
                             <input class="string required bg-maxlength form-control"
-                                    placeholder="Ngày sinh"
-                                    asp-for="khachHangDatPhong.khachHang.NgaySinh"
+                                   placeholder="Ngày sinh"
+                                   asp-for="khachHangDatPhong.khachHang.NgaySinh"
                                    name="khachHang.NgaySinh"
                                    maxlength="50" size="50" type="date"
                                    id="ngaysinh">
@@ -337,7 +366,7 @@
                             <div class="col-md-12 text-right">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">
                                     <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Hủy bỏ
-                                  
+
 
                                 </button>
                                 <button name="button" type="submit" class="btn btn-default btnFormSubmit btn green">
@@ -352,7 +381,10 @@
     </div>
 </div>
 
+<script src="~/Form/jsController/popper-min.js"></script>
 <script src="~/Form/jsController/jquery.js"></script>
+<script src="~/Form/jsController/popper-min.js"></script>
+<script src="~/Form/jsController/bootstrap-confirmation-min.js"></script>
 <script src="~/Form/plugins/layout/layout-min.js"></script>
 <script src="~/Form/plugins/bootstrap-confirmation-min.js"></script>
 <script src="~/Form/plugins/bootstrap-fileinput.js"></script>
@@ -370,6 +402,7 @@
 <link href="~/Form/css/pricing-min.css" rel="stylesheet" />
 <link href="~/Form/css/search-min.css" rel="stylesheet" />
 <script src="~/Form/plugins/layout/bootstrap-min.js"></script>
+
 
 <script>
 
@@ -405,10 +438,40 @@
 
             if (end_date < start_date) {
                 toastr.error('Ngày hết hạn phải lớn hơn ngày đặt cọc');
-                 $(".errors").text(toastr);
-             
+                $(".errors").text(toastr);
+
             }
         });
+        $('[data-toggle="popover"]').popover();
+        $('#btn_delete').confirmation({
+
+                placement       :'right',
+                title           :'Are you sure?',
+                btnOkClass      :'btn btn-sm btn-danger',
+                btnOkLabel      :'Delete',
+                btnOkIcon       :'glyphicon glyphicon-ok',
+                btnCancelClass  :'btn btn-sm btn-default',
+                btnCancelLabel  :'Cancel',
+                btnCancelIcon   :'glyphicon glyphicon-remove',
+                href            :'#',
+                target          :'_self',
+                singleton       :true,
+                popout          :true,
+                onShow          :function(event, element) {},
+                onHide          :function(event, element) {},
+                onConfirm       :function(event, element) {},
+                onCancel        :function(event, element) {},
+                template        :  '<div class="popover"><div class="arrow"></div>'
+                                  +'<h3 class="popover-title"></h3>'
+                                  +'<div class="popover-content">'
+                                  +' <a data-apply="confirmation">Yes</a>'
+                                  +' <a data-dismiss="confirmation">No</a>'
+                                  +'</div>'
+                                  +'</div>'
+
+              });
+
+
     });
 </script>
 

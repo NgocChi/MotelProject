@@ -142,18 +142,21 @@ body {
 .btn.btn-outline.green {
     border-color: #007c7e;
     color: #007c7e;
+    border: 1px solid !important;
 }
 
 .btn.green:not(.btn-outline) {
     color: #FFF;
     background-color: #007c7e;
     border-color: #007c7e;
+    border: 1px solid !important;
 }
 
 .btn.btn-outline.green.active, .btn.btn-outline.green:active, .btn.btn-outline.green:active:focus, .btn.btn-outline.green:active:hover, .btn.btn-outline.green:focus, .btn.btn-outline.green:hover {
     border-color: #007c7e;
     color: #FFF;
-    background-color: #007c7e
+    background-color: #007c7e;
+    border: 1px solid !important;
 }
 
 .portlet {
