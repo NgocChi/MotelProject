@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Motel.Interfaces.Repositories;
 using Motel.Models;
 using Motel.Queries;
 using Motel.Repositories;
@@ -14,50 +15,30 @@ namespace Motel.Controllers.API
     [Route("api/[controller]")]
     public class KhachHangController : Controller
     {
-       // private readonly IConfiguration Configuration = null;
-        public KhachHangRepository Repository = null;
-        //public KhachHangController(IConfiguration configuration)
-        //{
-        //    this.Configuration = configuration;
-        //    Queries = new KhachHangQueries();
-        //    Repository = new KhachHangRepository();
-        //}
-
-        //[HttpGet]
-        //[Route("getCus")]
-        //public async Task<ApiResult> GetCus()
-        //{
-        //    var kq = await Queries.Gets();
-        //    return new ApiResult()
-        //    {
-        //        Result = 0,
-        //        Data = kq
-        //    };
-        //}
+        private readonly IKhachHangRepository Repository = null;
 
 
-        //[HttpGet]
-        //[Route("get")]
-        //public async Task<ApiResult> Get(int attributeId)
-        //{
-        //    var rs = await Queries.Get(attributeId);
-        //    return new ApiResult()
-        //    {
-        //        Result = 0,
-        //        Data = rs
-        //    };
-        //}
+        public KhachHangController(IKhachHangRepository queries)
+        {
+            this.Repository = queries;
+        }
 
-        //[HttpPost]
-        //[Route("add")]
-        //public async Task<ApiResult> Add(KhachHang khachHang)
-        //{
-        //    var rs = await Repository.Add(khachHang);
-        //    return new ApiResult()
-        //    {
-        //        Result = rs > 0 ? 0 : -1,
-        //        Data = rs
-        //    };
-        //}
+
+        [HttpGet]
+        [Route("getCus")]
+        public async Task<ApiResult> GetCus()
+        {
+            var kq = await Repository._Gets();
+            return new ApiResult()
+            {
+                Result = kq == null ? 0 : 1,
+                Data = kq
+            };
+        }
+
+
+
+
+
     }
 }

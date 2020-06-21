@@ -11,11 +11,11 @@ namespace Motel.Interfaces.Repositories
     {
         IEnumerable<NhaTro> Gets();
 
-        NhaTro GetsById(int? id);
+        Task<NhaTro> GetsById(int? id);
 
-        int Create(NhaTro nhaTro);
+        Task<int> Create(NhaTro nhaTro);
 
-        int Update(NhaTro nhaTro);
+        Task<int> Update(NhaTro nhaTro);
 
         int UpdateSoLuongPhong(int maNt, int soluong);
 

@@ -24,10 +24,6 @@
     <ProjectReference Include="..\Web\Web.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Assets\Login\" />
-  </ItemGroup>
-
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptJSXEmit>React</TypeScriptJSXEmit>

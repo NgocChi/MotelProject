@@ -66,7 +66,10 @@ namespace Motel
 
                 routes.MapSpaFallbackRoute(
                      name: "spa-fallback",
-                     defaults: new { controller = "DangNhap", action = "Login" });
+                     defaults: new { controller = "NhaTro", action = "Index" });
+                routes.MapSpaFallbackRoute(
+                     name: "spa-fallback1",
+                     defaults: new { controller = "NhaTro", action = "AddOrEdit" });
             });
 
 

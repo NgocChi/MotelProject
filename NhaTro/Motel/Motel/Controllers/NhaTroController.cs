@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL;
 using Microsoft.AspNetCore.Mvc;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
@@ -12,91 +13,78 @@ namespace Motel.Controllers
     public class NhaTroController : Controller
     {
         private readonly INhaTroRepository Repository = null;
-        
+        NhaTroViewModel nt = null;
         public NhaTroController(INhaTroRepository repository)
         {
             this.Repository = repository;
+            nt = new NhaTroViewModel();
         }
 
         public ViewResult Index(int? id)
         {
-            NhaTroViewModel nt = new NhaTroViewModel();
+           
             nt.listNhaTro = Repository.Gets();
-            if(id != 0)
-            {
-                nt.nhaTro = Repository.GetsById(id);
-            }
             return View(nt);
         }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddOrEdit(int? id, [Bind("Ten", "DiaChi", "TongPhong", "PhongTrong", "Mota")] NhaTroViewModel nhaTroViewModel)
+        {
+            int kq = -1;
+            if (ModelState.IsValid)
+            {
+                if (id == 0)
+                {
+                    kq = await Repository.Create(nhaTroViewModel.nhaTro);
+                }
+                else
+                {
+                    try
+                    {
+                        kq = await Repository.Update(nhaTroViewModel.nhaTro);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
+                return Json(new { IsValid = true, htnl = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
+            }
+            return Json(new { IsValid = false, htnl = Helper.RenderRazorViewToString(this, "AddOrEdit", nhaTroViewModel) });
+        }
+
         [HttpGet]
-        public ActionResult Update(int id)
+        public async Task<IActionResult> AddOrEdit(int? id )
         {
-            NhaTroViewModel nt = new NhaTroViewModel();
+           
+            if (id == 0)
+                return View(new NhaTroViewModel());
+            else
+            {
+                var kq = await Repository.GetsById(id);
+                if (kq == null)
+                    return NotFound();
+                return View(kq);
 
-            return View(nt);
+            }
         }
 
         [HttpPost]
-        public IActionResult Create(NhaTro nhaTro)
+        public  IActionResult Delete(int id=0)
         {
-            int kq = -1;
-            try
+            if(id == 0)
+                return View(new NhaTroViewModel());
+            else
             {
-                if (!ModelState.IsValid)
-                {
-                    ViewData["info"] = "Dữ liệu bị trống";
-                    return RedirectToAction(nameof(NhaTroController.Create), "NhaTro");
-                }
-                kq = Repository.Create(nhaTro);
-                if (kq == 1)
-                {
-                    ViewData["info"] = "Thêm nhà trọ thành công";
-                    return RedirectToAction(nameof(NhaTroController.Index), "NhaTro");
-                }
-                else
-                {
-                    ViewData["info"] = "Thêm thất bại";
-                    return RedirectToAction(nameof(NhaTroController.Create), "NhaTro");
-                }
+                var kq  =  Repository.GetsById(id);
+                if (kq == null)
+                    return NotFound();
+                return View(kq);
 
             }
-            catch (Exception ex)
-            {
-                ViewData["error"] = ex.Message;
-                return RedirectToAction(nameof(NhaTroController.Create), "NhaTro");
-            }
-
         }
-        [HttpPost]
-        public IActionResult Update(NhaTro nhaTro)
-        {
-            int kq = -1;
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    ViewData["info"] = "Dữ liệu bị trống";
-                    return RedirectToAction(nameof(NhaTroController.Update), "NhaTro");
-                }
-                kq = Repository.Update(nhaTro);
-                if (kq == 1)
-                {
-                    ViewData["info"] = "Cập nhật nhà trọ thành công";
-                    return RedirectToAction(nameof(NhaTroController.Index), "NhaTro");
-                }
-                else
-                {
-                    ViewData["info"] = "Cập nhật thất bại";
-                    return RedirectToAction(nameof(NhaTroController.Update), "NhaTro");
-                }
 
-            }
-            catch (Exception ex)
-            {
-                ViewData["error"] = ex.Message;
-                return RedirectToAction(nameof(NhaTroController.Update), "NhaTro");
-            }
-
-        }
     }
 }

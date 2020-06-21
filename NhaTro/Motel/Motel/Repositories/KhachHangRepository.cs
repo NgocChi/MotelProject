@@ -26,6 +26,13 @@ namespace Motel.Repositories
             return _appDBContext.KhachHangs.ToList();
         }
 
+
+        public async Task<IEnumerable<KhachHang>> _Gets()
+        {
+
+            return  _appDBContext.KhachHangs.ToList();
+        }
+
         public int Create(KhachHang kh)
         {
             if (kh != null)

@@ -11,6 +11,8 @@ namespace Motel.Interfaces.Repositories
     {
         IEnumerable<KhachHang> Gets();
 
+        Task<IEnumerable<KhachHang>> _Gets();
+
         int Create(KhachHang kh);
     }
 }

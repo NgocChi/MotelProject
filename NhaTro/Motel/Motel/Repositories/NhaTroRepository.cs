@@ -23,26 +23,26 @@ namespace Motel.Repositories
             return _appDBContext.NhaTros.ToList();
         }
 
-        public NhaTro GetsById(int? id)
+        public async Task<NhaTro> GetsById(int? id)
         {
-            return _appDBContext.NhaTros.FirstOrDefault(t=>t.MaNT == id);
+            return await  _appDBContext.NhaTros.FindAsync( id);
         }
 
-        public int Create(NhaTro nhaTro)
+        public async Task<int> Create(NhaTro nhaTro)
         {
             if (nhaTro != null)
             {
                 _appDBContext.NhaTros.Add(nhaTro);
-                _appDBContext.SaveChanges();
+                await _appDBContext.SaveChangesAsync();
                 return 1;
             }
             return 0;
 
         }
-        public int Update(NhaTro nhaTro)
+        public async Task<int> Update(NhaTro nhaTro)
         {
 
-            NhaTro find = _appDBContext.NhaTros.FirstOrDefault(p => p.MaNT == nhaTro.MaNT);
+            NhaTro find = await _appDBContext.NhaTros.FindAsync(nhaTro.MaNT);
             if(find != null)
             {
                 find.Ten = nhaTro.Ten;
@@ -51,7 +51,7 @@ namespace Motel.Repositories
                 find.Mota = nhaTro.Mota;
                 find.DiaChi = nhaTro.DiaChi;
                 _appDBContext.NhaTros.Add(find);
-                _appDBContext.SaveChanges();
+                await _appDBContext.SaveChangesAsync();
                 return 1;
             }
             return 0;
