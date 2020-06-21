@@ -1,0 +1,201 @@
+﻿
+@{
+    Layout = null;
+}
+@using Motel.ViewModels
+@model QuanLyDatPhongViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
+@{
+    if (ViewData["Title"] != null)
+    {
+        <script type="text/javascript">
+            toastr.error("", "Email or password is wrong !)");
+        </script>
+    }
+}
+
+<form method="POST" asp-controller="DatPhong" asp-action="Create"
+      class="simple_form form-horizontal" novalidate="novalidate"
+      id="new_admin_building" accept-charset="UTF-8" data-remote="true">
+    <input name="utf8" type="hidden" value="✓">
+    <ul class="errors"></ul>
+    <div class="form-group form-md-line-input  row">
+        <div class="col-md-2"></div>
+        <label class="col-md-2 control-label">
+            Khách thuê
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-6">
+            <div class="md-radio-inline">
+                <div class="md-radio">
+                    <input type="radio" id="radio_renter_status0" name="admin_deposit[type]" checked="" class="md-radiobtn" value="0">
+                    <label for="radio_renter_status0">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>Thêm mới
+                    </label>
+                </div>
+                <div class="md-radio">
+                    <input type="radio" id="radio_renter_status1" name="admin_deposit[type]" class="md-radiobtn" value="1">
+                    <label for="radio_renter_status1">
+                        <span></span>
+                        <span class="check"></span>
+                        <span class="box"></span>Đã tồn tại
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">
+            Phòng
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-4">
+            <select asp-for="khachHangDatPhong.datPhong._MaPH" class="text required bg-maxlength form-control"
+                    name="datPhong._MaPH"
+                    id="_MaPH" tabindex="-1" aria-hidden="true">
+                @{
+                    foreach (var item in Model.listPhong)
+                    {
+                        <option value="@item.MaPH">@item.Ten</option>
+                    }
+                }
+            </select>
+            <div class="form-control-focus"></div>
+        </div>
+        <label class="col-md-2 control-label">
+            Khách hàng
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-4">
+            <select asp-for="khachHangDatPhong.datPhong._MaKH" hidden class="text required bg-maxlength form-control"
+                    name="datPhong._MaKH"
+                    id="Khachhang1" tabindex="-1" aria-hidden="true">
+                <option value="0">----</option>
+                @{
+                    foreach (var item in Model.listKhachHang)
+                    {
+                        <option value="@item.MaKh">@item.TenKH</option>
+                    }
+                }
+            </select>
+            <input class="string required bg-maxlength form-control"
+                   asp-for="khachHangDatPhong.khachHang.TenKH"
+                   placeholder="Tên Khach Hàng"
+                   name="khachHang.TenKH"
+                   maxlength="50" size="50" type="text"
+                   id="Khachhang">
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">
+            Số tiền cọc
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-4">
+            <input class="string required bg-maxlength form-control"
+                   asp-for="khachHangDatPhong.datPhong.SoTienCoc"
+                   value="0" placeholder=" Số tiền cọc"
+                   name="datPhong.SoTienCoc"
+                   maxlength="50" size="50" type="text"
+                   id="SoTienCoc">
+            <div class="form-control-focus"></div>
+        </div>
+        <label class="col-md-2 control-label">CMND</label>
+        <div class="col-md-4">
+            <input class="string required bg-maxlength form-control"
+                   asp-for="khachHangDatPhong.khachHang.CMND"
+                   placeholder="CMND" maxlength="50"
+                   name="khachHang.CMND"
+                   size="50" type="text" id="cmnd">
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">
+            Ngày đặt
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-4">
+            <input class="string required bg-maxlength form-control"
+                   placeholder="Tổng số phòng"
+                   asp-for="khachHangDatPhong.datPhong.NgayDat"
+                   name="datPhong.NgayDat"
+                   maxlength="50" size="50" type="date"
+                   id="NgayDat">
+            <div class="form-control-focus"></div>
+        </div>
+        <label class="col-md-2 control-label">Số điện thoại</label>
+        <div class="col-md-4">
+            <input class="string required bg-maxlength form-control"
+                   asp-for="khachHangDatPhong.khachHang.SoDienThoai"
+                   value="0" placeholder="Số điện thoại" maxlength="50"
+                   name="khachHang.SoDienThoai"
+                   size="50" type="text" id="sdt">
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">
+            Ngày hết hạn
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-4">
+            <input class="string required bg-maxlength form-control"
+                   asp-for="khachHangDatPhong.datPhong.NgayHetHan"
+                   placeholder="Ngày hết hạn"
+                   name="datPhong.NgayHetHan"
+                   maxlength="50" size="50" type="date"
+                   id="NgayHetHan">
+            <div class="form-control-focus"></div>
+        </div>
+        <label class="col-md-2 control-label">Ngày sinh</label>
+        <div class="col-md-4">
+            <input class="string required bg-maxlength form-control"
+                   placeholder="Ngày sinh"
+                   asp-for="khachHangDatPhong.khachHang.NgaySinh"
+                   name="khachHang.NgaySinh"
+                   maxlength="50" size="50" type="date"
+                   id="ngaysinh">
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">Mô tả</label>
+        <div class="col-md-4">
+            <textarea class="text optional bg-maxlength form-control autosizeme"
+                      asp-for="khachHangDatPhong.datPhong.GhiChu"
+                      name="datPhong.GhiChu"
+                      placeholder="Nhập mô tả" maxlength="500"
+                      id="Mota"></textarea>
+            <div class="form-control-focus"></div>
+        </div>
+        <label class="col-md-2 control-label">Email</label>
+        <div class="col-md-4">
+            <input class="text optional bg-maxlength form-control autosizeme"
+                   asp-for="khachHangDatPhong.khachHang.Mail"
+                   type="text" name="khachHang.Mail"
+                   placeholder="Email" maxlength="500"
+                   id="email" />
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+    <div class="form-actions margin-top-10">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Hủy bỏ
+
+
+                </button>
+                <button name="button" type="submit" class="btn btn-default btnFormSubmit btn green">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i>  Lưu lại
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

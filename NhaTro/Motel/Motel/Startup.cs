@@ -52,11 +52,13 @@ namespace Motel
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory looger)
         {
+           
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseIdentity();
             app.UseStaticFiles();
             app.UseSession();
+            app.UseMvcWithDefaultRoute();
             app.UseMvc(routes =>
             {
 
@@ -67,9 +69,9 @@ namespace Motel
                 routes.MapSpaFallbackRoute(
                      name: "spa-fallback",
                      defaults: new { controller = "NhaTro", action = "Index" });
-                routes.MapSpaFallbackRoute(
-                     name: "spa-fallback1",
-                     defaults: new { controller = "NhaTro", action = "AddOrEdit" });
+                //routes.MapSpaFallbackRoute(
+                //     name: "spa-fallback1",
+                //     defaults: new { controller = "NhaTro", action = "AddOrEdit" });
             });
 
 

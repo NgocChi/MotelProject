@@ -1,15 +1,12 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
     Layout = null;
 }
-@model NhaTroViewModel
+
 @using Motel.ViewModels
+@model NhaTroViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
-
-
-
 
 
 <div class="row">
@@ -41,7 +38,7 @@
             <!-- /.card-header -->
             <div class="card-body">
                 <div class="text-right">
-                    <button onclick="ShowPopup('@Url.Action("AddOrEdit","NhaTro",new { id = 0}, Context.Request.Scheme)','Thêm mới')" type="button" class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Thêm mới"><i class="fa fa-plus"></i> Thêm mới</button>
+                    <button id="myBtn" data-target="#myModal" data-toggle="modal" type="button" class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Thêm mới"><i class="fa fa-plus"></i> Thêm mới</button>
                     <a class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Tìm kiếm" data-placement="top" data-remote="true" href="#"><i class="fa fa-search"></i>Tìm kiếm</a>
                     <button data-toggle="confirmation" data-placement="left" type="submit" form="myForm"
                             class="btn green btn-outline btn-circle btn-sm"
@@ -76,50 +73,42 @@
 
 
                             <tbody>
-                                @{
+                                <tr class="item-1932 highlight">
+                                    <td class="text-center">
+                                        <button class="btn btn-circle btn-icon-only btn-default tooltips"
+                                                data-target="#myModalEdit" data-toggle="modal"
+                                                data-remote="true"
+                                                data-placement="top" data-original-title="Chỉnh sửa">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="md-checkbox-inline service-checkbox">
+                                            <div class="icheck-primary d-inline ml-2">
+                                                <input type="checkbox" value="" name="todo2" id="ck-1932">
+                                                <label for="ck-1932">
+                                                    <span></span><span class="check"></span><span class="box"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-center">
+                                        <a data-btn-ok-class="btn-success"
+                                           data-btn-cancel-class="btn-danger"
+                                           data-toggle="confirmation"
+                                           data-placement="left" data-singleton="true"
+                                           data-tooltip-title="Xóa"
+                                           data-confirm-title="Bạn chắc chắn muốn xóa dữ liệu?"
+                                           class="btn red btn-circle btn-icon-only btn-default cus-tooltips cus-confirmations"
+                                           data-remote="true" rel="nofollow" data-method="delete"> <i class="fas fa-trash"></i></a>
+                                    </td>
 
-                                    foreach (var item in Model.listNhaTro)
-                                    {
-                                        <tr class="item-1932 highlight">
-                                            <td class="text-center">
-                                                <a class="btn btn-circle btn-icon-only btn-default tooltips"
-                                                   onclick="ShowPopup('@Url.Action("AddOrEdit","NhaTro",new { id = item.MaNT }, Context.Request.Scheme)','Thêm mới')"
-                                                   data-remote="true"
-                                                   id="btnEdit"
-                                                   data-placement="top" data-original-title="Chỉnh sửa">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                @*data-target="#myModalEdit" data-toggle="modal"*@
-                                            </td>
-                                            <td class="text-center">
-                                                <div class="md-checkbox-inline service-checkbox">
-                                                    <div class="icheck-primary d-inline ml-2">
-                                                        <input type="checkbox" value="" name="todo2" id="ck-1932">
-                                                        <label for="ck-1932">
-                                                            <span></span><span class="check"></span><span class="box"></span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>@item.Ten</td>
-                                            <td>@item.DiaChi</td>
-                                            <td>@item.TongPhong</td>
-                                            <td>@item.PhongTrong</td>
-                                            <td>@item.Mota</td>
-                                            <td class="text-center">
-                                                <a data-btn-ok-class="btn-success"
-                                                   data-btn-cancel-class="btn-danger"
-                                                   data-toggle="confirmation"
-                                                   data-placement="left" data-singleton="true"
-                                                   data-tooltip-title="Xóa"
-                                                   data-confirm-title="Bạn chắc chắn muốn xóa dữ liệu?"
-                                                   class="btn red btn-circle btn-icon-only btn-default cus-tooltips cus-confirmations"
-                                                   data-remote="true" data-method="delete"> <i class="fas fa-trash"></i></a>
-                                            </td>
-
-                                        </tr>
-                                    }
-                                }
+                                </tr>
                             </tbody>
 
                         </table>
@@ -145,20 +134,12 @@
     </div>
 </div>
 
-
-
 <script type="text/javascript">
     $(document).ready(function () {
 
         toastr.success(@ViewData["error"]);
 
     });
-    $("#btnEdit").click(function(){
-        $("#myModalEdit").dialog({
-            modal: true,
-
-        });
-});
 </script>
 
 
@@ -185,5 +166,3 @@
 <link href="~/Form/css/pricing-min.css" rel="stylesheet" />
 <link href="~/Form/css/search-min.css" rel="stylesheet" />
 <script src="~/Form/plugins/layout/bootstrap-min.js"></script>
-<script src="~/Form/jsController/Controller/jsNhaTroController.js" asp-append-version="true"></script>
-

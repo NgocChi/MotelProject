@@ -1,16 +1,11 @@
-﻿@{
-    ViewData["Title"] = "AddOrEdit";
+﻿
+@{
     Layout = null;
 }
-@model NhaTro
-@using Motel.Models
-
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-@addTagHelper *, YourProjetcName
 
 
-<form asp-controller="NhaTro" asp-action="AddOrEdit" asp-route-id="@Model.MaNT" onsubmit="return jQueryAjaxPost(this);"
-      autocomplete="off" class="simple_form form-horizontal" novalidate="novalidate"
+<form method="post"
+      class="simple_form form-horizontal" novalidate="novalidate"
       id="new_admin_building" accept-charset="UTF-8" data-remote="true">
     <input name="utf8" type="hidden" value="✓">
 
@@ -24,7 +19,6 @@
         <div class="col-md-4">
             <input class="string required bg-maxlength form-control"
                    placeholder="Nhập tên Khu/Tòa nhà" maxlength="50" size="50" type="text"
-                   asp-for="Ten" name=@nameof(Model.Ten)
                    id="Ten">
             <div class="form-control-focus"></div>
         </div>
@@ -38,7 +32,6 @@
         </label>
         <div class="col-md-10">
             <textarea class="text required bg-maxlength form-control"
-                      asp-for="DiaChi" name=@nameof(Model.DiaChi)
                       placeholder="Nhập địa chỉ" maxlength="255" id="DiaChi"></textarea>
             <div class="form-control-focus"></div>
         </div>
@@ -49,7 +42,6 @@
         <div class="col-md-4">
             <input class="string required bg-maxlength form-control"
                    value="0" disabled placeholder="Tổng số phòng"
-                   asp-for="TongPhong" name=@nameof(Model.TongPhong)
                    maxlength="50" size="50" type="number"
                    id="TongPhong">
 
@@ -59,7 +51,6 @@
         <div class="col-md-4">
             <input class="string required bg-maxlength form-control"
                    value="0" disabled placeholder="Số phòng trống" maxlength="50"
-                   asp-for="PhongTrong" name=@nameof(Model.PhongTrong)
                    size="50" type="number" id="PhongTrong">
 
             <div class="form-control-focus"></div>
@@ -72,7 +63,6 @@
         <label class="col-md-2 control-label">Mô tả</label>
         <div class="col-md-10">
             <textarea class="text optional bg-maxlength form-control autosizeme"
-                      asp-for="Mota" name=@nameof(Model.Mota)
                       placeholder="Nhập mô tả" maxlength="500"
                       id="Mota"></textarea>
             <div class="form-control-focus"></div>
@@ -94,27 +84,3 @@
         </div>
     </div>
 </form>
-
-
-@*<script src="~/Form/plugins/layout/layout-min.js"></script>
-<script src="~/Form/plugins/bootstrap-confirmation-min.js"></script>
-<script src="~/Form/plugins/bootstrap-fileinput.js"></script>
-<script src="~/Form/plugins/bootstrap-hover-dropdown-min.js"></script>
-<script src="~/Form/plugins/jquery-inputmask-bundle-min.js"></script>
-<script src="~/Form/plugins/jquery-priceformat-min.js"></script>
-<script src="~/Form/plugins/jquery-pulsate-min.js"></script>
-<script src="~/Form/plugins/jquery-slimscroll-min.js"></script>
-<script src="~/Form/plugins/js-cookie-min.js"></script>
-<script src="~/Form/plugins/tableHeadFixer.js"></script>
-<script src="~/Form/plugins/tinymce-min.js"></script>
-<script src="~/Form/plugins/toastr-min.js"></script>
-<script src="~/Form/plugins/ui-toastr-min.js"></script>
-<link href="~/Form/css/blog-min.css" rel="stylesheet" />
-<link href="~/Form/css/component-md-min.css" rel="stylesheet" />
-<link href="~/Form/css/custom-green.css" rel="stylesheet" />
-<link href="~/Form/css/layout-min.css" rel="stylesheet" />
-<link href="~/Form/css/plugins-md-min.css" rel="stylesheet" />
-<link href="~/Form/css/pricing-min.css" rel="stylesheet" />
-<link href="~/Form/css/search-min.css" rel="stylesheet" />*@
-
-

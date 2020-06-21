@@ -20,65 +20,70 @@ namespace Motel.Controllers
             nt = new NhaTroViewModel();
         }
 
-        public ViewResult Index(int? id)
+        public ViewResult Index()
         {
-           
             nt.listNhaTro = Repository.Gets();
-            return View(nt);
+            ViewResult kq = View(nt);
+            return kq;
         }
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int? id, [Bind("Ten", "DiaChi", "TongPhong", "PhongTrong", "Mota")] NhaTroViewModel nhaTroViewModel)
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("Ten", "DiaChi", "TongPhong", "PhongTrong", "Mota")] NhaTro nhaTroViewModel)
         {
             int kq = -1;
             if (ModelState.IsValid)
             {
                 if (id == 0)
                 {
-                    kq = await Repository.Create(nhaTroViewModel.nhaTro);
+                    
+                    kq = await Repository.Create(nhaTroViewModel);
                 }
                 else
                 {
                     try
                     {
-                        kq = await Repository.Update(nhaTroViewModel.nhaTro);
+                        nhaTroViewModel.MaNT = id;
+                        kq = await Repository.Update(nhaTroViewModel);
                     }
                     catch
                     {
                         throw;
                     }
                 }
-                return Json(new { IsValid = true, htnl = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "Index", Repository.Gets()) });
             }
-            return Json(new { IsValid = false, htnl = Helper.RenderRazorViewToString(this, "AddOrEdit", nhaTroViewModel) });
+            return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", nhaTroViewModel) });
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddOrEdit(int? id )
+        public async Task<IActionResult> AddOrEdit(int id)
         {
-           
+            IActionResult result;
             if (id == 0)
-                return View(new NhaTroViewModel());
+            {
+
+                return View(new NhaTro());
+            }
             else
             {
                 var kq = await Repository.GetsById(id);
                 if (kq == null)
-                    return NotFound();
-                return View(kq);
-
+                    result = NotFound();
+                result = View(kq);
             }
+            return result;
         }
 
         [HttpPost]
-        public  IActionResult Delete(int id=0)
+        public IActionResult Delete(int id = 0)
         {
-            if(id == 0)
+            if (id == 0)
                 return View(new NhaTroViewModel());
             else
             {
-                var kq  =  Repository.GetsById(id);
+                var kq = Repository.GetsById(id);
                 if (kq == null)
                     return NotFound();
                 return View(kq);

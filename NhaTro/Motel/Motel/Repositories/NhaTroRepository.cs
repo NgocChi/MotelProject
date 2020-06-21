@@ -50,7 +50,7 @@ namespace Motel.Repositories
                 find.PhongTrong = nhaTro.PhongTrong;
                 find.Mota = nhaTro.Mota;
                 find.DiaChi = nhaTro.DiaChi;
-                _appDBContext.NhaTros.Add(find);
+                _appDBContext.NhaTros.Update(find);
                 await _appDBContext.SaveChangesAsync();
                 return 1;
             }
