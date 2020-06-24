@@ -11,7 +11,8 @@ namespace DAL
 {
     public static class DalHelper
     {
-        public static string ConnectionString => GlobalConfiguration.SQLConnectionString;
+        //public static string ConnectionString => GlobalConfiguration.SQLConnectionString;
+        public static string ConnectionString = "Server=DESKTOP-SQJRAD1;Database=NHATRO;User ID=sa;Password=585858";
 
         #region Get Connection
         public static IDbConnection GetConnection(string connectionString = "")

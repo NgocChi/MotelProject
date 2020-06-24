@@ -27,12 +27,12 @@ namespace Motel.Models
         public Int64 CSNuoc { get; set; }
 
         [Column("_MaNT")]
-        public int? _MaNT { get; set; }
+        public int _MaNT { get; set; }
 
         [Column("_MaLP")]
         public int? _MaLP { get; set; }
 
-        [Column("_MaTTPH")] 
+        [Column("_MaTTPH")]
         public int? _MaTTPH { get; set; }
 
         [Column("SoNguoiToiDa")]

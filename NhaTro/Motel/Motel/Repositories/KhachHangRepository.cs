@@ -22,28 +22,56 @@ namespace Motel.Repositories
 
         public IEnumerable<KhachHang> Gets()
         {
-           
+
             return _appDBContext.KhachHangs.ToList();
         }
 
-
-        public async Task<IEnumerable<KhachHang>> _Gets()
+        public async Task<KhachHang> GetsById(int? id)
         {
-
-            return  _appDBContext.KhachHangs.ToList();
+            return await _appDBContext.KhachHangs.FindAsync(id);
         }
 
-        public int Create(KhachHang kh)
+        public async Task<int> Create(KhachHang khach)
         {
-            if (kh != null)
+            if (khach != null)
             {
-                _appDBContext.KhachHangs.Add(kh);
-                _appDBContext.SaveChanges();
+                _appDBContext.KhachHangs.Add(khach);
+                await _appDBContext.SaveChangesAsync();
                 return 1;
             }
             return 0;
-
         }
+        public async Task<int> Update(KhachHang khach)
+        {
+            KhachHang find = await _appDBContext.KhachHangs.FindAsync(khach.MaKh);
+            if (find != null)
+            {
+                find.TenKH = khach.TenKH;
+                find.TenTaiKhoan = khach.TenTaiKhoan;
+                find.CMND = khach.CMND;
+                find.NgaySinh = khach.NgaySinh;
+                find.SoDienThoai = khach.SoDienThoai;
+                find.Mail = khach.Mail;
+                find.MaNguoiThan = khach.MaNguoiThan;
+                _appDBContext.KhachHangs.Update(find);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            KhachHang find = await _appDBContext.KhachHangs.FindAsync(id);
+            if (find != null)
+            {
+                _appDBContext.KhachHangs.Remove(find);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+        }
+
 
     }
 }

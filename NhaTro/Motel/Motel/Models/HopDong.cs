@@ -21,10 +21,10 @@ namespace Motel.Models
         public DateTime NgayKetThuc { get; set; }
 
         [Column("GiaPhong")]
-        public double GiaPhong { get; set; }
+        public decimal GiaPhong { get; set; }
 
         [Column("TienDatCoc")]
-        public double TienDatCoc { get; set; }
+        public decimal TienDatCoc { get; set; }
 
         [Column("_MaKH")]
         public int _MaKH { get; set; }

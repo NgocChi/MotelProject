@@ -9,9 +9,6 @@
 @addTagHelper *, YourProjetcName
 
 
-
-
-
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -41,7 +38,8 @@
             <!-- /.card-header -->
             <div class="card-body">
                 <div class="text-right">
-                    <button onclick="ShowPopup('@Url.Action("AddOrEdit","NhaTro",new { id = 0}, Context.Request.Scheme)','Thêm mới')" type="button" class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Thêm mới"><i class="fa fa-plus"></i> Thêm mới</button>
+                    <button onclick="ShowPopup('@Url.Action("AddOrEdit","NhaTro",new { id = 0}, Context.Request.Scheme)','Thêm mới')" type="button" 
+                            class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Thêm mới"><i class="fa fa-plus"></i> Thêm mới</button>
                     <a class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Tìm kiếm" data-placement="top" data-remote="true" href="#"><i class="fa fa-search"></i>Tìm kiếm</a>
                     <button data-toggle="confirmation" data-placement="left" type="submit" form="myForm"
                             class="btn green btn-outline btn-circle btn-sm"
@@ -83,13 +81,12 @@
                                         <tr class="item-1932 highlight">
                                             <td class="text-center">
                                                 <a class="btn btn-circle btn-icon-only btn-default tooltips"
-                                                   onclick="ShowPopup('@Url.Action("AddOrEdit","NhaTro",new { id = item.MaNT }, Context.Request.Scheme)','Thêm mới')"
+                                                   onclick="ShowPopup('@Url.Action("AddOrEdit","NhaTro",new { id = item.MaNT }, Context.Request.Scheme)','Chỉnh sửa')"
                                                    data-remote="true"
                                                    id="btnEdit"
                                                    data-placement="top" data-original-title="Chỉnh sửa">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                @*data-target="#myModalEdit" data-toggle="modal"*@
                                             </td>
                                             <td class="text-center">
                                                 <div class="md-checkbox-inline service-checkbox">
@@ -107,24 +104,19 @@
                                             <td>@item.PhongTrong</td>
                                             <td>@item.Mota</td>
                                             <td class="text-center">
-                                                <a data-btn-ok-class="btn-success"
-                                                   data-btn-cancel-class="btn-danger"
-                                                   data-toggle="confirmation"
-                                                   data-placement="left" data-singleton="true"
-                                                   data-tooltip-title="Xóa"
-                                                   data-confirm-title="Bạn chắc chắn muốn xóa dữ liệu?"
-                                                   class="btn red btn-circle btn-icon-only btn-default cus-tooltips cus-confirmations"
-                                                   data-remote="true" data-method="delete"> <i class="fas fa-trash"></i></a>
+                                                <form asp-action="Delete"
+                                                    asp-route-id="@item.MaNT"
+                                                    onsubmit="return jQueryAjaxDelete(this)">
+                                                    <button type="submit"
+                                                           class="btn red btn-circle btn-icon-only btn-default"
+                                                            ><i class="fas fa-trash"></i></button>
+                                                </form>
                                             </td>
-
                                         </tr>
                                     }
                                 }
                             </tbody>
-
                         </table>
-
-
                     </div>
 
                 </div>
@@ -146,44 +138,4 @@
 </div>
 
 
-
-<script type="text/javascript">
-    $(document).ready(function () {
-
-        toastr.success(@ViewData["error"]);
-
-    });
-    $("#btnEdit").click(function(){
-        $("#myModalEdit").dialog({
-            modal: true,
-
-        });
-});
-</script>
-
-
-<script src="~/Form/plugins/layout/layout-min.js"></script>
-<script src="~/Form/plugins/bootstrap-confirmation-min.js"></script>
-<script src="~/Form/plugins/bootstrap-fileinput.js"></script>
-<script src="~/Form/plugins/bootstrap-hover-dropdown-min.js"></script>
-<script src="~/Form/plugins/jquery.blockui-min.js"></script>
-<script src="~/Form/plugins/jquery-inputmask-bundle-min.js"></script>
-<script src="~/Form/plugins/jquery-min.js"></script>
-<script src="~/Form/plugins/jquery-priceformat-min.js"></script>
-<script src="~/Form/plugins/jquery-pulsate-min.js"></script>
-<script src="~/Form/plugins/jquery-slimscroll-min.js"></script>
-<script src="~/Form/plugins/js-cookie-min.js"></script>
-<script src="~/Form/plugins/tableHeadFixer.js"></script>
-<script src="~/Form/plugins/tinymce-min.js"></script>
-<script src="~/Form/plugins/toastr-min.js"></script>
-<script src="~/Form/plugins/ui-toastr-min.js"></script>
-<link href="~/Form/css/blog-min.css" rel="stylesheet" />
-<link href="~/Form/css/component-md-min.css" rel="stylesheet" />
-<link href="~/Form/css/custom-green.css" rel="stylesheet" />
-<link href="~/Form/css/layout-min.css" rel="stylesheet" />
-<link href="~/Form/css/plugins-md-min.css" rel="stylesheet" />
-<link href="~/Form/css/pricing-min.css" rel="stylesheet" />
-<link href="~/Form/css/search-min.css" rel="stylesheet" />
-<script src="~/Form/plugins/layout/bootstrap-min.js"></script>
-<script src="~/Form/jsController/Controller/jsNhaTroController.js" asp-append-version="true"></script>
 

@@ -6,14 +6,7 @@
 @model QuanLyHopDongViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
-@{
-    if (ViewData["Title"] != null)
-    {
-        <script type="text/javascript">
-            toastr.error("", "Email or password is wrong !)");
-        </script>
-    }
-}
+
 
 <form method="POST">
     <ul class="errors"></ul>

@@ -18,50 +18,7 @@ namespace Motel.Controllers
             Repository = repository;
 
         }
-        public IActionResult CreateAccount()
-        {
-
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Create_Account(TaiKhoanViewModel taikhoan)
-        {
-            int kq = -1;
-            try
-            {
-                if (!ModelState.IsValid)
-                {
-                    ViewData["info"] = "Dữ liệu bị trống";
-                    return RedirectToAction(nameof(TaoTaiKhoanController.CreateAccount), "TaoTaiKhoan");
-                }
-                if (taikhoan.MatKhau != taikhoan.PrMatKhau)
-                {
-                    ViewData["info"] = "Mật khẩu không khớp";
-                    return RedirectToAction(nameof(TaoTaiKhoanController.CreateAccount), "TaoTaiKhoan");
-                }
-                TaiKhoan tk = new TaiKhoan();
-                tk.TenTaiKhoan = taikhoan.TenTaiKhoan;
-                tk.MatKhau = taikhoan.MatKhau;
-                kq = Repository.Create(tk);
-                if(kq == 1)
-                {
-                    ViewData["info"] = "Suscess";
-                    return RedirectToAction(nameof(DangNhapController.Login), "DangNhap");
-                }
-                else
-                {
-                    ViewData["info"] = "Tài khoản đã tồn tại";
-                    return RedirectToAction(nameof(TaoTaiKhoanController.CreateAccount), "TaoTaiKhoan");
-                }
-                   
-            }
-            catch (Exception ex)
-            {
-                ViewData["error"] = ex.Message;
-                return RedirectToAction(nameof(TaoTaiKhoanController.CreateAccount), "TaoTaiKhoan");
-            }
-       
-        }
+      
+      
     }
 }

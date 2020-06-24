@@ -7,7 +7,7 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
-<form class="simple_form form-horizontal" asp-controller="PhongTro" asp-action="Create" method="post" novalidate="novalidate"
+<form class="simple_form form-horizontal" asp-controller="PhongTro" asp-action="AddOrEdit" asp-route-id="@Model.phong.MaPH" onsubmit="return jQueryAjaxPost(this);" novalidate="novalidate"
       id="new_admin_building" accept-charset="UTF-8" data-remote="true">
     <input name="utf8" type="hidden" value="✓">
     <ul class="errors"></ul>
@@ -18,7 +18,7 @@
         </label>
         <div class="col-md-4">
             <select asp-for="phong._MaNT" class="text required bg-maxlength form-control"
-                    name="_MaNT"
+                    name="phong._MaNT"
                     id="_MaNT" tabindex="-1" aria-hidden="true">
                 @{
 
@@ -37,7 +37,7 @@
         </label>
         <div class="col-md-4">
             <input asp-for="phong.Tang" class="string required bg-maxlength form-control"
-                   name="Tang" id="Tang"
+                   name=phong.Tang id="Tang"
                    placeholder="Tên phòng" maxlength="50" size="50" min="0" type="number">
             <div class="form-control-focus"></div>
         </div>
@@ -49,15 +49,15 @@
             <span class="required" aria-required="true"> * </span>
         </label>
         <div class="col-md-4">
-            <input asp-for="phong.Ten" name="Ten" id="Ten" class="string required bg-maxlength form-control"
+            <input asp-for="phong.Ten" name=phong.Ten id="Ten" class="string required bg-maxlength form-control"
                    placeholder="Tên phòng" maxlength="50" size="50" type="text">
             <div class="form-control-focus"></div>
         </div>
         <label class="col-md-2 control-label">Số tối đa</label>
         <div class="col-md-4">
-            <input asp-for="phong.SoNguoiToiDa" class="string required bg-maxlength form-control"
+            <input asp-for="phong.SoNguoiToiDa" name=phong.SoNguoiToiDa class="string required bg-maxlength form-control"
                    placeholder="Số người tối đa" maxlength="50" size="50"
-                   type="number" name="SoNguoiToiDa" min="0" max="10" id="SoNguoiToiDa">
+                   type="number" min="0" max="10" id="SoNguoiToiDa">
             <div class="form-control-focus"></div>
         </div>
     </div>
@@ -66,7 +66,7 @@
         <label class="col-md-2 control-label">Loai phòng</label>
         <div class="col-md-4">
             <select asp-for="phong._MaLP" class="text required bg-maxlength form-control"
-                    name="_MaLP"
+                    name=phong._MaLP
                     id="_MaNT" tabindex="-1" aria-hidden="true">
                 @{
                     foreach (var item in Model.listLoaiPhong)
@@ -81,7 +81,7 @@
         <label class="col-md-2 control-label">Trạng thái phòng</label>
         <div class="col-md-4">
             <select asp-for="phong._MaTTPH" class="text required bg-maxlength form-control"
-                    name="_MaTTPH"
+                    name=phong._MaTTPH
                     id="_MaTTPH" tabindex="-1" aria-hidden="true">
                 @{
                     foreach (var item in Model.listTrangThaiPhong)

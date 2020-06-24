@@ -18,8 +18,8 @@ namespace Motel.ViewModels
 
     }
 
-    public class KhachHangDatPhongViewModel 
-    {  
+    public class KhachHangDatPhongViewModel
+    {
         public DatPhong datPhong { get; set; }
         public KhachHang khachHang { get; set; }
     }

@@ -24,17 +24,6 @@ namespace Motel.Controllers.API
         }
 
 
-        [HttpGet]
-        [Route("getCus")]
-        public async Task<ApiResult> GetCus()
-        {
-            var kq = await Repository._Gets();
-            return new ApiResult()
-            {
-                Result = kq == null ? 0 : 1,
-                Data = kq
-            };
-        }
 
 
 

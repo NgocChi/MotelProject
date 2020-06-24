@@ -22,18 +22,38 @@ namespace Motel.Repositories
                         join nt in _appDBContext.NhaTros on p._MaNT equals nt.MaNT
                         join ttp in _appDBContext.TrangThaiPhongs on p._MaTTPH equals ttp.MaTTPH
                         join lp in _appDBContext.LoaiPhongs on p._MaLP equals lp.MaLP
-                        select new PhongViewModel { MaPH = p.MaPH, Tang = p.Tang, Ten = p.Ten, CSDien = p.CSDien, 
-                            CSNuoc = p.CSNuoc, _MaLP = p._MaLP, _MaTTPH = p._MaTTPH , SoNguoiToiDa = p.SoNguoiToiDa,TenNhaTro = nt.Ten ,
-                            TrangThai = ttp.Ten, TenLoaiPhong = lp.Ten, Gia = lp.Gia, GiaDatCoc = lp.GiaDatCoc,
+                        select new PhongViewModel
+                        {
+                            MaPH = p.MaPH,
+                            Tang = p.Tang,
+                            Ten = p.Ten,
+                            CSDien = p.CSDien,
+                            CSNuoc = p.CSNuoc,
+                            _MaLP = p._MaLP,
+                            _MaTTPH = p._MaTTPH,
+                            SoNguoiToiDa = p.SoNguoiToiDa,
+                            TenNhaTro = nt.Ten,
+                            TrangThai = ttp.Ten,
+                            TenLoaiPhong = lp.Ten,
+                            Gia = lp.Gia,
+                            GiaDatCoc = lp.GiaDatCoc,
                             DienTich = lp.DienTich
 
                         };
-            return query.ToList(); 
+            return query.ToList();
         }
         public IEnumerable<Phong> GetsPhongTrong()
         {
             var query = _appDBContext.Phongs.Where(t => t._MaTTPH == 1);
             return query.ToList();
+        }
+        public async Task<Phong> GetById(int id)
+        {
+            return await _appDBContext.Phongs.FindAsync(id);
+        }
+        public async Task<LoaiPhong> GetLoaiPhById(int id)
+        {
+            return await _appDBContext.LoaiPhongs.FindAsync(id);
         }
         public IEnumerable<LoaiPhong> GetsLoaiPhong()
         {
@@ -47,18 +67,18 @@ namespace Motel.Repositories
             return query;
         }
 
-        public int Create(Phong phong)
+        public async Task<int> Create(Phong phong)
         {
             if (phong != null)
             {
                 _appDBContext.Phongs.Add(phong);
-                _appDBContext.SaveChanges();
+                await _appDBContext.SaveChangesAsync();
                 return 1;
             }
             return 0;
 
         }
-        public int Update(Phong phong)
+        public async Task<int> Update(Phong phong)
         {
 
             Phong find = _appDBContext.Phongs.FirstOrDefault(p => p.MaPH == phong.MaPH);
@@ -68,40 +88,39 @@ namespace Motel.Repositories
                 find.CSDien = phong.CSDien;
                 find.CSNuoc = phong.CSNuoc;
                 find._MaLP = phong._MaLP;
-              
-                _appDBContext.Phongs.Add(find);
-                _appDBContext.SaveChanges();
+                find._MaTTPH = phong._MaTTPH;
+                find.SoNguoiToiDa = phong.SoNguoiToiDa;
+                _appDBContext.Phongs.Update(find);
+                await _appDBContext.SaveChangesAsync();
                 return 1;
             }
             return 0;
 
         }
-        public int UpdateTTP(int maph, int ttph)
+        public async Task<int> UpdateTTP(int maph, int ttph)
         {
-
-            Phong find = _appDBContext.Phongs.FirstOrDefault(p => p.MaPH == maph);
+            Phong find = await _appDBContext.Phongs.FindAsync(maph);
             if (find != null)
             {
                 find._MaTTPH = ttph;
                 _appDBContext.Phongs.Update(find);
-                _appDBContext.SaveChanges();
+                await _appDBContext.SaveChangesAsync();
                 return 1;
             }
             return 0;
-
         }
 
-        public int CreateLoaiPhong(LoaiPhong loaiPhong)
+        public async Task<int> CreateLoaiPhong(LoaiPhong loaiPhong)
         {
             if (loaiPhong != null)
             {
                 _appDBContext.LoaiPhongs.Add(loaiPhong);
-                _appDBContext.SaveChanges();
+                await _appDBContext.SaveChangesAsync();
                 return 1;
             }
             return 0;
         }
-        public int UpdateLoaiPhong(LoaiPhong loaiPhong)
+        public async Task<int> UpdateLoaiPhong(LoaiPhong loaiPhong)
         {
             LoaiPhong find = _appDBContext.LoaiPhongs.FirstOrDefault(p => p.MaLP == loaiPhong.MaLP);
             if (find != null)
@@ -111,8 +130,32 @@ namespace Motel.Repositories
                 find.GiaDatCoc = loaiPhong.GiaDatCoc;
                 find.DienTich = loaiPhong.DienTich;
                 find.ThongTin = loaiPhong.ThongTin;
-                _appDBContext.LoaiPhongs.Add(find);
-                _appDBContext.SaveChanges();
+                _appDBContext.LoaiPhongs.Update(find);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            Phong find = await _appDBContext.Phongs.FindAsync(id);
+            if (find != null)
+            {
+                _appDBContext.Phongs.Remove(find);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+        }
+
+        public async Task<int> DeleteLoaiPh(int id)
+        {
+            LoaiPhong find = await _appDBContext.LoaiPhongs.FindAsync(id);
+            if (find != null)
+            {
+                _appDBContext.LoaiPhongs.Remove(find);
+                await _appDBContext.SaveChangesAsync();
                 return 1;
             }
             return 0;

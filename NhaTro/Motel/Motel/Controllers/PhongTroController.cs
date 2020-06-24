@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DAL;
 using Microsoft.AspNetCore.Mvc;
+using Motel.Data;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
 using Motel.ViewModels;
@@ -23,136 +25,159 @@ namespace Motel.Controllers
             QuanLyPhongViewModel model = new QuanLyPhongViewModel();
             model.listPhong = Repository.Gets();
             model.listLoaiPhong = Repository.GetsLoaiPhong();
-            model.listNhaTro = NhaTroRepository.Gets();
-            model.listTrangThaiPhong = Repository.GetsTrangThaiPhong();
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Create(Phong phong)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddOrEdit(int id, QuanLyPhongViewModel ph)
         {
             int kq = -1;
-            try
+            if (ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
+                if (id == 0)
                 {
-                    ViewData["info"] = "Dữ liệu bị trống";
-                    return RedirectToAction(nameof(PhongTroController.Create), "PhongTro");
-                }
-                kq = Repository.Create(phong);
-                if (kq == 1)
-                {
-                   // NhaTroRepository.UpdateSoLuongPhong();
-                    ViewData["info"] = "Thêm nhà trọ thành công";
-                    return RedirectToAction(nameof(PhongTroController.Index), "PhongTro");
+                    kq = await Repository.Create(ph.phong);
+                    await NhaTroRepository.UpdateSoLuongPhong(ph.phong._MaNT, 1);
                 }
                 else
                 {
-                    ViewData["info"] = "Thêm thất bại";
-                    return RedirectToAction(nameof(PhongTroController.Create), "PhongTro");
+                    try
+                    {
+                        ph.phong.MaPH = id;
+                        kq = await Repository.Update(ph.phong);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
                 }
-
+                QuanLyPhongViewModel model = new QuanLyPhongViewModel();
+                model.listPhong = Repository.Gets();
+                model.listLoaiPhong = Repository.GetsLoaiPhong();
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
-            catch (Exception ex)
-            {
-                ViewData["error"] = ex.Message;
-                return RedirectToAction(nameof(PhongTroController.Create), "PhongTro");
-            }
-
+            return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", ph.phong) });
         }
-        [HttpPost]
-        public IActionResult Update(Phong phong)
+
+        [HttpGet]
+        public async Task<IActionResult> AddOrEdit(int id)
         {
-            int kq = -1;
-            try
+            IActionResult result;
+            QuanLyPhongViewModel model = new QuanLyPhongViewModel();
+            model.listLoaiPhong = Repository.GetsLoaiPhong();
+            model.listNhaTro = NhaTroRepository.Gets();
+            model.listTrangThaiPhong = Repository.GetsTrangThaiPhong();
+            if (id == 0)
             {
-                if (!ModelState.IsValid)
-                {
-                    ViewData["info"] = "Dữ liệu bị trống";
-                    return RedirectToAction(nameof(PhongTroController.Update), "PhongTro");
-                }
-                kq = Repository.Update(phong);
-                if (kq == 1)
-                {
-                    ViewData["info"] = "Cập nhật nhà trọ thành công";
-                    return RedirectToAction(nameof(PhongTroController.Index), "PhongTro");
-                }
-                else
-                {
-                    ViewData["info"] = "Cập nhật thất bại";
-                    return RedirectToAction(nameof(PhongTroController.Update), "PhongTro");
-                }
-
+                model.phong = new Phong();
+                result = View(model);
             }
-            catch (Exception ex)
+            else
             {
-                ViewData["error"] = ex.Message;
-                return RedirectToAction(nameof(PhongTroController.Update), "PhongTro");
+                model.phong = await Repository.GetById(id);
+                if (model.phong == null)
+                    result = NotFound();
+                result = View(model);
             }
-
+            return result;
         }
 
         [HttpPost]
-        public IActionResult CreateLoaiPhong(LoaiPhong loaiPhong)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddOrEditLoaiPh(int id, QuanLyPhongViewModel loaiph)
         {
             int kq = -1;
-            try
+            if (ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
+                if (id == 0)
                 {
-                    ViewData["info"] = "Dữ liệu bị trống";
-                    return RedirectToAction(nameof(PhongTroController.CreateLoaiPhong), "PhongTro");
-                }
-                kq = Repository.CreateLoaiPhong(loaiPhong);
-                if (kq == 1)
-                {
-                    ViewData["info"] = "Thêm nhà trọ thành công";
-                    return RedirectToAction(nameof(PhongTroController.Index), "PhongTro");
+                    kq = await Repository.CreateLoaiPhong(loaiph.loaiPhong);
                 }
                 else
                 {
-                    ViewData["info"] = "Thêm thất bại";
-                    return RedirectToAction(nameof(PhongTroController.CreateLoaiPhong), "PhongTro");
+                    try
+                    {
+                        loaiph.loaiPhong.MaLP = id;
+                        kq = await Repository.UpdateLoaiPhong(loaiph.loaiPhong);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
                 }
-
+                QuanLyPhongViewModel model = new QuanLyPhongViewModel();
+                model.listPhong = Repository.Gets();
+                model.listLoaiPhong = Repository.GetsLoaiPhong();
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
-            catch (Exception ex)
-            {
-                ViewData["error"] = ex.Message;
-                return RedirectToAction(nameof(PhongTroController.CreateLoaiPhong), "PhongTro");
-            }
-
+            return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", loaiph.loaiPhong) });
         }
-        [HttpPost]
-        public IActionResult UpdateLoaiPhong(LoaiPhong PhongTro)
+
+        [HttpGet]
+        public async Task<IActionResult> AddOrEditLoaiPh(int id)
         {
-            int kq = -1;
-            try
+            IActionResult result;
+            QuanLyPhongViewModel model = new QuanLyPhongViewModel();
+            if (id == 0)
             {
-                if (!ModelState.IsValid)
-                {
-                    ViewData["info"] = "Dữ liệu bị trống";
-                    return RedirectToAction(nameof(PhongTroController.UpdateLoaiPhong), "PhongTro");
-                }
-                kq = Repository.UpdateLoaiPhong(PhongTro);
-                if (kq == 1)
-                {
-                    ViewData["info"] = "Cập nhật nhà trọ thành công";
-                    return RedirectToAction(nameof(PhongTroController.Index), "PhongTro");
-                }
-                else
-                {
-                    ViewData["info"] = "Cập nhật thất bại";
-                    return RedirectToAction(nameof(PhongTroController.UpdateLoaiPhong), "PhongTro");
-                }
+                model.loaiPhong = new LoaiPhong();
+                result = View(model);
+            }
+            else
+            {
+                model.loaiPhong = await Repository.GetLoaiPhById(id);
+                if (model.loaiPhong == null)
+                    result = NotFound();
+                result = View(model);
+            }
+            return result;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            QuanLyPhongViewModel model = new QuanLyPhongViewModel();
+            if (id == 0)
+            {
+                model.listPhong = Repository.Gets();
+                model.listLoaiPhong = Repository.GetsLoaiPhong();
+                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+            }
+            else
+            {
+                int kq = await Repository.Delete(id);
+                if (kq == 0)
+                    return NotFound();
+                model.listPhong = Repository.Gets();
+                model.listLoaiPhong = Repository.GetsLoaiPhong();
+                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
 
             }
-            catch (Exception ex)
-            {
-                ViewData["error"] = ex.Message;
-                return RedirectToAction(nameof(PhongTroController.UpdateLoaiPhong), "PhongTro");
-            }
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteLoaiPh(int id)
+        {
+            QuanLyPhongViewModel model = new QuanLyPhongViewModel();
+            if (id == 0)
+            {
+                model.listPhong = Repository.Gets();
+                model.listLoaiPhong = Repository.GetsLoaiPhong();
+                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+            }
+            else
+            {
+                int kq = await Repository.DeleteLoaiPh(id);
+                if (kq == 0)
+                    return NotFound();
+                model.listPhong = Repository.Gets();
+                model.listLoaiPhong = Repository.GetsLoaiPhong();
+                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+
+            }
         }
 
     }

@@ -6,14 +6,7 @@
 @model QuanLyDatPhongViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
-@{
-    if (ViewData["Title"] != null)
-    {
-        <script type="text/javascript">
-            toastr.error("", "Email or password is wrong !)");
-        </script>
-    }
-}
+
 
 
 
@@ -44,7 +37,10 @@
             <!-- /.card-header -->
             <div class="card-body">
                 <div class="text-right">
-                    <button id="myBtn" data-target="#myModal" data-toggle="modal" type="button" class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Thêm mới"><i class="fa fa-plus"></i> Thêm mới</button>
+                    <button type="button" onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = 0}, Context.Request.Scheme)','Thêm mới')"
+                            class="btn green btn-outline btn-circle btn-sm tooltips">
+                        <i class="fa fa-plus"></i> Thêm mới
+                    </button>
                     <a class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Tìm kiếm" data-placement="top" data-remote="true" href="#"><i class="fa fa-search"></i>Tìm kiếm</a>
                     <button data-toggle="confirmation" data-placement="left" type="submit" form="myForm"
                             class="btn green btn-outline btn-circle btn-sm"
@@ -79,25 +75,23 @@
                                         <tr class="item-1932 highlight">
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button class="btn btn-xs green dropdown-toggle" type="button"
-                                                            data-toggle="dropdown" aria-expanded="false">
+                                                    <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                                                         Tác vụ
                                                         <i class="fa fa-angle-down"></i>
                                                     </button>
                                                     <ul class="dropdown-menu" role="menu">
                                                         <li>
-                                                            <a data-remote="true" href="#"><i class="icon-pencil"></i> Chỉnh sửa</a>
+                                                            <a data-remote="true" onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Chỉnh sửa</a>
                                                         </li>
                                                         <li>
-                                                            <a data-remote="true" href="#"><i class="fa fa-handshake-o" aria-hidden="true"></i> Tạo hợp đồng</a>
+                                                            <a data-remote="true"><i class="fas fa-handshake-o" aria-hidden="true"></i> Tạo hợp đồng</a>
                                                         </li>
                                                         <li class="divider"></li>
                                                         <li>
-                                                            <a href="#">
-                                                                <i class="fa fa-file-word-o"></i> Giấy nhận cọc
+                                                            <a>
+                                                                <i class="fas fa-file-word-o"></i> Giấy nhận cọc
                                                             </a>
                                                         </li>
-
                                                     </ul>
                                                 </div>
                                             </td>
@@ -108,28 +102,15 @@
                                             <td>@item.NgayDat</td>
                                             <td>@item.NgayHetHan</td>
                                             <td class="text-center">
-                                                <a data-toggle="confirmation"
-                                                   data-placement="left"
-                                                   id="btn_delete"
-                                                   class="btn red btn-circle btn-icon-only btn-default"
-                                                   data-remote="true" data-method="delete"> <i class="fas fa-trash"></i></a>
-                                                <div class="popover confirmation fade left in"
-                                                     id="confirm1" style="top: 89px; left: 1241px;">
-                                                    <div class="arrow" style="top: 50%;"></div>
-                                                    <h3 class="popover-title">Bạn chắc chắn muốn xóa dữ liệu?</h3>
-                                                    <div class="popover-content text-center">
-                                                        <div class="btn-group">
-                                                            <a class="btn btn-sm btn-success" data-apply="confirmation" data-remote="true" data-method="delete" href="">
-                                                                <i class="glyphicon glyphicon-ok"></i> Có
-                                                            </a>
-                                                            <a class="btn btn-sm btn-danger" data-dismiss="confirmation">
-                                                                <i class="glyphicon glyphicon-remove"></i> Không
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <form asp-action="Delete"
+                                                      asp-route-id="@item.MaDP"
+                                                      onsubmit="return jQueryAjaxDelete(this)">
+                                                    <button type="submit"
+                                                            class="btn red btn-circle btn-icon-only btn-default">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
                                             </td>
-                                           
                                         </tr>
                                     }
                                 }
@@ -156,99 +137,6 @@
 
 
 
-<script src="~/Form/jsController/popper-min.js"></script>
-<script src="~/Form/jsController/jquery.js"></script>
-<script src="~/Form/jsController/popper-min.js"></script>
-<script src="~/Form/jsController/bootstrap-confirmation-min.js"></script>
-<script src="~/Form/plugins/layout/layout-min.js"></script>
-<script src="~/Form/plugins/bootstrap-confirmation-min.js"></script>
-<script src="~/Form/plugins/bootstrap-fileinput.js"></script>
-<script src="~/Form/plugins/bootstrap-hover-dropdown-min.js"></script>
-<script src="~/Form/plugins/js-cookie-min.js"></script>
-<script src="~/Form/plugins/tableHeadFixer.js"></script>
-<script src="~/Form/plugins/tinymce-min.js"></script>
-<script src="~/Form/plugins/toastr-min.js"></script>
-<script src="~/Form/plugins/ui-toastr-min.js"></script>
-<link href="~/Form/css/blog-min.css" rel="stylesheet" />
-<link href="~/Form/css/component-md-min.css" rel="stylesheet" />
-<link href="~/Form/css/custom-green.css" rel="stylesheet" />
-<link href="~/Form/css/layout-min.css" rel="stylesheet" />
-<link href="~/Form/css/plugins-md-min.css" rel="stylesheet" />
-<link href="~/Form/css/pricing-min.css" rel="stylesheet" />
-<link href="~/Form/css/search-min.css" rel="stylesheet" />
-<script src="~/Form/plugins/layout/bootstrap-min.js"></script>
-
-
-<script>
-
-    $(document).ready(function () {
-        $('#radio_renter_status1').click(function () {
-            $('#Khachhang').prop('hidden', true);
-            $('#Khachhang1').prop('hidden', false);
-            $("#cmnd").prop('disabled', true);
-            $("#sdt").prop('disabled', true);
-            $("#email").prop('disabled', true);
-            $("#ngaysinh").prop('disabled', true);
-        })
-        $('#radio_renter_status0').click(function () {
-            $('#Khachhang').prop('hidden', false);
-            $('#Khachhang1').prop('hidden', true);
-            $("#cmnd").prop('disabled', false);
-            $("#sdt").prop('disabled', false);
-            $("#email").prop('disabled', false);
-            $("#ngaysinh").prop('disabled', false);
-        })
-        $("#NgayDat").change(function () {
-            var start_date = convert_to_date($("#NgayDat").val());
-            var end_date = convert_to_date($("#NgayHetHan").val());
-            if (start_date > end_date) {
-                toastr.error('Ngày đặt cọc phải nhỏ hơn ngày hết hạn')
-                $(".errors").text(toastr);
-            }
-        });
-
-        $("#NgayHetHan").change(function () {
-            var start_date = convert_to_date($("#NgayDat").val());
-            var end_date = convert_to_date($("#NgayHetHan").val());
-
-            if (end_date < start_date) {
-                toastr.error('Ngày hết hạn phải lớn hơn ngày đặt cọc');
-                $(".errors").text(toastr);
-
-            }
-        });
-        $('[data-toggle="popover"]').popover();
-        $('#btn_delete').confirmation({
-
-            placement: 'right',
-            title: 'Are you sure?',
-            btnOkClass: 'btn btn-sm btn-danger',
-            btnOkLabel: 'Delete',
-            btnOkIcon: 'glyphicon glyphicon-ok',
-            btnCancelClass: 'btn btn-sm btn-default',
-            btnCancelLabel: 'Cancel',
-            btnCancelIcon: 'glyphicon glyphicon-remove',
-            href: '#',
-            target: '_self',
-            singleton: true,
-            popout: true,
-            onShow: function (event, element) { },
-            onHide: function (event, element) { },
-            onConfirm: function (event, element) { },
-            onCancel: function (event, element) { },
-            template: '<div class="popover"><div class="arrow"></div>'
-                + '<h3 class="popover-title"></h3>'
-                + '<div class="popover-content">'
-                + ' <a data-apply="confirmation">Yes</a>'
-                + ' <a data-dismiss="confirmation">No</a>'
-                + '</div>'
-                + '</div>'
-
-        });
-
-
-    });
-</script>
 
 
 

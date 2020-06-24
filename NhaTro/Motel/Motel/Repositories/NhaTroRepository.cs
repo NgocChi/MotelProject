@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Motel.Repositories
 {
-    public class NhaTroRepository: INhaTroRepository
+    public class NhaTroRepository : INhaTroRepository
     {
         private readonly AppDBContext _appDBContext;
 
@@ -18,14 +18,14 @@ namespace Motel.Repositories
             this._appDBContext = appDBContext;
         }
 
-        public  IEnumerable<NhaTro> Gets()
+        public IEnumerable<NhaTro> Gets()
         {
             return _appDBContext.NhaTros.ToList();
         }
 
         public async Task<NhaTro> GetsById(int? id)
         {
-            return await  _appDBContext.NhaTros.FindAsync( id);
+            return await _appDBContext.NhaTros.FindAsync(id);
         }
 
         public async Task<int> Create(NhaTro nhaTro)
@@ -37,13 +37,11 @@ namespace Motel.Repositories
                 return 1;
             }
             return 0;
-
         }
         public async Task<int> Update(NhaTro nhaTro)
         {
-
             NhaTro find = await _appDBContext.NhaTros.FindAsync(nhaTro.MaNT);
-            if(find != null)
+            if (find != null)
             {
                 find.Ten = nhaTro.Ten;
                 find.TongPhong = nhaTro.TongPhong;
@@ -57,19 +55,29 @@ namespace Motel.Repositories
             return 0;
         }
 
-        public int UpdateSoLuongPhong(int maNt , int soLuong)
+        public async Task<int> Delete(int id)
         {
-
-            NhaTro find = _appDBContext.NhaTros.FirstOrDefault(p => p.MaNT == maNt);
+            NhaTro find = await _appDBContext.NhaTros.FindAsync(id);
             if (find != null)
             {
-                find.TongPhong = soLuong;
-                _appDBContext.NhaTros.Add(find);
-                _appDBContext.SaveChanges();
+                _appDBContext.NhaTros.Remove(find);
+                await _appDBContext.SaveChangesAsync();
                 return 1;
             }
             return 0;
+        }
 
+        public async Task<int> UpdateSoLuongPhong(int maNt, int soLuong)
+        {
+            NhaTro find = _appDBContext.NhaTros.FirstOrDefault(p => p.MaNT == maNt);
+            if (find != null)
+            {
+                find.TongPhong += soLuong;
+                _appDBContext.NhaTros.Update(find);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
         }
     }
 }

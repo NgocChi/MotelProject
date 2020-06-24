@@ -17,7 +17,9 @@ namespace Motel.Interfaces.Repositories
 
         Task<int> Update(NhaTro nhaTro);
 
-        int UpdateSoLuongPhong(int maNt, int soluong);
+        Task<int> Delete(int id);
+
+        Task<int> UpdateSoLuongPhong(int maNt, int soluong);
 
     }
 }

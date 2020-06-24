@@ -11,8 +11,12 @@ namespace Motel.Interfaces.Repositories
     {
         IEnumerable<DatPhongViewModel> Gets();
 
-        int Create(DatPhong dp);
+        Task<int> Create(DatPhong dp);
 
-        int Update(DatPhong dp);
+        Task<int> Update(DatPhong dp);
+
+        Task<int> Delete(int id);
+
+        Task<DatPhong> GetsById(int? id);
     }
 }

@@ -38,35 +38,49 @@ namespace Motel.Repositories
             return query.ToList();
         }
 
-        public int Create(DatPhong datphong)
+        public async Task<int> Create(DatPhong datphong)
         {
             if (datphong != null)
             {
                 _appDBContext.DatPhongs.Add(datphong);
-                
-                _appDBContext.SaveChanges();
+                await _appDBContext.SaveChangesAsync();
                 return 1;
             }
             return 0;
-
         }
-        public int Update(DatPhong datphong)
+        public async Task<int> Update(DatPhong datphong)
         {
-
-            //Phong find = _appDBContext.DatPhongs.FirstOrDefault(p => p.MaPH == datphong.MaPH);
-            //if (find != null)
-            //{
-            //    find.Ten = datphong.Ten;
-            //    find.CSDien = datphong.CSDien;
-            //    find.CSNuoc = datphong.CSNuoc;
-            //    find._MaLP = datphong._MaLP;
-
-            //    _appDBContext.DatPhongs.Add(find);
-            //    _appDBContext.SaveChanges();
-            //    return 1;
-            //}
+            DatPhong find = _appDBContext.DatPhongs.FirstOrDefault(p => p.MaDP == datphong.MaDP);
+            if (find != null)
+            {
+                find.NgayDat = datphong.NgayDat;
+                find.NgayHetHan = datphong.NgayHetHan;
+                find.SoTienCoc = datphong.SoTienCoc;
+                find._MaKH = datphong._MaKH;
+                find._MaPH = datphong._MaPH;
+                find.GhiChu = datphong.GhiChu;
+                _appDBContext.DatPhongs.Update(find);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
             return 0;
+        }
 
+        public async Task<int> Delete(int id)
+        {
+            DatPhong find = await _appDBContext.DatPhongs.FindAsync(id);
+            if (find != null)
+            {
+                _appDBContext.DatPhongs.Remove(find);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+        }
+
+        public async Task<DatPhong> GetsById(int? id)
+        {
+            return await _appDBContext.DatPhongs.FindAsync(id);
         }
     }
 }

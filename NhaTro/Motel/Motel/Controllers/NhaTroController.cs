@@ -27,7 +27,6 @@ namespace Motel.Controllers
             return kq;
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit(int id, [Bind("Ten", "DiaChi", "TongPhong", "PhongTrong", "Mota")] NhaTro nhaTroViewModel)
@@ -37,7 +36,6 @@ namespace Motel.Controllers
             {
                 if (id == 0)
                 {
-                    
                     kq = await Repository.Create(nhaTroViewModel);
                 }
                 else
@@ -52,7 +50,9 @@ namespace Motel.Controllers
                         throw;
                     }
                 }
-                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "Index", Repository.Gets()) });
+                NhaTroViewModel nt = new NhaTroViewModel();
+                nt.listNhaTro = Repository.Gets();
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll",nt )});
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", nhaTroViewModel) });
         }
@@ -63,7 +63,6 @@ namespace Motel.Controllers
             IActionResult result;
             if (id == 0)
             {
-
                 return View(new NhaTro());
             }
             else
@@ -77,19 +76,24 @@ namespace Motel.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id = 0)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
         {
+            NhaTroViewModel nt = new NhaTroViewModel();
+
             if (id == 0)
-                return View(new NhaTroViewModel());
+            {
+                nt.listNhaTro = Repository.Gets();
+                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
+            }
             else
             {
-                var kq = Repository.GetsById(id);
-                if (kq == null)
+                int kq = await Repository.Delete(id);
+                if (kq == 0)
                     return NotFound();
-                return View(kq);
-
+                nt.listNhaTro = Repository.Gets();
+                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
             }
         }
-
     }
 }

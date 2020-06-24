@@ -15,15 +15,21 @@ namespace Motel.Interfaces.Repositories
         IEnumerable<LoaiPhong> GetsLoaiPhong();
 
         IEnumerable<TrangThaiPhong> GetsTrangThaiPhong();
+        Task<Phong> GetById(int id);
+        Task<LoaiPhong> GetLoaiPhById(int id);
 
-        int Create(Phong phong);
+        Task<int> Create(Phong phong);
 
-        int Update(Phong phong);
+        Task<int> Update(Phong phong);
 
-        int UpdateTTP(int maph, int ttph);
+        Task<int> UpdateTTP(int maph, int ttph);
 
-        int CreateLoaiPhong(LoaiPhong loaiPhong);
+        Task<int> CreateLoaiPhong(LoaiPhong loaiPhong);
 
-        int UpdateLoaiPhong(LoaiPhong loaiPhong);
+        Task<int> UpdateLoaiPhong(LoaiPhong loaiPhong);
+
+        Task<int> Delete(int id);
+
+        Task<int> DeleteLoaiPh(int id);
     }
 }
