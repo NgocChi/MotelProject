@@ -10,10 +10,10 @@ namespace Motel.Interfaces.Repositories
     public interface IHopDongRepository
     {
         IEnumerable<HopDongViewModel> Gets();
-        Task<HopDong> GetById(int id);
+        //Task<HopDong> GetById(int id);
 
-        Task<int> Create(HopDong hd);
+        //Task<int> Create(HopDong hd);
 
-        Task<int> Update(HopDong hd);
+        //Task<int> Update(HopDong hd);
     }
 }
