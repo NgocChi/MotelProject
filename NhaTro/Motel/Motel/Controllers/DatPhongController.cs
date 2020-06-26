@@ -39,7 +39,12 @@ namespace Motel.Controllers
             {
                 if (id == 0)
                 {
-                    kq = await Repository.Create(datPhong.khachHangDatPhong.datPhong);
+                    if (datPhong.khachHangDatPhong.datPhong._MaKH == 0)
+                    {
+                        int makh = await KhachHangRepository.Create(datPhong.khachHangDatPhong.khachHang);
+                        datPhong.khachHangDatPhong.datPhong._MaKH = makh;
+                    }
+                    await Repository.Create(datPhong.khachHangDatPhong.datPhong);
                     await PhongRepository.UpdateTTP(datPhong.khachHangDatPhong.datPhong._MaPH, 2);
                 }
                 else

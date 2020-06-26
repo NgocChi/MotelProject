@@ -36,8 +36,8 @@ namespace Motel.Repositories
             if (khach != null)
             {
                 _appDBContext.KhachHangs.Add(khach);
-                await _appDBContext.SaveChangesAsync();
-                return 1;
+                 await _appDBContext.SaveChangesAsync();
+                return khach.MaKh;
             }
             return 0;
         }

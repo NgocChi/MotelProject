@@ -82,3 +82,14 @@ jQueryAjaxDelete = form => {
     return false;
 }
 
+$(function () {
+    $('#loadbody').addClass('hide');
+    $(document).bind('ajaxStart', function () {
+        $('#loadbody').removeClass('hide');
+
+    }).bind('ajaxStop', function () {
+        $('#loadbody').addClass('hide');
+    })
+
+});
+
