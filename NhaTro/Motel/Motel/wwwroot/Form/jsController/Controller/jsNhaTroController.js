@@ -15,6 +15,23 @@
     }
 }
 
+ShowPopupLarge = (url, tilte) => {
+    try {
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (res) {
+                $("#myModallarge .caption-subject .bold .uppercase").html(tilte);
+                $("#myModallarge .modal-body").html(res);
+                $("#myModallarge").modal('show');
+            }
+        });
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
 jQueryAjaxPost = form => {
     try {
         $.ajax({

@@ -35,21 +35,21 @@ namespace Motel.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, [Bind("Ten", "DiaChi", "TongPhong", "PhongTrong", "Mota")] KhachHang ViewModel)
+        public async Task<IActionResult> AddOrEdit(int id, KhachHangViewModel ViewModel)
         {
             int kq = -1;
             if (ModelState.IsValid)
             {
                 if (id == 0)
                 {
-                    kq = await Repository.Create(ViewModel);
+                    kq = await Repository.Create(ViewModel.khachHang);
                 }
                 else
                 {
                     try
                     {
-                        ViewModel.MaKh = id;
-                        kq = await Repository.Update(ViewModel);
+                        ViewModel.khachHang.MaKh = id;
+                        kq = await Repository.Update(ViewModel.khachHang);
                     }
                     catch
                     {

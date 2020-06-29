@@ -9,7 +9,7 @@
 @addTagHelper *, YourProjetcName
 
 
-<form asp-controller="PhongTro" asp-action="AddOrEdit" asp-route-id="@Model.khachHang.MaKh" onsubmit="return jQueryAjaxPost(this);"
+<form asp-controller="KhachHang" asp-action="AddOrEdit" asp-route-id="@Model.khachHang.MaKh" onsubmit="return jQueryAjaxPost(this);"
       class="simple_form form-horizontal" novalidate="novalidate"
       id="new_admin_building" accept-charset="UTF-8" data-remote="true">
     <input name="utf8" type="hidden" value="✓">
@@ -18,12 +18,12 @@
     <ul class="errors"></ul>
     <div class="form-group form-md-line-input row">
         <label class="col-md-2 control-label">
-            Tên khu nhà
+            Tên khách hàng
             <span class="required" aria-required="true"> * </span>
         </label>
         <div class="col-md-4">
             <input class="string required bg-maxlength form-control"
-                   placeholder="Nhập tên Khu/Tòa nhà" maxlength="50" size="50" type="text"
+                   placeholder="Tên khách hàng" maxlength="50" size="50" type="text"
                    asp-for="khachHang.TenKH" name="khachHang.TenKH"
                    id="Ten">
             <div class="form-control-focus"></div>
@@ -33,32 +33,32 @@
 
     <div class="form-group form-md-line-input row">
         <label class="col-md-2 control-label">
-            Địa chỉ
+            Quê quán
             <span class="required" aria-required="true"> * </span>
         </label>
         <div class="col-md-10">
             <textarea class="text required bg-maxlength form-control"
                       asp-for="khachHang.QueQuan" name="khachHang.QueQuan"
-                      placeholder="Nhập địa chỉ" maxlength="255" id="DiaChi"></textarea>
+                      placeholder="Quê quán" maxlength="255" id="DiaChi"></textarea>
             <div class="form-control-focus"></div>
         </div>
     </div>
 
     <div class="form-group form-md-line-input row">
-        <label class="col-md-2 control-label">Tổng số phòng</label>
+        <label class="col-md-2 control-label">Số điện thoại</label>
         <div class="col-md-4">
             <input class="string required bg-maxlength form-control"
-                   value="0" disabled placeholder="Tổng số phòng"
+                   placeholder="Số điện thoại"
                    asp-for="khachHang.SoDienThoai" name="khachHang.SoDienThoai"
                    maxlength="50" size="50" type="number"
                    id="TongPhong">
 
             <div class="form-control-focus"></div>
         </div>
-        <label class="col-md-2 control-label">Số phòng trống</label>
+        <label class="col-md-2 control-label">CMND</label>
         <div class="col-md-4">
             <input class="string required bg-maxlength form-control"
-                   value="0" disabled placeholder="Số phòng trống" maxlength="50"
+                   placeholder="CMND" maxlength="50"
                    asp-for="khachHang.CMND" name="khachHang.CMND"
                    size="50" type="number" id="PhongTrong">
 
@@ -69,11 +69,11 @@
 
     <div class="form-group form-md-line-input row">
 
-        <label class="col-md-2 control-label">Mô tả</label>
+        <label class="col-md-2 control-label">Mail</label>
         <div class="col-md-10">
             <textarea class="text optional bg-maxlength form-control autosizeme"
                       asp-for="khachHang.Mail" name="khachHang.Mail"
-                      placeholder="Nhập mô tả" maxlength="500"
+                      placeholder="Mail" maxlength="500"
                       id="Mota"></textarea>
             <div class="form-control-focus"></div>
         </div>
