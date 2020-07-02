@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using DAL;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Motel.Interfaces.Repositories;
@@ -15,39 +16,26 @@ namespace Motel.Controllers
 {
     public class DangNhapController : Controller
     {
-        //private readonly UserManager<IdentityUser> _userManager;
-        //private readonly SignInManager<IdentityUser> _signInManager;
+
         private readonly ITaiKhoanRepository Repository = null;
+        public HomeController Home = new HomeController();
 
         public DangNhapController(ITaiKhoanRepository repository)
         {
-           
             Repository = repository;
 
         }
 
-        public IActionResult Login()
+        [HttpGet]
+        public async Task<IActionResult> Login(TaiKhoanViewModel taikhoan)
         {
-            return View();
-
-        }
-
-        [HttpPost]
-        public IActionResult Login(TaiKhoanViewModel taikhoan)
-        {
-            if (!ModelState.IsValid)
+            if (taikhoan.TenTaiKhoan == null)
                 return View(taikhoan);
-          
-            var user = Repository.DangNhap(taikhoan.TenTaiKhoan,taikhoan.MatKhau);
 
-            if (user != null)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            ModelState.AddModelError("", "Username/password not found");
-            return View(taikhoan);
-
+            var user = Repository.DangNhap(taikhoan.TenTaiKhoan, taikhoan.MatKhau);
+            if (user == null)
+                return View(taikhoan);
+            return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(Home, "Index", null) });
         }
 
     }

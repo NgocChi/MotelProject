@@ -16,6 +16,7 @@ namespace Motel.Controllers
         private readonly IPhongRepository PhongRepository = null;
         private readonly IKhachHangRepository KhachHangRepository = null;
         private readonly IDichVuRepository DichVuRepository = null;
+
         public HopDongController(IHopDongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IDichVuRepository dichVuRepository)
         {
             this.Repository = repository;
@@ -69,6 +70,8 @@ namespace Motel.Controllers
             model.listPhong = PhongRepository.GetsPhongTrong();
             model.listKhachHang = KhachHangRepository.Gets();
             model.listDichVu = DichVuRepository.Gets();
+            model.listKHDestination = new List<KhachHang>();
+            model.listDichVuDestination = new List<DichVu>();
             if (id == 0)
             {
                 model.hopDongKhachHangPhong = new HopDongKhachHang();

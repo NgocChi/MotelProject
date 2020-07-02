@@ -22,10 +22,10 @@ namespace Motel
 {
     public class Startup
     {
-      
+
         public IConfigurationRoot ConfigurationRoot { get; }
 
-        public Startup( IHostingEnvironment env)
+        public Startup(IHostingEnvironment env)
         {
 
             ConfigurationRoot = new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
@@ -43,8 +43,8 @@ namespace Motel
             services.AddTransient<INhaTroRepository, NhaTroRepository>();
             services.AddTransient<IPhongRepository, PhongRepository>();
             services.AddTransient<IDatPhongRepository, DatPhongRepository>();
-            services.AddTransient<IHoaDonRepository, HoaDonRepository>(); 
-            services.AddTransient<IHopDongRepository, HopDongRepository>(); 
+            services.AddTransient<IHoaDonRepository, HoaDonRepository>();
+            services.AddTransient<IHopDongRepository, HopDongRepository>();
             services.AddTransient<IPhuongTienRepository, PhuongTienRepository>();
             services.AddTransient<IDichVuRepository, DichVuRepository>();
             services.AddMvc();
@@ -52,13 +52,13 @@ namespace Motel
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory looger)
         {
-           
+
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseIdentity();
             app.UseStaticFiles();
             app.UseSession();
-            app.UseMvcWithDefaultRoute();
+            //app.UseMvcWithDefaultRoute();
             app.UseMvc(routes =>
             {
 
@@ -69,7 +69,7 @@ namespace Motel
                 routes.MapSpaFallbackRoute(
                      name: "spa-fallback",
                      defaults: new { controller = "NhaTro", action = "Index" });
-        
+
             });
 
 

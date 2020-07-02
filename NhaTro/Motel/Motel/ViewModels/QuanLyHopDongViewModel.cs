@@ -14,6 +14,11 @@ namespace Motel.ViewModels
 
         public IEnumerable<DichVu> listDichVu { get; set; }
         public HopDongKhachHang hopDongKhachHangPhong { get; set; }
+
+        public IEnumerable<KhachHang> listKHDestination { get; set; }
+
+        public IEnumerable<DichVu> listDichVuDestination { get; set; }
+
     }
 
     public class HopDongViewModel : HopDong

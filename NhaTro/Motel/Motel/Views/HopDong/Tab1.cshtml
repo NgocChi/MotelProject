@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = null;
+}
+@using Motel.ViewModels
+@model QuanLyHopDongViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="table-scrollable table-scrollable-agreement">
+            <table class="table table-striped table-bordered table-hover items-table aside-table ">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            <a class="btn btn-circle btn-icon-only btn-default add-all-selection"><span class="fa fa-plus" aria-hidden="true"></span></a>
+                        </th>
+                        <th>Tên khách thuê</th>
+                        <th class="text-center">SĐT</th>
+                        <th width="50">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="renter-right-container">
+                    @{
+                        foreach (var item in Model.listKhachHang)
+                        {
+                            <tr class="renter-item-8844">
+                                <td class="text-center">
+                                    <a class="btn btn-circle btn-icon-only btn-default item-selection remove-selection"><input class="display-hide" type="checkbox" checked="checked"><span class="fa fa-plus" aria-hidden="true"></span></a>
+                                </td>
+                                <td class="renter-item-name-8844">@item.TenKH</td>
+                                <td class="renter-item-phone-8844 text-center">@item.SoDienThoai</td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-6" style="padding-left: 0px;">
+        <div class="table-scrollable table-scrollable-agreement">
+            <table class="table table-striped table-bordered table-hover items-table" id="right-table">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            <a class="btn btn-circle btn-icon-only btn-default remove-all-selection-service"><span class="fa fa-minus" aria-hidden="true"></span></a>
+                        </th>
+                        <th>Tên khách thuê</th>
+                        <th class="text-center">SĐT </th>
+
+                    </tr>
+                </thead>
+                <tbody class="renter-right-container">
+                    @{
+                        foreach (var item in Model.listKHDestination)
+                        {
+                            <tr class="renter-item-8844">
+                                <td class="text-center">
+                                    <a class="btn btn-circle btn-icon-only btn-default item-selection remove-selection"><input class="display-hide" type="checkbox" checked="checked"><span class="fa fa-minus" aria-hidden="true"></span></a>
+                                </td>
+                                <td class="renter-item-name-8844">@item.TenKH</td>
+                                <td class="renter-item-phone-8844 text-center">@item.SoDienThoai</td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
