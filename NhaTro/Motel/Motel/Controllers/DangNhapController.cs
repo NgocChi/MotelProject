@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web;
 using Web.Controls;
 
 namespace Motel.Controllers
@@ -18,24 +19,45 @@ namespace Motel.Controllers
     {
 
         private readonly ITaiKhoanRepository Repository = null;
-        public HomeController Home = new HomeController();
+        private readonly INhaTroRepository NhaTroRepository = null;
 
-        public DangNhapController(ITaiKhoanRepository repository)
+        public DangNhapController(ITaiKhoanRepository repository, INhaTroRepository nhaTroRepository)
         {
-            Repository = repository;
-
+            this.Repository = repository;
+            this.NhaTroRepository = nhaTroRepository;
         }
 
         [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(TaiKhoanViewModel taikhoan)
         {
+            QuanLyTaiKhoan model = new QuanLyTaiKhoan();
+            model.listNhaTro = NhaTroRepository.Gets();
             if (taikhoan.TenTaiKhoan == null)
                 return View(taikhoan);
 
             var user = Repository.DangNhap(taikhoan.TenTaiKhoan, taikhoan.MatKhau);
+
             if (user == null)
-                return View(taikhoan);
-            return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(Home, "Index", null) });
+                return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "Login", model) });
+            return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ChooseMotel", model) });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Choose(QuanLyTaiKhoan tk)
+        {
+            HttpContext.Session.SetComplexData("UserData", tk._chooseMotel);
+            if (tk._chooseMotel == 0)
+                return RedirectToAction("Login", "DangNhap");
+            return RedirectToAction("Index", "Home");
         }
 
     }

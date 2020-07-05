@@ -47,7 +47,7 @@ jQueryAjaxPost = form => {
                     $("#myModal .modal-body").html('');
                     $("#myModal").modal('hide');
                     $.notify('Thành công', {
-                        globalPosition: 'top-center', className: 'success', offset: {
+                        globalPosition: 'top-center', className: 'info', offset: {
                             x: 50,
                             y: 100
                         }

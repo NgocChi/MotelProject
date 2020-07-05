@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Motel.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace Motel.ViewModels
 {
+    public class QuanLyTaiKhoan
+    {
+        public IEnumerable<NhaTro> listNhaTro { get; set; }
+        public TaiKhoanViewModel taikhoan { get; set; }
+
+        public int _chooseMotel { get; set; }
+    }
+
     public class TaiKhoanViewModel
     {
         public string TenTaiKhoan { get; set; }

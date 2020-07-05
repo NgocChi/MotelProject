@@ -23,6 +23,30 @@ namespace Motel.Controllers.API
             this.Repository = queries;
         }
 
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<ApiResult> GetById(int id)
+        {
+            var rs = await Repository.GetsById(id);
+            return new ApiResult()
+            {
+                Result = rs == null ? -1 : 0,
+                Data = rs
+            };
+        }
+
+        [HttpGet]
+        [Route("Gets")]
+        public async Task<ApiResult> Gets()
+        {
+            var rs = Repository.Gets();
+            return new ApiResult()
+            {
+                Result = rs == null ? -1 : 0,
+                Data = rs
+            };
+        }
+
 
 
 

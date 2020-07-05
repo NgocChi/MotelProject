@@ -176,10 +176,10 @@
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <ul id="nana" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!--Nhà trọ -->
                         <li class="nav-item">
-                            <div class="nav-link active">
+                            <div class="nav-link ">
                                 <i class="fa fa-hotel"></i>
                                 <p>
                                     @Html.ActionLink("Nhà trọ", "Index", "NhaTro")
@@ -459,11 +459,26 @@
 
     </div>
 
+
+    <script>
+
+        $(function () {
+            $(".nav-item").click(function () {
+                // remove classes from all
+                $(".nav-item .nav-link").removeClass("active");
+                // add class to the one we clicked
+                $(this).addClass("active");
+            });
+            $("nav-item has-treeview").click(function () {
+                // remove classes from all
+                $(".nav-item .nav-link").removeClass("active");
+                // add class to the one we clicked
+                $(this).addClass("active");
+            });
+        });
+    </script>
     <script src="~/Shared/plugins/jquery/jquery.min.js"></script>
     <script src="~/Shared/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
     <script src="~/Shared/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/Shared/plugins/chart.js/Chart.min.js"></script>
     <script src="~/Shared/plugins/sparklines/sparkline.js"></script>
@@ -474,7 +489,9 @@
     <script src="~/Shared/plugins/daterangepicker/daterangepicker.js"></script>
     <script src="~/Shared/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
     <script src="~/Shared/plugins/summernote/summernote-bs4.min.js"></script>
-    <script src="~/Shared/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+
+
+
     <script src="~/Shared/dist/js/adminlte.js"></script>
     <script src="~/Shared/dist/js/pages/dashboard.js"></script>
     <script src="~/Shared/dist/js/demo.js"></script>
