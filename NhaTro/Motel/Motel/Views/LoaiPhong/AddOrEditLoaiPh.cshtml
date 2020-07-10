@@ -2,12 +2,13 @@
 @{
     Layout = null;
 }
+
 @using Motel.ViewModels
-@model QuanLyPhongViewModel
+@model QuanLyLoaiPhongViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
-<form class="simple_form form-horizontal" asp-controller="PhongTro" asp-action="AddOrEditLoaiPh" asp-route-id="@Model.loaiPhong.MaLP" onsubmit="return jQueryAjaxPost(this);" novalidate="novalidate"
+<form class="simple_form form-horizontal" asp-controller="LoaiPhong" asp-action="AddOrEditLoaiPh" asp-route-id="@Model.loaiPhong.MaLP" onsubmit="return jQueryAjaxPost(this);" novalidate="novalidate"
       id="new_admin_building" accept-charset="UTF-8" data-remote="true">
     <input name="utf8" type="hidden" value="✓">
 

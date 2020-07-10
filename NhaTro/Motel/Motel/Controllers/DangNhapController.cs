@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -20,11 +21,13 @@ namespace Motel.Controllers
 
         private readonly ITaiKhoanRepository Repository = null;
         private readonly INhaTroRepository NhaTroRepository = null;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DangNhapController(ITaiKhoanRepository repository, INhaTroRepository nhaTroRepository)
+        public DangNhapController(ITaiKhoanRepository repository, INhaTroRepository nhaTroRepository, IHttpContextAccessor httpContextAccessor)
         {
             this.Repository = repository;
             this.NhaTroRepository = nhaTroRepository;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
@@ -36,7 +39,7 @@ namespace Motel.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(TaiKhoanViewModel taikhoan)
+        public IActionResult Login(TaiKhoanViewModel taikhoan)
         {
             QuanLyTaiKhoan model = new QuanLyTaiKhoan();
             model.listNhaTro = NhaTroRepository.Gets();
@@ -52,9 +55,10 @@ namespace Motel.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Choose(QuanLyTaiKhoan tk)
+        public IActionResult Choose(QuanLyTaiKhoan tk)
         {
-            HttpContext.Session.SetComplexData("UserData", tk._chooseMotel);
+
+            _httpContextAccessor.HttpContext.Session.SetComplexData("UserData", tk._chooseMotel);
             if (tk._chooseMotel == 0)
                 return RedirectToAction("Login", "DangNhap");
             return RedirectToAction("Index", "Home");

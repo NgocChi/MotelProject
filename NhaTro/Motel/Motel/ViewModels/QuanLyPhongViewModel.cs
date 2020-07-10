@@ -18,6 +18,6 @@ namespace Motel.ViewModels
 
         public Phong phong { get; set; }
 
-        public LoaiPhong loaiPhong { get; set; }
+
     }
 }

@@ -37,6 +37,13 @@ namespace Motel
             options.UseSqlServer(ConfigurationRoot.GetConnectionString("DefaultConnectionString")));
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppDBContext>();
+            services.AddMvc();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+            services.AddHttpContextAccessor();
             services.AddTransient<IKhachHangRepository, KhachHangRepository>();
             services.AddTransient<IHomeRepository, HomeRepository>();
             services.AddTransient<ITaiKhoanRepository, TaiKhoanRepository>();
@@ -47,8 +54,8 @@ namespace Motel
             services.AddTransient<IHopDongRepository, HopDongRepository>();
             services.AddTransient<IPhuongTienRepository, PhuongTienRepository>();
             services.AddTransient<IDichVuRepository, DichVuRepository>();
-            services.AddMvc();
-            services.AddSession();
+            services.AddTransient<ILoaiPhongRepository, LoaiPhongRepository>();
+          
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory looger)
         {

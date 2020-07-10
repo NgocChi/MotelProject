@@ -16,6 +16,33 @@ namespace Motel.Repositories
         {
             this._appDBContext = appDBContext;
         }
+        public IEnumerable<PhongViewModel> Gets(int _nhaTro)
+        {
+            var query = from p in _appDBContext.Phongs
+                        join nt in _appDBContext.NhaTros on p._MaNT equals nt.MaNT
+                        join ttp in _appDBContext.TrangThaiPhongs on p._MaTTPH equals ttp.MaTTPH
+                        join lp in _appDBContext.LoaiPhongs on p._MaLP equals lp.MaLP
+                        where p._MaNT == _nhaTro
+                        select new PhongViewModel
+                        {
+                            MaPH = p.MaPH,
+                            Tang = p.Tang,
+                            Ten = p.Ten,
+                            CSDien = p.CSDien,
+                            CSNuoc = p.CSNuoc,
+                            _MaLP = p._MaLP,
+                            _MaTTPH = p._MaTTPH,
+                            SoNguoiToiDa = p.SoNguoiToiDa,
+                            TenNhaTro = nt.Ten,
+                            TrangThai = ttp.Ten,
+                            TenLoaiPhong = lp.Ten,
+                            Gia = lp.Gia,
+                            GiaDatCoc = lp.GiaDatCoc,
+                            DienTich = lp.DienTich
+
+                        };
+            return query.ToList();
+        }
         public IEnumerable<PhongViewModel> Gets()
         {
             var query = from p in _appDBContext.Phongs
@@ -50,15 +77,6 @@ namespace Motel.Repositories
         public async Task<Phong> GetById(int id)
         {
             return await _appDBContext.Phongs.FindAsync(id);
-        }
-        public async Task<LoaiPhong> GetLoaiPhById(int id)
-        {
-            return await _appDBContext.LoaiPhongs.FindAsync(id);
-        }
-        public IEnumerable<LoaiPhong> GetsLoaiPhong()
-        {
-            var query = _appDBContext.LoaiPhongs.ToList();
-            return query;
         }
 
         public IEnumerable<TrangThaiPhong> GetsTrangThaiPhong()
@@ -110,33 +128,6 @@ namespace Motel.Repositories
             return 0;
         }
 
-        public async Task<int> CreateLoaiPhong(LoaiPhong loaiPhong)
-        {
-            if (loaiPhong != null)
-            {
-                _appDBContext.LoaiPhongs.Add(loaiPhong);
-                await _appDBContext.SaveChangesAsync();
-                return 1;
-            }
-            return 0;
-        }
-        public async Task<int> UpdateLoaiPhong(LoaiPhong loaiPhong)
-        {
-            LoaiPhong find = _appDBContext.LoaiPhongs.FirstOrDefault(p => p.MaLP == loaiPhong.MaLP);
-            if (find != null)
-            {
-                find.Ten = loaiPhong.Ten;
-                find.Gia = loaiPhong.Gia;
-                find.GiaDatCoc = loaiPhong.GiaDatCoc;
-                find.DienTich = loaiPhong.DienTich;
-                find.ThongTin = loaiPhong.ThongTin;
-                _appDBContext.LoaiPhongs.Update(find);
-                await _appDBContext.SaveChangesAsync();
-                return 1;
-            }
-            return 0;
-        }
-
         public async Task<int> Delete(int id)
         {
             Phong find = await _appDBContext.Phongs.FindAsync(id);
@@ -149,16 +140,5 @@ namespace Motel.Repositories
             return 0;
         }
 
-        public async Task<int> DeleteLoaiPh(int id)
-        {
-            LoaiPhong find = await _appDBContext.LoaiPhongs.FindAsync(id);
-            if (find != null)
-            {
-                _appDBContext.LoaiPhongs.Remove(find);
-                await _appDBContext.SaveChangesAsync();
-                return 1;
-            }
-            return 0;
-        }
     }
 }
