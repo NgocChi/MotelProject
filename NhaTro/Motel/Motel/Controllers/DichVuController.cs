@@ -36,19 +36,31 @@ namespace Motel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddOrEdit(int id, DichVuViewModel loai)
         {
-            int kq = -1;
             if (ModelState.IsValid)
             {
                 if (id == 0)
                 {
-                    kq = await Repository.Create(loai.dichVu);
+                    foreach (var item in loai.listLoaiDichVu)
+                    {
+                        if (item.IsCheck == true)
+                        {
+                            LoaiDichVuViewModel1 i = this.Repository.GetsByIdMaLoaiDV(item.MaLoaiDV);
+                            loai.dichVu.Ten = i.TenLoaiDV;
+                            loai.dichVu.Gia = i.DonGia;
+                            loai.dichVu.MoTa = i.Mota;
+                            loai.dichVu._MaDVT = i._MaDVi;
+                            loai.dichVu._MaLDV = i.MaLoaiDV;
+                            await Repository.Create(loai.dichVu);
+                        }
+                    }
+
                 }
                 else
                 {
                     try
                     {
                         loai.dichVu.MaDV = id;
-                        kq = await Repository.Update(loai.dichVu);
+                        await Repository.Update(loai.dichVu);
                     }
                     catch
                     {

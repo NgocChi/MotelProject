@@ -1,4 +1,5 @@
 ﻿using Motel.Models;
+using Motel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,7 @@ namespace Motel.Interfaces.Repositories
         Task<int> Update(DichVu dv);
 
         Task<int> Delete(int id);
+
+        LoaiDichVuViewModel1 GetsByIdMaLoaiDV(int? id);
     }
 }

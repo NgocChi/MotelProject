@@ -17,13 +17,13 @@ namespace Motel.ViewModels
         public DichVu dichVu { get; set; }
     }
 
-    public class LoaiDichVuViewModel1
+    public class LoaiDichVuViewModel1: LoaiDichVu
     {
         public bool IsCheck { get; set; }
 
-        public int MaLoaiDV { get; set; }
+        //public int MaLoaiDV { get; set; }
 
-        public string TenLoaiDV { get; set; }
+        //public string TenLoaiDV { get; set; }
     }
 
 }

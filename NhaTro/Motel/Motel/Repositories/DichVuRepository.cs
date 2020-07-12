@@ -1,6 +1,7 @@
 ﻿using Motel.Data;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
+using Motel.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,9 +41,27 @@ namespace Motel.Repositories
             return query.ToList();
         }
 
+
         public async Task<DichVu> GetsById(int? id)
         {
             return await _appDBContext.DichVus.FindAsync(id);
+        }
+
+        public LoaiDichVuViewModel1 GetsByIdMaLoaiDV(int? id)
+        {
+            var query = from ldv in _appDBContext.LoaiDichVus
+                        where ldv.MaLoaiDV == id
+                        select new LoaiDichVuViewModel1
+                        {
+                            MaLoaiDV = ldv.MaLoaiDV,
+                            TenLoaiDV = ldv.TenLoaiDV,
+                            DonGia = ldv.DonGia,
+                            Mota = ldv.Mota,
+                            _MaDVi = ldv._MaDVi
+
+
+                        };
+            return query.FirstOrDefault();
         }
 
         public async Task<int> Create(DichVu dv)

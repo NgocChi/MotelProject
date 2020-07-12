@@ -18,7 +18,7 @@ namespace Motel.Models
         public string Ten { get; set; }
 
         [Column("Gia")]
-        public double Gia { get; set; }
+        public decimal Gia { get; set; }
 
         [Column("MoTa")]
         public string MoTa { get; set; }
