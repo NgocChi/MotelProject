@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "AddOrEdit";
+    Layout = null;
+}
+@model LoaiDichVuViewModel
+@using Motel.ViewModels
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
+
+
+<form asp-controller="LoaiDichVu" asp-action="AddOrEdit" asp-route-id="@Model.loaiDichVu.MaLoaiDV" onsubmit="return jQueryAjaxPost(this);"
+      autocomplete="off" class="simple_form form-horizontal" novalidate="novalidate"
+      id="new_admin_building" accept-charset="UTF-8" data-remote="true">
+    <input name="utf8" type="hidden" value="✓">
+
+    <ul class="errors"></ul>
+
+
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">
+            Tên dịch vụ
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-4">
+            <input class="string required bg-maxlength form-control"
+                   placeholder="Tên dịch vụ" maxlength="50"
+                   asp-for="loaiDichVu.TenLoaiDV" name="loaiDichVu.TenLoaiDV"
+                   size="50" type="text" id="PhongTrong">
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+    <div class="form-group form-md-line-input row">
+
+        <label class="col-md-2 control-label">Đơn giá</label>
+        <div class="col-md-4">
+            <input class="string required bg-maxlength form-control"
+                   placeholder="Đơn giá" maxlength="50"
+                   asp-for="loaiDichVu.DonGia" name="loaiDichVu.DonGia"
+                   size="50" type="number" id="PhongTrong">
+
+            <div class="form-control-focus"></div>
+        </div>
+        <label class="col-md-2 control-label">
+            Đơn vị
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-4">
+            <select asp-for="loaiDichVu._MaDVi" name="loaiDichVu._MaDVi" class="text required bg-maxlength form-control"
+                    id="_MaNT" tabindex="-1" aria-hidden="true">
+                @{
+
+                    foreach (var item in Model.listDonViTinh)
+                    {
+                        <option value="@item.MaDonVi">@item.TenDonVi</option>
+                    }
+                }
+            </select>
+
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">
+            Mô tả
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-10">
+            <textarea class="text required bg-maxlength form-control"
+                      asp-for="loaiDichVu.Mota" name="loaiDichVu.Mota"
+                      placeholder="Mô tả" maxlength="255" id="DiaChi"></textarea>
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+
+    <div class="form-actions margin-top-10">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Hủy bỏ
+                </button>
+                <button name="button" type="submit" class="btn btn-default btnFormSubmit btn green">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i>  Lưu lại
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+

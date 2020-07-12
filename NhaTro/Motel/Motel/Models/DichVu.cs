@@ -12,7 +12,7 @@ namespace Motel.Models
     {
         [Key]
         [Column("MaDV")]
-        public int MaHopDong { get; set; }
+        public int MaDV { get; set; }
 
         [Column("Ten")]
         public string Ten { get; set; }
@@ -20,7 +20,16 @@ namespace Motel.Models
         [Column("Gia")]
         public double Gia { get; set; }
 
+        [Column("MoTa")]
+        public string MoTa { get; set; }
+
         [Column("_MaNT")]
         public int _MaNT { get; set; }
+
+        [Column("_MaDVT")]
+        public int _MaDVT { get; set; }
+
+        [Column("_MaLDV")]
+        public int _MaLDV { get; set; }
     }
 }

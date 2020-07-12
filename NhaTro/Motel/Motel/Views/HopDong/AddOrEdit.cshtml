@@ -67,11 +67,35 @@
             </div>
         </div>
     </div>
+    <div class="form-group form-md-line-input row">
+        <div class="col-md-6 selected-room-container">
+            <label class="control-label">
+                Khách thuê
+                <span class="required" aria-required="true"> * </span>
+            </label>
+            <select class="form-control select optional form-control" id="btn_khachhang">
+                @{
+                    foreach (var item in Model.listKhachHang)
+                    {
+                        <option value="@item.MaKh">@item.TenKH</option>
+                    }
+                }
+            </select>
+
+            <input type="hidden" name="admin_agreement[room_id]" value="34171">
+            <input type="hidden" name="change_deposit2agreement[deposit_id]" value="711">
+        </div>
+        <div class="col-md-2" style="padding-top:30px;">
+            <a class="btn green btn-outline btn-circle btn-sm" id="new-ajax-renter" data-remote="true">
+                <i class="fa fa-plus font-green"></i>Thêm khách thuê
+            </a>
+        </div>
+    </div>
 
     <div class="form-group form-md-line-input row">
         <div class="col-md-12">
             <label class="control-label required" style="margin-right: 10px;">
-                Chọn danh sách khách thuê và dịch vụ tương ứng
+                Chọn danh sách dịch vụ và nhập phương tiện của khách
                 <span class="required" aria-required="true"> * </span>:
             </label>
         </div>
@@ -79,9 +103,6 @@
 
     <div class="tabbable-custom ">
         <ul class="nav nav-tabs ">
-            <li class="active">
-                <a href="#tab1" data-toggle="tab" aria-expanded="false">1. Chọn khách thuê</a>
-            </li>
             <li class="">
                 <a href="#tab2" data-toggle="tab" aria-expanded="true">2. Chọn dịch vụ</a>
             </li>
@@ -92,11 +113,11 @@
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane active" id="tab1">
-                <div id="tab_1">
-                    @await Html.PartialAsync("Tab1", Model);
-                </div>
-            </div>
+            @*<div class="tab-pane active" id="tab1">
+                    <div id="tab_1">
+                        @await Html.PartialAsync("Tab1", Model);
+                    </div>
+                </div>*@
             <div class="tab-pane" id="tab2">
                 <div id="tab_2">
                     @await Html.PartialAsync("Tab2", Model);

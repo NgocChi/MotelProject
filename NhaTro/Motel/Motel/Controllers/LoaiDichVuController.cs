@@ -10,74 +10,69 @@ using Motel.ViewModels;
 
 namespace Motel.Controllers
 {
-    public class DichVuController : Controller
+    public class LoaiDichVuController : Controller
     {
-        private readonly IDichVuRepository Repository = null;
-        private readonly INhaTroRepository NhaTroRepository = null;
-        private readonly ILoaiDichVuRepository LoaiDVRepository = null;
+        private readonly ILoaiDichVuRepository Repository = null;
         private readonly IDonViTinhRepository DonViRepository = null;
 
-        public DichVuController(IDichVuRepository repository, IDonViTinhRepository donViRepository, ILoaiDichVuRepository loaiDVRepository, INhaTroRepository nhaTroRepository)
+        public LoaiDichVuController(ILoaiDichVuRepository repository, IDonViTinhRepository donViRepository)
         {
             this.Repository = repository;
-            this.LoaiDVRepository = loaiDVRepository;
             this.DonViRepository = donViRepository;
-            this.NhaTroRepository = nhaTroRepository;
 
         }
         public IActionResult Index()
         {
-            DichVuViewModel model = new DichVuViewModel();
-            model.listDichVu = Repository.Gets();
+            LoaiDichVuViewModel model = new LoaiDichVuViewModel();
+            model.listLoaiDichVu = Repository.Gets().ToList();
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, DichVuViewModel loai)
+        public async Task<IActionResult> AddOrEdit(int id, LoaiDichVuViewModel loai)
         {
             int kq = -1;
             if (ModelState.IsValid)
             {
                 if (id == 0)
                 {
-                    kq = await Repository.Create(loai.dichVu);
+                    kq = await Repository.Create(loai.loaiDichVu);
                 }
                 else
                 {
                     try
                     {
-                        loai.dichVu.MaDV = id;
-                        kq = await Repository.Update(loai.dichVu);
+                        loai.loaiDichVu.MaLoaiDV = id;
+                        kq = await Repository.Update(loai.loaiDichVu);
                     }
                     catch
                     {
                         throw;
                     }
                 }
-                DichVuViewModel model = new DichVuViewModel();
-                model.listDichVu = Repository.Gets();
+                LoaiDichVuViewModel model = new LoaiDichVuViewModel();
+                model.listLoaiDichVu = Repository.Gets();
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
-            return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", loai.dichVu) });
+            return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", loai.loaiDichVu) });
         }
 
         [HttpGet]
         public async Task<IActionResult> AddOrEdit(int id)
         {
             IActionResult result;
-            DichVuViewModel model = new DichVuViewModel();
-            model.listLoaiDichVu = LoaiDVRepository.GetList();
-            model.listNhaTro = NhaTroRepository.Gets();
+            LoaiDichVuViewModel model = new LoaiDichVuViewModel();
+            model.listDonViTinh = DonViRepository.Gets();
             if (id == 0)
             {
-                model.dichVu = new DichVu();
+                model.loaiDichVu = new LoaiDichVu();
                 result = View(model);
             }
             else
             {
-                model.dichVu = await Repository.GetsById(id);
-                if (model.dichVu == null)
+                model.loaiDichVu = await Repository.GetsById(id);
+                if (model.loaiDichVu == null)
                     result = NotFound();
                 result = View(model);
             }
@@ -88,10 +83,10 @@ namespace Motel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            DichVuViewModel model = new DichVuViewModel();
+            LoaiDichVuViewModel model = new LoaiDichVuViewModel();
             if (id == 0)
             {
-                model.listDichVu = Repository.Gets();
+                model.listLoaiDichVu = Repository.Gets();
                 return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
             else
@@ -99,7 +94,7 @@ namespace Motel.Controllers
                 int kq = await Repository.Delete(id);
                 if (kq == 0)
                     return NotFound();
-                model.listDichVu = Repository.Gets();
+                model.listLoaiDichVu = Repository.Gets();
                 return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
 
             }

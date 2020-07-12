@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "AddOrEdit";
+    Layout = null;
+}
+@model DonViTinhViewModel
+@using Motel.ViewModels
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
+
+
+<form asp-controller="DonViTinh" asp-action="AddOrEdit" asp-route-id="@Model.donViTinh.MaDonVi" onsubmit="return jQueryAjaxPost(this);"
+      autocomplete="off" class="simple_form form-horizontal" novalidate="novalidate"
+      id="new_admin_building" accept-charset="UTF-8" data-remote="true">
+    <input name="utf8" type="hidden" value="✓">
+
+    <ul class="errors"></ul>
+
+
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">
+            Địa chỉ
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-10">
+            <textarea class="text required bg-maxlength form-control"
+                      asp-for="donViTinh.TenDonVi" name="donViTinh.TenDonVi"
+                      placeholder="Nhập địa chỉ" maxlength="255" id="DiaChi"></textarea>
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+    <div class="form-group form-md-line-input row">
+
+        <label class="col-md-2 control-label">Mô tả</label>
+        <div class="col-md-10">
+            <textarea class="text optional bg-maxlength form-control autosizeme"
+                      asp-for="donViTinh.MoTa" name="donViTinh.MoTa"
+                      placeholder="Nhập mô tả" maxlength="500"
+                      id="Mota"></textarea>
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+
+    <div class="form-actions margin-top-10">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Hủy bỏ
+                </button>
+                <button name="button" type="submit" class="btn btn-default btnFormSubmit btn green">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i>  Lưu lại
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+

@@ -22,6 +22,22 @@ namespace Motel.Repositories
         {
             return _appDBContext.NhaTros.ToList();
         }
+        public IEnumerable<NhaTro> GetsList()
+        {
+            var query = from nt in _appDBContext.NhaTros
+                        select new NhaTro
+                        {
+                            MaNT = nt.MaNT,
+                            Ten = nt.Ten,
+                            DiaChi = nt.DiaChi,
+                            Mota = nt.Mota,
+                            TongPhong = _appDBContext.Phongs.Count(t => t._MaNT == nt.MaNT),
+                            PhongTrong = _appDBContext.Phongs.Count(t => t._MaNT == nt.MaNT && (t._MaTTPH == 1 || t._MaTTPH == 2))
+
+
+                        };
+            return query.ToList();
+        }
 
         public async Task<NhaTro> GetsById(int? id)
         {

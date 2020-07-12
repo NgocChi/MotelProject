@@ -13,16 +13,38 @@ namespace Motel.Repositories
     {
         private readonly AppDBContext _appDBContext;
 
+
         public DatPhongRepository(AppDBContext appDBContext)
         {
             this._appDBContext = appDBContext;
         }
+
 
         public IEnumerable<DatPhongViewModel> Gets()
         {
             var query = from dp in _appDBContext.DatPhongs
                         join p in _appDBContext.Phongs on dp._MaPH equals p.MaPH
                         join kh in _appDBContext.KhachHangs on dp._MaKH equals kh.MaKh
+                        select new DatPhongViewModel
+                        {
+                            MaDP = dp.MaDP,
+                            NgayDat = dp.NgayDat,
+                            NgayHetHan = dp.NgayHetHan,
+                            SoTienCoc = dp.SoTienCoc,
+                            _MaPH = dp._MaPH,
+                            _MaKH = dp._MaKH,
+                            TenKhachHang = kh.TenKH,
+                            TenPhong = p.Ten,
+                            SoDienThoai = kh.SoDienThoai
+                        };
+            return query.ToList();
+        }
+        public IEnumerable<DatPhongViewModel> GetsByMaNhaTro(int id)
+        {
+            var query = from dp in _appDBContext.DatPhongs
+                        join p in _appDBContext.Phongs on dp._MaPH equals p.MaPH
+                        join kh in _appDBContext.KhachHangs on dp._MaKH equals kh.MaKh
+                        where p._MaNT == id
                         select new DatPhongViewModel
                         {
                             MaDP = dp.MaDP,

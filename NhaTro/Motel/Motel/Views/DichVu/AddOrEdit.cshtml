@@ -2,74 +2,64 @@
 @{
     Layout = null;
 }
+@using Motel.ViewModels
+@model DichVuViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
 
 
-<form method="post"
-      class="simple_form form-horizontal" novalidate="novalidate"
+
+<form asp-controller="DichVu" asp-action="AddOrEdit" asp-route-id="@Model.dichVu.MaDV" onsubmit="return jQueryAjaxPost(this);"
+      autocomplete="off" class="simple_form form-horizontal" novalidate="novalidate"
       id="new_admin_building" accept-charset="UTF-8" data-remote="true">
     <input name="utf8" type="hidden" value="✓">
 
-
     <ul class="errors"></ul>
-    <div class="form-group form-md-line-input row">
-        <label class="col-md-2 control-label">
-            Tên khu nhà
-            <span class="required" aria-required="true"> * </span>
-        </label>
-        <div class="col-md-4">
-            <input class="string required bg-maxlength form-control"
-                   placeholder="Nhập tên Khu/Tòa nhà" maxlength="50" size="50" type="text"
-                   id="Ten">
-            <div class="form-control-focus"></div>
-        </div>
 
-    </div>
+
 
     <div class="form-group form-md-line-input row">
         <label class="col-md-2 control-label">
-            Địa chỉ
+            Nhà Trọ
             <span class="required" aria-required="true"> * </span>
         </label>
-        <div class="col-md-10">
-            <textarea class="text required bg-maxlength form-control"
-                      placeholder="Nhập địa chỉ" maxlength="255" id="DiaChi"></textarea>
+        <div class="col-md-6">
+            <select asp-for="dichVu._MaNT" name="dichVu._MaNT" class="text required bg-maxlength form-control"
+                    id="_MaNT" tabindex="-1" aria-hidden="true">
+                @{
+
+                    foreach (var item in Model.listNhaTro)
+                    {
+                        <option value="@item.MaNT">@item.Ten</option>
+                    }
+                }
+            </select>
+
             <div class="form-control-focus"></div>
         </div>
     </div>
-
     <div class="form-group form-md-line-input row">
-        <label class="col-md-2 control-label">Tổng số phòng</label>
-        <div class="col-md-4">
-            <input class="string required bg-maxlength form-control"
-                   value="0" disabled placeholder="Tổng số phòng"
-                   maxlength="50" size="50" type="number"
-                   id="TongPhong">
+        <label class="col-md-2 control-label">
+            Chọn dịch vụ
+            <span class="required" aria-required="true"> * </span>
+        </label>
 
-            <div class="form-control-focus"></div>
-        </div>
-        <label class="col-md-2 control-label">Số phòng trống</label>
-        <div class="col-md-4">
-            <input class="string required bg-maxlength form-control"
-                   value="0" disabled placeholder="Số phòng trống" maxlength="50"
-                   size="50" type="number" id="PhongTrong">
+        <div class="checkbox-list col-md-10 ">
+            <div class="row">
+                @for (int i = 0; i < Model.listLoaiDichVu.Count(); i++)
+                {
+                    <div class="checkbox-inline col-md-1 text-right">
+                        <input type="hidden" asp-for="@Model.listLoaiDichVu[i].MaLoaiDV" />
+                        <input type="checkbox" asp-for="listLoaiDichVu[i].IsCheck" />
+                    </div>
+                    <div class="checkbox-inline col-md-2"> @Model.listLoaiDichVu[i].TenLoaiDV</div>
 
-            <div class="form-control-focus"></div>
+                }
+            </div>
+
         </div>
 
     </div>
-
-    <div class="form-group form-md-line-input row">
-
-        <label class="col-md-2 control-label">Mô tả</label>
-        <div class="col-md-10">
-            <textarea class="text optional bg-maxlength form-control autosizeme"
-                      placeholder="Nhập mô tả" maxlength="500"
-                      id="Mota"></textarea>
-            <div class="form-control-focus"></div>
-        </div>
-    </div>
-
-
 
     <div class="form-actions margin-top-10">
         <div class="row">

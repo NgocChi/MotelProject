@@ -43,6 +43,10 @@ namespace Motel.Data
 
         public DbSet<ChuTro> ChuTros { get; set; }
 
+        public DbSet<DonViTinh> DonViTinhs { get; set; }
+
+        public DbSet<LoaiDichVu> LoaiDichVus { get; set; }
+
         public DbSet<ChiTietPhieuThanhToan> ChiTietPhieuThanhToans { get; set; }
     }
 

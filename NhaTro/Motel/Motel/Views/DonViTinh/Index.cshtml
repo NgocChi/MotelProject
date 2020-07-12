@@ -1,14 +1,13 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ViewAll";
     Layout = "~/Views/Shared/_layout.cshtml";
 }
+
+@model DonViTinhViewModel
 @using Motel.ViewModels
-@model DichVuViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
-
-
 
 <div id="view-all">
     @await Html.PartialAsync("ViewAll", Model);
@@ -35,3 +34,6 @@
 <link href="~/Form/css/pricing-min.css" rel="stylesheet" />
 <link href="~/Form/css/search-min.css" rel="stylesheet" />
 <script src="~/Form/plugins/layout/bootstrap-min.js"></script>
+
+
+

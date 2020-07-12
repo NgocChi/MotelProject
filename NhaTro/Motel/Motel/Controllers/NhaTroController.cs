@@ -22,7 +22,7 @@ namespace Motel.Controllers
 
         public ViewResult Index()
         {
-            nt.listNhaTro = Repository.Gets();
+            nt.listNhaTro = Repository.GetsList();
             ViewResult kq = View(nt);
             return kq;
         }
@@ -52,7 +52,7 @@ namespace Motel.Controllers
                 }
                 NhaTroViewModel nt = new NhaTroViewModel();
                 nt.listNhaTro = Repository.Gets();
-                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll",nt )});
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", nhaTroViewModel) });
         }

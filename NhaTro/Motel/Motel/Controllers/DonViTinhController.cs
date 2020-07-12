@@ -10,74 +10,66 @@ using Motel.ViewModels;
 
 namespace Motel.Controllers
 {
-    public class DichVuController : Controller
+    public class DonViTinhController : Controller
     {
-        private readonly IDichVuRepository Repository = null;
-        private readonly INhaTroRepository NhaTroRepository = null;
-        private readonly ILoaiDichVuRepository LoaiDVRepository = null;
-        private readonly IDonViTinhRepository DonViRepository = null;
+        private readonly IDonViTinhRepository Repository = null;
 
-        public DichVuController(IDichVuRepository repository, IDonViTinhRepository donViRepository, ILoaiDichVuRepository loaiDVRepository, INhaTroRepository nhaTroRepository)
+        public DonViTinhController(IDonViTinhRepository repository)
         {
             this.Repository = repository;
-            this.LoaiDVRepository = loaiDVRepository;
-            this.DonViRepository = donViRepository;
-            this.NhaTroRepository = nhaTroRepository;
 
         }
         public IActionResult Index()
         {
-            DichVuViewModel model = new DichVuViewModel();
-            model.listDichVu = Repository.Gets();
+            DonViTinhViewModel model = new DonViTinhViewModel();
+            model.listDonViTinh = Repository.Gets().ToList();
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, DichVuViewModel loai)
+        public async Task<IActionResult> AddOrEdit(int id, DonViTinhViewModel dvt)
         {
             int kq = -1;
             if (ModelState.IsValid)
             {
                 if (id == 0)
                 {
-                    kq = await Repository.Create(loai.dichVu);
+                    kq = await Repository.Create(dvt.donViTinh);
                 }
                 else
                 {
                     try
                     {
-                        loai.dichVu.MaDV = id;
-                        kq = await Repository.Update(loai.dichVu);
+                        dvt.donViTinh.MaDonVi = id;
+                        kq = await Repository.Update(dvt.donViTinh);
                     }
                     catch
                     {
                         throw;
                     }
                 }
-                DichVuViewModel model = new DichVuViewModel();
-                model.listDichVu = Repository.Gets();
+                DonViTinhViewModel model = new DonViTinhViewModel();
+                model.listDonViTinh = Repository.Gets();
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
-            return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", loai.dichVu) });
+            return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", dvt.donViTinh) });
         }
 
         [HttpGet]
         public async Task<IActionResult> AddOrEdit(int id)
         {
             IActionResult result;
-            DichVuViewModel model = new DichVuViewModel();
-            model.listLoaiDichVu = LoaiDVRepository.GetList();
-            model.listNhaTro = NhaTroRepository.Gets();
+            DonViTinhViewModel model = new DonViTinhViewModel();
             if (id == 0)
             {
-                model.dichVu = new DichVu();
+                model.donViTinh = new DonViTinh();
                 result = View(model);
             }
             else
             {
-                model.dichVu = await Repository.GetsById(id);
-                if (model.dichVu == null)
+                model.donViTinh = await Repository.GetsById(id);
+                if (model.donViTinh == null)
                     result = NotFound();
                 result = View(model);
             }
@@ -88,10 +80,10 @@ namespace Motel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            DichVuViewModel model = new DichVuViewModel();
+            DonViTinhViewModel model = new DonViTinhViewModel();
             if (id == 0)
             {
-                model.listDichVu = Repository.Gets();
+                model.listDonViTinh = Repository.Gets();
                 return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
             else
@@ -99,7 +91,7 @@ namespace Motel.Controllers
                 int kq = await Repository.Delete(id);
                 if (kq == 0)
                     return NotFound();
-                model.listDichVu = Repository.Gets();
+                model.listDonViTinh = Repository.Gets();
                 return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
 
             }

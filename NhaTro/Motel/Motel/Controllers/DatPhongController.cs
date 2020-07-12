@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
 using Motel.ViewModels;
+using Web;
 
 namespace Motel.Controllers
 {
@@ -15,17 +17,21 @@ namespace Motel.Controllers
         private readonly IDatPhongRepository Repository = null;
         private readonly IPhongRepository PhongRepository = null;
         private readonly IKhachHangRepository KhachHangRepository = null;
-        public DatPhongController(IDatPhongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private int _nhaTro = 0;
+        public DatPhongController(IDatPhongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IHttpContextAccessor httpContextAccessor)
         {
             this.Repository = repository;
             this.PhongRepository = phongRepository;
             this.KhachHangRepository = khachHangRepository;
+            _httpContextAccessor = httpContextAccessor;
+            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("UserData");
         }
 
         public IActionResult Index()
         {
             QuanLyDatPhongViewModel dp = new QuanLyDatPhongViewModel();
-            dp.listDatPhong = Repository.Gets();
+            dp.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
             return View(dp);
         }
 
@@ -59,7 +65,7 @@ namespace Motel.Controllers
                         throw;
                     }
                 }
-                dp.listDatPhong = Repository.Gets();
+                dp.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", dp) });
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", datPhong) });
@@ -72,7 +78,7 @@ namespace Motel.Controllers
             QuanLyDatPhongViewModel model = new QuanLyDatPhongViewModel();
             model.listPhong = PhongRepository.GetsPhongTrong();
             model.listKhachHang = KhachHangRepository.Gets();
-            model.listDatPhong = Repository.Gets();
+            model.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
             if (id == 0)
             {
                 model.khachHangDatPhong = new KhachHangDatPhongViewModel();
@@ -100,7 +106,7 @@ namespace Motel.Controllers
             QuanLyDatPhongViewModel dp = new QuanLyDatPhongViewModel();
             if (id == 0)
             {
-                dp.listDatPhong = Repository.Gets();
+                dp.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
                 return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", dp) });
             }
 
@@ -109,7 +115,7 @@ namespace Motel.Controllers
                 int kq = await Repository.Delete(id);
                 if (kq == 0)
                     return NotFound();
-                dp.listDatPhong = Repository.Gets();
+                dp.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
                 return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", dp) });
 
             }

@@ -1,10 +1,10 @@
 ﻿
 @{
+    ViewData["Title"] = "Index";
     Layout = null;
 }
-
+@model DonViTinhViewModel
 @using Motel.ViewModels
-@model DichVuViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
@@ -13,7 +13,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <span class="caption-subject font-green sbold uppercase">Dịch vụ theo nhà trọ</span>
+                <span class="caption-subject font-green sbold uppercase">Quản lý đơn vị tính</span>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -38,7 +38,10 @@
             <!-- /.card-header -->
             <div class="card-body">
                 <div class="text-right">
-                    <button onclick="ShowPopup('@Url.Action("AddOrEdit","DichVu",new { id = 0}, Context.Request.Scheme)','Thêm mới')" type="button" class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Thêm mới"><i class="fa fa-plus"></i> Thêm mới</button>
+                    <button onclick="ShowPopup('@Url.Action("AddOrEdit","DonViTinh",new { id = 0}, Context.Request.Scheme)','Thêm mới')" type="button"
+                            class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Thêm mới">
+                        <i class="fa fa-plus"></i> Thêm mới
+                    </button>
                     <a class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Tìm kiếm" data-placement="top" data-remote="true" href="#"><i class="fa fa-search"></i>Tìm kiếm</a>
                     <button data-toggle="confirmation" data-placement="left" type="submit" form="myForm"
                             class="btn green btn-outline btn-circle btn-sm"
@@ -53,8 +56,8 @@
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th class="text-center">
+                                    <th style="max-width:20px;"></th>
+                                    <th class="text-center" style="max-width:20px;">
                                         <div class="md-checkbox-inline service-checkbox">
                                             <div class="icheck-primary d-inline ml-2">
                                                 <input type="checkbox" value="" name="todo1" id="todoCheck1">
@@ -62,29 +65,29 @@
                                             </div>
                                         </div>
                                     </th>
-                                    <th>Tên dịch vụ</th>
-                                    <th>Đơn giá</th>
-                                    <th>Đơn giá cố định</th>
-                                    <th>Đơn vị</th>
+                                    <th>Tên đơn vị</th>
                                     <th>Mô tả</th>
                                     <th></th>
                                 </tr>
                             </thead>
+
+
                             <tbody>
                                 @{
 
-                                    foreach (var item in Model.listDichVu)
+                                    foreach (var item in Model.listDonViTinh)
                                     {
                                         <tr class="item-1932 highlight">
-                                            <td class="text-center">
-                                                <button class="btn btn-circle btn-icon-only btn-default tooltips"
-                                                        data-target="#myModalEdit" data-toggle="modal"
-                                                        data-remote="true"
-                                                        data-placement="top" data-original-title="Chỉnh sửa">
+                                            <td class="text-center" style="max-width:20px;">
+                                                <a class="btn btn-circle btn-icon-only btn-default tooltips"
+                                                   onclick="ShowPopup('@Url.Action("AddOrEdit","DonViTinh",new { id = item.MaDonVi }, Context.Request.Scheme)','Chỉnh sửa')"
+                                                   data-remote="true"
+                                                   id="btnEdit"
+                                                   data-placement="top" data-original-title="Chỉnh sửa">
                                                     <i class="fas fa-edit"></i>
-                                                </button>
+                                                </a>
                                             </td>
-                                            <td class="text-center">
+                                            <td class="text-center" style="max-width:20px;">
                                                 <div class="md-checkbox-inline service-checkbox">
                                                     <div class="icheck-primary d-inline ml-2">
                                                         <input type="checkbox" value="" name="todo2" id="ck-1932">
@@ -94,13 +97,11 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>@item.Ten</td>
-                                            <td>@item.Gia</td>
-                                            <td>@item._MaDVT</td>
+                                            <td>@item.TenDonVi</td>
                                             <td>@item.MoTa</td>
                                             <td class="text-center">
                                                 <form asp-action="Delete"
-                                                      asp-route-id="@item.MaDV"
+                                                      asp-route-id="@item.MaDonVi"
                                                       onsubmit="return jQueryAjaxDelete(this)">
                                                     <button type="submit"
                                                             class="btn red btn-circle btn-icon-only btn-default">
@@ -108,15 +109,11 @@
                                                     </button>
                                                 </form>
                                             </td>
-
                                         </tr>
                                     }
                                 }
                             </tbody>
-
                         </table>
-
-
                     </div>
 
                 </div>
@@ -136,5 +133,6 @@
         <!-- /.col -->
     </div>
 </div>
+
 
 
