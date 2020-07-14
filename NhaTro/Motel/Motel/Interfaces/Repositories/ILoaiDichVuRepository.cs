@@ -10,7 +10,7 @@ namespace Motel.Interfaces.Repositories
     public interface ILoaiDichVuRepository
     {
         IEnumerable<LoaiDichVuView> Gets();
-        List<LoaiDichVuViewModel1> GetList();
+        List<LoaiDichVuView> GetListByMaNhaTroByDichVu(int id);
 
         Task<LoaiDichVu> GetsById(int? id);
         Task<int> Create(LoaiDichVu loai);

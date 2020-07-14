@@ -62,9 +62,9 @@
                                             </div>
                                         </div>
                                     </th>
+                                    <th>Tên nhà trọ</th>
                                     <th>Tên dịch vụ</th>
                                     <th>Đơn giá</th>
-                                    <th>Đơn giá cố định</th>
                                     <th>Đơn vị</th>
                                     <th>Mô tả</th>
                                     <th></th>
@@ -76,13 +76,14 @@
                                     foreach (var item in Model.listDichVu)
                                     {
                                         <tr class="item-1932 highlight">
-                                            <td class="text-center">
-                                                <button class="btn btn-circle btn-icon-only btn-default tooltips"
-                                                        data-target="#myModalEdit" data-toggle="modal"
-                                                        data-remote="true"
-                                                        data-placement="top" data-original-title="Chỉnh sửa">
+                                            <td class="text-center" style="max-width:20px;">
+                                                <a class="btn btn-circle btn-icon-only btn-default tooltips"
+                                                   onclick="ShowPopup('@Url.Action("Edit","DichVu",new { id = item.MaDV }, Context.Request.Scheme)','Chỉnh sửa')"
+                                                   data-remote="true"
+                                                   id="btnEdit"
+                                                   data-placement="top" data-original-title="Chỉnh sửa">
                                                     <i class="fas fa-edit"></i>
-                                                </button>
+                                                </a>
                                             </td>
                                             <td class="text-center">
                                                 <div class="md-checkbox-inline service-checkbox">
@@ -94,9 +95,10 @@
                                                     </div>
                                                 </div>
                                             </td>
+                                            <td>@item.TenNhaTro</td>
                                             <td>@item.Ten</td>
                                             <td>@item.Gia</td>
-                                            <td>@item._MaDVT</td>
+                                            <td>@item.TenDonVi</td>
                                             <td>@item.MoTa</td>
                                             <td class="text-center">
                                                 <form asp-action="Delete"

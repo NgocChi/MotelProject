@@ -7,7 +7,8 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
-<form method="POST">
+<form asp-controller="HopDong" asp-action="AddOrEdit" asp-route-id="@Model.hopDongKhachHangPhong.hopDong.MaHopDong" onsubmit="return jQueryAjaxPost(this);"
+      autocomplete="off">
     <ul class="errors"></ul>
     <input type="hidden" id="last_room" value="34171">
     <input type="hidden" id="owner_previous" value="8844" class="string optional" name="admin_agreement[owner_previous]">
@@ -22,17 +23,18 @@
                 Phòng
                 <span class="required" aria-required="true"> * </span>
             </label>
-            <select class="form-control select optional form-control" id="btn_phong">
+            <select asp-for="hopDongKhachHangPhong.hopDong._MaPH"
+                    name="hopDongKhachHangPhong.hopDong._MaPH" class="form-control select optional form-control" id="btn_phong">
                 @{
+                    <option value="0">--Chọn Phòng--</option>
                     foreach (var item in Model.listPhong)
                     {
                         <option value="@item.MaPH">@item.Ten</option>
+
                     }
                 }
             </select>
 
-            <input type="hidden" name="admin_agreement[room_id]" value="34171">
-            <input type="hidden" name="change_deposit2agreement[deposit_id]" value="711">
         </div>
 
         <div class="col-md-3">
@@ -42,7 +44,7 @@
             </label>
             <div class="md-radio-inline">
                 <div class="md-radio">
-                    <input id="radio1" name="admin_agreement[agreement_type]" class="md-radiobtn radio-agreement_type" value="1" checked="checked" type="radio">
+                    <input id="radio1" class="md-radiobtn radio-agreement_type" value="1" checked="checked" type="radio">
                     <label for="radio1">
                         <span class=""></span>
                         <span class="check"></span>
@@ -50,7 +52,7 @@
                     </label>
                 </div>
                 <div class="md-radio hide">
-                    <input id="radio2" name="admin_agreement[agreement_type]" class="md-radiobtn radio-agreement_type" value="3" type="radio">
+                    <input id="radio2" class="md-radiobtn radio-agreement_type" value="3" type="radio">
                     <label for="radio2">
                         <span class=""></span>
                         <span class="check"></span>
@@ -67,30 +69,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group form-md-line-input row">
-        <div class="col-md-6 selected-room-container">
-            <label class="control-label">
-                Khách thuê
-                <span class="required" aria-required="true"> * </span>
-            </label>
-            <select class="form-control select optional form-control" id="btn_khachhang">
-                @{
-                    foreach (var item in Model.listKhachHang)
-                    {
-                        <option value="@item.MaKh">@item.TenKH</option>
-                    }
-                }
-            </select>
 
-            <input type="hidden" name="admin_agreement[room_id]" value="34171">
-            <input type="hidden" name="change_deposit2agreement[deposit_id]" value="711">
-        </div>
-        <div class="col-md-2" style="padding-top:30px;">
-            <a class="btn green btn-outline btn-circle btn-sm" id="new-ajax-renter" data-remote="true">
-                <i class="fa fa-plus font-green"></i>Thêm khách thuê
-            </a>
-        </div>
-    </div>
 
     <div class="form-group form-md-line-input row">
         <div class="col-md-12">
@@ -106,141 +85,186 @@
             <li class="">
                 <a href="#tab2" data-toggle="tab" aria-expanded="true">2. Chọn dịch vụ</a>
             </li>
-            <li class="">
-                <a href="#tab3" data-toggle="tab" aria-expanded="true">3. Phương tiện</a>
-            </li>
-
         </ul>
 
         <div class="tab-content">
-            @*<div class="tab-pane active" id="tab1">
-                    <div id="tab_1">
-                        @await Html.PartialAsync("Tab1", Model);
-                    </div>
-                </div>*@
-            <div class="tab-pane" id="tab2">
+            <div class="tab-pane active" id="tab2">
                 <div id="tab_2">
                     @await Html.PartialAsync("Tab2", Model);
                 </div>
             </div>
-            <div class="tab-pane" id="tab3">
-                <div id="tab_3">
-                    @await Html.PartialAsync("Tab3", Model);
-                </div>
-            </div>
         </div>
 
-    </div><!--end tableable-->
+    </div>
 
     <div class="row">
+
         <div class="col-lg-6">
-            <!-- Chọn người đại diện, Số tien dat coc -->
-            <div class="form-group form-md-line-input">
-                <label class="col-md-4 control-label">
-                    Người đại diện
-                    <span class="required" aria-required="true"> * </span>
-                </label>
-                <div class="col-md-8">
-                    <select class="form-control select optional form-control" name="admin_agreement[renter_id]" id="admin_agreement_renter_id">
-                        <option value="">-- Chọn người đại diện --</option>
-                        <option selected="selected" value="8844">Tâm</option>
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
+                    <label class="control-label">
+                        Người đại diện
+                        <span class="required" aria-required="true"> * </span>
+                    </label>
+                    <select asp-for="hopDongKhachHangPhong.hopDong._MaKH" class="form-control select optional form-control" id="btn_khachhang">
+                        @{
+
+                            foreach (var item in Model.listKhachHang)
+                            {
+                                <option value="@item.MaKh">@item.TenKH</option>
+                            }
+                        }
                     </select>
+
+                    <input type="hidden" name="admin_agreement[room_id]" value="34171">
+                    <input type="hidden" name="change_deposit2agreement[deposit_id]" value="711">
                 </div>
             </div>
 
-            <div class="form-group form-md-line-input">
-                <label class="col-md-4 control-label">Tiền đặt cọc</label>
-                <div class="col-md-8">
-                    <input class="string optional bg-maxlength optional form-control number-format-clear-empty" placeholder="Nhập số tiền đặt cọc" maxlength="11" size="11" type="text" value="3000000" name="admin_agreement[down_payment]" id="admin_agreement_down_payment">
-                    <div class="form-control-focus"></div>
-                </div>
-            </div>
-
-            <div class="form-group form-md-line-input">
-                <label class="col-md-4 control-label">Ngày bắt đầu</label>
-                <div class="col-md-8">
-                    <div class="input-group date form_datetime">
-                        <input type="text" id="startDate" class="form-control" name="admin_agreement[start_date]" value="18/06/2020 20:49" readonly="">
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
+                    <label class="control-label">Tiền đặt cọc</label>
+                    <div>
+                        <input class="string optional bg-maxlength optional form-control number-format-clear-empty"
+                               placeholder="Nhập số tiền đặt cọc" maxlength="11" size="11" type="text"
+                               asp-for="hopDongKhachHangPhong.hopDong.TienDatCoc"
+                               name="hopDongKhachHangPhong.hopDong.GiaPhong"
+                               id="tienDatCoc">
                         <div class="form-control-focus"></div>
-                        <span class="input-group-btn">
-                            <button class="btn default date-set" type="button">
-                                <i class="fa fa-calendar"></i>
-                            </button>
-                        </span>
                     </div>
                 </div>
             </div>
 
-            <div class="form-group form-md-line-input">
-                <label class="col-md-4 control-label">Ngày hết hạn<span class="required" aria-required="true"> * </span></label>
-                <div class="col-md-8">
-                    <div class="input-group date form_datetime">
-                        <input type="text" id="endDate" class="form-control" name="admin_agreement[end_date]" value="18/06/2021 20:49" readonly="">
-                        <div class="form-control-focus"></div>
-                        <span class="input-group-btn">
-                            <button class="btn default date-set" type="button">
-                                <i class="fa fa-calendar"></i>
-                            </button>
-                        </span>
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
+                    <label class="control-label">Ngày bắt đầu</label>
+                    <div>
+                        <div class="input-group date form_datetime">
+                            <input class="string required bg-maxlength form-control"
+                                   placeholder="Ngày bắt đầu"
+                                   asp-for="hopDongKhachHangPhong.hopDong.NgayBatDau"
+                                   name="hopDongKhachHangPhong.hopDong.NgayBatDau"
+                                   maxlength="50" size="50" type="date"
+                                   id="startDate">
+                            <div class="form-control-focus"></div>
+
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Chu ky thanh toan -->
-            <div class="form-group form-md-line-input">
-                <label class="col-md-4 control-label">
-                    Kì thanh toán
-                    <span class="required" aria-required="true"> * </span>
-                </label>
-                <div class="col-md-8">
-                    <div class="input-group">
-                        <input class="string optional form-control bg-maxlength number-format" value="1" placeholder="Nhập kì thanh toán" maxlength="2" size="2" type="text" name="admin_agreement[billing_cycle]" id="admin_agreement_billing_cycle">
-                        <div class="form-control-focus"></div>
-                        <span class="input-group-btn">
-                            <button class="btn default" type="button">
-                                <i class="fa fa-history"></i>tháng/lần
-                            </button>
-                        </span>
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
+                    <label class="control-label">
+                        Kì thanh toán
+                        <span class="required" aria-required="true"> * </span>
+                    </label>
+                    <div>
+                        <div class="input-group">
+                            <input class="string optional form-control bg-maxlength number-format" value="1" placeholder="Nhập kì thanh toán" maxlength="2" size="2" type="text" name="admin_agreement[billing_cycle]" id="admin_agreement_billing_cycle">
+                            <div class="form-control-focus"></div>
+                            <span class="input-group-btn">
+                                <button class="btn default" type="button">
+                                    <i class="fa fa-history"></i>tháng/lần
+                                </button>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Ngày cảnh báo nộp tiền theo kỳ -->
-            <div class="form-group form-md-line-input">
-                <label class="col-md-4 control-label">
-                    Ngày đóng tiền kỳ tới
-                    <span class="required" aria-required="true"> * </span> <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Ngày dùng để cảnh báo khi đến kỳ thanh toán"> [?] </span>
-                </label>
-                <div class="col-md-8">
-                    <div class="input-group">
-                        <input class="string optional form-control bg-maxlength number-format" value="18" placeholder="Nhập kì thanh toán" maxlength="2" size="2" type="text" name="admin_agreement[billing_cycle_warning]" id="admin_agreement_billing_cycle_warning">
-                        <div class="form-control-focus"></div>
-                        <span class="input-group-btn">
-                            <button class="btn default" type="button">
-                                <i class="fa fa-history"></i>Kỳ
-                            </button>
-                        </span>
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
+                    <label class="control-label">
+                        Ngày đóng tiền kỳ tới
+                        <span class="required" aria-required="true"> * </span> <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Ngày dùng để cảnh báo khi đến kỳ thanh toán"> [?] </span>
+                    </label>
+                    <div>
+                        <div class="input-group">
+                            <input class="string optional form-control bg-maxlength number-format" value="18" placeholder="Nhập kì thanh toán" maxlength="2" size="2" type="text" name="admin_agreement[billing_cycle_warning]" id="admin_agreement_billing_cycle_warning">
+                            <div class="form-control-focus"></div>
+                            <span class="input-group-btn">
+                                <button class="btn default" type="button">
+                                    <i class="fa fa-history"></i>Kỳ
+                                </button>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
 
         </div>
         <div class="col-lg-6">
-            <!-- Ghi chú -->
-            <div class="form-group form-md-line-input">
-                <div class="row">
-                    <label class="col-md-4 control-label">Ghi chú (Nếu có) </label>
-                    <div class="col-md-8">
-                        <textarea class="text optional form-control bg-maxlength" row="5" style="height: 286px;" maxlength="255" name="admin_agreement[description]" id="admin_agreement_description"></textarea>
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
+                    <label class="control-label">
+                        Chủ đại diện
+                        <span class="required" aria-required="true"> * </span>
+                    </label>
+                    <select asp-for="hopDongKhachHangPhong.hopDong._MaCT" class="form-control select optional form-control" id="btn_khachhang">
+                        @{
+                            foreach (var item in Model.listChuTro)
+                            {
+                                <option value="@item.MaChuTro">@item.HoTen</option>
+
+                            }
+                        }
+                    </select>
+
+                    <input type="hidden" name="admin_agreement[room_id]" value="34171">
+                    <input type="hidden" name="change_deposit2agreement[deposit_id]" value="711">
+                </div>
+            </div>
+
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
+                    <label class="control-label">Tiền phòng</label>
+                    <div>
+                        <input class="string optional bg-maxlength optional form-control number-format-clear-empty"
+                               asp-for="hopDongKhachHangPhong.hopDong.GiaPhong"
+                               name="hopDongKhachHangPhong.hopDong.GiaPhong"
+                               placeholder="Nhập số tiền đặt cọc" maxlength="11" size="11" type="text"
+                               id="giaPhong">
                         <div class="form-control-focus"></div>
                     </div>
                 </div>
             </div>
+
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
+                    <label class="control-label">Ngày hết hạn<span class="required" aria-required="true"> * </span></label>
+                    <div>
+                        <div class="input-group date form_datetime">
+                            <input class="string required bg-maxlength form-control"
+                                   placeholder="Ngày hết hạn"
+                                   asp-for="hopDongKhachHangPhong.hopDong.NgayKetThuc"
+                                   name="hopDongKhachHangPhong.hopDong.NgayKetThuc"
+                                   maxlength="50" size="50" type="date"
+                                   id="endDate">
+                            <div class="form-control-focus"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
+                    <label class="control-label">Ghi chú (Nếu có) </label>
+                    <div>
+                        <textarea class="text optional form-control bg-maxlength" asp-for="hopDongKhachHangPhong.hopDong.GhiChu"
+                                  name="hopDongKhachHangPhong.hopDong.GhiChu"
+                                  row="2" style="height: 110px;" maxlength="500"></textarea>
+                        <div class="form-control-focus"></div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 
-    <input class="hidden" type="hidden" value="0" name="admin_agreement[month_pre_payment]" id="admin_agreement_month_pre_payment">
-    <input class="hidden" type="hidden" value="0" name="admin_agreement[pre_payment]" id="admin_agreement_pre_payment">
+    <input class="hidden" type="hidden" value="0" id="admin_agreement_month_pre_payment">
+    <input class="hidden" type="hidden" value="0" id="admin_agreement_pre_payment">
 
     <div class="form-actions margin-top-10">
         <div class="row">
@@ -259,3 +283,172 @@
     </div>
 
 </form>
+
+
+<script>
+    $(function () {
+        $("#btn_phong").change(function () {
+
+            var k = $("#btn_phong option:selected").text();
+            var indexGia = k.indexOf("-", 0);
+            var indexCoc = k.indexOf("-", indexGia + 1);
+            var Gia = k.substring(indexGia + 1, indexCoc)
+            var Coc = k.substring(indexCoc + 1)
+
+            $("#giaPhong").val(Gia);
+            $("#tienDatCoc").val(Coc);
+        });
+    });
+
+    $(document).ready(function () {
+        $('#datetimepicker').datetimepicker();
+        $('#endDate').datepicker();
+        $(".form_datetime").datetimepicker({
+            autoclose: true,
+            isRTL: App.isRTL(),
+            language: 'vi',
+            format: "dd/mm/yyyy hh:ii",
+            pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
+        });
+
+        $(".show-main-modal").click(function () {
+            $("#main-modal").modal("show");
+        });
+
+        $("#show-second-modal").click(function () {
+            $("#second-modal").modal("hide");
+            $("#main-modal").modal("show");
+        });
+
+        $(".radio-agreement_type").change(function () {
+            if ($(this).val() == 1) {
+                /* Hiển thị phần chọn phòng */
+                $(".selected-room-container").show();
+            }
+
+            if ($(this).val() == 3) {
+                /* Ẩn thị phần chọn phòng */
+                $(".selected-room-container").hide();
+            }
+        });
+
+
+        $("#room_agreement, #startDate").change(function () {
+            caculatePrePayment(false);
+        });
+
+        caculatePrePayment(true);
+
+        function caculatePrePayment(isFirst) {
+
+            var room_name = $("#room_agreement option:selected").text();
+            if (room_name.indexOf(" - ") > 0) {
+                var strs = room_name.split(" - ");
+                if (strs.length == 4) {
+                    if (!isFirst) {
+                        $('#unit-price-room').val(format_money(parseInt(strs[3].replace(/\./g, '')), false));
+                        $('#admin_agreement_down_payment').val(format_money(parseInt(strs[3].replace(/\./g, '')), false));
+                    }
+                }
+                else {
+                    if (!isFirst) {
+                        $('#unit-price-room').val(0);
+                        $('#admin_agreement_down_payment').val(0);
+                    }
+                }
+            }
+            else {
+                if (!isFirst) {
+                    $('#unit-price-room').val(0);
+                    $('#admin_agreement_down_payment').val(0);
+                }
+            }
+        }
+
+        $("#admin_agreement_billing_cycle").change(function () {
+            //TODO: Điều kiện theo đơn vị
+            if (parseInt($(this).val()) > parseInt($("#duration").val())) {
+                //toastr.error('Thời hạn hợp đồng phải lớn hơn kỳ thanh toán');
+            }
+        });
+
+        $("#startDate, #duration, #durationUnit").change(function () {
+            //TODO: Điều kiện theo đơn vị
+            if (parseInt($("#admin_agreement_billing_cycle").val()) > parseInt($("#duration").val())) {
+                //toastr.error('Thời hạn hợp đồng phải lớn hơn kỳ thanh toán');
+            }
+
+            var duration = $('#duration').val() || 0;
+            var durationUnit = $('#durationUnit').val() || 1;
+            var durationUnitText = $('#durationUnitText');
+
+            if (duration != "") {
+                var startDate = $('#startDate').val();
+                var dt1 = parseInt(startDate.substring(0, 2));
+                var mon1 = parseInt(startDate.substring(3, 5)) - 1;
+                var yr1 = parseInt(startDate.substring(6, 10));
+                var time = new Date(yr1, mon1, dt1);
+
+                if (durationUnit == "0") {
+                    time.setDate(time.getDate() + parseInt(duration));
+                    durationUnitText.html("Ngày");
+                }
+                else if (durationUnit == "1") {
+                    time.setMonth(time.getMonth() + parseInt(duration));
+                    durationUnitText.html("Tháng");
+                }
+                else if (durationUnit == "2") {
+                    time.setFullYear(time.getFullYear() + parseInt(duration));
+                    durationUnitText.html("Năm");
+                }
+                else {
+                    time.setMonth(time.getMonth() + parseInt(duration));
+                    durationUnitText.html("Tháng");
+                }
+
+                dd = ("0" + time.getDate()).slice(-2);
+                mm = ("0" + (time.getMonth() + 1)).slice(-2);
+                yy = time.getFullYear();
+                var endDate = dd + "/" + mm + "/" + yy + startDate.substring(10, startDate.length);
+                $("#endDate").val(endDate);
+            } else {
+                $("#endDate").val("");
+            }
+            ;
+            checkStartDateEndDate();
+        });
+
+        $("#endDate").change(function () {
+            checkStartDateEndDate();
+        });
+
+        function checkStartDateEndDate() {
+            var startDate = convertStringToDate($('#startDate').val());
+            var endDate = convertStringToDate($('#endDate').val());
+            if (endDate.getTime() < startDate.getTime()) {
+                toastr.error('Ngày kết thúc phải lớn hơn ngày bắt đầu')
+            }
+        }
+        function format_money(cost, has_unit) {
+            var price = cost.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+            if (cost.toString() != null) {
+                if (has_unit == true) {
+                    price = price + 'đ';
+                }
+                else {
+                    price = price;
+                }
+            }
+
+            return price;
+        }
+
+        function convertStringToDate(str) {
+            var dt1 = parseInt(str.substring(0, 2));
+            var mon1 = parseInt(str.substring(3, 5)) - 1;
+            var yr1 = parseInt(str.substring(6, 10));
+            var date = new Date(yr1, mon1, dt1);
+            return date;
+        }
+    });
+</script>

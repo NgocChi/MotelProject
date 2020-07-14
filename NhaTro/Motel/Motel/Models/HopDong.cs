@@ -15,10 +15,10 @@ namespace Motel.Models
         public int MaHopDong { get; set; }
 
         [Column("NgayBatDau")]
-        public DateTime NgayBatDau { get; set; }
+        public DateTime? NgayBatDau { get; set; }
 
         [Column("NgayKetThuc")]
-        public DateTime NgayKetThuc { get; set; }
+        public DateTime? NgayKetThuc { get; set; }
 
         [Column("GiaPhong")]
         public decimal GiaPhong { get; set; }
@@ -34,5 +34,8 @@ namespace Motel.Models
 
         [Column("_MaPH")]
         public int _MaPH { get; set; }
+
+        [Column("GhiChu")]
+        public string GhiChu { get; set; }
     }
 }

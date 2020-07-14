@@ -18,9 +18,12 @@ namespace Motel.Models
         [Column("Ten")]
         public string Ten { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C0}")]
+        [DataType(DataType.Currency)]
         [Column("Gia")]
         public decimal Gia { get; set; }
 
+        [DataType(DataType.Currency)]
         [Column("GiaDatCoc")]
         public decimal GiaDatCoc { get; set; }
 

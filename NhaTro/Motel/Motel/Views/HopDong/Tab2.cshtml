@@ -29,208 +29,52 @@
                         {
                             <tr>
                                 <td class="text-center">
-                                    <a class="btn btn-circle btn-icon-only btn-default item-selection-service add-selection-service"><input class="display-hide" type="checkbox" name="admin_agreement_service[]" value="18142"><span class="fa fa-plus" aria-hidden="true"></span></a>
-                                    <input type="hidden" name="admin_agreement_service_service_initial[18142]" value="45607">
+                                    <a class="btn btn-circle btn-icon-only btn-default item-selection-service add-selection-service">
+                                        <input class="display-hide" type="checkbox"><span class="fa fa-plus" aria-hidden="true"></span>
+                                    </a>
+                                    <input type="hidden">
                                 </td>
-                                <!-- Cột name -->
-                                <td class="service-building-18142">Tiền điện</td>
-                                <!-- Cột quy tắc tính tiền -->
-                                <td class="formula-type-input hide 18142">
-                                    <!-- Trường hợp điện, nước thì lấy danh sách loại quy tắc -->
-                                    <select name="admin_agreement_service_formula_type[18142]" id="formula-type-item18142" class="select optional form-control formula-type-item">
-                                        <option selected="selected" value="1">Đơn giá cố định</option>
-                                        <option value="2">Đơn giá theo đầu người</option>
-                                        <option value="3">Đơn giá theo định mức</option>
-                                    </select>
-                                </td>
-                                <!-- Cột giá ẩn -->
+                                <td class="service-building-18142">@item.Ten</td>
+
+                                @*<td class="formula-type-input hide 18142">
+                                        <select class="select optional form-control formula-type-item">
+                                            <option selected="selected" value="1">Đơn giá cố định</option>
+                                            <option value="2">Đơn giá theo đầu người</option>
+                                            <option value="3">Đơn giá theo định mức</option>
+                                        </select>
+                                    </td>*@
                                 <td class="text-center unit-price-18142 ">
-                                    90.000đ
+                                    @item.Gia
                                 </td>
                                 <!-- Cột giá -->
-                                <td class="text-center hide 18142">
-                                    <!-- Phòng thì hiển thị giá mặc đinh là --- -->
-                                    <!-- Điện/nước theo loại công thức, chú ý loại là công thức thì hiển thị danh sách công thức, ngược lại hiển thị đơn giá -->
-                                    <select name="admin_agreement_service_formula_id[18142]" id="admin_agreement_service_formula_id_18142" class="select optional form-control formula-id-item18142" disabled="disabled" style="display: none;"><option value="">-- Chọn công thức --</option><option value="6116">CT Điện</option></select>
-                                    <input type="hidden" name="admin_agreement_service_unit_price[18142]" disabled="" class="unit-price-hidden-item18142">
-                                    <input type="text" name="admin_agreement_service_unit_price[18142]" value="4000" class="form-control number-format text-center unit-price-fix-item18142">
+                                @*<td class="text-center hide 18142">
+                                        <select class="select optional form-control formula-id-item18142" disabled="disabled" style="display: none;"><option value="">-- Chọn công thức --</option><option value="6116">CT Điện</option></select>
+                                        <input type="hidden" disabled="" class="unit-price-hidden-item18142">
+                                        <input type="text" class="form-control number-format text-center unit-price-fix-item18142">
 
-                                    <!-- Phục vụ cho việc xử lý JS lúc thay đổi quy tắc tính tiền -->
-                                    <input type="text" name="admin_agreement_service_unit_price[18142]" value="90000" class="form-control number-format text-center unit-price-item18142" disabled="" style="display: none;">
-                                    <input type="hidden" name="admin_agreement_service_formula_id[18142]" class="formula-id-hidden-item18142">
-                                </td>
-                                <!-- Cột đơn vị -->
+                                        <input type="text" class="form-control number-format text-center unit-price-item18142" disabled="" style="display: none;">
+                                        <input type="hidden" class="formula-id-hidden-item18142">
+                                    </td>*@
+
                                 <td class="text-center">
-                                    <div class="unit181422">Số (kWh)</div>
-                                    <input id="unit181422" type="hidden" name="admin_agreement_service_unit[18142]" value="24295">
+                                    <div class="unit181422">@item.TenDonVi</div>
+                                    <input type="hidden">
                                 </td>
-                                <!-- Cột số lượng -->
                                 <td class="amount hide text-center 18142">
-                                    <!-- Phòng thì hiển thị cố định số lượng là 1 -->
-                                    <!-- Loại theo đầu người thì cho phép sửa số lượng, ngược lại thì cố định (chỉ áp dụng cho điện/nước) -->
-                                    <input type="text" name="admin_agreement_service_amount[18142]" value="1" class="form-control number-format text-center amount18142" readonly="">
+                                    <input type="text" class="form-control number-format text-center amount18142" readonly="">
                                 </td>
-                                <!-- Cột Tạm dừng -->
+
                                 <td class="stop-service hide text-center 18142">
                                     <div class="md-checkbox-inline">
                                         <div class="md-checkbox">
-                                            <input type="checkbox" id="checkboxactive18142" name="admin_agreement_service_active[18142]" value="1" class="md-check"><label for="checkboxactive18142"><span></span><span class="check"></span><span class="box"></span></label>
+                                            <input type="checkbox" class="md-check"><label for="checkboxactive18142"><span></span><span class="check"></span><span class="box"></span></label>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <a class="btn btn-circle btn-icon-only btn-default item-selection-service add-selection-service"><input class="hide" type="checkbox" name="admin_agreement_service[]" value="18143"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-                                    <input type="hidden" name="admin_agreement_service_service_initial[18143]" value="45608">
-                                </td>
-                                <!-- Cột name -->
-                                <td class="service-building-18143">Tiền nước</td>
-                                <!-- Cột quy tắc tính tiền -->
-                                <td class="formula-type-input hide 18143">
-                                    <!-- Trường hợp điện, nước thì lấy danh sách loại quy tắc -->
-                                    <select name="admin_agreement_service_formula_type[18143]" id="formula-type-item18143" class="select optional form-control formula-type-item">
-                                        <option selected="selected" value="1">Đơn giá cố định</option>
-                                        <option value="2">Đơn giá theo đầu người</option>
-                                        <option value="3">Đơn giá theo định mức</option>
-                                    </select>
-                                </td>
-                                <!-- Cột giá ẩn -->
-                                <td class="text-center unit-price-18143 ">
-                                    70.000đ
-                                </td>
-                                <!-- Cột giá -->
-                                <td class="text-center hide 18143">
-                                    <!-- Phòng thì hiển thị giá mặc đinh là --- -->
-                                    <!-- Điện/nước theo loại công thức, chú ý loại là công thức thì hiển thị danh sách công thức, ngược lại hiển thị đơn giá -->
-                                    <select name="admin_agreement_service_formula_id[18143]" id="admin_agreement_service_formula_id_18143" class="select optional form-control formula-id-item18143" disabled="disabled" style="display: none;"><option value="">-- Chọn công thức --</option><option value="6117">CT Nước</option></select>
-                                    <input type="hidden" name="admin_agreement_service_unit_price[18143]" disabled="" class="unit-price-hidden-item18143">
-                                    <input type="text" name="admin_agreement_service_unit_price[18143]" value="22000" class="form-control number-format text-center unit-price-fix-item18143">
 
-                                    <!-- Phục vụ cho việc xử lý JS lúc thay đổi quy tắc tính tiền -->
-                                    <input type="text" name="admin_agreement_service_unit_price[18143]" value="70000" class="form-control number-format text-center unit-price-item18143" disabled="" style="display: none;">
-                                    <input type="hidden" name="admin_agreement_service_formula_id[18143]" class="formula-id-hidden-item18143">
-                                </td>
-                                <!-- Cột đơn vị -->
-                                <td class="text-center">
-                                    <div class="unit181433">Khối (m3)</div>
-                                    <input id="unit181433" type="hidden" name="admin_agreement_service_unit[18143]" value="24296">
-                                </td>
-                                <!-- Cột số lượng -->
-                                <td class="amount hide text-center 18143">
-                                    <!-- Phòng thì hiển thị cố định số lượng là 1 -->
-                                    <!-- Loại theo đầu người thì cho phép sửa số lượng, ngược lại thì cố định (chỉ áp dụng cho điện/nước) -->
-                                    <input type="text" name="admin_agreement_service_amount[18143]" value="1" class="form-control number-format text-center amount18143" readonly="">
-                                </td>
-                                <!-- Cột Tạm dừng -->
-                                <td class="stop-service hide text-center 18143">
-                                    <div class="md-checkbox-inline">
-                                        <div class="md-checkbox">
-                                            <input type="checkbox" id="checkboxactive18143" name="admin_agreement_service_active[18143]" value="1" class="md-check"><label for="checkboxactive18143"><span></span><span class="check"></span><span class="box"></span></label>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <a class="btn btn-circle btn-icon-only btn-default item-selection-service add-selection-service"><input class="hide" type="checkbox" name="admin_agreement_service[]" value="18144"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-                                    <input type="hidden" name="admin_agreement_service_service_initial[18144]" value="45612">
-                                </td>
-                                <!-- Cột name -->
-                                <td class="service-building-18144">Xe máy</td>
-                                <!-- Cột quy tắc tính tiền -->
-                                <td class="formula-type-input hide 18144">
-                                    <!-- Trường hợp điện, nước thì lấy danh sách loại quy tắc -->
-                                    <!-- Trường hợp khác thì cố định -->
-                                    Đơn giá cố định
-                                    <input type="hidden" name="admin_agreement_service_formula_type[18144]" value="1">
-                                </td>
-                                <!-- Cột giá ẩn -->
-                                <td class="text-center unit-price-18144 ">
-                                    100.000đ
-                                </td>
-                                <!-- Cột giá -->
-                                <td class="text-center hide 18144">
-                                    <!-- Phòng thì hiển thị giá mặc đinh là --- -->
-                                    <!-- Điện/nước theo loại công thức, chú ý loại là công thức thì hiển thị danh sách công thức, ngược lại hiển thị đơn giá -->
-                                    <!-- Phục vụ cho hiển thị ban đầu, luôn có 1 cặp unit_price & formula_id -->
-                                    <input type="hidden" name="admin_agreement_service_unit_price[18144]" disabled="" class="unit-price-hidden-item18144">
 
-                                    <!-- Phục vụ cho việc xử lý JS lúc thay đổi quy tắc tính tiền -->
-                                    <input type="text" name="admin_agreement_service_unit_price[18144]" value="100000" class="form-control number-format text-center unit-price-item18144">
-                                    <input type="text" name="admin_agreement_service_unit_price[18144]" value="0" class="form-control number-format text-center unit-price-fix-item18144" disabled="" style="display: none;">
-                                    <input type="hidden" name="admin_agreement_service_formula_id[18144]" class="formula-id-hidden-item18144">
-                                </td>
-                                <!-- Cột đơn vị -->
-                                <td class="text-center">
-                                    <div class="unit18144">Chiếc</div>
-                                    <input id="unit18144" type="hidden" name="admin_agreement_service_unit[18144]" value="24298">
-                                </td>
-                                <!-- Cột số lượng -->
-                                <td class="amount hide text-center 18144">
-                                    <!-- Phòng thì hiển thị cố định số lượng là 1 -->
-                                    <!-- Loại theo đầu người thì cho phép sửa số lượng, ngược lại thì cố định (chỉ áp dụng cho điện/nước) -->
-                                    <input type="text" name="admin_agreement_service_amount[18144]" value="1" class="form-control number-format text-center amount18144">
-                                </td>
-                                <!-- Cột Tạm dừng -->
-                                <td class="stop-service hide text-center 18144">
-                                    <div class="md-checkbox-inline">
-                                        <div class="md-checkbox">
-                                            <input type="checkbox" id="checkboxactive18144" name="admin_agreement_service_active[18144]" value="1" class="md-check"><label for="checkboxactive18144"><span></span><span class="check"></span><span class="box"></span></label>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
-                                    <a class="btn btn-circle btn-icon-only btn-default item-selection-service add-selection-service"><input class="hide" type="checkbox" name="admin_agreement_service[]" value="18145"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-                                    <input type="hidden" name="admin_agreement_service_service_initial[18145]" value="45616">
-                                </td>
-                                <!-- Cột name -->
-                                <td class="service-building-18145">Internet</td>
-                                <!-- Cột quy tắc tính tiền -->
-                                <td class="formula-type-input hide 18145">
-                                    <!-- Trường hợp điện, nước thì lấy danh sách loại quy tắc -->
-                                    <!-- Trường hợp khác thì cố định -->
-                                    Đơn giá cố định
-                                    <input type="hidden" name="admin_agreement_service_formula_type[18145]" value="1">
-                                </td>
-                                <!-- Cột giá ẩn -->
-                                <td class="text-center unit-price-18145 ">
-                                    100.000đ
-                                </td>
-                                <!-- Cột giá -->
-                                <td class="text-center hide 18145">
-                                    <!-- Phòng thì hiển thị giá mặc đinh là --- -->
-                                    <!-- Điện/nước theo loại công thức, chú ý loại là công thức thì hiển thị danh sách công thức, ngược lại hiển thị đơn giá -->
-                                    <!-- Phục vụ cho hiển thị ban đầu, luôn có 1 cặp unit_price & formula_id -->
-                                    <input type="hidden" name="admin_agreement_service_unit_price[18145]" disabled="" class="unit-price-hidden-item18145">
 
-                                    <!-- Phục vụ cho việc xử lý JS lúc thay đổi quy tắc tính tiền -->
-                                    <input type="text" name="admin_agreement_service_unit_price[18145]" value="100000" class="form-control number-format text-center unit-price-item18145">
-                                    <input type="text" name="admin_agreement_service_unit_price[18145]" value="0" class="form-control number-format text-center unit-price-fix-item18145" disabled="" style="display: none;">
-                                    <input type="hidden" name="admin_agreement_service_formula_id[18145]" class="formula-id-hidden-item18145">
-                                </td>
-                                <!-- Cột đơn vị -->
-                                <td class="text-center">
-                                    <div class="unit18145">Phòng</div>
-                                    <input id="unit18145" type="hidden" name="admin_agreement_service_unit[18145]" value="24293">
-                                </td>
-                                <!-- Cột số lượng -->
-                                <td class="amount hide text-center 18145">
-                                    <!-- Phòng thì hiển thị cố định số lượng là 1 -->
-                                    <!-- Loại theo đầu người thì cho phép sửa số lượng, ngược lại thì cố định (chỉ áp dụng cho điện/nước) -->
-                                    <input type="text" name="admin_agreement_service_amount[18145]" value="1" class="form-control number-format text-center amount18145">
-                                </td>
-                                <!-- Cột Tạm dừng -->
-                                <td class="stop-service hide text-center 18145">
-                                    <div class="md-checkbox-inline">
-                                        <div class="md-checkbox">
-                                            <input type="checkbox" id="checkboxactive18145" name="admin_agreement_service_active[18145]" value="1" class="md-check"><label for="checkboxactive18145"><span></span><span class="check"></span><span class="box"></span></label>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
                         }
                     }
                 </tbody>
@@ -246,9 +90,7 @@
                         <th class="text-center">
                             <a class="btn btn-circle btn-icon-only btn-default remove-all-selection-service"><span class="fa fa-minus" aria-hidden="true"></span></a>
                         </th>
-                        <th class="service-building text-center hide"></th>
                         <th class="text-center">Tên dịch vụ</th>
-                        <th>Quy tắc tính tiền</th>
                         <th class="text-center">Đơn giá</th>
                         <th class="text-center">Đơn vị</th>
                         <th class="amount text-center">Số lượng</th>
@@ -256,51 +98,6 @@
                     </tr>
                 </thead>
                 <tbody class="item-container-service-right">
-                    <tr>
-                        <td class="text-center">
-                            <a class="btn btn-circle btn-icon-only btn-default item-selection-service remove-selection-service">
-                                <input class="display-hide" type="checkbox" name="admin_agreement_service[]" value="18141" checked=""><span class="fa fa-minus" aria-hidden="true"></span>
-                                <input type="hidden" name="admin_agreement_service_service_initial[18141]" value="45606">
-                            </a>
-                        </td>
-                        <!-- Cột name -->
-                        <td class="service-building-18141">Tiền nhà</td>
-                        <!-- Cột quy tắc tính tiền -->
-                        <td class="formula-type-input 18141">
-                            <!-- Trường hợp điện, nước thì lấy danh sách loại quy tắc -->
-                            <!-- Trường hợp khác thì cố định -->
-                            Đơn giá cố định
-                            <input type="hidden" name="admin_agreement_service_formula_type[18141]" value="1">
-                        </td>
-                        <!-- Cột giá ẩn -->
-                        <td class="text-center hide unit-price-18141 unit-price-room">
-                            ---
-                        </td>
-                        <!-- Cột giá -->
-                        <td class="text-center 18141">
-                            <!-- Phòng thì hiển thị giá mặc đinh là --- -->
-                            <input type="text" name="admin_agreement_service_unit_price[18141]" id="unit-price-room" value="3000000" class="form-control number-format text-center">
-                            <input type="hidden" name="admin_agreement_service_formula_id[18141]">
-                        </td>
-                        <!-- Cột đơn vị -->
-                        <td class="text-center">
-                            <div class="unit181411">Phòng</div>
-                            <input id="unit181411" type="hidden" name="admin_agreement_service_unit[18141]" value="24293">
-                        </td>
-                        <!-- Cột số lượng -->
-                        <td class="amount text-center 18141">
-                            <!-- Phòng thì hiển thị cố định số lượng là 1 -->
-                            <input type="text" name="admin_agreement_service_amount[18141]" value="1" class="form-control number-format text-center amount18141" readonly="">
-                        </td>
-                        <!-- Cột Tạm dừng -->
-                        <td class="stop-service text-center 18141">
-                            <div class="md-checkbox-inline">
-                                <div class="md-checkbox">
-                                    <input type="checkbox" id="checkboxactive18141" name="admin_agreement_service_active[18141]" value="1" class="md-check"><label for="checkboxactive18141"><span></span><span class="check"></span><span class="box"></span></label>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -320,7 +117,7 @@
                 /* define other table */
                 $otherTable = $('.items-table-service').not($btn.closest('table'));
 
-            $btn.find('span').toggleClass('glyphicon-plus glyphicon-minus');
+            $btn.find('span').toggleClass('fa fa-plus fa fa-minus');
             $btn.find('input:checkbox').prop("checked", !$btn.find('input:checkbox').is(":checked"));
 
             /*Cập nhật uncheck cho checkbox*/
@@ -354,7 +151,7 @@
                     columns.each(function () {
                         $btnSelection = $(this).find('.item-selection-service');
                         $btn = $btnSelection.toggleClass('add-selection-service remove-selection-service');
-                        $btn.find('span').toggleClass('glyphicon-plus glyphicon-minus');
+                        $btn.find('span').toggleClass('fa fa-plus fa fa-minus');
                         $btn.find('input:checkbox').prop("checked", !$btn.find('input:checkbox').is(":checked"));
 
                         /*Cập nhật uncheck cho checkbox*/

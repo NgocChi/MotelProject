@@ -9,15 +9,19 @@ namespace Motel.ViewModels
     public class QuanLyHopDongViewModel
     {
         public IEnumerable<HopDongViewModel> listHopDong { get; set; }
-        public IEnumerable<Phong> listPhong { get; set; }
+        public IEnumerable<PhongViewModel> listPhong { get; set; }
+
+        public IEnumerable<ChuTro> listChuTro { get; set; }
+
         public IEnumerable<KhachHang> listKhachHang { get; set; }
 
-        public IEnumerable<DichVu> listDichVu { get; set; }
-        public HopDongKhachHang hopDongKhachHangPhong { get; set; }
+        public IEnumerable<DichVu_ViewModel> listDichVu { get; set; }
 
         public IEnumerable<KhachHang> listKHDestination { get; set; }
 
         public IEnumerable<DichVu> listDichVuDestination { get; set; }
+
+        public HopDongKhachHang hopDongKhachHangPhong { get; set; }
 
     }
 
@@ -36,8 +40,7 @@ namespace Motel.ViewModels
 
         public HopDong hopDong { get; set; }
 
-        public KhachHang khachHang { get; set; }
+        public DichVuPhong dichVuPhong { get; set; }
 
-        public Phong phong { get; set; }
     }
 }

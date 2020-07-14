@@ -11,6 +11,7 @@ namespace Motel.Interfaces.Repositories
     {
         IEnumerable<PhongViewModel> Gets(int _nhaTro);
         IEnumerable<PhongViewModel> Gets();
+        IEnumerable<PhongViewModel> GetsPTrong(int idNT);
         IEnumerable<Phong> GetsPhongTrong();
 
         IEnumerable<TrangThaiPhong> GetsTrangThaiPhong();

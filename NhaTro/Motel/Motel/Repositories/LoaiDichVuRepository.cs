@@ -36,12 +36,12 @@ namespace Motel.Repositories
             return query.ToList();
         }
 
-        public List<LoaiDichVuViewModel1> GetList()
+        public List<LoaiDichVuView> GetListByMaNhaTroByDichVu(int id)
         {
-            var query = from loai in _appDBContext.LoaiDichVus
-                        join dv in _appDBContext.DonViTinhs on loai._MaDVi equals dv.MaDonVi
 
-                        select new LoaiDichVuViewModel1
+            var query = from loai in _appDBContext.LoaiDichVus
+                        where !(from dv in _appDBContext.DichVus where dv._MaNT == id select dv._MaLDV).Contains(loai.MaLoaiDV)
+                        select new LoaiDichVuView
                         {
                             MaLoaiDV = loai.MaLoaiDV,
                             TenLoaiDV = loai.TenLoaiDV,

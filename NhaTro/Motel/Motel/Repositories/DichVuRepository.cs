@@ -23,18 +23,23 @@ namespace Motel.Repositories
         }
 
 
-        public IEnumerable<DichVu> GetsByNhaTro(int id)
+        public IEnumerable<DichVu_ViewModel> GetsByNhaTro(int id)
         {
             var query = from dv in _appDBContext.DichVus
                         join nt in _appDBContext.NhaTros on dv._MaNT equals nt.MaNT
                         join dvt in _appDBContext.DonViTinhs on dv._MaDVT equals dvt.MaDonVi
                         where dv._MaNT == id
 
-                        select new DichVu
+                        select new DichVu_ViewModel
                         {
                             Ten = dv.Ten,
                             Gia = dv.Gia,
                             MoTa = dv.MoTa,
+                            MaDV = dv.MaDV,
+                            _MaNT = dv._MaNT,
+                            _MaDVT = dv._MaDVT,
+                            TenDonVi = dvt.TenDonVi,
+                            TenNhaTro = nt.Ten
 
 
                         };
@@ -47,11 +52,11 @@ namespace Motel.Repositories
             return await _appDBContext.DichVus.FindAsync(id);
         }
 
-        public LoaiDichVuViewModel1 GetsByIdMaLoaiDV(int? id)
+        public LoaiDichVuView GetsByIdMaLoaiDV(int? id)
         {
             var query = from ldv in _appDBContext.LoaiDichVus
                         where ldv.MaLoaiDV == id
-                        select new LoaiDichVuViewModel1
+                        select new LoaiDichVuView
                         {
                             MaLoaiDV = ldv.MaLoaiDV,
                             TenLoaiDV = ldv.TenLoaiDV,
@@ -80,10 +85,9 @@ namespace Motel.Repositories
             if (find != null)
             {
                 find.Gia = dv.Gia;
+                find.Ten = dv.Ten;
                 find.MoTa = dv.MoTa;
                 find._MaDVT = dv._MaDVT;
-                find._MaNT = dv._MaNT;
-                find._MaLDV = dv._MaLDV;
                 _appDBContext.DichVus.Update(find);
                 await _appDBContext.SaveChangesAsync();
                 return 1;

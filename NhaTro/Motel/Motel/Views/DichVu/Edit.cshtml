@@ -1,0 +1,122 @@
+﻿
+@{
+    Layout = null;
+}
+@using Motel.ViewModels
+@model DichVuViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
+
+
+
+<form asp-controller="DichVu" asp-action="Edit" asp-route-id="@Model.dichVu.MaDV" onsubmit="return jQueryAjaxPost(this);"
+      autocomplete="off" class="simple_form form-horizontal" novalidate="novalidate"
+      id="new_admin_building" accept-charset="UTF-8" data-remote="true">
+    <input name="utf8" type="hidden" value="✓">
+
+    <ul class="errors"></ul>
+
+
+
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">
+            Nhà Trọ
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-4">
+            <select disabled asp-for="dichVu._MaNT" name="dichVu._MaNT" class="text required bg-maxlength form-control"
+                    id="_MaNT" tabindex="-1" aria-hidden="true">
+                @{
+
+                    foreach (var item in Model.listNhaTro)
+                    {
+                        <option value="@item.MaNT">@item.Ten</option>
+                    }
+                }
+            </select>
+
+            <div class="form-control-focus"></div>
+        </div>
+        <div style="padding-top:15px;" class="checkbox-list col-md-6 ">
+            <div class="row">
+                <div class="checkbox-inline col-md-3>
+                    <input type="hidden" />
+                    <input type="checkbox" />
+                </div>
+                <div class="checkbox-inline col-md-9"> Tạm dừng</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">
+            Tên dịch vụ
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-4">
+            <input class="text required bg-maxlength form-control"
+                   asp-for="dichVu.Ten" name="dichVu.Ten" type="text"
+                   placeholder="Nhập địa chỉ" maxlength="255" id="DiaChi" />
+            <div class="form-control-focus"></div>
+        </div>
+        <label class="col-md-2 control-label">
+            Gía dịch vụ
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-4">
+            <input class="text required bg-maxlength form-control"
+                   asp-for="dichVu.Gia" name="dichVu.Gia" type="number"
+                   placeholder="Nhập địa chỉ" maxlength="255" id="DiaChi" />
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+
+
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">
+            Đơn vị tính
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-4 ">
+            <select asp-for="dichVu._MaDVT" class="text required bg-maxlength form-control"
+                    id="_MaNT" tabindex="-1" aria-hidden="true">
+                @{
+
+                    foreach (var item in Model.listDonViTinh)
+                    {
+                        <option value="@item.MaDonVi">@item.TenDonVi</option>
+                    }
+                }
+            </select>
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">
+            Mô tả
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-10">
+            <textarea class="text required bg-maxlength form-control"
+                      asp-for="dichVu.MoTa" name="dichVu.MoTa"
+                      placeholder="Nhập địa chỉ" maxlength="255" id="DiaChi"></textarea>
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+
+
+    <div class="form-actions margin-top-10">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Hủy bỏ
+                </button>
+                <button name="button" type="submit" class="btn btn-default btnFormSubmit btn green">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i>  Lưu lại
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

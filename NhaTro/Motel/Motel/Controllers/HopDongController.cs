@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
 using Motel.ViewModels;
+using Web;
 
 namespace Motel.Controllers
 {
@@ -16,19 +18,24 @@ namespace Motel.Controllers
         private readonly IPhongRepository PhongRepository = null;
         private readonly IKhachHangRepository KhachHangRepository = null;
         private readonly IDichVuRepository DichVuRepository = null;
+        private readonly IChuTroRepository ChuTroRepository = null;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private int _nhaTro = 0;
 
-        public HopDongController(IHopDongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IDichVuRepository dichVuRepository)
+        public HopDongController(IHttpContextAccessor httpContextAccessor, IChuTroRepository chuTroRepository, IHopDongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IDichVuRepository dichVuRepository)
         {
             this.Repository = repository;
             this.PhongRepository = phongRepository;
             this.KhachHangRepository = khachHangRepository;
             this.DichVuRepository = dichVuRepository;
+            this._httpContextAccessor = httpContextAccessor;
+            this.ChuTroRepository = chuTroRepository;
+            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("UserData");
         }
         public IActionResult Index()
         {
             QuanLyHopDongViewModel hd = new QuanLyHopDongViewModel();
             hd.listHopDong = Repository.Gets();
-
             return View(hd);
         }
         [HttpPost]
@@ -56,7 +63,12 @@ namespace Motel.Controllers
                     }
                 }
                 QuanLyHopDongViewModel model = new QuanLyHopDongViewModel();
-                model.listPhong = PhongRepository.GetsPhongTrong();
+                model.listPhong = PhongRepository.GetsPTrong(_nhaTro);
+                model.listKhachHang = KhachHangRepository.Gets();
+                model.listDichVu = DichVuRepository.GetsByNhaTro(_nhaTro);
+                model.listKHDestination = new List<KhachHang>();
+                model.listChuTro = ChuTroRepository.Gets();
+                model.listDichVuDestination = new List<DichVu>();
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", hopdong) });
@@ -67,18 +79,18 @@ namespace Motel.Controllers
         {
             IActionResult result;
             QuanLyHopDongViewModel model = new QuanLyHopDongViewModel();
-            model.listPhong = PhongRepository.GetsPhongTrong();
+            model.listPhong = PhongRepository.GetsPTrong(_nhaTro);
             model.listKhachHang = KhachHangRepository.Gets();
-            model.listDichVu = DichVuRepository.Gets();
+            model.listDichVu = DichVuRepository.GetsByNhaTro(_nhaTro);
             model.listKHDestination = new List<KhachHang>();
+            model.listChuTro = ChuTroRepository.Gets();
             model.listDichVuDestination = new List<DichVu>();
             if (id == 0)
             {
                 model.hopDongKhachHangPhong = new HopDongKhachHang();
                 model.hopDongKhachHangPhong.datPhong = new DatPhong();
-                model.hopDongKhachHangPhong.khachHang = new KhachHang();
-                model.hopDongKhachHangPhong.phong = new Phong();
                 model.hopDongKhachHangPhong.hopDong = new HopDong();
+                model.hopDongKhachHangPhong.dichVuPhong = new DichVuPhong();
                 result = View(model);
             }
             else
@@ -86,7 +98,7 @@ namespace Motel.Controllers
                 model.hopDongKhachHangPhong.hopDong = await Repository.GetById(id);
                 if (model.hopDongKhachHangPhong.hopDong == null)
                     result = NotFound();
-                result = View(model);
+                result = Json(model);
             }
             return result;
         }

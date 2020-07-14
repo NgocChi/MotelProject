@@ -19,9 +19,10 @@ namespace Motel.Controllers.API
             this.TaiKhoanRepository = taiKhoanRepository;
         }
 
+
         [HttpPost]
         [Route("login")]
-        public async Task<ApiResult> Login(DangNhapRequest request)
+        public async Task<ApiResult> Login([FromBody] DangNhapRequest request)
         {
 
             var rs = "hello";

@@ -74,6 +74,33 @@ namespace Motel.Repositories
             var query = _appDBContext.Phongs.Where(t => t._MaTTPH == 1);
             return query.ToList();
         }
+        public IEnumerable<PhongViewModel> GetsPTrong(int idNT)
+        {
+            var query = from p in _appDBContext.Phongs
+                        join nt in _appDBContext.NhaTros on p._MaNT equals nt.MaNT
+                        join ttp in _appDBContext.TrangThaiPhongs on p._MaTTPH equals ttp.MaTTPH
+                        join lp in _appDBContext.LoaiPhongs on p._MaLP equals lp.MaLP
+                        where p._MaTTPH == 1 && p._MaNT == idNT
+                        select new PhongViewModel
+                        {
+                            MaPH = p.MaPH,
+                            Tang = p.Tang,
+                            Ten = p.Ten + '-' + lp.Gia + '-' + lp.GiaDatCoc,
+                            CSDien = p.CSDien,
+                            CSNuoc = p.CSNuoc,
+                            _MaLP = p._MaLP,
+                            _MaTTPH = p._MaTTPH,
+                            SoNguoiToiDa = p.SoNguoiToiDa,
+                            TenNhaTro = nt.Ten,
+                            TrangThai = ttp.Ten,
+                            TenLoaiPhong = lp.Ten,
+                            Gia = lp.Gia,
+                            GiaDatCoc = lp.GiaDatCoc,
+                            DienTich = lp.DienTich
+
+                        };
+            return query.ToList();
+        }
         public async Task<Phong> GetById(int id)
         {
             return await _appDBContext.Phongs.FindAsync(id);

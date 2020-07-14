@@ -8,22 +8,20 @@ namespace Motel.ViewModels
 {
     public class DichVuViewModel
     {
-        public IEnumerable<DichVu> listDichVu { get; set; }
+        public IEnumerable<DichVu_ViewModel> listDichVu { get; set; }
 
         public IEnumerable<NhaTro> listNhaTro { get; set; }
-        public List<LoaiDichVuViewModel1> listLoaiDichVu { get; set; }
+        public List<LoaiDichVuView> listLoaiDichVu { get; set; }
 
         public IEnumerable<DonViTinh> listDonViTinh { get; set; }
         public DichVu dichVu { get; set; }
     }
 
-    public class LoaiDichVuViewModel1: LoaiDichVu
+    public class DichVu_ViewModel : DichVu
     {
-        public bool IsCheck { get; set; }
+        public string TenDonVi { get; set; }
+        public string TenNhaTro { get; set; }
 
-        //public int MaLoaiDV { get; set; }
-
-        //public string TenLoaiDV { get; set; }
     }
 
 }
