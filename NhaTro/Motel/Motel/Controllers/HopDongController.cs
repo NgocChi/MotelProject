@@ -95,16 +95,17 @@ namespace Motel.Controllers
             model.listChuTro = ChuTroRepository.Gets();
             model.listDichVuDestination = new List<DichVu>();
             model.hopDongKhachHangPhong = new HopDongKhachHang();
-            if (idDatPhong != 0)
-            {
-                model.hopDongKhachHangPhong.datPhong = new DatPhong();
-                model.hopDongKhachHangPhong.datPhong = await DatPhongRepository.GetsById(idDatPhong);
-            }
             if (id == 0)
             {
                 model.hopDongKhachHangPhong.hopDong = new HopDong();
-                model.hopDongKhachHangPhong.hopDong._MaPH = model.hopDongKhachHangPhong.datPhong._MaPH;
                 model.hopDongKhachHangPhong.dichVuPhong = new DichVuPhong();
+                if (idDatPhong != 0)
+                {
+                    model.hopDongKhachHangPhong.datPhong = new DatPhong();
+                    model.hopDongKhachHangPhong.datPhong = await DatPhongRepository.GetsById(idDatPhong);
+                    model.hopDongKhachHangPhong.hopDong._MaPH = model.hopDongKhachHangPhong.datPhong._MaPH;
+                }
+
                 result = View(model);
             }
             else

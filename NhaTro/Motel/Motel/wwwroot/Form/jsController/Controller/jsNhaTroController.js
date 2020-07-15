@@ -46,6 +46,7 @@ jQueryAjaxPost = form => {
                     $("#myModal .caption-subject .bold .uppercase").html('');
                     $("#myModal .modal-body").html('');
                     $("#myModal").modal('hide');
+                    $("#myModal").modal('hide');
                     $.notify('Thành công', {
                         globalPosition: 'top-center', className: 'info', offset: {
                             x: 50,
@@ -56,6 +57,43 @@ jQueryAjaxPost = form => {
                 }
                 else
                     $('#myModal .modal-body').html(res.html);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+    catch (e) {
+        console.log(e);
+    }
+    return false;
+}
+
+jQueryAjaxPostLarge = form => {
+    try {
+        $.ajax({
+            type: "POST",
+            url: form.action,
+            data: new FormData(form),
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                if (res.isValid) {
+                    $("#view-all").html(res.html);
+                    $("#myModallarge .caption-subject .bold .uppercase").html('');
+                    $("#myModallarge .modal-body").html('');
+                    $("#myModallarge").modal('hide');
+                    $("#myModallarge").modal('hide');
+                    $.notify('Thành công', {
+                        globalPosition: 'top-center', className: 'info', offset: {
+                            x: 50,
+                            y: 100
+                        }
+                    });
+
+                }
+                else
+                    $('#myModallarge .modal-body').html(res.html);
             },
             error: function (err) {
                 console.log(err);
