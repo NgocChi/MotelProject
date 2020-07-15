@@ -78,13 +78,24 @@ jQueryAjaxDelete = form => {
                 contentType: false,
                 processData: false,
                 success: function (res) {
-                    $("#view-all").html(res.html);
-                    $.notify('Xóa Thành công', {
-                        globalPosition: 'top-center', className: 'success', offset: {
-                            x: 50,
-                            y: 100
-                        }
-                    });
+                    if (res.isValid) {
+                        $("#view-all").html(res.html);
+                        $.notify('Xóa Thành công', {
+                            globalPosition: 'top-center', className: 'success', offset: {
+                                x: 50,
+                                y: 100
+                            }
+                        });
+                    }
+                    else {
+                        $("#view-all").html(res.html);
+                        $.notify('Đang được sử dụng không thể xóa', {
+                            globalPosition: 'top-center', className: 'denger', offset: {
+                                x: 50,
+                                y: 100
+                            }
+                        });
+                    }
                 },
                 error: function (err) {
                     console.log(err);

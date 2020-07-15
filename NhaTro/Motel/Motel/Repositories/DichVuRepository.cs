@@ -23,7 +23,7 @@ namespace Motel.Repositories
         }
 
 
-        public IEnumerable<DichVu_ViewModel> GetsByNhaTro(int id)
+        public List<DichVu_ViewModel> GetsByNhaTro(int id)
         {
             var query = from dv in _appDBContext.DichVus
                         join nt in _appDBContext.NhaTros on dv._MaNT equals nt.MaNT
@@ -105,6 +105,12 @@ namespace Motel.Repositories
                 return 1;
             }
             return 0;
+        }
+
+        public int CheckForeignKey(int id)
+        {
+            DichVuPhong p = _appDBContext.DichVuPhongs.Where(t => t._MaDV == id).FirstOrDefault();
+            return p == null ? 1 : 0;
         }
     }
 }

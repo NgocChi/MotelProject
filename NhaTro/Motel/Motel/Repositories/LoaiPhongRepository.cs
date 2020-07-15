@@ -64,5 +64,11 @@ namespace Motel.Repositories
             var query = _appDBContext.LoaiPhongs.ToList();
             return query;
         }
+
+        public int CheckForeignKey(int id)
+        {
+            Phong p = _appDBContext.Phongs.Where(t => t._MaLP == id).FirstOrDefault();
+            return p == null ? 1 : 0;
+        }
     }
 }

@@ -20,5 +20,7 @@ namespace Motel.Interfaces.Repositories
 
         Task<int> Delete(int id);
 
+        int CheckForeignKey(int id);
+
     }
 }

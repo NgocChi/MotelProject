@@ -22,6 +22,8 @@ namespace Motel.ViewModels
         public string TenDonVi { get; set; }
         public string TenNhaTro { get; set; }
 
+        public bool IsCheck { get; set; }
+
     }
 
 }

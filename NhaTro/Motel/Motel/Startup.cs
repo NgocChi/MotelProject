@@ -58,6 +58,7 @@ namespace Motel
             services.AddTransient<IDonViTinhRepository, DonViTinhRepository>();
             services.AddTransient<ILoaiDichVuRepository, LoaiDichVuRepository>();
             services.AddTransient<IChuTroRepository, ChuTroRepository>();
+            services.AddTransient<IDichVuPhongRepository, DichVuPhongRepository>();
 
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory looger)

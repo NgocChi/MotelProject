@@ -71,7 +71,6 @@ namespace Motel.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 try
                 {
                     loai.dichVu.MaDV = id;
@@ -81,7 +80,6 @@ namespace Motel.Controllers
                 {
                     throw;
                 }
-
                 DichVuViewModel model = new DichVuViewModel();
                 model.listDichVu = Repository.GetsByNhaTro(_nhaTro);
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
@@ -124,12 +122,20 @@ namespace Motel.Controllers
             }
             else
             {
-                int kq = await Repository.Delete(id);
-                if (kq == 0)
-                    return NotFound();
-                model.listDichVu = Repository.GetsByNhaTro(_nhaTro);
-                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
-
+                int checkForeign = Repository.CheckForeignKey(id);
+                if (checkForeign == 1)
+                {
+                    int kq = await Repository.Delete(id);
+                    if (kq == 0)
+                        return NotFound();
+                    model.listDichVu = Repository.GetsByNhaTro(_nhaTro);
+                    return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                }
+                else
+                {
+                    model.listDichVu = Repository.GetsByNhaTro(_nhaTro);
+                    return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                }
             }
         }
     }

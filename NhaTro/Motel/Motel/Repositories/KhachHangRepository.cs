@@ -36,7 +36,7 @@ namespace Motel.Repositories
             if (khach != null)
             {
                 _appDBContext.KhachHangs.Add(khach);
-                 await _appDBContext.SaveChangesAsync();
+                await _appDBContext.SaveChangesAsync();
                 return khach.MaKh;
             }
             return 0;
@@ -71,7 +71,12 @@ namespace Motel.Repositories
             }
             return 0;
         }
-
+        public int CheckForeignKey(int id)
+        {
+            HopDong hd = _appDBContext.HopDongs.Where(t => t._MaKH == id).FirstOrDefault();
+            DatPhong dp = _appDBContext.DatPhongs.Where(t => t._MaKH == id).FirstOrDefault();
+            return hd == null && dp == null ? 1 : 0;
+        }
 
     }
 }

@@ -51,7 +51,7 @@ namespace Motel.Controllers
                     }
                 }
                 NhaTroViewModel nt = new NhaTroViewModel();
-                nt.listNhaTro = Repository.Gets();
+                nt.listNhaTro = Repository.GetsList();
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", nhaTroViewModel) });
@@ -83,16 +83,25 @@ namespace Motel.Controllers
 
             if (id == 0)
             {
-                nt.listNhaTro = Repository.Gets();
+                nt.listNhaTro = Repository.GetsList();
                 return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
             }
             else
             {
-                int kq = await Repository.Delete(id);
-                if (kq == 0)
-                    return NotFound();
-                nt.listNhaTro = Repository.Gets();
-                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
+                int checkForeign = Repository.CheckForeignKey(id);
+                if (checkForeign == 1)
+                {
+                    int kq = await Repository.Delete(id);
+                    if (kq == 0)
+                        return NotFound();
+                    nt.listNhaTro = Repository.GetsList();
+                    return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
+                }
+                else
+                {
+                    nt.listNhaTro = Repository.GetsList();
+                    return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
+                }
             }
         }
     }

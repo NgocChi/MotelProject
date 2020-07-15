@@ -10,7 +10,7 @@ namespace Motel.Interfaces.Repositories
     public interface IDichVuRepository
     {
         IEnumerable<DichVu> Gets();
-        IEnumerable<DichVu_ViewModel> GetsByNhaTro(int id);
+        List<DichVu_ViewModel> GetsByNhaTro(int id);
 
         Task<DichVu> GetsById(int? id);
         Task<int> Create(DichVu dv);
@@ -20,5 +20,7 @@ namespace Motel.Interfaces.Repositories
         Task<int> Delete(int id);
 
         LoaiDichVuView GetsByIdMaLoaiDV(int? id);
+
+        int CheckForeignKey(int id);
     }
 }

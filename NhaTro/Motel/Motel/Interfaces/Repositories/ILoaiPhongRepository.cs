@@ -14,5 +14,6 @@ namespace Motel.Interfaces.Repositories
         Task<int> UpdateLoaiPhong(LoaiPhong loaiPhong);
         IEnumerable<LoaiPhong> GetsLoaiPhong();
         Task<LoaiPhong> GetLoaiPhById(int id);
+        int CheckForeignKey(int id);
     }
 }

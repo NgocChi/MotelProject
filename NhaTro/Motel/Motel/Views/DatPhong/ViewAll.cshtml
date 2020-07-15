@@ -84,7 +84,7 @@
                                                             <a data-remote="true" onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Chỉnh sửa</a>
                                                         </li>
                                                         <li>
-                                                            <a data-remote="true"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
+                                                            <a data-remote="true" onclick="ShowPopup('@Url.Action("AddOrEdit","HopDong",new { id = 0, idDatPhong = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
                                                         </li>
                                                         <li class="divider"></li>
                                                         <li>

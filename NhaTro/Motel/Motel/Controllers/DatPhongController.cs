@@ -120,5 +120,33 @@ namespace Motel.Controllers
 
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> CheckIn(int id)
+        {
+            IActionResult result;
+            QuanLyDatPhongViewModel model = new QuanLyDatPhongViewModel();
+            model.listPhong = PhongRepository.GetsPhongTrong();
+            model.listKhachHang = KhachHangRepository.Gets();
+            model.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
+            if (id == 0)
+            {
+                model.khachHangDatPhong = new KhachHangDatPhongViewModel();
+                model.khachHangDatPhong.datPhong = new DatPhong();
+                model.khachHangDatPhong.khachHang = new KhachHang();
+                result = View(model);
+            }
+            else
+            {
+                model.khachHangDatPhong = new KhachHangDatPhongViewModel();
+
+                model.khachHangDatPhong.datPhong = await Repository.GetsById(id);
+                model.khachHangDatPhong.khachHang = await KhachHangRepository.GetsById(model.khachHangDatPhong.datPhong._MaKH);
+                if (model.khachHangDatPhong.datPhong == null)
+                    result = NotFound();
+                result = View(model);
+            }
+            return result;
+        }
     }
 }

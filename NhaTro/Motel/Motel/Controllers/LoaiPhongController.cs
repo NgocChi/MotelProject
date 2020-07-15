@@ -89,12 +89,20 @@ namespace Motel.Controllers
             }
             else
             {
-                int kq = await Repository.DeleteLoaiPh(id);
-                if (kq == 0)
-                    return NotFound();
-                model.listLoaiPhong = Repository.GetsLoaiPhong();
-                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
-
+                int checkForeign = Repository.CheckForeignKey(id);
+                if (checkForeign == 1)
+                {
+                    int kq = await Repository.DeleteLoaiPh(id);
+                    if (kq == 0)
+                        return NotFound();
+                    model.listLoaiPhong = Repository.GetsLoaiPhong();
+                    return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                }
+                else
+                {
+                    model.listLoaiPhong = Repository.GetsLoaiPhong();
+                    return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                }
             }
         }
     }

@@ -20,9 +20,10 @@ namespace Motel.Controllers
         private readonly IDichVuRepository DichVuRepository = null;
         private readonly IChuTroRepository ChuTroRepository = null;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IDichVuPhongRepository DichVuPhongRepository = null;
         private int _nhaTro = 0;
 
-        public HopDongController(IHttpContextAccessor httpContextAccessor, IChuTroRepository chuTroRepository, IHopDongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IDichVuRepository dichVuRepository)
+        public HopDongController(IHttpContextAccessor httpContextAccessor, IDichVuPhongRepository dichVuPhongRepository, IChuTroRepository chuTroRepository, IHopDongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IDichVuRepository dichVuRepository)
         {
             this.Repository = repository;
             this.PhongRepository = phongRepository;
@@ -30,6 +31,7 @@ namespace Motel.Controllers
             this.DichVuRepository = dichVuRepository;
             this._httpContextAccessor = httpContextAccessor;
             this.ChuTroRepository = chuTroRepository;
+            this.DichVuPhongRepository = dichVuPhongRepository;
             _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("UserData");
         }
         public IActionResult Index()
@@ -40,7 +42,7 @@ namespace Motel.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, QuanLyHopDongViewModel hopdong)
+        public async Task<IActionResult> AddOrEdit(int id, int idDatPhong, QuanLyHopDongViewModel hopdong)
         {
             int kq = -1;
             if (ModelState.IsValid)
@@ -48,7 +50,17 @@ namespace Motel.Controllers
                 if (id == 0)
                 {
                     kq = await Repository.Create(hopdong.hopDongKhachHangPhong.hopDong);
-
+                    foreach (var item in hopdong.listDichVu)
+                    {
+                        if (item.IsCheck == true)
+                        {
+                            DichVuPhong dvp = new DichVuPhong();
+                            dvp._MaDV = item.MaDV;
+                            dvp._MaPH = hopdong.hopDongKhachHangPhong.hopDong._MaPH;
+                            await DichVuPhongRepository.Create(dvp);
+                        }
+                    }
+                    await PhongRepository.UpdateTTP(hopdong.hopDongKhachHangPhong.hopDong._MaPH, 3);
                 }
                 else
                 {
@@ -63,19 +75,14 @@ namespace Motel.Controllers
                     }
                 }
                 QuanLyHopDongViewModel model = new QuanLyHopDongViewModel();
-                model.listPhong = PhongRepository.GetsPTrong(_nhaTro);
-                model.listKhachHang = KhachHangRepository.Gets();
-                model.listDichVu = DichVuRepository.GetsByNhaTro(_nhaTro);
-                model.listKHDestination = new List<KhachHang>();
-                model.listChuTro = ChuTroRepository.Gets();
-                model.listDichVuDestination = new List<DichVu>();
+                model.listHopDong = Repository.Gets();
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", hopdong) });
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddOrEdit(int id)
+        public async Task<IActionResult> AddOrEdit(int id, int idDatPhong)
         {
             IActionResult result;
             QuanLyHopDongViewModel model = new QuanLyHopDongViewModel();

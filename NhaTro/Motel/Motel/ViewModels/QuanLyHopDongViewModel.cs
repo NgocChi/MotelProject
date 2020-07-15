@@ -15,7 +15,7 @@ namespace Motel.ViewModels
 
         public IEnumerable<KhachHang> listKhachHang { get; set; }
 
-        public IEnumerable<DichVu_ViewModel> listDichVu { get; set; }
+        public List<DichVu_ViewModel> listDichVu { get; set; }
 
         public IEnumerable<KhachHang> listKHDestination { get; set; }
 

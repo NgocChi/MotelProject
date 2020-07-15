@@ -20,6 +20,7 @@
                     name="_chooseMotel" asp-for="_chooseMotel"
                     id="_MaNT" tabindex="-1" aria-hidden="true">
                 @{
+                    <option value="0">--Not selected--</option>
                     foreach (var item in Model.listNhaTro)
                     {
                         <option value="@item.MaNT">@item.Ten</option>

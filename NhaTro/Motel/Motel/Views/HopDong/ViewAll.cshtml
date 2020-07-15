@@ -13,7 +13,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <span class="caption-subject font-green sbold uppercase">Quản lý đặt phòng</span>
+                <span class="caption-subject font-green sbold uppercase">Quản lý hợp đồng</span>
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
@@ -62,8 +62,7 @@
                                     <th>Ngày bắt đầu</th>
                                     <th>Ngày kết thúc</th>
                                     <th>Tiền đặt cọc</th>
-
-                                    <th></th>
+                                    @*<th></th>*@
                                 </tr>
                             </thead>
 
@@ -102,16 +101,16 @@
                                             <td>@item.NgayBatDau</td>
                                             <td>@item.NgayKetThuc</td>
                                             <td>@item.TienDatCoc</td>
-                                            <td class="text-center">
-                                                <form asp-action="Delete"
-                                                      asp-route-id="@item.MaHopDong"
-                                                      onsubmit="return jQueryAjaxDelete(this)">
-                                                    <button type="submit"
-                                                            class="btn red btn-circle btn-icon-only btn-default">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
+                                            @*<td class="text-center">
+                                                    <form asp-action="Delete"
+                                                          asp-route-id="@item.MaHopDong"
+                                                          onsubmit="return jQueryAjaxDelete(this)">
+                                                        <button type="submit"
+                                                                class="btn red btn-circle btn-icon-only btn-default">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>*@
                                         </tr>
                                     }
                                 }

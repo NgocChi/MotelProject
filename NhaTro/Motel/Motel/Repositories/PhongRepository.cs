@@ -167,5 +167,12 @@ namespace Motel.Repositories
             return 0;
         }
 
+        public int CheckForeignKey(int id)
+        {
+            DatPhong p = _appDBContext.DatPhongs.Where(t => t._MaPH == id).FirstOrDefault();
+            HopDong hd = _appDBContext.HopDongs.Where(t => t._MaPH == id).FirstOrDefault();
+            return p == null && hd == null ? 1 : 0;
+        }
+
     }
 }

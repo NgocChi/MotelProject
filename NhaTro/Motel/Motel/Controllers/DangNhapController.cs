@@ -59,10 +59,56 @@ namespace Motel.Controllers
         {
 
             _httpContextAccessor.HttpContext.Session.SetComplexData("UserData", tk._chooseMotel);
-            if (tk._chooseMotel == 0)
-                return RedirectToAction("Login", "DangNhap");
+            //if (tk._chooseMotel == 0)
+            //    return RedirectToAction("Login", "DangNhap");
             return RedirectToAction("Index", "Home");
         }
+
+        [HttpGet]
+        public IActionResult CreateAccount()
+        {
+            QuanLyTaiKhoan model = new QuanLyTaiKhoan();
+            model.taikhoan = new TaiKhoanViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateAccount(QuanLyTaiKhoan tk)
+        {
+            int kq = -1;
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "CreateAccount", tk) });
+                }
+                if (tk.taikhoan.MatKhau != tk.taikhoan.PrMatKhau)
+                {
+                    return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "CreateAccount", tk) });
+                }
+                TaiKhoan taikh = new TaiKhoan();
+                taikh.TenTaiKhoan = tk.taikhoan.TenTaiKhoan;
+                taikh.MatKhau = tk.taikhoan.MatKhau;
+                kq = Repository.Create(taikh);
+                if (kq == 1)
+                {
+                    return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "Login", tk) });
+                }
+                else
+                {
+                    return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "CreateAccount", tk) });
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
+
+
 
     }
 }

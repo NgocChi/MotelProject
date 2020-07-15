@@ -22,5 +22,7 @@ namespace Motel.Interfaces.Repositories
 
         Task<int> UpdateSoLuongPhong(int maNt, int soluong);
 
+        int CheckForeignKey(int id);
+
     }
 }
