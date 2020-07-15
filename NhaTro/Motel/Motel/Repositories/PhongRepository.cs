@@ -69,9 +69,9 @@ namespace Motel.Repositories
                         };
             return query.ToList();
         }
-        public IEnumerable<Phong> GetsPhongTrong()
+        public IEnumerable<Phong> GetsPhongTrong(int idPhong)
         {
-            var query = _appDBContext.Phongs.Where(t => t._MaTTPH == 1);
+            var query = _appDBContext.Phongs.Where(t => t._MaTTPH == 1 || t.MaPH == idPhong);
             return query.ToList();
         }
         public IEnumerable<PhongViewModel> GetsPTrong(int idNT)

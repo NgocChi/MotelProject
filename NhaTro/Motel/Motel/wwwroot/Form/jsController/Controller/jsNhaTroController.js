@@ -121,3 +121,19 @@ $(function () {
 
 });
 
+jQueryAjaxChooseTTP = (url) => {
+    try {
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (res) {
+                $("#view-all").html(res.html);
+            }
+        });
+    }
+    catch (e) {
+        console.log(e);
+    }
+    return false;
+}
+

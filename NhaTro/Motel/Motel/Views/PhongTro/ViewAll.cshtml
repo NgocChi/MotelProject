@@ -51,6 +51,48 @@
                     </button>
 
                 </div>
+                <div class="text-left">
+                    <div class="md-radio-inline">
+                        <label class="bold" style="margin-right: 10px;">Trạng thái phòng:</label>
+                        <div class="md-radio">
+                            <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","PhongTro",new { trangThai = 0}, Context.Request.Scheme)')"
+                                   id="radio0" name="radio_TTP" class="md-radiobtn radio-agreement-type" value="0" checked="" type="radio">
+                            <label for="radio0">
+                                <span class=""></span>
+                                <span class="check"></span>
+                                <span class="box"></span>  Tất cả
+                            </label>
+                        </div>
+                        <div class="md-radio">
+                            <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","PhongTro",new { trangThai = 1}, Context.Request.Scheme)')"
+                                   id="radio1" name="radio_TTP" class="md-radiobtn radio-agreement-type" value="1" type="radio">
+                            <label for="radio1">
+                                <span class=""></span>
+                                <span class="check"></span>
+                                <span class="box"></span> Chưa thuê
+                            </label>
+                        </div>
+                        <div class="md-radio">
+                            <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","PhongTro",new { trangThai = 2}, Context.Request.Scheme)')"
+                                   id="radio2" name="radio_TTP" class="md-radiobtn radio-agreement-type" value="2" type="radio">
+                            <label for="radio2">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> Đang cọc phòng
+                            </label>
+                        </div>
+                        <div class="md-radio">
+                            <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","PhongTro",new { trangThai = 3}, Context.Request.Scheme)')"
+                                   id="radio3" name="radio_TTP" class="md-radiobtn radio-agreement-type" value="3" type="radio">
+                            <label for="radio3">
+                                <span></span>
+                                <span class="check"></span>
+                                <span class="box"></span> Đã được thuê
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
 
                 <div class="row">
                     <div class="card-body">

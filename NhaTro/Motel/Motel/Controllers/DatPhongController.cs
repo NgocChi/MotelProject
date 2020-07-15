@@ -59,6 +59,7 @@ namespace Motel.Controllers
                     {
                         datPhong.khachHangDatPhong.datPhong.MaDP = id;
                         kq = await Repository.Update(datPhong.khachHangDatPhong.datPhong);
+                        await PhongRepository.UpdateTTP(datPhong.khachHangDatPhong.datPhong._MaPH, 2);
                     }
                     catch
                     {
@@ -76,11 +77,12 @@ namespace Motel.Controllers
         {
             IActionResult result;
             QuanLyDatPhongViewModel model = new QuanLyDatPhongViewModel();
-            model.listPhong = PhongRepository.GetsPhongTrong();
+
             model.listKhachHang = KhachHangRepository.Gets();
             model.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
             if (id == 0)
             {
+                model.listPhong = PhongRepository.GetsPhongTrong(0);
                 model.khachHangDatPhong = new KhachHangDatPhongViewModel();
                 model.khachHangDatPhong.datPhong = new DatPhong();
                 model.khachHangDatPhong.khachHang = new KhachHang();
@@ -89,9 +91,9 @@ namespace Motel.Controllers
             else
             {
                 model.khachHangDatPhong = new KhachHangDatPhongViewModel();
-
                 model.khachHangDatPhong.datPhong = await Repository.GetsById(id);
                 model.khachHangDatPhong.khachHang = await KhachHangRepository.GetsById(model.khachHangDatPhong.datPhong._MaKH);
+                model.listPhong = PhongRepository.GetsPhongTrong(model.khachHangDatPhong.datPhong._MaPH);
                 if (model.khachHangDatPhong.datPhong == null)
                     result = NotFound();
                 result = View(model);
@@ -126,7 +128,7 @@ namespace Motel.Controllers
         {
             IActionResult result;
             QuanLyDatPhongViewModel model = new QuanLyDatPhongViewModel();
-            model.listPhong = PhongRepository.GetsPhongTrong();
+            model.listPhong = PhongRepository.GetsPhongTrong(id);
             model.listKhachHang = KhachHangRepository.Gets();
             model.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
             if (id == 0)

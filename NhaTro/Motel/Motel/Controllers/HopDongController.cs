@@ -21,9 +21,10 @@ namespace Motel.Controllers
         private readonly IChuTroRepository ChuTroRepository = null;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IDichVuPhongRepository DichVuPhongRepository = null;
+        private readonly IDatPhongRepository DatPhongRepository = null;
         private int _nhaTro = 0;
 
-        public HopDongController(IHttpContextAccessor httpContextAccessor, IDichVuPhongRepository dichVuPhongRepository, IChuTroRepository chuTroRepository, IHopDongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IDichVuRepository dichVuRepository)
+        public HopDongController(IHttpContextAccessor httpContextAccessor, IDatPhongRepository datPhongRepository, IDichVuPhongRepository dichVuPhongRepository, IChuTroRepository chuTroRepository, IHopDongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IDichVuRepository dichVuRepository)
         {
             this.Repository = repository;
             this.PhongRepository = phongRepository;
@@ -32,6 +33,7 @@ namespace Motel.Controllers
             this._httpContextAccessor = httpContextAccessor;
             this.ChuTroRepository = chuTroRepository;
             this.DichVuPhongRepository = dichVuPhongRepository;
+            this.DatPhongRepository = datPhongRepository;
             _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("UserData");
         }
         public IActionResult Index()
@@ -92,11 +94,16 @@ namespace Motel.Controllers
             model.listKHDestination = new List<KhachHang>();
             model.listChuTro = ChuTroRepository.Gets();
             model.listDichVuDestination = new List<DichVu>();
+            model.hopDongKhachHangPhong = new HopDongKhachHang();
+            if (idDatPhong != 0)
+            {
+                model.hopDongKhachHangPhong.datPhong = new DatPhong();
+                model.hopDongKhachHangPhong.datPhong = await DatPhongRepository.GetsById(idDatPhong);
+            }
             if (id == 0)
             {
-                model.hopDongKhachHangPhong = new HopDongKhachHang();
-                model.hopDongKhachHangPhong.datPhong = new DatPhong();
                 model.hopDongKhachHangPhong.hopDong = new HopDong();
+                model.hopDongKhachHangPhong.hopDong._MaPH = model.hopDongKhachHangPhong.datPhong._MaPH;
                 model.hopDongKhachHangPhong.dichVuPhong = new DichVuPhong();
                 result = View(model);
             }

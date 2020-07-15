@@ -73,6 +73,10 @@ namespace Motel.Repositories
         public async Task<int> Update(DatPhong datphong)
         {
             DatPhong find = _appDBContext.DatPhongs.FirstOrDefault(p => p.MaDP == datphong.MaDP);
+            Phong ph = _appDBContext.Phongs.Find(find._MaPH);
+            ph._MaTTPH = 1;
+            _appDBContext.Phongs.Update(ph);
+
             if (find != null)
             {
                 find.NgayDat = datphong.NgayDat;

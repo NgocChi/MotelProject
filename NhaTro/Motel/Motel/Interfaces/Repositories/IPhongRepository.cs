@@ -12,7 +12,7 @@ namespace Motel.Interfaces.Repositories
         IEnumerable<PhongViewModel> Gets(int _nhaTro);
         IEnumerable<PhongViewModel> Gets();
         IEnumerable<PhongViewModel> GetsPTrong(int idNT);
-        IEnumerable<Phong> GetsPhongTrong();
+        IEnumerable<Phong> GetsPhongTrong(int idPhong);
 
         IEnumerable<TrangThaiPhong> GetsTrangThaiPhong();
         Task<Phong> GetById(int id);

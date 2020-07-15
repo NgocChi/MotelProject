@@ -28,11 +28,35 @@ namespace Motel.Controllers
             _httpContextAccessor = httpContextAccessor;
             _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("UserData");
         }
-        public ViewResult Index()
+
+        public IActionResult Index1(int trangThai = 0)
+        {
+            QuanLyPhongViewModel model = new QuanLyPhongViewModel();
+            switch (trangThai)
+            {
+                case 0:
+                    model.listPhong = Repository.Gets(_nhaTro);
+                    break;
+
+                case 1:
+                    model.listPhong = Repository.Gets(_nhaTro).Where(t => t._MaTTPH == trangThai);
+                    break;
+                case 2:
+                    model.listPhong = Repository.Gets(_nhaTro).Where(t => t._MaTTPH == trangThai);
+                    break;
+                case 3:
+                    model.listPhong = Repository.Gets(_nhaTro).Where(t => t._MaTTPH == trangThai);
+                    break;
+
+            }
+            return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+        }
+        public ActionResult Index()
         {
             QuanLyPhongViewModel model = new QuanLyPhongViewModel();
             model.listPhong = Repository.Gets(_nhaTro);
             return View(model);
+
         }
 
         [HttpPost]
