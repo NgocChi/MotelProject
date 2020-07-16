@@ -165,7 +165,7 @@ jQueryAjaxChooseTTP = (url) => {
             type: "GET",
             url: url,
             success: function (res) {
-                $("#view-all").html(res.html);
+                $("#table_phong").html(res.html);
             }
         });
     }

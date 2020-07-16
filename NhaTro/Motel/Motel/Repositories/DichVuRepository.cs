@@ -23,6 +23,31 @@ namespace Motel.Repositories
         }
 
 
+        public List<DichVu_ViewModel> GetsByNhaTro(int id, int idPhong)
+        {
+            var query = from dv in _appDBContext.DichVus
+                        join nt in _appDBContext.NhaTros on dv._MaNT equals nt.MaNT
+                        join dvt in _appDBContext.DonViTinhs on dv._MaDVT equals dvt.MaDonVi
+                        where dv._MaNT == id
+
+                        select new DichVu_ViewModel
+                        {
+                            Ten = dv.Ten,
+                            Gia = dv.Gia,
+                            MoTa = dv.MoTa,
+                            MaDV = dv.MaDV,
+                            _MaNT = dv._MaNT,
+                            _MaDVT = dv._MaDVT,
+                            TenDonVi = dvt.TenDonVi,
+                            TenNhaTro = nt.Ten,
+                            IsCheck = !(from dvp in _appDBContext.DichVuPhongs where dvp._MaPH == idPhong select dvp._MaDV).Contains(dv.MaDV)
+
+
+
+                        };
+            return query.ToList();
+        }
+
         public List<DichVu_ViewModel> GetsByNhaTro(int id)
         {
             var query = from dv in _appDBContext.DichVus
@@ -42,9 +67,11 @@ namespace Motel.Repositories
                             TenNhaTro = nt.Ten
 
 
+
                         };
             return query.ToList();
         }
+
 
 
         public async Task<DichVu> GetsById(int? id)

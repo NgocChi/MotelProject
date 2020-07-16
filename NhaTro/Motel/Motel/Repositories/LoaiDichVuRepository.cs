@@ -38,7 +38,8 @@ namespace Motel.Repositories
 
         public List<LoaiDichVuView> GetListByMaNhaTroByDichVu(int id)
         {
-
+            // lấy danh sách loại dịch vụ nào chưa tồn tại trong table dịch vu theo nha tro
+            // lấy danh sách dịch vụ nào chưa tồn tại
             var query = from loai in _appDBContext.LoaiDichVus
                         where !(from dv in _appDBContext.DichVus where dv._MaNT == id select dv._MaLDV).Contains(loai.MaLoaiDV)
                         select new LoaiDichVuView

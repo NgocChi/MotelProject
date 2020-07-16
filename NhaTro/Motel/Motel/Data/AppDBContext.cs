@@ -48,6 +48,12 @@ namespace Motel.Data
         public DbSet<LoaiDichVu> LoaiDichVus { get; set; }
 
         public DbSet<ChiTietPhieuThanhToan> ChiTietPhieuThanhToans { get; set; }
+
+        public DbSet<ManHinh> ManHinhs { get; set; }
+
+        public DbSet<PhanQuyen> PhanQuyens { get; set; }
+
+        public DbSet<NhomNguoiDung> NhomNguoiDungs { get; set; }
     }
 
 }

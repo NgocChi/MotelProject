@@ -23,5 +23,8 @@ namespace Motel.Models
         [Column("LoaiTaiKhoan")]
         public bool? LoaiTaiKhoan { get; set; }
 
+        [Column("_MaNND")]
+        public int? _MaNND { get; set; }
+
     }
 }

@@ -84,13 +84,13 @@ namespace Motel.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddOrEdit(int id, int idDatPhong)
+        public async Task<IActionResult> AddOrEdit(int id, int idDatPhong, int idPhong = 0)
         {
             IActionResult result;
             QuanLyHopDongViewModel model = new QuanLyHopDongViewModel();
             model.listPhong = PhongRepository.GetsPTrong(_nhaTro);
             model.listKhachHang = KhachHangRepository.Gets();
-            model.listDichVu = DichVuRepository.GetsByNhaTro(_nhaTro);
+            model.listDichVu = DichVuRepository.GetsByNhaTro(_nhaTro, idPhong);
             model.listKHDestination = new List<KhachHang>();
             model.listChuTro = ChuTroRepository.Gets();
             model.listDichVuDestination = new List<DichVu>();

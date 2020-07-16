@@ -10,6 +10,9 @@ namespace Motel.ViewModels
     public class QuanLyTaiKhoan
     {
         public IEnumerable<NhaTro> listNhaTro { get; set; }
+
+        public IEnumerable<TaiKhoan> listTaiKhoan { get; set; }
+
         public TaiKhoanViewModel taikhoan { get; set; }
 
         public int _chooseMotel { get; set; }
@@ -28,5 +31,6 @@ namespace Motel.ViewModels
         public string ReturnUrl { get; set; }
 
         public string PrMatKhau { get; set; }
+
     }
 }

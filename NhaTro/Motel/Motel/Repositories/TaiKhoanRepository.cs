@@ -21,11 +21,11 @@ namespace Motel.Repositories
 
         public TaiKhoan DangNhap(string userName, string password)
         {
-           return  _appDBContext.TaiKhoans.FirstOrDefault(p => (p.TenTaiKhoan == userName & p.MatKhau == password));
+            return _appDBContext.TaiKhoans.FirstOrDefault(p => (p.TenTaiKhoan == userName & p.MatKhau == password));
         }
         public int Create(TaiKhoan taikhoan)
         {
-           
+
             var find = _appDBContext.TaiKhoans.FirstOrDefault(p => p.TenTaiKhoan == taikhoan.TenTaiKhoan);
             if (find == null)
             {
@@ -37,6 +37,11 @@ namespace Motel.Repositories
 
         }
 
-       
+        public IEnumerable<TaiKhoan> Gets()
+        {
+            return _appDBContext.TaiKhoans.ToList();
+        }
+
+
     }
 }

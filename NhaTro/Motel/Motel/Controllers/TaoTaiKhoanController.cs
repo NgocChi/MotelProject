@@ -18,7 +18,14 @@ namespace Motel.Controllers
             Repository = repository;
 
         }
-      
-      
+
+        public IActionResult Index()
+        {
+            QuanLyTaiKhoan model = new QuanLyTaiKhoan();
+            model.listTaiKhoan = Repository.Gets();
+            return View(model);
+        }
+
+
     }
 }

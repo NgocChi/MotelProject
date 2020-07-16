@@ -37,5 +37,11 @@ namespace Motel.Models
 
         [Column("GhiChu")]
         public string GhiChu { get; set; }
+
+        [Column("SoDien")]
+        public int SoDien { get; set; }
+
+        [Column("SoNuoc")]
+        public int SoNuoc { get; set; }
     }
 }

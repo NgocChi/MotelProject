@@ -6,13 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Motel.Controllers
 {
-    public class DienNuocController : Controller
+    public class HoaDonController : Controller
     {
-
-        public DienNuocController()
-        {
-
-        }
         public IActionResult Index()
         {
             return View();

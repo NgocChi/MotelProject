@@ -49,7 +49,7 @@ namespace Motel.Controllers
                     break;
 
             }
-            return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "Table", model) });
         }
         public ActionResult Index()
         {

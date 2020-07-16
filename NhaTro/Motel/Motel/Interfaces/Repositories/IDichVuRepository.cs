@@ -10,6 +10,7 @@ namespace Motel.Interfaces.Repositories
     public interface IDichVuRepository
     {
         IEnumerable<DichVu> Gets();
+        List<DichVu_ViewModel> GetsByNhaTro(int id, int idPhong);
         List<DichVu_ViewModel> GetsByNhaTro(int id);
 
         Task<DichVu> GetsById(int? id);

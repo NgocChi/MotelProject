@@ -82,74 +82,10 @@
 
                 </div>
 
-                <div class="row">
-                    <div class="card-body">
-                        <table class="table table-striped table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">
-                                    </th>
-                                    <th>Phòng</th>
-                                    <th>Tên người đại diện</th>
-                                    <th>Thời hạn hợp đồng</th>
-                                    <th>Ngày bắt đầu</th>
-                                    <th>Ngày kết thúc</th>
-                                    <th>Tiền đặt cọc</th>
-                                    @*<th></th>*@
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                @{
-                                    foreach (var item in Model.listHopDong)
-                                    {
-                                        <tr class="item-1932 highlight">
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-xs green dropdown-toggle" type="button"
-                                                            data-toggle="dropdown" aria-expanded="false">
-                                                        Tác vụ
-                                                        <i class="fa fa-angle-down"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li>
-                                                            <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = item.MaHopDong }, Context.Request.Scheme)','Chỉnh sửa')"><i class="icon-pencil"></i> Chỉnh sửa</a>
-                                                        </li>
-                                                        <li>
-                                                            <a data-remote="true" href="#"><i class="fa fa-handshake-o" aria-hidden="true"></i>Gia hạn hợp đồng</a>
-                                                        </li>
-                                                        <li class="divider"></li>
-                                                        <li>
-                                                            <a href="#">
-                                                                <i class="fa fa-file-word-o"></i> Tải hợp đồng
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td>@item.TenPhong</td>
-                                            <td>@item.TenKhachHang</td>
-                                            <td>@item.ThoiHanHopDong</td>
-                                            <td>@item.NgayBatDau</td>
-                                            <td>@item.NgayKetThuc</td>
-                                            <td>@item.TienDatCoc</td>
-                                            @*<td class="text-center">
-                                                    <form asp-action="Delete"
-                                                          asp-route-id="@item.MaHopDong"
-                                                          onsubmit="return jQueryAjaxDelete(this)">
-                                                        <button type="submit"
-                                                                class="btn red btn-circle btn-icon-only btn-default">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </td>*@
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                <div id="table_phong">
+                    @await Html.PartialAsync("Table", Model);
                 </div>
+
                 <div class="row">
                     <div class="card-tools">
                         <ul class="pagination pagination-sm">

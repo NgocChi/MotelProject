@@ -375,10 +375,20 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <div class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Đăng ký tài khoản</p>
-                                    </a>
+                                        <p>
+                                            @Html.ActionLink("Đăng kí tài khoản", "Index", "TaoTaiKhoan")
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <div class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            @Html.ActionLink("Quản lý nhóm người dùng", "Index", "NhomNguoiDung")
+                                        </p>
+                                    </div>
                                 </li>
                                 <li class="nav-item">
                                     <div class="nav-link">
