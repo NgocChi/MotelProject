@@ -8,10 +8,11 @@ namespace Motel.Interfaces.Repositories
 {
     public interface IDichVuPhongRepository
     {
+        int CheckExist(DichVuPhong dvp);
         Task<int> Create(DichVuPhong dvp);
 
         Task<int> Update(DichVuPhong dvp);
 
-        Task<int> Delete(int id);
+        Task<int> Delete(DichVuPhong id);
     }
 }

@@ -26,13 +26,15 @@ namespace Motel.Repositories
             }
             return 0;
         }
-        public async Task<int> Update(DichVuPhong dv)
+        public async Task<int> Update(DichVuPhong dvp)
         {
-            DichVuPhong find = await _appDBContext.DichVuPhongs.FindAsync(dv.MaDVPH);
+            DichVuPhong find = _appDBContext.DichVuPhongs.Where(t => t._MaHD == dvp._MaHD && t._MaDV == dvp._MaDV && t._MaPH == t._MaPH).FirstOrDefault();
             if (find != null)
             {
-                find._MaDV = dv._MaDV;
-                find._MaPH = dv._MaPH;
+                find._MaDV = dvp._MaDV;
+                find._MaPH = dvp._MaPH;
+                find._MaHD = dvp._MaHD;
+                find.SoLuong = dvp.SoLuong;
                 _appDBContext.DichVuPhongs.Update(find);
                 await _appDBContext.SaveChangesAsync();
                 return 1;
@@ -40,9 +42,9 @@ namespace Motel.Repositories
             return 0;
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<int> Delete(DichVuPhong dvp)
         {
-            DichVuPhong find = await _appDBContext.DichVuPhongs.FindAsync(id);
+            DichVuPhong find = _appDBContext.DichVuPhongs.Where(t => t._MaHD == dvp._MaHD && t._MaDV == dvp._MaDV && t._MaPH == t._MaPH).FirstOrDefault();
             if (find != null)
             {
                 _appDBContext.DichVuPhongs.Remove(find);
@@ -50,6 +52,12 @@ namespace Motel.Repositories
                 return 1;
             }
             return 0;
+        }
+
+        public int CheckExist(DichVuPhong dvp)
+        {
+            DichVuPhong find = _appDBContext.DichVuPhongs.Where(t => t._MaHD == dvp._MaHD && t._MaDV == dvp._MaDV && t._MaPH == t._MaPH).FirstOrDefault();
+            return find == null ? 1 : 0;
         }
     }
 }

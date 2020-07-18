@@ -44,7 +44,7 @@ namespace Motel.Repositories
             {
                 _appDBContext.HopDongs.Add(hopDong);
                 await _appDBContext.SaveChangesAsync();
-                return 1;
+                return hopDong.MaHopDong;
             }
             return 0;
         }
@@ -60,6 +60,9 @@ namespace Motel.Repositories
                 find.GiaPhong = hopDong.GiaPhong;
                 find.TienDatCoc = hopDong.TienDatCoc;
                 find._MaCT = hopDong._MaCT;
+                find.GhiChu = hopDong.GhiChu;
+                find.SoDien = hopDong.SoDien;
+                find.SoNuoc = hopDong.SoNuoc;
                 _appDBContext.HopDongs.Update(find);
                 await _appDBContext.SaveChangesAsync();
                 return 1;

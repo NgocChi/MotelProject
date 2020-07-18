@@ -1,0 +1,62 @@
+﻿@{
+    Layout = null;
+}
+@using Motel.ViewModels
+@model QuanLyHoaDonViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
+
+<div class="row">
+    <div class="card-body">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                    </th>
+                    <th>Phòng</th>
+                    <th>Người đặt cọc</th>
+                    <th>Số điện thoại</th>
+                    <th>Tiền đặt cọc</th>
+                    <th>Ngày đặt cọc</th>
+                    <th>Ngày hết hạn</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr class="item-1932 highlight" style="background-color:gold;">
+                    <td class="text-center">
+                        <div class="btn-group">
+                            <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                Tác vụ
+                                <i class="fa fa-angle-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a data-remote="true"><i class="fas fa-edit"></i> Chỉnh sửa</a>
+                                </li>
+                                <li>
+                                    <a data-remote="true"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a>
+                                        <i class="fas fa-file-word-o"></i> Giấy nhận cọc
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-center">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

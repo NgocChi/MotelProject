@@ -40,7 +40,8 @@ namespace Motel.Repositories
                             _MaDVT = dv._MaDVT,
                             TenDonVi = dvt.TenDonVi,
                             TenNhaTro = nt.Ten,
-                            IsCheck = !(from dvp in _appDBContext.DichVuPhongs where dvp._MaPH == idPhong select dvp._MaDV).Contains(dv.MaDV)
+                            SoLuong = 0,
+                            IsCheck = (from dvp in _appDBContext.DichVuPhongs where dvp._MaPH == idPhong select dvp._MaDV).Contains(dv.MaDV)
 
 
 

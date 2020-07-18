@@ -26,35 +26,37 @@
                 <tbody class="item-container-service-left">
                     @for (int i = 0; i < Model.listDichVu.Count(); i++)
                     {
-                        <tr>
-                            <td class="text-center">
-                                <a class="btn btn-circle btn-icon-only btn-default item-selection-service add-selection-service">
-                                    <input class="display-hide" type="checkbox" asp-for="@Model.listDichVu[i].IsCheck" /><span class="fa fa-plus" aria-hidden="true"></span>
-                                    <input class="display-hide" type="hidden" asp-for="@Model.listDichVu[i].MaDV" />
-                                </a>
+                        @if (@Model.listDichVu[i].IsCheck == false)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    <a class="btn btn-circle btn-icon-only btn-default item-selection-service add-selection-service">
+                                        <input class="display-hide" type="checkbox" asp-for="@Model.listDichVu[i].IsCheck" /><span class="fa fa-plus" aria-hidden="true"></span>
+                                        <input class="display-hide" type="hidden" asp-for="@Model.listDichVu[i].MaDV" />
+                                    </a>
 
-                            </td>
-                            <td class="service-building-18142">@Model.listDichVu[i].Ten</td>
-                            <td class="text-center unit-price-18142 ">
-                                @Model.listDichVu[i].Gia
-                            </td>
-                            <td class="text-center">
-                                <div class="unit181422">@Model.listDichVu[i].TenDonVi</div>
-                                <input type="hidden">
-                            </td>
-                            <td class="amount hide text-center 18142">
-                                <input type="text" class="form-control number-format text-center amount18142" readonly="">
-                            </td>
+                                </td>
+                                <td class="service-building-18142">@Model.listDichVu[i].Ten</td>
+                                <td class="text-center unit-price-18142 ">
+                                    @Model.listDichVu[i].Gia
+                                </td>
+                                <td class="text-center">
+                                    <div class="unit181422">@Model.listDichVu[i].TenDonVi</div>
+                                    <input type="hidden">
+                                </td>
+                                <td class="amount hide text-center 18142">
+                                    <input type="text" asp-for="@Model.listDichVu[i].SoLuong" class="form-control number-format text-center amount18142">
+                                </td>
 
-                            <td class="stop-service hide text-center 18142">
-                                <div class="md-checkbox-inline">
-                                    <div class="md-checkbox">
-                                        <input type="checkbox" class="md-check"><label for="checkboxactive18142"><span></span><span class="check"></span><span class="box"></span></label>
+                                <td class="stop-service hide text-center 18142">
+                                    <div class="md-checkbox-inline">
+                                        <div class="md-checkbox">
+                                            <input type="checkbox" class="md-check"><label for="checkboxactive18142"><span></span><span class="check"></span><span class="box"></span></label>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                        </tr>
-
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
@@ -79,12 +81,12 @@
                 <tbody class="item-container-service-right">
                     @for (int i = 0; i < Model.listDichVu.Count(); i++)
                     {
-                        @if (@Model.listDichVu[i].IsCheck == false)
+                        @if (@Model.listDichVu[i].IsCheck == true)
                         {
                             <tr>
                                 <td class="text-center">
-                                    <a class="btn btn-circle btn-icon-only btn-default item-selection-service add-selection-service">
-                                        <input class="display-hide" type="checkbox" asp-for="@Model.listDichVu[i].IsCheck" /><span class="fa fa-plus" aria-hidden="true"></span>
+                                    <a class="btn btn-circle btn-icon-only btn-default item-selection-service remove-selection-service">
+                                        <input class="display-hide" type="checkbox" asp-for="@Model.listDichVu[i].IsCheck" /><span class="fa fa-minus" aria-hidden="true"></span>
                                         <input class="display-hide" type="hidden" asp-for="@Model.listDichVu[i].MaDV" />
                                     </a>
 
@@ -98,7 +100,7 @@
                                     <input type="hidden">
                                 </td>
                                 <td class="amount hide text-center 18142">
-                                    <input type="text" class="form-control number-format text-center amount18142" readonly="">
+                                    <input type="text" asp-for="@Model.listDichVu[i].SoLuong" class="form-control number-format text-center amount18142">
                                 </td>
 
                                 <td class="stop-service hide text-center 18142">

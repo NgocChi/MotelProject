@@ -26,7 +26,7 @@
             <select asp-for="hopDongKhachHangPhong.hopDong._MaPH"
                     class="form-control select optional form-control" id="btn_phong">
                 @{
-
+                    <option value="0">--Not selected--</option>
                     foreach (var item in Model.listPhong)
                     {
                         <option value="@item.MaPH">@item.Ten</option>
@@ -137,7 +137,8 @@
                     <label class="control-label">Chỉ số nước ban đầu:</label>
                     <div>
                         <input class="string optional bg-maxlength optional form-control number-format-clear-empty"
-                               placeholder="Chỉ số nước ban đầu:" maxlength="11" size="11" type="text">
+                               asp-for="hopDongKhachHangPhong.hopDong.SoNuoc"
+                               placeholder="Chỉ số nước ban đầu:" maxlength="11" size="11" type="number">
                         <div class="form-control-focus"></div>
                     </div>
                 </div>
@@ -163,8 +164,8 @@
                     <div>
                         <input class="string optional bg-maxlength optional form-control number-format-clear-empty"
                                placeholder="Nhập số tiền đặt cọc" maxlength="11" size="11" type="text"
-                               asp-for="hopDongKhachHangPhong.hopDong.TienDatCoc"
-                               id="tienDatCoc">
+                               asp-for="hopDongKhachHangPhong.datPhong.SoTienCoc"
+                               id="tienDanChan">
                         <div class="form-control-focus"></div>
                     </div>
                 </div>
@@ -220,7 +221,8 @@
                     <label class="control-label">Chỉ số điện ban đầu:</label>
                     <div>
                         <input class="string optional bg-maxlength optional form-control number-format-clear-empty"
-                               placeholder="Chỉ số điện ban đầu:" maxlength="11" size="11" type="text">
+                               asp-for="hopDongKhachHangPhong.hopDong.SoDien"
+                               placeholder="Chỉ số điện ban đầu:" maxlength="11" size="11" type="number">
                         <div class="form-control-focus"></div>
                     </div>
                 </div>
@@ -234,6 +236,19 @@
                                asp-for="hopDongKhachHangPhong.hopDong.GiaPhong"
                                placeholder="Nhập số tiền đặt cọc" maxlength="11" size="11" type="text"
                                id="giaPhong">
+                        <div class="form-control-focus"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
+                    <label class="control-label">Tổng thu tiền: </label>
+                    <div>
+                        <input class="string optional bg-maxlength optional form-control number-format-clear-empty"
+                               placeholder="Nhập số tiền đặt cọc" maxlength="11" size="11" type="text"
+                               asp-for="TongTien"
+                               id="tongThuTien">
                         <div class="form-control-focus"></div>
                     </div>
                 </div>
@@ -290,6 +305,8 @@
 
             $("#giaPhong").val(Gia);
             $("#tienDatCoc").val(Coc);
+            $("#tongThuTien").val(parseFloat(Gia) + parseFloat(Coc));
+
         });
     });
 

@@ -19,5 +19,14 @@ namespace Motel.Models
 
         [Column("_MaPH")]
         public int _MaPH { get; set; }
+
+        [Column("_MaHD")]
+        public int? _MaHD { get; set; }
+
+        [Column("SoLuong")]
+        public int? SoLuong { get; set; }
+
+        [Column("TrangThai")]
+        public int? TrangThai { get; set; }
     }
 }

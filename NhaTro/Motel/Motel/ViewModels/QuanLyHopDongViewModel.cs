@@ -23,6 +23,8 @@ namespace Motel.ViewModels
 
         public HopDongKhachHang hopDongKhachHangPhong { get; set; }
 
+        public decimal TongTien { get; set; }
+
     }
 
     public class HopDongViewModel : HopDong
@@ -32,6 +34,7 @@ namespace Motel.ViewModels
         public string TenKhachHang { get; set; }
 
         public int ThoiHanHopDong { get; set; }
+
     }
 
     public class HopDongKhachHang
