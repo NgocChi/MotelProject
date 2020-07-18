@@ -27,6 +27,24 @@ namespace Motel.Controllers
             _httpContextAccessor = httpContextAccessor;
             _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("UserData");
         }
+        public IActionResult Index1(int trangThai = 0)
+        {
+            QuanLyDatPhongViewModel dp = new QuanLyDatPhongViewModel();
+            switch (trangThai)
+            {
+                case 0:
+                    dp.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
+                    break;
+                case 1:
+                    dp.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro).Where(t => t.NgayHetHan >= DateTime.Now);
+                    break;
+                case 2:
+                    dp.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro).Where(t => t.NgayHetHan < DateTime.Now);
+                    break;
+
+            }
+            return Json(new { html = Helper.RenderRazorViewToString(this, "Table", dp) });
+        }
 
         public IActionResult Index()
         {

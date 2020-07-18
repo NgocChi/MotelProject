@@ -27,7 +27,7 @@ namespace Motel.Models
         public int _MaPH { get; set; }
 
         [Column("_MaKH")]
-        public int? _MaKH { get; set; }
+        public int _MaKH { get; set; }
 
         [Column("GhiChu")]
         public string GhiChu { get; set; }

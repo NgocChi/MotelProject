@@ -20,5 +20,7 @@ namespace Motel.Interfaces.Repositories
         Task<int> Delete(int id);
 
         Task<DatPhong> GetsById(int? id);
+
+        DatPhongViewModel GetsByIdDP(int id);
     }
 }

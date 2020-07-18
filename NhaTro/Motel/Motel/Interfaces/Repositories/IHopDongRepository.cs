@@ -9,7 +9,7 @@ namespace Motel.Interfaces.Repositories
 {
     public interface IHopDongRepository
     {
-        IEnumerable<HopDongViewModel> Gets();
+        IEnumerable<HopDongViewModel> Gets(int idNhaTro);
 
         Task<HopDong> GetById(int id);
 

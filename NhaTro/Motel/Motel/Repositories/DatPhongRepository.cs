@@ -108,5 +108,27 @@ namespace Motel.Repositories
         {
             return await _appDBContext.DatPhongs.FindAsync(id);
         }
+
+        public DatPhongViewModel GetsByIdDP(int id)
+        {
+            var query = from dp in _appDBContext.DatPhongs
+                        join p in _appDBContext.Phongs on dp._MaPH equals p.MaPH
+                        join loai in _appDBContext.LoaiPhongs on p._MaLP equals loai.MaLP
+                        where dp.MaDP == id
+                        select new DatPhongViewModel
+                        {
+                            MaDP = dp.MaDP,
+                            NgayDat = dp.NgayDat,
+                            NgayHetHan = dp.NgayHetHan,
+                            SoTienCoc = dp.SoTienCoc,
+                            _MaPH = dp._MaPH,
+                            Gia = loai.Gia,
+                            GiaDatCoc = loai.GiaDatCoc,
+                            _MaKH = dp._MaKH,
+                            TenPhong = p.Ten,
+
+                        };
+            return query.FirstOrDefault();
+        }
     }
 }

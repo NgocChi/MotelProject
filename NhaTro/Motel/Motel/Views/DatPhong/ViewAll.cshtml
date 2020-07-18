@@ -55,7 +55,8 @@
                     <div class="md-radio-inline">
                         <label class="bold" style="margin-right: 10px;">Trạng thái đặt phòng:</label>
                         <div class="md-radio">
-                            <input id="radio0" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="0" checked="" type="radio">
+                            <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","DatPhong",new { trangThai = 0}, Context.Request.Scheme)')"
+                                   id="radio0" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="0" checked="" type="radio">
                             <label for="radio0">
                                 <span class=""></span>
                                 <span class="check"></span>
@@ -63,7 +64,8 @@
                             </label>
                         </div>
                         <div class="md-radio">
-                            <input id="radio1" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="1" type="radio">
+                            <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","DatPhong",new { trangThai = 1}, Context.Request.Scheme)')"
+                                   id="radio1" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="1" type="radio">
                             <label for="radio1">
                                 <span class=""></span>
                                 <span class="check"></span>
@@ -71,7 +73,8 @@
                             </label>
                         </div>
                         <div class="md-radio">
-                            <input id="radio2" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="2" type="radio">
+                            <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","DatPhong",new { trangThai = 2}, Context.Request.Scheme)')"
+                                   id="radio2" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="2" type="radio">
                             <label for="radio2">
                                 <span></span>
                                 <span class="check"></span>

@@ -17,11 +17,12 @@ namespace Motel.Repositories
         {
             this._appDBContext = appDBContext;
         }
-        public IEnumerable<HopDongViewModel> Gets()
+        public IEnumerable<HopDongViewModel> Gets(int idNhaTro)
         {
             var query = from hd in _appDBContext.HopDongs
                         join p in _appDBContext.Phongs on hd._MaPH equals p.MaPH
                         join kh in _appDBContext.KhachHangs on hd._MaKH equals kh.MaKh
+                        where p._MaNT == idNhaTro
                         select new HopDongViewModel
                         {
                             MaHopDong = hd.MaHopDong,

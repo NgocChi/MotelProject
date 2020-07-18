@@ -4,7 +4,7 @@
             type: "GET",
             url: url,
             success: function (res) {
-                $("#myModal .caption-subject .bold .uppercase").html(tilte);
+                $("#myModal .modal-header .caption  .caption-subject ").html(tilte);
                 $("#myModal .modal-body").html(res);
                 $("#myModal").modal('show');
             }

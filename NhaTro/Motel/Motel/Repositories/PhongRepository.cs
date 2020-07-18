@@ -74,13 +74,13 @@ namespace Motel.Repositories
             var query = _appDBContext.Phongs.Where(t => t._MaTTPH == 1 || t.MaPH == idPhong);
             return query.ToList();
         }
-        public IEnumerable<PhongViewModel> GetsPTrong(int idNT)
+        public IEnumerable<PhongViewModel> GetsPTrong(int idNT, int idPhong)
         {
             var query = from p in _appDBContext.Phongs
                         join nt in _appDBContext.NhaTros on p._MaNT equals nt.MaNT
                         join ttp in _appDBContext.TrangThaiPhongs on p._MaTTPH equals ttp.MaTTPH
                         join lp in _appDBContext.LoaiPhongs on p._MaLP equals lp.MaLP
-                        where p._MaTTPH == 1 && p._MaNT == idNT
+                        where (p._MaTTPH == 1 && p._MaNT == idNT) || p.MaPH == idPhong
                         select new PhongViewModel
                         {
                             MaPH = p.MaPH,

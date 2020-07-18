@@ -36,7 +36,7 @@ namespace Motel.ViewModels
 
     public class HopDongKhachHang
     {
-        public DatPhong datPhong { get; set; }
+        public DatPhongViewModel datPhong { get; set; }
 
         public HopDong hopDong { get; set; }
 

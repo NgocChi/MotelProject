@@ -24,9 +24,9 @@
                 <span class="required" aria-required="true"> * </span>
             </label>
             <select asp-for="hopDongKhachHangPhong.hopDong._MaPH"
-                    name="hopDongKhachHangPhong.hopDong._MaPH" class="form-control select optional form-control" id="btn_phong">
+                    class="form-control select optional form-control" id="btn_phong">
                 @{
-                    <option value="0">--Chọn Phòng--</option>
+
                     foreach (var item in Model.listPhong)
                     {
                         <option value="@item.MaPH">@item.Ten</option>
@@ -51,14 +51,7 @@
                         <span class="box"></span>  Thuê phòng
                     </label>
                 </div>
-                <div class="md-radio hide">
-                    <input id="radio2" class="md-radiobtn radio-agreement_type" value="3" type="radio">
-                    <label for="radio2">
-                        <span class=""></span>
-                        <span class="check"></span>
-                        <span class="box"></span> Dịch vụ
-                    </label>
-                </div>
+
             </div>
         </div>
         <!-- Trạng thái hợp đồng -->
@@ -106,7 +99,8 @@
                         Người đại diện
                         <span class="required" aria-required="true"> * </span>
                     </label>
-                    <select asp-for="hopDongKhachHangPhong.hopDong._MaKH" class="form-control select optional form-control" id="btn_khachhang">
+                    <select asp-for="hopDongKhachHangPhong.hopDong._MaKH" class="form-control select optional form-control"
+                            id="btn_khachhang">
                         @{
 
                             foreach (var item in Model.listKhachHang)
@@ -116,14 +110,43 @@
                         }
                     </select>
 
-                    <input type="hidden" name="admin_agreement[room_id]" value="34171">
-                    <input type="hidden" name="change_deposit2agreement[deposit_id]" value="711">
+                </div>
+            </div>
+
+
+
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
+                    <label class="control-label">Ngày bắt đầu</label>
+                    <div>
+                        <div class="input-group date form_datetime">
+                            <input class="string required bg-maxlength form-control"
+                                   placeholder="Ngày bắt đầu"
+                                   asp-for="hopDongKhachHangPhong.hopDong.NgayBatDau"
+                                   maxlength="50" size="50" type="date"
+                                   id="startDate">
+                            <div class="form-control-focus"></div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="form-group form-md-line-input row">
                 <div class="col-md-12 selected-room-container">
-                    <label class="control-label">Tiền đặt cọc</label>
+                    <label class="control-label">Chỉ số nước ban đầu:</label>
+                    <div>
+                        <input class="string optional bg-maxlength optional form-control number-format-clear-empty"
+                               placeholder="Chỉ số nước ban đầu:" maxlength="11" size="11" type="text">
+                        <div class="form-control-focus"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
+                    <label class="control-label">Gía cọc phòng</label>
                     <div>
                         <input class="string optional bg-maxlength optional form-control number-format-clear-empty"
                                placeholder="Nhập số tiền đặt cọc" maxlength="11" size="11" type="text"
@@ -136,61 +159,20 @@
 
             <div class="form-group form-md-line-input row">
                 <div class="col-md-12 selected-room-container">
-                    <label class="control-label">Ngày bắt đầu</label>
+                    <label class="control-label">Tiền dằn chân: </label>
                     <div>
-                        <div class="input-group date form_datetime">
-                            <input class="string required bg-maxlength form-control"
-                                   placeholder="Ngày bắt đầu"
-                                   asp-for="hopDongKhachHangPhong.hopDong.NgayBatDau"
-                                   name="hopDongKhachHangPhong.hopDong.NgayBatDau"
-                                   maxlength="50" size="50" type="date"
-                                   id="startDate">
-                            <div class="form-control-focus"></div>
-
-                        </div>
+                        <input class="string optional bg-maxlength optional form-control number-format-clear-empty"
+                               placeholder="Nhập số tiền đặt cọc" maxlength="11" size="11" type="text"
+                               asp-for="hopDongKhachHangPhong.hopDong.TienDatCoc"
+                               id="tienDatCoc">
+                        <div class="form-control-focus"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="form-group form-md-line-input row">
-                <div class="col-md-12 selected-room-container">
-                    <label class="control-label">
-                        Kì thanh toán
-                        <span class="required" aria-required="true"> * </span>
-                    </label>
-                    <div>
-                        <div class="input-group">
-                            <input class="string optional form-control bg-maxlength number-format" value="1" placeholder="Nhập kì thanh toán" maxlength="2" size="2" type="text" name="admin_agreement[billing_cycle]" id="admin_agreement_billing_cycle">
-                            <div class="form-control-focus"></div>
-                            <span class="input-group-btn">
-                                <button class="btn default" type="button">
-                                    <i class="fa fa-history"></i>tháng/lần
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="form-group form-md-line-input row">
-                <div class="col-md-12 selected-room-container">
-                    <label class="control-label">
-                        Ngày đóng tiền kỳ tới
-                        <span class="required" aria-required="true"> * </span> <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Ngày dùng để cảnh báo khi đến kỳ thanh toán"> [?] </span>
-                    </label>
-                    <div>
-                        <div class="input-group">
-                            <input class="string optional form-control bg-maxlength number-format" value="18" placeholder="Nhập kì thanh toán" maxlength="2" size="2" type="text" name="admin_agreement[billing_cycle_warning]" id="admin_agreement_billing_cycle_warning">
-                            <div class="form-control-focus"></div>
-                            <span class="input-group-btn">
-                                <button class="btn default" type="button">
-                                    <i class="fa fa-history"></i>Kỳ
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+
 
         </div>
         <div class="col-lg-6">
@@ -200,7 +182,8 @@
                         Chủ đại diện
                         <span class="required" aria-required="true"> * </span>
                     </label>
-                    <select asp-for="hopDongKhachHangPhong.hopDong._MaCT" class="form-control select optional form-control" id="btn_khachhang">
+                    <select asp-for="hopDongKhachHangPhong.hopDong._MaCT" class="form-control select optional form-control"
+                            id="btn_khachhang">
                         @{
                             foreach (var item in Model.listChuTro)
                             {
@@ -210,23 +193,11 @@
                         }
                     </select>
 
-                    <input type="hidden" name="admin_agreement[room_id]" value="34171">
-                    <input type="hidden" name="change_deposit2agreement[deposit_id]" value="711">
+
                 </div>
             </div>
 
-            <div class="form-group form-md-line-input row">
-                <div class="col-md-12 selected-room-container">
-                    <label class="control-label">Tiền phòng</label>
-                    <div>
-                        <input class="string optional bg-maxlength optional form-control number-format-clear-empty"
-                               asp-for="hopDongKhachHangPhong.hopDong.GiaPhong"
-                               placeholder="Nhập số tiền đặt cọc" maxlength="11" size="11" type="text"
-                               id="giaPhong">
-                        <div class="form-control-focus"></div>
-                    </div>
-                </div>
-            </div>
+
 
             <div class="form-group form-md-line-input row">
                 <div class="col-md-12 selected-room-container">
@@ -236,7 +207,6 @@
                             <input class="string required bg-maxlength form-control"
                                    placeholder="Ngày hết hạn"
                                    asp-for="hopDongKhachHangPhong.hopDong.NgayKetThuc"
-                                   name="hopDongKhachHangPhong.hopDong.NgayKetThuc"
                                    maxlength="50" size="50" type="date"
                                    id="endDate">
                             <div class="form-control-focus"></div>
@@ -247,10 +217,35 @@
 
             <div class="form-group form-md-line-input row">
                 <div class="col-md-12 selected-room-container">
+                    <label class="control-label">Chỉ số điện ban đầu:</label>
+                    <div>
+                        <input class="string optional bg-maxlength optional form-control number-format-clear-empty"
+                               placeholder="Chỉ số điện ban đầu:" maxlength="11" size="11" type="text">
+                        <div class="form-control-focus"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
+                    <label class="control-label">Gía phòng</label>
+                    <div>
+                        <input class="string optional bg-maxlength optional form-control number-format-clear-empty"
+                               asp-for="hopDongKhachHangPhong.hopDong.GiaPhong"
+                               placeholder="Nhập số tiền đặt cọc" maxlength="11" size="11" type="text"
+                               id="giaPhong">
+                        <div class="form-control-focus"></div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="form-group form-md-line-input row">
+                <div class="col-md-12 selected-room-container">
                     <label class="control-label">Ghi chú (Nếu có) </label>
                     <div>
                         <textarea class="text optional form-control bg-maxlength" asp-for="hopDongKhachHangPhong.hopDong.GhiChu"
-                                  name="hopDongKhachHangPhong.hopDong.GhiChu"
                                   row="2" style="height: 110px;" maxlength="500"></textarea>
                         <div class="form-control-focus"></div>
                     </div>

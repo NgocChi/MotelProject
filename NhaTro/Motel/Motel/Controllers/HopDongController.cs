@@ -36,10 +36,30 @@ namespace Motel.Controllers
             this.DatPhongRepository = datPhongRepository;
             _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("UserData");
         }
+        public IActionResult Index1(int trangThai = 0)
+        {
+            QuanLyHopDongViewModel hd = new QuanLyHopDongViewModel();
+            switch (trangThai)
+            {
+                case 0:
+                    hd.listHopDong = Repository.Gets(_nhaTro);
+                    break;
+                case 1:
+                    hd.listHopDong = Repository.Gets(_nhaTro).Where(t => t.NgayKetThuc >= DateTime.Now);
+                    break;
+                case 2:
+                    hd.listHopDong = Repository.Gets(_nhaTro).Where(t => t.NgayKetThuc < DateTime.Now);
+                    break;
+
+            }
+            return Json(new { html = Helper.RenderRazorViewToString(this, "Table", hd) });
+        }
+
+
         public IActionResult Index()
         {
             QuanLyHopDongViewModel hd = new QuanLyHopDongViewModel();
-            hd.listHopDong = Repository.Gets();
+            hd.listHopDong = Repository.Gets(_nhaTro);
             return View(hd);
         }
         [HttpPost]
@@ -77,7 +97,7 @@ namespace Motel.Controllers
                     }
                 }
                 QuanLyHopDongViewModel model = new QuanLyHopDongViewModel();
-                model.listHopDong = Repository.Gets();
+                model.listHopDong = Repository.Gets(_nhaTro);
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", hopdong) });
@@ -88,27 +108,31 @@ namespace Motel.Controllers
         {
             IActionResult result;
             QuanLyHopDongViewModel model = new QuanLyHopDongViewModel();
-            model.listPhong = PhongRepository.GetsPTrong(_nhaTro);
+
             model.listKhachHang = KhachHangRepository.Gets();
             model.listDichVu = DichVuRepository.GetsByNhaTro(_nhaTro, idPhong);
             model.listKHDestination = new List<KhachHang>();
             model.listChuTro = ChuTroRepository.Gets();
             model.listDichVuDestination = new List<DichVu>();
             model.hopDongKhachHangPhong = new HopDongKhachHang();
-            if (id == 0)
+            if (id == 0) // nếu thêm mới hợp đồng
             {
                 model.hopDongKhachHangPhong.hopDong = new HopDong();
                 model.hopDongKhachHangPhong.dichVuPhong = new DichVuPhong();
-                if (idDatPhong != 0)
+                if (idDatPhong != 0) // nếu đã đặt phòng
                 {
-                    model.hopDongKhachHangPhong.datPhong = new DatPhong();
-                    model.hopDongKhachHangPhong.datPhong = await DatPhongRepository.GetsById(idDatPhong);
+                    model.hopDongKhachHangPhong.datPhong = new DatPhongViewModel();
+                    model.hopDongKhachHangPhong.datPhong = DatPhongRepository.GetsByIdDP(idDatPhong);
+                    model.listPhong = PhongRepository.GetsPTrong(_nhaTro, model.hopDongKhachHangPhong.datPhong._MaPH);
                     model.hopDongKhachHangPhong.hopDong._MaPH = model.hopDongKhachHangPhong.datPhong._MaPH;
+                    model.hopDongKhachHangPhong.hopDong._MaKH = model.hopDongKhachHangPhong.datPhong._MaKH;
+                    model.hopDongKhachHangPhong.hopDong.GiaPhong = model.hopDongKhachHangPhong.datPhong.Gia;
+                    model.hopDongKhachHangPhong.hopDong.TienDatCoc = model.hopDongKhachHangPhong.datPhong.GiaDatCoc;
                 }
 
                 result = View(model);
             }
-            else
+            else // nếu edit hợp đồng
             {
                 model.hopDongKhachHangPhong.hopDong = await Repository.GetById(id);
                 if (model.hopDongKhachHangPhong.hopDong == null)
@@ -125,7 +149,7 @@ namespace Motel.Controllers
             QuanLyHopDongViewModel model = new QuanLyHopDongViewModel();
             if (id == 0)
             {
-                model.listHopDong = Repository.Gets();
+                model.listHopDong = Repository.Gets(_nhaTro);
                 return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
             else
@@ -133,7 +157,7 @@ namespace Motel.Controllers
                 int kq = await Repository.Delete(id);
                 if (kq == 0)
                     return NotFound();
-                model.listHopDong = Repository.Gets();
+                model.listHopDong = Repository.Gets(_nhaTro);
                 return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
         }

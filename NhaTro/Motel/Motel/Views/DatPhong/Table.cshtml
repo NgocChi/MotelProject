@@ -30,46 +30,137 @@
 
                     foreach (var item in Model.listDatPhong)
                     {
-                        <tr class="item-1932 highlight">
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                        Tác vụ
-                                        <i class="fa fa-angle-down"></i>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a data-remote="true" onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Chỉnh sửa</a>
-                                        </li>
-                                        <li>
-                                            <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = 0, idDatPhong = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li>
-                                            <a>
-                                                <i class="fas fa-file-word-o"></i> Giấy nhận cọc
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                            <td>@item.TenPhong</td>
-                            <td>@item.TenKhachHang</td>
-                            <td>@item.SoDienThoai</td>
-                            <td>@item.SoTienCoc</td>
-                            <td>@item.NgayDat</td>
-                            <td>@item.NgayHetHan</td>
-                            <td class="text-center">
-                                <form asp-action="Delete"
-                                      asp-route-id="@item.MaDP"
-                                      onsubmit="return jQueryAjaxDelete(this)">
-                                    <button type="submit"
-                                            class="btn red btn-circle btn-icon-only btn-default">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+
+                        @if (item.NgayHetHan < DateTime.Now.AddDays(3) && item.NgayHetHan > DateTime.Now)
+                        {
+                            <tr class="item-1932 highlight" style="background-color:gold;">
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                            Tác vụ
+                                            <i class="fa fa-angle-down"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a data-remote="true" onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Chỉnh sửa</a>
+                                            </li>
+                                            <li>
+                                                <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = 0, idDatPhong = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a>
+                                                    <i class="fas fa-file-word-o"></i> Giấy nhận cọc
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td>@item.TenPhong</td>
+                                <td>@item.TenKhachHang</td>
+                                <td>@item.SoDienThoai</td>
+                                <td>@item.SoTienCoc</td>
+                                <td>@item.NgayDat</td>
+                                <td>@item.NgayHetHan</td>
+                                <td class="text-center">
+                                    <form asp-action="Delete"
+                                          asp-route-id="@item.MaDP"
+                                          onsubmit="return jQueryAjaxDelete(this)">
+                                        <button type="submit"
+                                                class="btn red btn-circle btn-icon-only btn-default">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                        else if (item.NgayHetHan < DateTime.Now)
+                        {
+                            <tr class="item-1932 highlight" style="background-color:crimson;">
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                            Tác vụ
+                                            <i class="fa fa-angle-down"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a data-remote="true" onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Chỉnh sửa</a>
+                                            </li>
+                                            <li>
+                                                <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = 0, idDatPhong = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a>
+                                                    <i class="fas fa-file-word-o"></i> Giấy nhận cọc
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td>@item.TenPhong</td>
+                                <td>@item.TenKhachHang</td>
+                                <td>@item.SoDienThoai</td>
+                                <td>@item.SoTienCoc</td>
+                                <td>@item.NgayDat</td>
+                                <td>@item.NgayHetHan</td>
+                                <td class="text-center">
+                                    <form asp-action="Delete"
+                                          asp-route-id="@item.MaDP"
+                                          onsubmit="return jQueryAjaxDelete(this)">
+                                        <button type="submit"
+                                                class="btn red btn-circle btn-icon-only btn-default">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr class="item-1932 highlight">
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                            Tác vụ
+                                            <i class="fa fa-angle-down"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li>
+                                                <a data-remote="true" onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Chỉnh sửa</a>
+                                            </li>
+                                            <li>
+                                                <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = 0, idDatPhong = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a>
+                                                    <i class="fas fa-file-word-o"></i> Giấy nhận cọc
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td>@item.TenPhong</td>
+                                <td>@item.TenKhachHang</td>
+                                <td>@item.SoDienThoai</td>
+                                <td>@item.SoTienCoc</td>
+                                <td>@item.NgayDat</td>
+                                <td>@item.NgayHetHan</td>
+                                <td class="text-center">
+                                    <form asp-action="Delete"
+                                          asp-route-id="@item.MaDP"
+                                          onsubmit="return jQueryAjaxDelete(this)">
+                                        <button type="submit"
+                                                class="btn red btn-circle btn-icon-only btn-default">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+
                     }
                 }
             </tbody>
