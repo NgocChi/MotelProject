@@ -35,7 +35,15 @@ namespace Motel.Models
         [Column("_MaDVPH")]
         public int _MaDVPH { get; set; }
 
+
         [Column("_MaLoaiHD")]
         public int _MaLoaiHD { get; set; }
+
+
+        [Column("_MaHD")]
+        public int _MaHD { get; set; }
+
+        [Column("TrangThai")]
+        public bool TrangThai { get; set; }
     }
 }

@@ -12,50 +12,75 @@
             <thead>
                 <tr>
                     <th class="text-center">
+                        <div class="md-checkbox-inline service-checkbox">
+                            <div class="icheck-primary d-inline ml-2">
+                                <input type="checkbox" value="" name="todo1" id="todoCheck1">
+                                <label for="todoCheck1"></label>
+                            </div>
+                        </div>
                     </th>
+                    <th class="text-center">
+                    </th>
+                    <th>Tháng/năm</th>
                     <th>Phòng</th>
-                    <th>Người đặt cọc</th>
-                    <th>Số điện thoại</th>
-                    <th>Tiền đặt cọc</th>
-                    <th>Ngày đặt cọc</th>
-                    <th>Ngày hết hạn</th>
-                    <th></th>
+                    <th>Người đại diện</th>
+                    <th>Loại hóa đơn</th>
+                    <th>Thành tiền</th>
+                    <th>Thanh toán</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày thanh toán</th>
+                    <th>Đã thanh toán</th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr class="item-1932 highlight" style="background-color:gold;">
-                    <td class="text-center">
-                        <div class="btn-group">
-                            <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                Tác vụ
-                                <i class="fa fa-angle-down"></i>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a data-remote="true"><i class="fas fa-edit"></i> Chỉnh sửa</a>
-                                </li>
-                                <li>
-                                    <a data-remote="true"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a>
-                                        <i class="fas fa-file-word-o"></i> Giấy nhận cọc
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="text-center">
-                    </td>
-                </tr>
+                @foreach (var item in Model.listXuatHoaDon)
+                {
+                    <tr class="item-1932 highlight" style="background-color:gold;">
+                        <td class="text-center">
+                            <div class="md-checkbox-inline service-checkbox">
+                                <div class="icheck-primary d-inline ml-2">
+                                    <input type="checkbox" value="" name="todo2" id="ck-1932">
+                                    <label for="ck-1932">
+                                        <span></span><span class="check"></span><span class="box"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                    Tác vụ
+                                    <i class="fa fa-angle-down"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a data-remote="true"><i class="fas fa-edit"></i> Chỉnh sửa</a>
+                                    </li>
+                                    <li>
+                                        <a data-remote="true"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a>
+                                            <i class="fas fa-file-word-o"></i> Giấy nhận cọc
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>@item.ThangNam</td>
+                        <td>@item.TenPhong</td>
+                        <td>@item.TenPhong</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
