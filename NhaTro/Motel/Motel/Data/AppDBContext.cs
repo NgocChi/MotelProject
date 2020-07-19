@@ -54,6 +54,8 @@ namespace Motel.Data
         public DbSet<PhanQuyen> PhanQuyens { get; set; }
 
         public DbSet<NhomNguoiDung> NhomNguoiDungs { get; set; }
+
+        public DbSet<ChiTietHoaDon> ChiTietHoaDons { get; set; }
     }
 
 }

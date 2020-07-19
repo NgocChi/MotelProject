@@ -13,6 +13,8 @@ namespace Motel.Interfaces.Repositories
         List<DichVu_ViewModel> GetsByNhaTro(int id, int idPhong);
         List<DichVu_ViewModel> GetsByNhaTro(int id);
 
+        List<DichVu_ViewModel> GetsByIdPhongIdHopDong(int idHopDong, int idPhong);
+
         Task<DichVu> GetsById(int? id);
         Task<int> Create(DichVu dv);
 

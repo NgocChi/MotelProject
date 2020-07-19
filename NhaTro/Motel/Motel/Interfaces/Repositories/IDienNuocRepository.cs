@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Motel.Interfaces.Repositories
 {
-    public interface IHoaDonRepository
+    public interface IDienNuocRepository
     {
-        IEnumerable<HoaDonViewModel> Gets(int id, DateTime Thang);
+        DienNuocViewModel GetDienNuocByIdPhong(int idPhong, DateTime ngayghi);
     }
 }

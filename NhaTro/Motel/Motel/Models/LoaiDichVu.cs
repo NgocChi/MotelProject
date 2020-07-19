@@ -26,5 +26,8 @@ namespace Motel.Models
 
         [Column("Mota")]
         public string Mota { get; set; }
+
+        [Column("MacDinh")]
+        public bool? MacDinh { get; set; }
     }
 }

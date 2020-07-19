@@ -1,0 +1,743 @@
+﻿
+@{
+    Layout = null;
+}
+@using Motel.ViewModels
+@model QuanLyHoaDonViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
+
+<form asp-controller="XuatHoaDon" asp-action="AddOrEdit" asp-route-id="@Model.hoaDon.MaHD" onsubmit="return jQueryAjaxPostLarge(this);"
+      autocomplete="off">
+    <ul class="errors"></ul>
+
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">Tháng/năm</label>
+        <div class="col-md-4">
+            <input as="datepicker" class="form-control date-picker" placeholder="Nhập năm"
+                   data-date-format="mm/yyyy" type="text" value="07/2020" name="admin_bill[month_year]" id="admin_bill_month_year">
+            <div class="form-control-focus"></div>
+        </div>
+
+        <label class="col-md-2 control-label">Mã hợp đồng</label>
+        <div class="col-md-4">
+            <input as="string" class="form-control" value="#HĐG0000006457" disabled="disabled"
+                   type="text" name="admin_bill[agreement_id]" id="admin_bill_agreement_id">
+        </div>
+
+    </div>
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">Ngày thanh toán</label>
+        <div class="col-md-4">
+            <input as="datepicker" class="form-control date-picker" placeholder="Nhập năm" data-date-format="mm/yyyy"
+                   disabled="disabled" type="text" value="07/2020" name="admin_bill[month_year]" id="admin_bill_month_year">
+            <div class="form-control-focus"></div>
+        </div>
+
+        <label class="col-md-2 control-label">Mã hóa đơn</label>
+        <div class="col-md-4">
+            <input class="string optional disabled form-control" disabled="disabled" placeholder="Mã hóa đơn"
+                   type="text" value="#HĐN0000031225" name="admin_bill[code]" id="admin_bill_code">
+            <div class="form-control-focus"></div>
+        </div>
+
+    </div>
+
+
+    <div class="form-group form-md-line-input no-margin-bottom" style="display: none;">
+        <label class="col-md-2 control-label"></label>
+        <div class="col-md-4"></div>
+        <label class="col-md-6 control-label">Tổng tiền trả trước còn lại trước đó: <b class="prepayment-remain-before">0đ</b></label>
+        <input type="hidden" name="admin_bill[pre_payment]" value="0">
+    </div>
+
+    <fieldset>
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="table-scrollable">
+                    <table class="table table-bordered table-hover service-table">
+                        <thead>
+
+                        </thead>
+                        <tbody class="services">
+                            <tr>
+                                <td>
+                                    Tiền nhà
+                                    <input type="hidden">
+                                    <input type="hidden" class="formula-type-service service-input">
+                                </td>
+                                <td>
+                                    Phòng
+                                    <input type="hidden">
+                                </td>
+                                <td>
+
+                                    <input type="number" asp-for="phong.Gia" class="form-control number-format unit-price-service service-input"
+                                           ,="" autocomplete="off">
+                                </td>
+                                <td>
+                                    <input value="1" class="form-control amount-service service-input text-center" readonly="">
+                                </td>
+                                <td>
+                                    <input asp-for="phong.Gia" class="form-control number-format-negative subtotal-service service-input tooltips"
+                                           readonly="" data-placement="top" data-original-title="2.000.000 * 1 = 2.000.000">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Tiền điện
+                                    <input type="hidden">
+                                    <input type="hidden" class="formula-type-service service-input" value="1">
+                                </td>
+                                <td>
+                                    Số (kWh)
+                                    <input type="hidden">
+                                </td>
+                                <td>
+                                    <input type="hidden" class="service-id">
+                                    <input type="hidden">
+                                    <input type="text" class="form-control number-format unit-price-service service-input" value="4000" ,="" autocomplete="off">
+                                </td>
+                                <td>
+                                    <!-- Số lượng không chỉnh cho trường hợp công thức và cố định -->
+                                    <div class="form-line-input" style="display: inline-flex;">
+                                        <input type="text" asp-for="dienNuoc.CSCuDien" id="start-electricity" class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số đầu">
+                                        <input type="text" asp-for="dienNuoc.CSMoiDien" id="end-electricity" class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số cuối">
+                                        <input type="text" id="amount-electricity" class="form-control number-format-navigative amount-service service-input text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số tiêu thụ">
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <input type="text" class="form-control number-format-negative subtotal-service service-input tooltips"
+                                           value="0" readonly="" data-placement="top" data-original-title="4.000 * 0 = 0">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Tiền nước
+                                    <input type="hidden" value="46801">
+                                    <input type="hidden" class="formula-type-service service-input" value="1">
+                                </td>
+                                <td>
+                                    Khối (m3)
+                                    <input type="hidden" value="24925">
+                                </td>
+                                <td>
+                                    <input type="hidden" class="service-id" value="18332">
+                                    <input type="hidden">
+                                    <input type="text" class="form-control number-format unit-price-service service-input" value="22000" ,="" autocomplete="off">
+                                </td>
+                                <td>
+                                    <!-- Số lượng không chỉnh cho trường hợp công thức và cố định -->
+                                    <div class="form-line-input" style="display: inline-flex;">
+                                        <input type="text" asp-for="dienNuoc.CSCuNuoc" id="start-water" class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số đầu">
+                                        <input type="text" asp-for="dienNuoc.CSMoiNuoc" id="end-water" class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số cuối">
+                                        <input type="text" id="amount-water" class="form-control number-format-navigative amount-service service-input text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số tiêu thụ">
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" name="admin_services[total][]" class="form-control number-format-negative subtotal-service service-input tooltips" value="0" readonly="" data-placement="top" data-original-title="22.000 * 0 = 0">
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-scrollable">
+                    <table class="table table-bordered table-hover service-table">
+                        <thead>
+                            <tr>
+                                <th>Tên dịch vụ</th>
+                                <th width="80">Đơn vị</th>
+                                <th>Đơn giá (đ)</th>
+                                <th width="270">Số lượng</th>
+                                <th width="20" style="display: none;">Trả trước (đ)</th>
+                                <th width="185">Thành tiền (đ)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="services">
+                            @foreach (var item in Model.listDichVu)
+                            {
+
+                                <tr>
+                                    <td>
+                                        @item.Ten
+                                        <input type="hidden">
+                                        <input type="hidden" class="formula-type-service service-input">
+                                    </td>
+                                    <td>
+                                        @item.TenDonVi
+                                        <input type="hidden">
+                                    </td>
+                                    <td>
+
+                                        <input type="hidden">
+                                        <input type="hidden">
+                                        <input type="text" value="@item.Gia" class="form-control number-format unit-price-service service-input" ,="" autocomplete="off">
+                                    </td>
+                                    <td>
+                                        <input type="text" value="@item.SoLuong" class="form-control number-format-navigative amount-service service-input text-center" v autocomplete="off">
+                                        <input type="hidden">
+                                        <input type="hidden">
+                                    </td>
+
+                                    <td>
+                                        <input type="text" name="admin_services[total][]" class="form-control number-format-negative subtotal-service service-input tooltips" value="100000" readonly="" data-placement="top" data-original-title="100.000 * 1 = 100.000">
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group form-md-line-input row">
+            <label class="col-md-2 control-label">
+                Tổng tiền Phòng:
+                <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Tiền phòng"> [?] </span>
+            </label>
+            <div class="col-md-4">
+                <input type="text" id="txt_tongtienphong" class="form-control number-format" readonly="">
+                <div class="form-control-focus"></div>
+            </div>
+            <label class="col-md-2 control-label">
+                Tổng tiền dịch vụ
+                <span class="required tooltips" aria-required="true" data-placement="top"
+                      data-original-title="Tổng tiền tất cả dịch vụ sử dụng phía trên"> [?] </span>
+            </label>
+            <div class="col-md-4">
+                <input id="txt_tongtiendv" class="string optional form-control number-format" autocomplete="off" readonly="readonly" type="text">
+                <div class="form-control-focus"></div>
+            </div>
+
+        </div>
+
+        <div class="form-group form-md-line-input row">
+            <label class="col-md-2 control-label">
+                Tổng tiền điện nước:
+                <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Tổng tiền điện nước"> [?] </span>
+            </label>
+            <div class="col-md-4">
+                <input id="txt_tongtiendiennuoc" class="string optional readonly form-control" readonly="readonly" type="text">
+                <div class="form-control-focus"></div>
+            </div>
+            <label class="col-md-2 control-label">
+                Chi phí khác
+                <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Chi phí khác phát sinh"> [?] </span>
+            </label>
+            <div class="col-md-4">
+                <input id="txt_chiphikhac" class="string optional readonly form-control" placeholder="Chi phí khác" type="text">
+                <div class="form-control-focus"></div>
+            </div>
+
+        </div>
+
+        <div class="form-group form-md-line-input row">
+            <label class="col-md-2 control-label">
+                <b>
+                    Thành tiền
+                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Thành tiền = Tổng tiền - Khấu trừ"> [?] </span>
+                </b>
+            </label>
+            <div class="col-md-4">
+                <input id="txt_thanhtien" class="string optional readonly form-control" readonly="readonly"
+                       placeholder="Thành tiền" type="text">
+                <div class="form-control-focus"></div>
+            </div>
+            <label class="col-md-2 control-label">
+                <b>
+                    Thành toán
+                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Thành tiền = Tổng tiền - Khấu trừ"> [?] </span>
+                </b>
+            </label>
+            <div class="col-md-4">
+                <input id="txt_thanhtoan" class="string optional readonly form-control" readonly="readonly"
+                       placeholder="Thành tiền" type="text">
+                <div class="form-control-focus"></div>
+            </div>
+        </div>
+
+
+    </fieldset>
+
+    <div class="form-group form-md-line-input">
+        <div class="col-md-12 mt10">
+            <label class="col-md-2 control-label tooltips" data-placement="top" data-original-title="Ghi chú lại hóa đơn, các chi tiết để sau làm thông tin tham chiếu">Chú thích</label>
+            <div class="col-md-10">
+                <textarea class="text optional bg-maxlength form-control autosizeme bill_note" id="bill_note" placeholder="Nhập ghi chú" maxlength="500" name="admin_bill[description]"></textarea>
+                <div class="form-control-focus"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-actions margin-top-10">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Hủy bỏ
+                </button>
+                <button name="button" type="submit" class="btn btn-default btnExportWithPrint btnFormSubmit btn blue">
+                    <i class="fa fa-money" aria-hidden="true"></i> Xuất &amp; In hóa đơn
+                </button>                <button name="button" type="submit" class="btn btn-default btnExportWithoutPrint btnFormSubmit btn green">
+                    <i class="fa fa-money" aria-hidden="true"></i> Xuất hóa đơn
+                </button>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    $(document).ready(function () {
+        $(".form_datetime").datetimepicker({
+            autoclose: true,
+            isRTL: App.isRTL(),
+            language: 'vi',
+            format: "dd/mm/yyyy hh:ii",
+            pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
+        });
+
+        $('.btnExportWithPrint').click(function () {
+            $('#admin_bill_print').val(1);
+        });
+        calculateTotalFirtLoading();
+        // Format cho dự nợ trước và sau khi load dữ liệu ra
+        // Dư nợ cũ
+        var debt_amount = format_number(parseInt(($('#debt_amount').val() === '' || $('#debt_amount').val() === null || typeof $('#debt_amount').val() === 'undefined') ? '0' : $('#debt_amount').val().replace(/[.]/g, '')) || 0);
+        $('#debt_amount').val(debt_amount);
+
+        // Dư nợ mới
+        var remain_amount = format_number(parseInt(($('#remain_amount').val() === '' || $('#remain_amount').val() === null || typeof $('#remain_amount').val() === 'undefined') ? '0' : $('#remain_amount').val().replace(/[.]/g, '')) || 0);
+        $('#remain_amount').val(remain_amount);
+
+        var total_amount = format_number(parseInt(($('#total_amount').val() === '' || $('#total_amount').val() === null || typeof $('#total_amount').val() === 'undefined') ? '0' : $('#total_amount').val().replace(/[.]/g, '')) || 0);
+        $('#total_amount').val(total_amount);
+
+        var total_amount_sumary = format_number(parseInt(($('#total_amount_sumary').val() === '' || $('#total_amount_sumary').val() === null || typeof $('#total_amount_sumary').val() === 'undefined') ? '0' : $('#total_amount_sumary').val().replace(/[.]/g, '')) || 0);
+        $('#total_amount_sumary').val(total_amount_sumary);
+
+        var payment_amount = format_number(parseInt(($('#payment_amount').val() === '' || $('#payment_amount').val() === null || typeof $('#payment_amount').val() === 'undefined') ? '0' : $('#payment_amount').val().replace(/[.]/g, '')) || 0);
+        $('#payment_amount').val(payment_amount);
+
+        // Thanh toán => Thay đổi dư nợ.
+        $('#payment_amount').change(function () {
+
+            var total_amount_sumary = parseInt(($('#total_amount_sumary').val() === '' || $('#total_amount_sumary').val() === null || typeof $('#total_amount_sumary').val() === 'undefined') ? '0' : $('#total_amount_sumary').val().replace(/[.]/g, '')) || 0;
+            var payment_amount = parseInt(($('#payment_amount').val() === '' || $('#payment_amount').val() === null || typeof $('#payment_amount').val() === 'undefined') ? '0' : $('#payment_amount').val().replace(/[.]/g, '')) || 0;
+            var use_prepayment_remain = parseInt(($('#use_prepayment_remain').val() === '' || $('#use_prepayment_remain').val() === null || typeof $('#use_prepayment_remain').val() === 'undefined') ? '0' : $('#use_prepayment_remain').val().replace(/[.]/g, '')) || 0;
+            var downpayment = parseInt(($('#downpayment').val() === '' || $('#downpayment').val() === null || typeof $('#downpayment').val() === 'undefined') ? '0' : $('#downpayment').val().replace(/[.]/g, '')) || 0;
+
+
+            remain_amount = 0
+
+            if ($('#is_use_prepayment_remain').is(':checked')) {
+                remain_amount = remain_amount + use_prepayment_remain;
+            }
+
+            if ($('#is_downpayment').is(':checked')) {
+                remain_amount = remain_amount + downpayment;
+            }
+
+            if (remain_amount <= 0) {
+                $('#remain_amount').val(format_number(payment_amount - total_amount_sumary));
+            }
+            else {
+                $('#remain_amount').val(format_number(remain_amount + (payment_amount - total_amount_sumary)));
+            }
+        })
+
+        $('#bill_status').change(function () {
+            if ($(this).is(':checked')) {
+                $('.bill-date').show();
+                var billDate = new Date();
+                var billDateStr = l_pad(billDate.getDate(), 2, '0') + "/" + l_pad((billDate.getMonth() + 1), 2, '0') + "/" + billDate.getFullYear() + " " + l_pad(billDate.getHours(), 2, '0') + ":" + l_pad(billDate.getMinutes(), 2, '0');
+                $('#bill_date').val(billDateStr);
+            }
+            else {
+                $('.bill-date').hide();
+            }
+        });
+
+        // Chi phí khác => Thay đổi tổng, dư nợ thay đổi.
+        $('#other_cost').change(function () {
+            calculateTotal();
+        });
+        // Khấu trừ => Thay đổi tổng, dư nợ thay đổi.
+        $('#discount').change(function () {
+            calculateTotal();
+        });
+
+        // Tất toán tiền trả trước.
+        $('#is_use_prepayment_remain').change(function () {
+            calculateTotal();
+        });
+
+        // Tất toán tiền đặt cọc.
+        $('#is_downpayment').change(function () {
+            calculateTotal();
+        });
+
+        /* Xử lý thay đổi trên từng dịch vụ trên bảng dịch vụ */
+        $('#start-electricity, #end-electricity').keyup(function () {
+            $(this).val(($(this).val() === '' || $(this).val() === null || typeof $(this).val() === 'undefined' || !$.isNumeric($(this).val().replace(/[.]/g, ''))) ? '' : format_number(parseInt($(this).val().replace(/[.]/g, '')) || 0));
+            if (event.which == 13) {
+                caculateAmount(this, $('#start-electricity').val(), $('#end-electricity').val(), 1)
+            }
+        });
+
+        $('#start-electricity, #end-electricity').change(function () {
+            $(this).val(($(this).val() === '' || $(this).val() === null || typeof $(this).val() === 'undefined' || !$.isNumeric($(this).val().replace(/[.]/g, ''))) ? '' : format_number(parseInt($(this).val().replace(/[.]/g, '')) || 0));
+            caculateAmount(this, $('#start-electricity').val(), $('#end-electricity').val(), 1)
+        });
+
+        $('#start-water, #end-water').keyup(function () {
+            $(this).val(($(this).val() === '' || $(this).val() === null || typeof $(this).val() === 'undefined' || !$.isNumeric($(this).val().replace(/[.]/g, ''))) ? '' : format_number(parseInt($(this).val().replace(/[.]/g, '')) || 0));
+            if (event.which == 13) {
+                caculateAmount(this, $('#start-water').val(), $('#end-water').val(), 2)
+            }
+        });
+
+        $('#start-water, #end-water').change(function () {
+            $(this).val(($(this).val() === '' || $(this).val() === null || typeof $(this).val() === 'undefined' || !$.isNumeric($(this).val().replace(/[.]/g, ''))) ? '' : format_number(parseInt($(this).val().replace(/[.]/g, '')) || 0));
+            caculateAmount(this, $('#start-water').val(), $('#end-water').val(), 2)
+        });
+
+        function caculateAmount(selector, start, end, type) {
+            if (start == '' && end == '') {
+                if (type == 1) {
+                    $('#amount-electricity').val('');
+                }
+                if (type == 2) {
+                    $('#amount-water').val('');
+                }
+            }
+            else {
+                var start = parseInt(start.replace(/[.]/g, '')) || 0;
+                if (end != '') {
+                    var end = parseInt(end.replace(/[.]/g, '')) || 0;
+                    var amount = end - start
+                    // Dư nợ = Thanh toán - tổng tiền.
+                    if (type == 1) {
+                        $('#amount-electricity').val(format_number(amount));
+                    }
+                    if (type == 2) {
+                        $('#amount-water').val(format_number(amount));
+                    }
+                }
+                else {
+                    if (type == 1) {
+                        $('#amount-electricity').val('');
+                    }
+                    if (type == 2) {
+                        $('#amount-water').val('');
+                    }
+                }
+            }
+
+            var service = $(selector).closest('tr');
+            selectorChange(service);
+        }
+
+        $('.service-input').change(function () {
+            var service = $(this).closest('tr');
+            selectorChange(service);
+        });
+
+        // Dịch vụ thay đổi (gồm đơn giá và số lượng => Thành tiền thay đổi).
+        function selectorChange(service) {
+
+            // Lấy giá trị của unit_price
+            var unitPriceSelector = service.find('.unit-price-service');
+            var amountSelector = service.find('.amount-service');
+            var subTotalSelector = service.find('.subtotal-service');
+            var formulaIdSelector = service.find('.formula-id-service');
+            var formulaTypeSelector = service.find('.formula-type-service');
+            var serviceIdSelector = service.find('.service-id');
+            var prepaymentStatusServiceSelector = service.find('.prepayment-status-service');
+            var prepaymentValueServiceSelector = service.find('.prepayment-value-service');
+            var prepaymentValueServiceHiddenSelector = service.find('.prepayment-value-service-hidden');
+            var prepaymentStatusServiceUncheckSelector = service.find('.prepayment-status-service-uncheck');
+
+            var usePrepaymentRemainSelector = $('#use_prepayment_remain'); // Số tiền trả trước còn lại
+
+            if (formulaTypeSelector.val() != 3) {
+
+                var unitPrice = parseInt(unitPriceSelector.val().replace(/[.]/g, '')) || 0;
+                var amount = parseInt(amountSelector.val().replace(/[.]/g, '')) || 0;
+                var usePrepaymentRemain = caculatePrepaymentRemain(serviceIdSelector, false);
+
+                // Nếu trạng thái trả trước là check
+                if (prepaymentStatusServiceSelector.is(':checked')) {
+                    prepaymentStatusServiceUncheckSelector.prop('disabled', true);
+                    prepaymentValueServiceSelector.html(format_number(usePrepaymentRemain - amount * unitPrice > 0 ? amount * unitPrice : usePrepaymentRemain));
+                    prepaymentValueServiceHiddenSelector.val(usePrepaymentRemain - amount * unitPrice > 0 ? amount * unitPrice : usePrepaymentRemain);
+                    usePrepaymentRemainSelector.val(format_number(caculatePrepaymentRemain(serviceIdSelector, true)));
+                }
+                else {
+                    prepaymentStatusServiceUncheckSelector.prop('disabled', false);
+                    prepaymentValueServiceSelector.html(format_number(0));
+                    prepaymentValueServiceHiddenSelector.val(0);
+                    usePrepaymentRemainSelector.val(format_number(caculatePrepaymentRemain(serviceIdSelector, true)));
+                }
+
+                // Thành tiền
+                if (formulaTypeSelector.val() == 1 && serviceIdSelector.val() == 18331) {
+                    subTotalSelector.attr("data-original-title", '' + format_number(unitPrice) + ' * ' + format_number(amount) + ' = ' + format_number((unitPrice * amount)));
+
+                    if (prepaymentStatusServiceSelector.is(':checked')) {
+                        subTotalSelector.val(usePrepaymentRemain - amount * unitPrice > 0 ? 0 : amount * unitPrice - usePrepaymentRemain);
+                    }
+                    else {
+                        subTotalSelector.val(amount * unitPrice);
+                    }
+                    format_total(subTotalSelector);
+                }
+                else if (formulaTypeSelector.val() == 1 && serviceIdSelector.val() == 18332) {
+                    subTotalSelector.attr("data-original-title", '' + format_number(unitPrice) + ' * ' + format_number(amount) + ' = ' + format_number(unitPrice * amount));
+                    if (prepaymentStatusServiceSelector.is(':checked')) {
+                        subTotalSelector.val(usePrepaymentRemain - amount * unitPrice > 0 ? 0 : amount * unitPrice - usePrepaymentRemain);
+                    }
+                    else {
+                        subTotalSelector.val(amount * unitPrice);
+                    }
+                    format_total(subTotalSelector);
+                }
+                else {
+                    if (prepaymentStatusServiceSelector.is(':checked')) {
+                        subTotalSelector.val(usePrepaymentRemain - amount * unitPrice > 0 ? 0 : amount * unitPrice - usePrepaymentRemain);
+                    }
+                    else {
+                        subTotalSelector.val(amount * unitPrice);
+                    }
+
+                    format_total(subTotalSelector);
+                    subTotalSelector.attr("data-original-title", '' + format_number(unitPrice) + ' * ' + format_number(amount) + ' = ' + format_number(unitPrice * amount));
+                }
+                // Tổng
+                calculateTotal();
+            }
+            else {
+                /*Gọi Ajax, truyền tham số là $formulaIdSelector & $amountSelector*/
+                $.ajax({
+                    type: "GET",
+                    url: '/admin/bills/ajax_sumary_by_formula',
+                    dataType: 'json',
+                    data: {
+                        service: {
+                            formula_id: parseInt(formulaIdSelector.val().replace(/[.]/g, '')) || 0,
+                            amount: parseInt(amountSelector.val().replace(/[.]/g, '')) || 0,
+                            room: $('#admin_bill_room_id').val(),
+                            service: serviceIdSelector.val(),
+                        }
+                    },
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                }).done(function (data) {
+
+                    var subTotalSelector = service.find('.subtotal-service');
+                    subTotalSelector.attr("data-original-title", data.detail_amount_html);
+
+                    var totalAmount = data.total_amount
+
+                    var usePrepaymentRemain = caculatePrepaymentRemain(serviceIdSelector, false);
+
+                    // Nếu trạng thái trả trước là check
+                    if (prepaymentStatusServiceSelector.is(':checked')) {
+                        prepaymentStatusServiceUncheckSelector.prop('disabled', true);
+                        prepaymentValueServiceSelector.html(format_number(usePrepaymentRemain - totalAmount > 0 ? totalAmount : usePrepaymentRemain));
+                        prepaymentValueServiceHiddenSelector.val(usePrepaymentRemain - totalAmount > 0 ? totalAmount : usePrepaymentRemain);
+                        usePrepaymentRemainSelector.val(format_number(caculatePrepaymentRemain(serviceIdSelector, true)));
+                    }
+                    else {
+                        prepaymentStatusServiceUncheckSelector.prop('disabled', false);
+                        prepaymentValueServiceSelector.html(format_number(0));
+                        prepaymentValueServiceHiddenSelector.val(0);
+                        usePrepaymentRemainSelector.val(format_number(caculatePrepaymentRemain(serviceIdSelector, true)));
+                    }
+
+                    if (prepaymentStatusServiceSelector.is(':checked')) {
+                        subTotalSelector.val(usePrepaymentRemain - totalAmount > 0 ? 0 : totalAmount - usePrepaymentRemain);
+                    }
+                    else {
+                        subTotalSelector.val(totalAmount);
+                    }
+                    format_total(subTotalSelector);
+
+                    // Tổng
+                    calculateTotal();
+                })
+            }
+        }
+
+        function caculatePrepaymentRemain(serviceIdSelector, excludeCurrentService) {
+            var serviceList = $('.service-table');
+            var rowsService = serviceList.find('> tbody > tr');
+
+            // Tổng dịch vụ
+            var prepaymentValueTotal = 0
+            rowsService.each(function () {
+                var prepaymentStatusServiceSelector = $(this).find('.prepayment-status-service');
+                var prepaymentValueServiceSelector = $(this).find('.prepayment-value-service');
+                var serviceIdSelectorTmp = $(this).find('.service-id');
+
+                // Nếu trạng thái trả trước là check
+                if (excludeCurrentService == false) {
+                    if (serviceIdSelectorTmp.val() != serviceIdSelector.val() && prepaymentStatusServiceSelector.is(':checked')) {
+                        var prepaymentValue = parseInt((prepaymentValueServiceSelector.html() === '' || prepaymentValueServiceSelector.html() === null || typeof prepaymentValueServiceSelector.html() === 'undefined') ? '0' : prepaymentValueServiceSelector.html().replace(/[.]/g, '')) || 0;
+                        prepaymentValueTotal = prepaymentValueTotal + prepaymentValue;
+                    }
+                }
+                else {
+                    if (prepaymentStatusServiceSelector.is(':checked')) {
+                        var prepaymentValue = parseInt((prepaymentValueServiceSelector.html() === '' || prepaymentValueServiceSelector.html() === null || typeof prepaymentValueServiceSelector.html() === 'undefined') ? '0' : prepaymentValueServiceSelector.html().replace(/[.]/g, '')) || 0;
+                        prepaymentValueTotal = prepaymentValueTotal + prepaymentValue;
+                    }
+                }
+            });
+
+            var prepaymentRemainBeforeElement = $('.prepayment-remain-before');
+            var prepaymentRemainBefore = parseInt((prepaymentRemainBeforeElement.html() === '' || prepaymentRemainBeforeElement.html() === null || typeof prepaymentRemainBeforeElement.html() === 'undefined') ? '0' : prepaymentRemainBeforeElement.html().replace(/[.]/g, '')) || 0;
+
+            return prepaymentRemainBefore - prepaymentValueTotal;
+        }
+
+        // Tính tổng.
+        function calculateTotalFirtLoading() {
+            var serviceList = $('.service-table');
+            var rowsService = serviceList.find('> tbody > tr');
+
+            // Tổng dịch vụ
+            var total = 0
+            rowsService.each(function () {
+                var subTotalSelector = $(this).find('.subtotal-service');
+                var subTotal = parseInt((subTotalSelector.val() === '' || subTotalSelector.val() === null || typeof subTotalSelector.val() === 'undefined') ? '0' : subTotalSelector.val().replace(/[.]/g, '')) || 0;
+                total = total + subTotal;
+            });
+
+            $('#sub_total').val(format_number(total));
+
+            // Chi phí khác.
+            var other_cost = parseInt(($('#other_cost').val() === '' || $('#other_cost').val() === null || typeof $('#other_cost').val() === 'undefined') ? '0' : $('#other_cost').val().replace(/[.]/g, '')) || 0;
+            var discount = parseInt(($('#discount').val() === '' || $('#discount').val() === null || typeof $('#discount').val() === 'undefined') ? '0' : $('#discount').val().replace(/[.]/g, '')) || 0;
+            var debt_amount = parseInt(($('#debt_amount').val() === '' || $('#debt_amount').val() === null || typeof $('#debt_amount').val() === 'undefined') ? '0' : $('#debt_amount').val().replace(/[.]/g, '')) || 0;
+
+            var use_prepayment_remain = parseInt(($('#use_prepayment_remain').val() === '' || $('#use_prepayment_remain').val() === null || typeof $('#use_prepayment_remain').val() === 'undefined') ? '0' : $('#use_prepayment_remain').val().replace(/[.]/g, '')) || 0;
+            var downpayment = parseInt(($('#downpayment').val() === '' || $('#downpayment').val() === null || typeof $('#downpayment').val() === 'undefined') ? '0' : $('#downpayment').val().replace(/[.]/g, '')) || 0;
+
+            // Thanh toán
+            // Dư nợ
+            // Tổng = Chi phí khác + Dư nợ cũ + chi phí khác.
+            $('#total_amount').val(format_number(other_cost + debt_amount + total));
+            $('#total_amount_sumary').val(format_number(other_cost + debt_amount + total - discount));
+
+
+            if ($('#bill_status').is(':checked')) {
+                $('.bill-date').show();
+            }
+            else {
+                $('.bill-date').hide();
+            }
+        }
+
+        // Tính tổng.
+        function calculateTotal() {
+            var serviceList = $('.service-table');
+            var rowsService = serviceList.find('> tbody > tr');
+
+            // Tổng dịch vụ
+            var total = 0
+            rowsService.each(function () {
+                var subTotalSelector = $(this).find('.subtotal-service');
+                var subTotal = parseInt((subTotalSelector.val() === '' || subTotalSelector.val() === null || typeof subTotalSelector.val() === 'undefined') ? '0' : subTotalSelector.val().replace(/[.]/g, '')) || 0;
+                total = total + subTotal;
+            });
+
+            $('#sub_total').val(format_number(total));
+
+            // Chi phí khác.
+            var other_cost = parseInt(($('#other_cost').val() === '' || $('#other_cost').val() === null || typeof $('#other_cost').val() === 'undefined') ? '0' : $('#other_cost').val().replace(/[.]/g, '')) || 0;
+            var discount = parseInt(($('#discount').val() === '' || $('#discount').val() === null || typeof $('#discount').val() === 'undefined') ? '0' : $('#discount').val().replace(/[.]/g, '')) || 0;
+            var debt_amount = parseInt(($('#debt_amount').val() === '' || $('#debt_amount').val() === null || typeof $('#debt_amount').val() === 'undefined') ? '0' : $('#debt_amount').val().replace(/[.]/g, '')) || 0;
+
+            var use_prepayment_remain = parseInt(($('#use_prepayment_remain').val() === '' || $('#use_prepayment_remain').val() === null || typeof $('#use_prepayment_remain').val() === 'undefined') ? '0' : $('#use_prepayment_remain').val().replace(/[.]/g, '')) || 0;
+            var downpayment = parseInt(($('#downpayment').val() === '' || $('#downpayment').val() === null || typeof $('#downpayment').val() === 'undefined') ? '0' : $('#downpayment').val().replace(/[.]/g, '')) || 0;
+
+            // Thanh toán
+            // Dư nợ
+            // Tổng = Chi phí khác + Dư nợ cũ + chi phí khác.
+            $('#total_amount').val(format_number(other_cost + debt_amount + total));
+            $('#total_amount_sumary').val(format_number(other_cost + debt_amount + total - discount));
+
+            remain_amount = 0
+            if ($('#is_use_prepayment_remain').is(':checked')) {
+                remain_amount = remain_amount + use_prepayment_remain;
+            }
+
+            if ($('#is_downpayment').is(':checked')) {
+                remain_amount = remain_amount + downpayment;
+            }
+
+            if (other_cost + debt_amount + total - discount < 0 || remain_amount >= other_cost + debt_amount + total - discount) {
+                $('#payment_amount').val(0);
+            }
+            else {
+                var payment_amount = other_cost + debt_amount + total - discount - remain_amount;
+                if (payment_amount >= 0) {
+                    $('#payment_amount').val(format_number(payment_amount));
+                }
+                else {
+                    $('#payment_amount').val(format_number(0));
+                }
+            }
+
+            var payment_amount = parseInt(($('#payment_amount').val() === '' || $('#payment_amount').val() === null || typeof $('#payment_amount').val() === 'undefined') ? '0' : $('#payment_amount').val().replace(/[.]/g, '')) || 0;
+            total_amount_sumary = other_cost + debt_amount + total - discount
+            if (remain_amount <= payment_amount || payment_amount > 0) {
+                if (total_amount_sumary < 0) {
+                    $('#remain_amount').val(format_number(0 - total_amount_sumary));
+                }
+                else {
+                    $('#remain_amount').val(format_number(0));
+                }
+            }
+            else {
+                $('#remain_amount').val(format_number(remain_amount - total_amount_sumary));
+            }
+        }
+
+        // Format lại dư nợ (chủ động format cho số âm + dương)
+        function format_number(n) {
+            // Nếu số âm thì giữ dấu format xong rồi lại bổ sung dấu.
+            var negative = '';
+            if (n.toString().indexOf('-') >= 0) {
+                n = parseInt(n.toString().replace('-', '')) || 0;
+                negative = '-';
+            }
+            // Trả lại đúng giá trị sau khi format (kèm số âm và dương nếu có)
+            return negative + n.toFixed(0).replace(/./g, function (c, i, a) {
+                return i > 0 && c !== "," && (a.length - i) % 3 === 0 ? "." + c : c;
+            });
+        }
+
+        function l_pad(string, pad_length, pad_string) {
+            return (Array(pad_length).join(pad_string || ' ') + string).slice(-pad_length);
+        }
+
+        function r_pad(string, pad_length, pad_string) {
+            return (string + Array(pad_length).join(pad_string || ' ')).slice(0, pad_length);
+        }
+
+        // Cập nhật format cho tổng (luôn > 0)
+        function format_total(total) {
+            $(total).priceFormat({
+                prefix: '',
+                thousandsSeparator: '.',
+                centsLimit: 0,
+                allowNegative: true
+            });
+        }
+
+    });
+</script>
