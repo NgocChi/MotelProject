@@ -1,5 +1,6 @@
 ﻿using Motel.Data;
 using Motel.Interfaces.Repositories;
+using Motel.Models;
 using Motel.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,52 @@ namespace Motel.Repositories
 
                         };
             return query.ToList();
+        }
+
+        public async Task<int> Create(HoaDon hd)
+        {
+            if (hd != null)
+            {
+                _appDBContext.HoaDons.Add(hd);
+                await _appDBContext.SaveChangesAsync();
+                return hd.MaHD;
+            }
+            return 0;
+        }
+        public async Task<int> Update(HoaDon hd)
+        {
+            HoaDon find = _appDBContext.HoaDons.FirstOrDefault(p => p.MaHD == hd.MaHD);
+            if (find != null)
+            {
+
+                _appDBContext.HoaDons.Update(find);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+        }
+
+        public async Task<int> CreateCT(ChiTietHoaDon ct)
+        {
+            if (ct != null)
+            {
+                _appDBContext.ChiTietHoaDons.Add(ct);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+        }
+        public async Task<int> UpdateCT(ChiTietHoaDon ct)
+        {
+            ChiTietHoaDon find = _appDBContext.ChiTietHoaDons.FirstOrDefault(p => p.MaCTHD == ct.MaCTHD);
+            if (find != null)
+            {
+
+                _appDBContext.ChiTietHoaDons.Update(find);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
         }
     }
 }

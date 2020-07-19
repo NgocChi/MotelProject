@@ -7,15 +7,19 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
-<form asp-controller="XuatHoaDon" asp-action="AddOrEdit" asp-route-id="@Model.hoaDon.MaHD" onsubmit="return jQueryAjaxPostLarge(this);"
+<form id="formHD" asp-controller="XuatHoaDon" asp-action="AddOrEdit"
+      asp-route-maHDong="@Model.hoaDon._MaHD"
+      asp-route-maPhong="@Model.hoaDon._MaPH"
+      asp-route-id="@Model.hoaDon.MaHD" onsubmit="return jQueryAjaxPostLarge(this);"
       autocomplete="off">
     <ul class="errors"></ul>
 
     <div class="form-group form-md-line-input row">
         <label class="col-md-2 control-label">Tháng/năm</label>
         <div class="col-md-4">
-            <input as="datepicker" class="form-control date-picker" placeholder="Nhập năm"
-                   data-date-format="mm/yyyy" type="text" value="07/2020" name="admin_bill[month_year]" id="admin_bill_month_year">
+            <input as="datepicker" asp-for="ThangNam" class="form-control date-picker" placeholder="Nhập năm"
+                   data-date-format="mm/yyyy" type="text">
+
             <div class="form-control-focus"></div>
         </div>
 
@@ -83,62 +87,6 @@
                                            readonly="" data-placement="top" data-original-title="2.000.000 * 1 = 2.000.000">
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    Tiền điện
-                                    <input type="hidden">
-                                    <input type="hidden" class="formula-type-service service-input" value="1">
-                                </td>
-                                <td>
-                                    Số (kWh)
-                                    <input type="hidden">
-                                </td>
-                                <td>
-                                    <input type="hidden" class="service-id">
-                                    <input type="hidden">
-                                    <input type="text" class="form-control number-format unit-price-service service-input" value="4000" ,="" autocomplete="off">
-                                </td>
-                                <td>
-                                    <!-- Số lượng không chỉnh cho trường hợp công thức và cố định -->
-                                    <div class="form-line-input" style="display: inline-flex;">
-                                        <input type="text" asp-for="dienNuoc.CSCuDien" id="start-electricity" class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số đầu">
-                                        <input type="text" asp-for="dienNuoc.CSMoiDien" id="end-electricity" class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số cuối">
-                                        <input type="text" id="amount-electricity" class="form-control number-format-navigative amount-service service-input text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số tiêu thụ">
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <input type="text" class="form-control number-format-negative subtotal-service service-input tooltips"
-                                           value="0" readonly="" data-placement="top" data-original-title="4.000 * 0 = 0">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Tiền nước
-                                    <input type="hidden" value="46801">
-                                    <input type="hidden" class="formula-type-service service-input" value="1">
-                                </td>
-                                <td>
-                                    Khối (m3)
-                                    <input type="hidden" value="24925">
-                                </td>
-                                <td>
-                                    <input type="hidden" class="service-id" value="18332">
-                                    <input type="hidden">
-                                    <input type="text" class="form-control number-format unit-price-service service-input" value="22000" ,="" autocomplete="off">
-                                </td>
-                                <td>
-                                    <!-- Số lượng không chỉnh cho trường hợp công thức và cố định -->
-                                    <div class="form-line-input" style="display: inline-flex;">
-                                        <input type="text" asp-for="dienNuoc.CSCuNuoc" id="start-water" class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số đầu">
-                                        <input type="text" asp-for="dienNuoc.CSMoiNuoc" id="end-water" class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số cuối">
-                                        <input type="text" id="amount-water" class="form-control number-format-navigative amount-service service-input text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số tiêu thụ">
-                                    </div>
-                                </td>
-                                <td>
-                                    <input type="text" name="admin_services[total][]" class="form-control number-format-negative subtotal-service service-input tooltips" value="0" readonly="" data-placement="top" data-original-title="22.000 * 0 = 0">
-                                </td>
-                            </tr>
 
                         </tbody>
                     </table>
@@ -157,35 +105,95 @@
                             </tr>
                         </thead>
                         <tbody class="services">
-                            @foreach (var item in Model.listDichVu)
+                            @for (int i = 0; i < Model.listDichVu.Count(); i++)
                             {
 
-                                <tr>
-                                    <td>
-                                        @item.Ten
-                                        <input type="hidden">
-                                        <input type="hidden" class="formula-type-service service-input">
-                                    </td>
-                                    <td>
-                                        @item.TenDonVi
-                                        <input type="hidden">
-                                    </td>
-                                    <td>
 
-                                        <input type="hidden">
-                                        <input type="hidden">
-                                        <input type="text" value="@item.Gia" class="form-control number-format unit-price-service service-input" ,="" autocomplete="off">
-                                    </td>
-                                    <td>
-                                        <input type="text" value="@item.SoLuong" class="form-control number-format-navigative amount-service service-input text-center" v autocomplete="off">
-                                        <input type="hidden">
-                                        <input type="hidden">
-                                    </td>
 
-                                    <td>
-                                        <input type="text" name="admin_services[total][]" class="form-control number-format-negative subtotal-service service-input tooltips" value="100000" readonly="" data-placement="top" data-original-title="100.000 * 1 = 100.000">
-                                    </td>
-                                </tr>
+                                @if (@Model.listDichVu[i].MacDinh == false)
+                                {
+                                    <tr>
+                                        <td>
+
+                                            @Model.listDichVu[i].Ten
+                                            <input type="hidden" asp-for="@Model.listDichVu[i].Ten">
+                                            <input type="hidden" asp-for="@Model.listDichVu[i]._MaDichVuPhong">
+
+                                        </td>
+                                        <td>
+                                            @Model.listDichVu[i].TenDonVi
+                                            <input type="hidden" asp-for="@Model.listDichVu[i].TenDonVi">
+                                        </td>
+                                        <td>
+
+
+                                            <input type="hidden" asp-for="@Model.listDichVu[i].Gia">
+                                            <input type="text" id="txt_gia" value="@Model.listDichVu[i].Gia" class="form-control number-format unit-price-service service-input" ,="" autocomplete="off">
+                                        </td>
+                                        <td>
+                                            <input type="text" id="txt_soluong" value="@Model.listDichVu[i].SoLuong" class="form-control number-format-navigative amount-service service-input text-center" v autocomplete="off">
+                                            <input type="hidden" asp-for="@Model.listDichVu[i].SoLuong">
+
+                                        </td>
+
+                                        <td>
+                                            <input type="hidden" asp-for="@Model.listDichVu[i].ThanhTien">
+                                            <input type="text" id="txt_tongdv" value="@Model.listDichVu[i].ThanhTien" class="form-control number-format-negative subtotal-service service-input tooltips" readonly="" data-placement="top" data-original-title="100.000 * 1 = 100.000">
+                                        </td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>
+                                            @Model.listDichVu[i].Ten
+                                            <input type="hidden" asp-for="@Model.listDichVu[i].Ten">
+                                            <input type="hidden" asp-for="@Model.listDichVu[i]._MaDichVuPhong">
+
+                                        </td>
+                                        <td>
+                                            @Model.listDichVu[i].TenDonVi
+                                            <input type="hidden" asp-for="@Model.listDichVu[i].TenDonVi">
+                                        </td>
+                                        <td>
+
+                                            <input type="hidden" asp-for="@Model.listDichVu[i].Gia">
+                                            <input type="text" value="@Model.listDichVu[i].Gia" class="form-control number-format unit-price-service service-input" ,="" autocomplete="off">
+                                        </td>
+                                        <td>
+                                            @if (@Model.listDichVu[i].Ten == "Điện")
+                                            {
+                                                <div class="form-line-input" style="display: inline-flex;">
+                                                    <input type="text" asp-for="dienNuoc.CSCuDien" id="start-electricity" readonly=""
+                                                           class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số đầu">
+                                                    <input type="text" asp-for="dienNuoc.CSMoiDien" id="end-electricity" readonly=""
+                                                           class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số cuối">
+                                                    <input type="text" asp-for="dienNuoc.TieuThuDien" id="amount-electricity" readonly=""
+                                                           class="form-control number-format-navigative amount-service service-input text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số tiêu thụ">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="form-line-input" style="display: inline-flex;">
+                                                    <input type="text" asp-for="dienNuoc.CSCuNuoc" id="start-electricity" readonly=""
+                                                           class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số đầu">
+                                                    <input type="text" asp-for="dienNuoc.CSMoiNuoc" id="end-electricity" readonly=""
+                                                           class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số cuối">
+                                                    <input type="text" asp-for="dienNuoc.TieuThuNuoc" id="amount-electricity" readonly=""
+                                                           class="form-control number-format-navigative amount-service service-input text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số tiêu thụ">
+                                                </div>
+                                            }
+                                            <!-- Số lượng không chỉnh cho trường hợp công thức và cố định -->
+
+                                        </td>
+
+                                        <td>
+                                            <input type="hidden" asp-for="@Model.listDichVu[i].ThanhTien">
+                                            <input type="text" class="form-control number-format-negative subtotal-service service-input tooltips"
+                                                   value="@Model.listDichVu[i].ThanhTien" readonly="" data-placement="top" data-original-title="4.000 * 0 = 0">
+                                        </td>
+                                    </tr>
+                                }
 
                             }
                         </tbody>
@@ -200,7 +208,8 @@
                 <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Tiền phòng"> [?] </span>
             </label>
             <div class="col-md-4">
-                <input type="text" id="txt_tongtienphong" class="form-control number-format" readonly="">
+                <input type="text" id="txt_tongtienphong" asp-for="phong.Gia" class="form-control number-format" readonly="">
+                <input type="hidden" asp-for="phong.MaPH">
                 <div class="form-control-focus"></div>
             </div>
             <label class="col-md-2 control-label">
@@ -209,7 +218,9 @@
                       data-original-title="Tổng tiền tất cả dịch vụ sử dụng phía trên"> [?] </span>
             </label>
             <div class="col-md-4">
-                <input id="txt_tongtiendv" class="string optional form-control number-format" autocomplete="off" readonly="readonly" type="text">
+                <input id="txt_tongtiendv" asp-for="TongTienDichVu" class="string optional form-control number-format"
+                       autocomplete="off" readonly="readonly" type="text">
+                <input type="hidden" asp-for="TongTienDichVu">
                 <div class="form-control-focus"></div>
             </div>
 
@@ -221,7 +232,8 @@
                 <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Tổng tiền điện nước"> [?] </span>
             </label>
             <div class="col-md-4">
-                <input id="txt_tongtiendiennuoc" class="string optional readonly form-control" readonly="readonly" type="text">
+                <input type="hidden" asp-for="TongTienDienNuoc">
+                <input id="txt_tongtiendiennuoc" asp-for="TongTienDienNuoc" class="string optional readonly form-control" readonly="readonly" type="text">
                 <div class="form-control-focus"></div>
             </div>
             <label class="col-md-2 control-label">
@@ -243,7 +255,8 @@
                 </b>
             </label>
             <div class="col-md-4">
-                <input id="txt_thanhtien" class="string optional readonly form-control" readonly="readonly"
+                <input type="hidden" asp-for="ThanhTienHoaDon">
+                <input id="txt_thanhtien" asp-for="ThanhTienHoaDon" class="string optional readonly form-control" readonly="readonly"
                        placeholder="Thành tiền" type="text">
                 <div class="form-control-focus"></div>
             </div>
@@ -291,6 +304,10 @@
 </form>
 
 <script>
+    $(function () {
+
+    });
+
     $(document).ready(function () {
         $(".form_datetime").datetimepicker({
             autoclose: true,

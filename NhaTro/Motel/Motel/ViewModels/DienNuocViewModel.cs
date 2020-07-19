@@ -16,5 +16,9 @@ namespace Motel.ViewModels
         public DateTime NgayGhi { get; set; }
 
         public int MaPhong { get; set; }
+
+        public int TieuThuDien { get; set; }
+
+        public int TieuThuNuoc { get; set; }
     }
 }

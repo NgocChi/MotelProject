@@ -28,7 +28,9 @@ namespace Motel.Repositories
                             CSMoiDien = dn.CSDienMoi,
                             CSCuNuoc = dn.CSNuocCu,
                             CSMoiNuoc = dn.CSNuocMoi,
-                            MaPhong = dn.MaPH
+                            MaPhong = dn.MaPH,
+                            TieuThuDien = dn.CSDienMoi - dn.CSDienCu,
+                            TieuThuNuoc = dn.CSNuocMoi - dn.CSNuocCu
 
                         };
             return query.FirstOrDefault();

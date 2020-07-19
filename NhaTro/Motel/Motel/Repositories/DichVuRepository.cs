@@ -63,7 +63,8 @@ namespace Motel.Repositories
                             Ten = dv.Ten,
                             TenDonVi = dvt.TenDonVi,
                             SoLuong = dvp.SoLuong,
-                            _MaDichVuPhong = dvp.MaDVPH
+                            _MaDichVuPhong = dvp.MaDVPH,
+                            MacDinh = dv.MacDinh == null ? false : true
                         };
             return query.ToList();
         }
