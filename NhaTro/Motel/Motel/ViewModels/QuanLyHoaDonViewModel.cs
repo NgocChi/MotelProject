@@ -21,6 +21,13 @@ namespace Motel.ViewModels
         public DienNuocViewModel dienNuoc { get; set; }
 
         public DateTime ThangNam { get; set; }
+
+        public decimal? TongTienDienNuoc { get; set; }
+        public decimal? TongTienDichVu { get; set; }
+
+        public decimal? ThanhTienHoaDon { get; set; }
+
+
     }
 
     public class HoaDonViewModel

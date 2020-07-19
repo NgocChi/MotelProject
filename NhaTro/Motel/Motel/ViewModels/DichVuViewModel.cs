@@ -28,6 +28,10 @@ namespace Motel.ViewModels
 
         public int _MaDichVuPhong { get; set; }
 
+        public bool MacDinh { get; set; }
+
+        public decimal? ThanhTien { get; set; }
+
 
     }
 

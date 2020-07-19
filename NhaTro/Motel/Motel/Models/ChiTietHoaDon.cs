@@ -21,7 +21,7 @@ namespace Motel.Models
         public int _MaHoaDon { get; set; }
 
         [Column("ThanhTien")]
-        public decimal ThanhTien { get; set; }
+        public decimal? ThanhTien { get; set; }
 
     }
 }

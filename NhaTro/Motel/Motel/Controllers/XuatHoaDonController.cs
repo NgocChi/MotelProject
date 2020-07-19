@@ -63,31 +63,79 @@ namespace Motel.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(int id, int idDatPhong, QuanLyHoaDonViewModel hopdong)
+        public async Task<IActionResult> AddOrEdit(int id, int maHDong, int maPhong, QuanLyHoaDonViewModel hoadon)
         {
             int kq = -1;
             try
             {
-                return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", hopdong) });
+                if (id == 0)
+                {
+                    hoadon.hoaDon = new HoaDon();
+                    hoadon.hoaDon.NgayLap = hoadon.ThangNam;
+                    hoadon.hoaDon.ThanhTien = hoadon.ThanhTienHoaDon;
+                    hoadon.hoaDon._MaHD = maHDong;
+                    hoadon.hoaDon._MaPH = maPhong;
+                    kq = await Repository.Create(hoadon.hoaDon);
+                    foreach (var item in hoadon.listDichVu)
+                    {
+                        ChiTietHoaDon ct = new ChiTietHoaDon();
+                        ct._MaDVP = item._MaDichVuPhong;
+                        ct.ThanhTien = item.ThanhTien;
+                        ct._MaHoaDon = kq;
+                        await Repository.CreateCT(ct);
+                    }
+                }
+                else
+                {
+
+                }
+                QuanLyHoaDonViewModel hd = new QuanLyHoaDonViewModel();
+                hd.ThangNam = DateTime.Now;
+                hd.listXuatHoaDon = Repository.Gets(_nhaTro, DateTime.Now);
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", hd) });
             }
             catch
             {
-                return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", hopdong) });
+                return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", hoadon) });
             }
 
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddOrEdit(int id, int _MaKhachHang, int _MaPhong, int _MaHopDong, DateTime thangNam)
+        public IActionResult AddOrEdit(int id, int _MaKhachHang, int _MaPhong, int _MaHopDong, DateTime thangNam)
         {
-            IActionResult result;
             QuanLyHoaDonViewModel model = new QuanLyHoaDonViewModel();
+            model.ThangNam = thangNam;
+            model.hoaDon = new HoaDon();
+            model.hoaDon._MaHD = _MaHopDong;
+            model.hoaDon._MaPH = _MaPhong;
             model.phong = PhongRepository.GetByIdPhong(_MaPhong);
             model.dienNuoc = DienNuocRepository.GetDienNuocByIdPhong(_MaPhong, thangNam);
             model.listDichVu = DichVuRepository.GetsByIdPhongIdHopDong(_MaHopDong, _MaPhong);
-            model.hoaDon = new HoaDon();
-            model.ThangNam = thangNam;
+            model.TongTienDienNuoc = 0;
+            model.TongTienDichVu = 0;
+            model.ThanhTienHoaDon = 0;
+            foreach (var item in model.listDichVu)
+            {
+                if (item.Ten == "Điện")
+                {
+                    item.ThanhTien = item.Gia * model.dienNuoc.TieuThuDien;
+                    model.TongTienDienNuoc += item.ThanhTien;
+                }
+                else if (item.Ten == "Nước")
+                {
+                    item.ThanhTien = item.Gia * model.dienNuoc.TieuThuNuoc;
+                    model.TongTienDienNuoc += item.ThanhTien;
+                }
+                else
+                {
+                    item.ThanhTien = item.Gia * item.SoLuong;
+                    model.TongTienDichVu += item.ThanhTien;
+                }
+            }
 
+
+            model.ThanhTienHoaDon = model.TongTienDichVu + model.TongTienDienNuoc + model.phong.Gia;
             return View(model);
         }
     }

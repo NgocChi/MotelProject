@@ -17,33 +17,27 @@ namespace Motel.Models
         [Column("NgayLap")]
         public DateTime NgayLap { get; set; }
 
-        [Column("SoLuong")]
-        public int SoLuong { get; set; }
-
-        [Column("DonGia")]
-        public double DonGia { get; set; }
-
         [Column("ThanhTien")]
-        public double ThanhTien { get; set; }
+        public decimal? ThanhTien { get; set; }
 
         [Column("DaThanhToan")]
-        public int DaThanhToan { get; set; }
+        public bool? DaThanhToan { get; set; }
 
         [Column("_MaPH")]
-        public int _MaPH { get; set; }
+        public int? _MaPH { get; set; }
 
         [Column("_MaDVPH")]
-        public int _MaDVPH { get; set; }
+        public int? _MaDVPH { get; set; }
 
 
         [Column("_MaLoaiHD")]
-        public int _MaLoaiHD { get; set; }
+        public int? _MaLoaiHD { get; set; }
 
 
         [Column("_MaHD")]
-        public int _MaHD { get; set; }
+        public int? _MaHD { get; set; }
 
         [Column("TrangThai")]
-        public bool TrangThai { get; set; }
+        public bool? TrangThai { get; set; }
     }
 }
