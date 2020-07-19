@@ -12,5 +12,7 @@ namespace Motel.Interfaces.Repositories
         int Create(TaiKhoan taiKhoan);
 
         IEnumerable<TaiKhoan> Gets();
+
+        int GetIdUserByTenTaiKhoan(string tenTaiKhoan, bool loaiTaiKhoan);
     }
 }

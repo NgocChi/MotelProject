@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-
 namespace Motel.Repositories
 {
     public class TaiKhoanRepository : ITaiKhoanRepository
@@ -25,7 +24,6 @@ namespace Motel.Repositories
         }
         public int Create(TaiKhoan taikhoan)
         {
-
             var find = _appDBContext.TaiKhoans.FirstOrDefault(p => p.TenTaiKhoan == taikhoan.TenTaiKhoan);
             if (find == null)
             {
@@ -34,7 +32,6 @@ namespace Motel.Repositories
                 return 1;
             }
             return 0;
-
         }
 
         public IEnumerable<TaiKhoan> Gets()
@@ -42,6 +39,20 @@ namespace Motel.Repositories
             return _appDBContext.TaiKhoans.ToList();
         }
 
-
+        public int GetIdUserByTenTaiKhoan(string tenTaiKhoan, bool loaiTaiKhoan)
+        {
+            int result = -1;
+            if(loaiTaiKhoan)
+            {
+                var data = _appDBContext.ChuTros.FirstOrDefault(ct => ct._TenTaiKhoan == tenTaiKhoan);
+                result = data.MaChuTro;
+            }
+            else
+            {
+                var data = _appDBContext.KhachHangs.FirstOrDefault(kh => kh.TenTaiKhoan == tenTaiKhoan);
+                result = data.MaKh;
+            }
+            return result;
+        }
     }
 }
