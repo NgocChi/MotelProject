@@ -62,10 +62,7 @@ namespace Motel.Controllers.API
                 result.LoaiTaiKhoan = user.LoaiTaiKhoan;
                 result.Message = "OK";
 
-                if(result?.LoaiTaiKhoan == true) // chu tro
-                {
-                    result.IdUser = _taiKhoanRepository.GetIdUserByTenTaiKhoan(request.TenTaiKhoan, true);
-                }
+                result.IdUser = _taiKhoanRepository.GetIdUserByTenTaiKhoan(request.TenTaiKhoan, Convert.ToBoolean(result.LoaiTaiKhoan));
             }
             return result;
         }
