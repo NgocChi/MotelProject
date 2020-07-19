@@ -58,10 +58,13 @@
                                 <div class="col-md-5">
                                     <div class="input-group date form_datetime">
                                         <input class="string required bg-maxlength form-control"
-                                               placeholder="Ngày hết hạn"
+                                               asp-for="ThangNam"
                                                maxlength="50" size="50" type="date"
                                                id="endDate">
                                         <div class="form-control-focus"></div>
+
+
+
                                     </div>
                                 </div>
                                 <label class="col-md-1 control-label">Đến</label>
@@ -80,7 +83,7 @@
 
                             <label class="bold" style="margin-right: 10px;">Trạng thái:</label>
                             <div class="md-radio">
-                                <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","HoaDon",new { trangThai = 0}, Context.Request.Scheme)')"
+                                <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","XuatHoaDon",new {  thangNam = Model.ThangNam, trangThai = 0}, Context.Request.Scheme)')"
                                        id="radio0" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="0" checked="" type="radio">
                                 <label for="radio0">
                                     <span class=""></span>
@@ -89,7 +92,7 @@
                                 </label>
                             </div>
                             <div class="md-radio">
-                                <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","HoaDon",new { trangThai = 1}, Context.Request.Scheme)')"
+                                <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","XuatHoaDon",new { thangNam = Model.ThangNam, trangThai = 1}, Context.Request.Scheme)')"
                                        id="radio1" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="1" type="radio">
                                 <label for="radio1">
                                     <span class=""></span>
@@ -98,7 +101,7 @@
                                 </label>
                             </div>
                             <div class="md-radio">
-                                <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","HoaDon",new { trangThai = 2}, Context.Request.Scheme)')"
+                                <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","XuatHoaDon",new { thangNam = Model.ThangNam,  trangThai = 2}, Context.Request.Scheme)')"
                                        id="radio2" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="2" type="radio">
                                 <label for="radio2">
                                     <span></span>
@@ -133,3 +136,10 @@
         <!-- /.col -->
     </div>
 </div>
+<script>
+    $("#datepicker").datepicker({
+        format: "mm-yyyy",
+        viewMode: "months",
+        minViewMode: "months"
+    });
+</script>

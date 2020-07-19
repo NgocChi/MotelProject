@@ -8,6 +8,7 @@ using DAL;
 using Motel.Interfaces.Repositories;
 using Microsoft.AspNetCore.Http;
 using Web;
+using Motel.Models;
 
 namespace Motel.Controllers
 {
@@ -15,32 +16,38 @@ namespace Motel.Controllers
     {
         private readonly IHoaDonRepository Repository = null;
         private readonly IHttpContextAccessor _httpContextAccessor = null;
-
+        private readonly IPhongRepository PhongRepository = null;
+        private readonly IDienNuocRepository DienNuocRepository = null;
+        private readonly IDichVuRepository DichVuRepository = null;
         private int _nhaTro = 0;
 
-        public XuatHoaDonController(IHttpContextAccessor httpContextAccessor, IHoaDonRepository repository)
+        public XuatHoaDonController(IHttpContextAccessor httpContextAccessor, IDichVuRepository dichVuRepository, IDienNuocRepository dienNuocRepository, IHoaDonRepository repository, IPhongRepository phongRepository)
         {
             this.Repository = repository;
+            this.DichVuRepository = dichVuRepository;
+            this.PhongRepository = phongRepository;
+            this.DienNuocRepository = dienNuocRepository;
             this._httpContextAccessor = httpContextAccessor;
             _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("UserData");
         }
 
-        public IActionResult Index1(int trangThai = 0)
+        public IActionResult Index1(DateTime thangNam, int trangThai = 0)
         {
             QuanLyHoaDonViewModel hd = new QuanLyHoaDonViewModel();
-            //switch (trangThai)
-            //{
-            //    case 0:
-            //        hd.listHopDong = Repository.Gets(_nhaTro);
-            //        break;
-            //    case 1:
-            //        hd.listHopDong = Repository.Gets(_nhaTro).Where(t => t.NgayKetThuc >= DateTime.Now);
-            //        break;
-            //    case 2:
-            //        hd.listHopDong = Repository.Gets(_nhaTro).Where(t => t.NgayKetThuc < DateTime.Now);
-            //        break;
+            hd.ThangNam = thangNam;
+            switch (trangThai)
+            {
+                case 0:
+                    hd.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam);
+                    break;
+                case 1:
+                    hd.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam);
+                    break;
+                case 2:
+                    hd.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam);
+                    break;
 
-            //}
+            }
             return Json(new { html = Helper.RenderRazorViewToString(this, "Table", hd) });
         }
 
@@ -48,7 +55,9 @@ namespace Motel.Controllers
         public IActionResult Index()
         {
             QuanLyHoaDonViewModel hd = new QuanLyHoaDonViewModel();
+            hd.ThangNam = DateTime.Now;
             hd.listXuatHoaDon = Repository.Gets(_nhaTro, DateTime.Now);
+
             return View(hd);
         }
 
@@ -69,12 +78,17 @@ namespace Motel.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> AddOrEdit(int id)
+        public async Task<IActionResult> AddOrEdit(int id, int _MaKhachHang, int _MaPhong, int _MaHopDong, DateTime thangNam)
         {
             IActionResult result;
             QuanLyHoaDonViewModel model = new QuanLyHoaDonViewModel();
+            model.phong = PhongRepository.GetByIdPhong(_MaPhong);
+            model.dienNuoc = DienNuocRepository.GetDienNuocByIdPhong(_MaPhong, thangNam);
+            model.listDichVu = DichVuRepository.GetsByIdPhongIdHopDong(_MaHopDong, _MaPhong);
+            model.hoaDon = new HoaDon();
+            model.ThangNam = thangNam;
 
-            return View();
+            return View(model);
         }
     }
 }

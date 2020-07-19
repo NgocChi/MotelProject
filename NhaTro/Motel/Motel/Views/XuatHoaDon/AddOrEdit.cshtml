@@ -7,38 +7,42 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
-<form asp-controller="XuatHoaDon" asp-action="AddOrEdit"
+<form asp-controller="XuatHoaDon" asp-action="AddOrEdit" asp-route-id="@Model.hoaDon.MaHD" onsubmit="return jQueryAjaxPostLarge(this);"
       autocomplete="off">
     <ul class="errors"></ul>
 
-    <div class="form-group hidden admin_bill_room"><input class="form-control hidden" type="hidden" value="34423" name="admin_bill[room_id]" id="admin_bill_room_id"></div>
-    <div class="form-group hidden admin_bill_id"><input class="form-control hidden" type="hidden" value="31225" name="admin_bill[id]" id="admin_bill_id"></div>
-    <div class="form-group hidden admin_bill_agreement"><input class="form-control hidden" type="hidden" value="6457" name="admin_bill[agreement_id]" id="admin_bill_agreement_id"></div>
-    <div class="form-group hidden admin_bill_month_year"><input class="form-control hidden" type="hidden" value="07/2020" name="admin_bill[month_year]" id="admin_bill_month_year"></div>
-
-    <input type="hidden" name="print" value="0" id="admin_bill_print">
-    <input type="hidden" name="checkout" value="0">
-
-    <div class="form-group form-md-line-input">
+    <div class="form-group form-md-line-input row">
         <label class="col-md-2 control-label">Tháng/năm</label>
         <div class="col-md-4">
-            <input as="datepicker" class="form-control date-picker" placeholder="Nhập năm" data-date-format="mm/yyyy" disabled="disabled" type="text" value="07/2020" name="admin_bill[month_year]" id="admin_bill_month_year">
+            <input as="datepicker" class="form-control date-picker" placeholder="Nhập năm"
+                   data-date-format="mm/yyyy" type="text" value="07/2020" name="admin_bill[month_year]" id="admin_bill_month_year">
             <div class="form-control-focus"></div>
         </div>
+
         <label class="col-md-2 control-label">Mã hợp đồng</label>
         <div class="col-md-4">
-            <input as="string" class="form-control" value="#HĐG0000006457" disabled="disabled" type="text" name="admin_bill[agreement_id]" id="admin_bill_agreement_id">
+            <input as="string" class="form-control" value="#HĐG0000006457" disabled="disabled"
+                   type="text" name="admin_bill[agreement_id]" id="admin_bill_agreement_id">
         </div>
+
     </div>
-    <!--Trường hợp sửa thì bổ sung các hidden field.-->
-    <div class="form-group form-md-line-input">
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">Ngày thanh toán</label>
+        <div class="col-md-4">
+            <input as="datepicker" class="form-control date-picker" placeholder="Nhập năm" data-date-format="mm/yyyy"
+                   disabled="disabled" type="text" value="07/2020" name="admin_bill[month_year]" id="admin_bill_month_year">
+            <div class="form-control-focus"></div>
+        </div>
 
         <label class="col-md-2 control-label">Mã hóa đơn</label>
         <div class="col-md-4">
-            <input class="string optional disabled form-control" disabled="disabled" placeholder="Mã hóa đơn" type="text" value="#HĐN0000031225" name="admin_bill[code]" id="admin_bill_code">
+            <input class="string optional disabled form-control" disabled="disabled" placeholder="Mã hóa đơn"
+                   type="text" value="#HĐN0000031225" name="admin_bill[code]" id="admin_bill_code">
             <div class="form-control-focus"></div>
         </div>
+
     </div>
+
 
     <div class="form-group form-md-line-input no-margin-bottom" style="display: none;">
         <label class="col-md-2 control-label"></label>
@@ -53,6 +57,96 @@
                 <div class="table-scrollable">
                     <table class="table table-bordered table-hover service-table">
                         <thead>
+
+                        </thead>
+                        <tbody class="services">
+                            <tr>
+                                <td>
+                                    Tiền nhà
+                                    <input type="hidden">
+                                    <input type="hidden" class="formula-type-service service-input">
+                                </td>
+                                <td>
+                                    Phòng
+                                    <input type="hidden">
+                                </td>
+                                <td>
+
+                                    <input type="number" asp-for="phong.Gia" class="form-control number-format unit-price-service service-input"
+                                           ,="" autocomplete="off">
+                                </td>
+                                <td>
+                                    <input value="1" class="form-control amount-service service-input text-center" readonly="">
+                                </td>
+                                <td>
+                                    <input asp-for="phong.Gia" class="form-control number-format-negative subtotal-service service-input tooltips"
+                                           readonly="" data-placement="top" data-original-title="2.000.000 * 1 = 2.000.000">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Tiền điện
+                                    <input type="hidden">
+                                    <input type="hidden" class="formula-type-service service-input" value="1">
+                                </td>
+                                <td>
+                                    Số (kWh)
+                                    <input type="hidden">
+                                </td>
+                                <td>
+                                    <input type="hidden" class="service-id">
+                                    <input type="hidden">
+                                    <input type="text" class="form-control number-format unit-price-service service-input" value="4000" ,="" autocomplete="off">
+                                </td>
+                                <td>
+                                    <!-- Số lượng không chỉnh cho trường hợp công thức và cố định -->
+                                    <div class="form-line-input" style="display: inline-flex;">
+                                        <input type="text" asp-for="dienNuoc.CSCuDien" id="start-electricity" class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số đầu">
+                                        <input type="text" asp-for="dienNuoc.CSMoiDien" id="end-electricity" class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số cuối">
+                                        <input type="text" id="amount-electricity" class="form-control number-format-navigative amount-service service-input text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số tiêu thụ">
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <input type="text" class="form-control number-format-negative subtotal-service service-input tooltips"
+                                           value="0" readonly="" data-placement="top" data-original-title="4.000 * 0 = 0">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Tiền nước
+                                    <input type="hidden" value="46801">
+                                    <input type="hidden" class="formula-type-service service-input" value="1">
+                                </td>
+                                <td>
+                                    Khối (m3)
+                                    <input type="hidden" value="24925">
+                                </td>
+                                <td>
+                                    <input type="hidden" class="service-id" value="18332">
+                                    <input type="hidden">
+                                    <input type="text" class="form-control number-format unit-price-service service-input" value="22000" ,="" autocomplete="off">
+                                </td>
+                                <td>
+                                    <!-- Số lượng không chỉnh cho trường hợp công thức và cố định -->
+                                    <div class="form-line-input" style="display: inline-flex;">
+                                        <input type="text" asp-for="dienNuoc.CSCuNuoc" id="start-water" class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số đầu">
+                                        <input type="text" asp-for="dienNuoc.CSMoiNuoc" id="end-water" class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số cuối">
+                                        <input type="text" id="amount-water" class="form-control number-format-navigative amount-service service-input text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số tiêu thụ">
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" name="admin_services[total][]" class="form-control number-format-negative subtotal-service service-input tooltips" value="0" readonly="" data-placement="top" data-original-title="22.000 * 0 = 0">
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-scrollable">
+                    <table class="table table-bordered table-hover service-table">
+                        <thead>
                             <tr>
                                 <th>Tên dịch vụ</th>
                                 <th width="80">Đơn vị</th>
@@ -63,339 +157,109 @@
                             </tr>
                         </thead>
                         <tbody class="services">
-                            <tr>
-                                <td>
-                                    Tiền nhà
-                                    <input type="hidden" name="admin_services[service_initial_id][]" value="46799">
-                                    <input type="hidden" name="admin_services[formula_type][]" class="formula-type-service service-input" value="1">
-                                </td>
-                                <td>
-                                    Phòng
-                                    <input type="hidden" name="admin_services[unit][]" value="24922">
-                                </td>
-                                <td>
-                                    <input type="hidden" name="admin_services[id][]" class="service-id" value="18330">
-                                    <input type="hidden" name="admin_services[formula_id][]">
-                                    <input type="text" name="admin_services[unit_price][]" class="form-control number-format unit-price-service service-input" value="2000000" ,="" autocomplete="off">
-                                </td>
-                                <td>
-                                    <input name="admin_services[amount][]" class="form-control amount-service service-input text-center" value="1">
-                                    <input type="hidden" name="admin_services[start_number][]" value="">
-                                    <input type="hidden" name="admin_services[end_number][]" value="">
-                                </td>
-                                <!-- Trạng thái Check/Uncheck trả trước. Nếu có tiền trả trước thì hiển thị, ngược lại thì ẩn -->
-                                <td style="display: none;">
-                                    <input type="hidden" name="admin_services[is_use_prepayment][]" class="prepayment-status-service-uncheck" value="0">
-                                    <div class="md-checkbox-inline service-checkbox">
-                                        <div class="md-checkbox">
-                                            <input type="checkbox" id="checkbox_bill_details_prepayment_status18330" name="admin_services[is_use_prepayment][]" class="md-check text-center prepayment-status-service service-input" value="1">
-                                            <label for="checkbox_bill_details_prepayment_status18330">
-                                                <div class="prepayment-value-service">
-                                                    0
-                                                </div>
-                                                <input type="hidden" name="admin_services[use_prepayment][]" class="prepayment-value-service-hidden" value="0">
-                                                <span></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <input name="admin_services[total][]" class="form-control number-format-negative subtotal-service service-input tooltips" value="2000000" readonly="" data-placement="top" data-original-title="2.000.000 * 1 = 2.000.000">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Tiền điện
-                                    <input type="hidden" name="admin_services[service_initial_id][]" value="46800">
-                                    <input type="hidden" name="admin_services[formula_type][]" class="formula-type-service service-input" value="1">
-                                </td>
-                                <td>
-                                    Số (kWh)
-                                    <input type="hidden" name="admin_services[unit][]" value="24924">
-                                </td>
-                                <td>
-                                    <input type="hidden" name="admin_services[id][]" class="service-id" value="18331">
-                                    <input type="hidden" name="admin_services[formula_id][]">
-                                    <input type="text" name="admin_services[unit_price][]" class="form-control number-format unit-price-service service-input" value="4000" ,="" autocomplete="off">
-                                </td>
-                                <td>
-                                    <!-- Số lượng không chỉnh cho trường hợp công thức và cố định -->
-                                    <div class="form-line-input" style="display: inline-flex;">
-                                        <input type="text" name="admin_services[start_number][]" id="start-electricity" class="form-control number-format-clear-empty-keep-zero text-center tooltips" value="" autocomplete="off" data-placement="top" data-original-title="Số đầu">
-                                        <input type="text" name="admin_services[end_number][]" id="end-electricity" class="form-control number-format-clear-empty-keep-zero text-center tooltips" value="" autocomplete="off" data-placement="top" data-original-title="Số cuối">
-                                        <input type="text" name="admin_services[amount][]" id="amount-electricity" class="form-control number-format-navigative amount-service service-input text-center tooltips" value="" autocomplete="off" data-placement="top" data-original-title="Số tiêu thụ">
-                                    </div>
-                                </td>
-                                <!-- Trạng thái Check/Uncheck trả trước. Nếu có tiền trả trước thì hiển thị, ngược lại thì ẩn -->
-                                <td style="display: none;">
-                                    <input type="hidden" name="admin_services[is_use_prepayment][]" class="prepayment-status-service-uncheck" value="0">
-                                    <div class="md-checkbox-inline service-checkbox">
-                                        <div class="md-checkbox">
-                                            <input type="checkbox" id="checkbox_bill_details_prepayment_status18331" name="admin_services[is_use_prepayment][]" class="md-check text-center prepayment-status-service service-input" value="1">
-                                            <label for="checkbox_bill_details_prepayment_status18331">
-                                                <div class="prepayment-value-service">
-                                                    0
-                                                </div>
-                                                <input type="hidden" name="admin_services[use_prepayment][]" class="prepayment-value-service-hidden" value="0">
-                                                <span></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <input type="text" name="admin_services[total][]" class="form-control number-format-negative subtotal-service service-input tooltips" value="0" readonly="" data-placement="top" data-original-title="4.000 * 0 = 0">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Xe đạp điện
-                                    <input type="hidden" name="admin_services[service_initial_id][]" value="46806">
-                                    <input type="hidden" name="admin_services[formula_type][]" class="formula-type-service service-input" value="1">
-                                </td>
-                                <td>
-                                    Chiếc
-                                    <input type="hidden" name="admin_services[unit][]" value="24927">
-                                </td>
-                                <td>
-                                    <input type="hidden" name="admin_services[id][]" class="service-id" value="18337">
-                                    <input type="hidden" name="admin_services[formula_id][]">
-                                    <input type="text" name="admin_services[unit_price][]" class="form-control number-format unit-price-service service-input" value="100000" ,="" autocomplete="off">
-                                </td>
-                                <td>
-                                    <input type="text" name="admin_services[amount][]" class="form-control number-format-navigative amount-service service-input text-center" value="1" autocomplete="off">
-                                    <input type="hidden" name="admin_services[start_number][]" value="">
-                                    <input type="hidden" name="admin_services[end_number][]" value="">
-                                </td>
-                                <!-- Trạng thái Check/Uncheck trả trước. Nếu có tiền trả trước thì hiển thị, ngược lại thì ẩn -->
-                                <td style="display: none;">
-                                    <input type="hidden" name="admin_services[is_use_prepayment][]" class="prepayment-status-service-uncheck" value="0">
-                                    <div class="md-checkbox-inline service-checkbox">
-                                        <div class="md-checkbox">
-                                            <input type="checkbox" id="checkbox_bill_details_prepayment_status18337" name="admin_services[is_use_prepayment][]" class="md-check text-center prepayment-status-service service-input" value="1">
-                                            <label for="checkbox_bill_details_prepayment_status18337">
-                                                <div class="prepayment-value-service">
-                                                    0
-                                                </div>
-                                                <input type="hidden" name="admin_services[use_prepayment][]" class="prepayment-value-service-hidden" value="0">
-                                                <span></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <input type="text" name="admin_services[total][]" class="form-control number-format-negative subtotal-service service-input tooltips" value="100000" readonly="" data-placement="top" data-original-title="100.000 * 1 = 100.000">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Tiền nước
-                                    <input type="hidden" name="admin_services[service_initial_id][]" value="46801">
-                                    <input type="hidden" name="admin_services[formula_type][]" class="formula-type-service service-input" value="1">
-                                </td>
-                                <td>
-                                    Khối (m3)
-                                    <input type="hidden" name="admin_services[unit][]" value="24925">
-                                </td>
-                                <td>
-                                    <input type="hidden" name="admin_services[id][]" class="service-id" value="18332">
-                                    <input type="hidden" name="admin_services[formula_id][]">
-                                    <input type="text" name="admin_services[unit_price][]" class="form-control number-format unit-price-service service-input" value="22000" ,="" autocomplete="off">
-                                </td>
-                                <td>
-                                    <!-- Số lượng không chỉnh cho trường hợp công thức và cố định -->
-                                    <div class="form-line-input" style="display: inline-flex;">
-                                        <input type="text" name="admin_services[start_number][]" id="start-water" class="form-control number-format-clear-empty-keep-zero text-center tooltips" value="" autocomplete="off" data-placement="top" data-original-title="Số đầu">
-                                        <input type="text" name="admin_services[end_number][]" id="end-water" class="form-control number-format-clear-empty-keep-zero text-center tooltips" value="" autocomplete="off" data-placement="top" data-original-title="Số cuối">
-                                        <input type="text" name="admin_services[amount][]" id="amount-water" class="form-control number-format-navigative amount-service service-input text-center tooltips" value="" autocomplete="off" data-placement="top" data-original-title="Số tiêu thụ">
-                                    </div>
-                                </td>
-                                <!-- Trạng thái Check/Uncheck trả trước. Nếu có tiền trả trước thì hiển thị, ngược lại thì ẩn -->
-                                <td style="display: none;">
-                                    <input type="hidden" name="admin_services[is_use_prepayment][]" class="prepayment-status-service-uncheck" value="0">
-                                    <div class="md-checkbox-inline service-checkbox">
-                                        <div class="md-checkbox">
-                                            <input type="checkbox" id="checkbox_bill_details_prepayment_status18332" name="admin_services[is_use_prepayment][]" class="md-check text-center prepayment-status-service service-input" value="1">
-                                            <label for="checkbox_bill_details_prepayment_status18332">
-                                                <div class="prepayment-value-service">
-                                                    0
-                                                </div>
-                                                <input type="hidden" name="admin_services[use_prepayment][]" class="prepayment-value-service-hidden" value="0">
-                                                <span></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <input type="text" name="admin_services[total][]" class="form-control number-format-negative subtotal-service service-input tooltips" value="0" readonly="" data-placement="top" data-original-title="22.000 * 0 = 0">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    Cáp
-                                    <input type="hidden" name="admin_services[service_initial_id][]" value="46810">
-                                    <input type="hidden" name="admin_services[formula_type][]" class="formula-type-service service-input" value="1">
-                                </td>
-                                <td>
-                                    Phòng
-                                    <input type="hidden" name="admin_services[unit][]" value="24922">
-                                </td>
-                                <td>
-                                    <input type="hidden" name="admin_services[id][]" class="service-id" value="18338">
-                                    <input type="hidden" name="admin_services[formula_id][]">
-                                    <input type="text" name="admin_services[unit_price][]" class="form-control number-format unit-price-service service-input" value="100000" ,="" autocomplete="off">
-                                </td>
-                                <td>
-                                    <input type="text" name="admin_services[amount][]" class="form-control number-format-navigative amount-service service-input text-center" value="1" autocomplete="off">
-                                    <input type="hidden" name="admin_services[start_number][]" value="">
-                                    <input type="hidden" name="admin_services[end_number][]" value="">
-                                </td>
-                                <!-- Trạng thái Check/Uncheck trả trước. Nếu có tiền trả trước thì hiển thị, ngược lại thì ẩn -->
-                                <td style="display: none;">
-                                    <input type="hidden" name="admin_services[is_use_prepayment][]" class="prepayment-status-service-uncheck" value="0">
-                                    <div class="md-checkbox-inline service-checkbox">
-                                        <div class="md-checkbox">
-                                            <input type="checkbox" id="checkbox_bill_details_prepayment_status18338" name="admin_services[is_use_prepayment][]" class="md-check text-center prepayment-status-service service-input" value="1">
-                                            <label for="checkbox_bill_details_prepayment_status18338">
-                                                <div class="prepayment-value-service">
-                                                    0
-                                                </div>
-                                                <input type="hidden" name="admin_services[use_prepayment][]" class="prepayment-value-service-hidden" value="0">
-                                                <span></span>
-                                                <span class="check"></span>
-                                                <span class="box"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <input type="text" name="admin_services[total][]" class="form-control number-format-negative subtotal-service service-input tooltips" value="100000" readonly="" data-placement="top" data-original-title="100.000 * 1 = 100.000">
-                                </td>
-                            </tr>
+                            @foreach (var item in Model.listDichVu)
+                            {
+
+                                <tr>
+                                    <td>
+                                        @item.Ten
+                                        <input type="hidden">
+                                        <input type="hidden" class="formula-type-service service-input">
+                                    </td>
+                                    <td>
+                                        @item.TenDonVi
+                                        <input type="hidden">
+                                    </td>
+                                    <td>
+
+                                        <input type="hidden">
+                                        <input type="hidden">
+                                        <input type="text" value="@item.Gia" class="form-control number-format unit-price-service service-input" ,="" autocomplete="off">
+                                    </td>
+                                    <td>
+                                        <input type="text" value="@item.SoLuong" class="form-control number-format-navigative amount-service service-input text-center" v autocomplete="off">
+                                        <input type="hidden">
+                                        <input type="hidden">
+                                    </td>
+
+                                    <td>
+                                        <input type="text" name="admin_services[total][]" class="form-control number-format-negative subtotal-service service-input tooltips" value="100000" readonly="" data-placement="top" data-original-title="100.000 * 1 = 100.000">
+                                    </td>
+                                </tr>
+
+                            }
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-
-        <div class="form-group form-md-line-input">
-            <div class="col-md-6">
-                <label class="col-md-6 control-label">
-                    Tổng tiền dịch vụ
-                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Tổng tiền tất cả dịch vụ sử dụng phía trên"> [?] </span>
-                </label>
-                <div class="col-md-6">
-                    <input type="text" id="sub_total" class="form-control number-format" value="2200000" readonly="">
-                    <div class="form-control-focus"></div>
-                </div>
-                <label class="col-md-6 control-label">
-                    Chi phí khác (+)
-                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Chi phí phát sinh (nếu có)"> [?] </span>
-                </label>
-                <div class="col-md-6">
-                    <input id="other_cost" class="string optional form-control number-format" autocomplete="off" placeholder="Nhập chi phí khác" type="text" value="0" name="admin_bill[other_cost]">
-                    <div class="form-control-focus"></div>
-                </div>
-                <label class="col-md-6 control-label">
-                    Dư/Nợ cũ
-                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Số tiền Dư/nợ của tháng trước(+: Khách nợ, -: Nợ khách)"> [?] </span>
-                </label>
-                <div class="col-md-6">
-                    <input id="debt_amount" class="string optional readonly form-control" readonly="readonly" placeholder="Nhập số tiền nợ" type="text" value="0" name="admin_bill[debt_amount]">
-                    <div class="form-control-focus"></div>
-                </div>
-                <label class="col-md-6 control-label">
-                    Tổng tiền
-                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Tổng tiền = Tổng tiền dịch vụ + Chi phí khác + Dư/Nợ cũ"> [?] </span>
-                </label>
-                <div class="col-md-6">
-                    <input id="total_amount" class="string optional readonly form-control" readonly="readonly" placeholder="Tổng tiền" type="text" value="2200000" name="admin_bill[total_amount]">
-                    <div class="form-control-focus"></div>
-                </div>
-                <label class="col-md-6 control-label">
-                    Khấu trừ (-)
-                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Chi phí khấu trừ (nếu có)"> [?] </span>
-                </label>
-                <div class="col-md-6">
-                    <input id="discount" class="string optional form-control number-format" autocomplete="off" placeholder="Nhập chi phí khấu trừ" type="text" value="0" name="admin_bill[discount]">
-                    <div class="form-control-focus"></div>
-                </div>
-                <label class="col-md-6 control-label">
-                    <b>
-                        Thành tiền
-                        <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Thành tiền = Tổng tiền - Khấu trừ"> [?] </span>
-                    </b>
-                </label>
-                <div class="col-md-6">
-                    <input id="total_amount_sumary" class="string optional readonly form-control" readonly="readonly" placeholder="Thành tiền" type="text" value="2200000" name="admin_bill[total_amount]">
-                    <div class="form-control-focus"></div>
-                </div>
+        <div class="form-group form-md-line-input row">
+            <label class="col-md-2 control-label">
+                Tổng tiền Phòng:
+                <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Tiền phòng"> [?] </span>
+            </label>
+            <div class="col-md-4">
+                <input type="text" id="txt_tongtienphong" class="form-control number-format" readonly="">
+                <div class="form-control-focus"></div>
             </div>
-            <div class="col-md-6">
-                <!-- Tất toán tiền trả trước -->
-                <label class="col-md-6 control-label" style="display: none;">
-                    Tất toán tiền trả trước
-                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Tất toán tiền trả trước"> [?] </span>
-                </label>
-                <div class="md-checkbox-inline col-md-1" style="display: none;">
-                    <div class="md-checkbox">
-                        <input type="checkbox" class="md-check" id="is_use_prepayment_remain" name="admin_bill[is_use_prepayment_remain]" value="1" disabled="">
-                        <label for="is_use_prepayment_remain">
-                            <span></span><span class="check"></span><span class="box"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-5" style="display: none;">
-                    <input id="use_prepayment_remain" class="string optional readonly form-control number-format" autocomplete="off" value="0" readonly="readonly" placeholder="" type="text" name="admin_bill[use_prepayment_remain]">
-                    <div class="form-control-focus"></div>
-                </div>
-                <!-- Tất toán tiền đặt cọc -->
-                <label class="col-md-6 control-label">
-                    Tất toán tiền đặt cọc
-                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Chọn sử dụng tiền đặt cọc hoặc không vào việc thanh toán"> [?] </span>
-                </label>
-                <div class="md-checkbox-inline col-md-1">
-                    <div class="md-checkbox">
-                        <input type="checkbox" class="md-check" id="is_downpayment" name="admin_bill[is_downpayment]" value="1">
-                        <label for="is_downpayment">
-                            <span></span><span class="check"></span><span class="box"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <input id="downpayment" class="string optional readonly form-control number-format" autocomplete="off" value="2000000" readonly="readonly" placeholder="" type="text" name="admin_bill[downpayment]">
-                    <div class="form-control-focus"></div>
-                </div>
-                <label class="col-md-6 control-label">
-                    <b>
-                        Thanh toán
-                        <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Thanh toán = Tất toán trả trươc (nếu có) + Tất toán đặt cọc (nếu có) - Thành tiền"> [?] </span>
-                    </b>
-                </label>
-                <div class="col-md-1"></div>
-                <div class="col-md-5">
-                    <input id="payment_amount" class="string optional form-control number-format" autocomplete="off" placeholder="Nhập số tiền thanh toán" type="text" value="2200000" name="admin_bill[payment_amount]">
-                    <div class="form-control-focus"></div>
-                </div>
-                <label class="col-md-6 control-label">
-                    Dư/Nợ mới
-                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Dư/Nợ mới = Thanh toán - Thành tiền(+: Nợ khách, -: Khách nợ)"> [?] </span>
-                </label>
-                <div class="col-md-1"></div>
-                <div class="col-md-5">
-                    <input id="remain_amount" class="string optional readonly form-control" readonly="readonly" placeholder="Số tiền còn dư" type="text" value="0" name="admin_bill[remain_amount]">
-                    <div class="form-control-focus"></div>
-                </div>
+            <label class="col-md-2 control-label">
+                Tổng tiền dịch vụ
+                <span class="required tooltips" aria-required="true" data-placement="top"
+                      data-original-title="Tổng tiền tất cả dịch vụ sử dụng phía trên"> [?] </span>
+            </label>
+            <div class="col-md-4">
+                <input id="txt_tongtiendv" class="string optional form-control number-format" autocomplete="off" readonly="readonly" type="text">
+                <div class="form-control-focus"></div>
+            </div>
+
+        </div>
+
+        <div class="form-group form-md-line-input row">
+            <label class="col-md-2 control-label">
+                Tổng tiền điện nước:
+                <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Tổng tiền điện nước"> [?] </span>
+            </label>
+            <div class="col-md-4">
+                <input id="txt_tongtiendiennuoc" class="string optional readonly form-control" readonly="readonly" type="text">
+                <div class="form-control-focus"></div>
+            </div>
+            <label class="col-md-2 control-label">
+                Chi phí khác
+                <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Chi phí khác phát sinh"> [?] </span>
+            </label>
+            <div class="col-md-4">
+                <input id="txt_chiphikhac" class="string optional readonly form-control" placeholder="Chi phí khác" type="text">
+                <div class="form-control-focus"></div>
+            </div>
+
+        </div>
+
+        <div class="form-group form-md-line-input row">
+            <label class="col-md-2 control-label">
+                <b>
+                    Thành tiền
+                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Thành tiền = Tổng tiền - Khấu trừ"> [?] </span>
+                </b>
+            </label>
+            <div class="col-md-4">
+                <input id="txt_thanhtien" class="string optional readonly form-control" readonly="readonly"
+                       placeholder="Thành tiền" type="text">
+                <div class="form-control-focus"></div>
+            </div>
+            <label class="col-md-2 control-label">
+                <b>
+                    Thành toán
+                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Thành tiền = Tổng tiền - Khấu trừ"> [?] </span>
+                </b>
+            </label>
+            <div class="col-md-4">
+                <input id="txt_thanhtoan" class="string optional readonly form-control" readonly="readonly"
+                       placeholder="Thành tiền" type="text">
+                <div class="form-control-focus"></div>
             </div>
         </div>
+
 
     </fieldset>
 

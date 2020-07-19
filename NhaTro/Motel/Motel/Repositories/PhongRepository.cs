@@ -174,5 +174,29 @@ namespace Motel.Repositories
             return p == null && hd == null ? 1 : 0;
         }
 
+        public PhongViewModel GetByIdPhong(int idPhong)
+        {
+            var query = from p in _appDBContext.Phongs
+                        join lp in _appDBContext.LoaiPhongs on p._MaLP equals lp.MaLP
+                        where p.MaPH == idPhong
+                        select new PhongViewModel
+                        {
+                            MaPH = p.MaPH,
+                            Tang = p.Tang,
+                            Ten = p.Ten,
+                            CSDien = p.CSDien,
+                            CSNuoc = p.CSNuoc,
+                            _MaLP = p._MaLP,
+                            _MaTTPH = p._MaTTPH,
+                            SoNguoiToiDa = p.SoNguoiToiDa,
+                            TenLoaiPhong = lp.Ten,
+                            Gia = lp.Gia,
+                            GiaDatCoc = lp.GiaDatCoc,
+                            DienTich = lp.DienTich
+
+                        };
+            return query.FirstOrDefault();
+        }
+
     }
 }

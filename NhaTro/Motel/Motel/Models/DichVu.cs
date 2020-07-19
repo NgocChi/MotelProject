@@ -31,5 +31,8 @@ namespace Motel.Models
 
         [Column("_MaLDV")]
         public int _MaLDV { get; set; }
+
+        [Column("MacDinh")]
+        public bool? MacDinh { get; set; }
     }
 }

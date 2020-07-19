@@ -27,5 +27,7 @@ namespace Motel.Interfaces.Repositories
 
         int CheckForeignKey(int id);
 
+        PhongViewModel GetByIdPhong(int idPhong);
+
     }
 }

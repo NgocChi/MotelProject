@@ -24,7 +24,9 @@ namespace Motel.ViewModels
 
         public bool IsCheck { get; set; }
 
-        public int SoLuong { get; set; }
+        public int? SoLuong { get; set; }
+
+        public int _MaDichVuPhong { get; set; }
 
 
     }

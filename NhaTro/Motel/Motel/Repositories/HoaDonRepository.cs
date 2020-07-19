@@ -24,12 +24,14 @@ namespace Motel.Repositories
                         from rs in result.DefaultIfEmpty()
                         join p in _appDBContext.Phongs on hd._MaPH equals p.MaPH
                         join kh in _appDBContext.KhachHangs on hd._MaKH equals kh.MaKh
-
                         where p._MaNT == id
                         select new HoaDonViewModel
                         {
                             TenKhachHang = kh.TenKH,
+                            _MaKhachHang = kh.MaKh,
                             TenPhong = p.Ten,
+                            _MaPhong = p.MaPH,
+                            _MaHopDong = hd.MaHopDong,
                             ThangNam = Thang,
                             TonTai = (from hoadon in _appDBContext.HoaDons where hoadon._MaHD == hd.MaHopDong select hoadon.MaHD).Contains(hd.MaHopDong),
                             TrangThai = false

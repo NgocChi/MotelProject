@@ -49,6 +49,25 @@ namespace Motel.Repositories
             return query.ToList();
         }
 
+        public List<DichVu_ViewModel> GetsByIdPhongIdHopDong(int idHopDong, int idPhong)
+        {
+            var query = from dvp in _appDBContext.DichVuPhongs
+                        join hd in _appDBContext.HopDongs on dvp._MaHD equals hd.MaHopDong
+                        join p in _appDBContext.Phongs on dvp._MaPH equals p.MaPH
+                        join dv in _appDBContext.DichVus on dvp._MaDV equals dv.MaDV
+                        join dvt in _appDBContext.DonViTinhs on dv._MaDVT equals dvt.MaDonVi
+                        where dvp._MaHD == idHopDong && dvp._MaPH == idPhong
+                        select new DichVu_ViewModel
+                        {
+                            Gia = dv.Gia,
+                            Ten = dv.Ten,
+                            TenDonVi = dvt.TenDonVi,
+                            SoLuong = dvp.SoLuong,
+                            _MaDichVuPhong = dvp.MaDVPH
+                        };
+            return query.ToList();
+        }
+
         public List<DichVu_ViewModel> GetsByNhaTro(int id)
         {
             var query = from dv in _appDBContext.DichVus
@@ -116,6 +135,7 @@ namespace Motel.Repositories
                 find.Ten = dv.Ten;
                 find.MoTa = dv.MoTa;
                 find._MaDVT = dv._MaDVT;
+                find.MacDinh = dv.MacDinh;
                 _appDBContext.DichVus.Update(find);
                 await _appDBContext.SaveChangesAsync();
                 return 1;

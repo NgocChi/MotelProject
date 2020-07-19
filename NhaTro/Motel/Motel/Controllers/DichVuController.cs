@@ -56,6 +56,7 @@ namespace Motel.Controllers
                         dv._MaDVT = i._MaDVi;
                         dv._MaLDV = i.MaLoaiDV;
                         dv._MaNT = loai.dichVu._MaNT;
+                        dv.MacDinh = i.MacDinh;
                         await Repository.Create(dv);
                     }
                 }
