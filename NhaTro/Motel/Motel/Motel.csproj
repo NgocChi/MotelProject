@@ -36,6 +36,7 @@
     <Folder Include="Models\API\Rooms\" />
     <Folder Include="Models\API\Contacts\" />
     <Folder Include="wwwroot\Rotativa\" />
+    <Folder Include="Models\API\Motels\" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>

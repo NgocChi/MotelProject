@@ -1,6 +1,7 @@
 ﻿using Motel.Data;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
+using Motel.Models.API.Motels;
 using Motel.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -103,6 +104,26 @@ namespace Motel.Repositories
         {
             Phong p = _appDBContext.Phongs.Where(t => t._MaNT == id).FirstOrDefault();
             return p == null ? 1 : 0;
+        }
+
+        public async Task<InfoNhaTroResponse> GetNhaTroByChuTro(int maNhaTro)
+        {
+            var result = new InfoNhaTroResponse();
+
+            var dataFromDB = (from nt in _appDBContext.NhaTros
+                             where nt.MaNT == maNhaTro
+                             select new InfoNhaTroResponse
+                             {
+                                 DiaChi = nt.DiaChi,
+                                 MaNhaTro = nt.MaNT,
+                                 Message = "OK",
+                                 SoPhongDangHoatDong = _appDBContext.Phongs.Where(t => t._MaNT == maNhaTro && t._MaTTPH == 3).Count(),
+                                 SoPhongTrong = _appDBContext.Phongs.Where(t => t._MaNT == maNhaTro).Count(),
+                                 TenNhaTro = nt.Ten,
+                                 TongSoNguoiDangO = 0,
+
+                             }).FirstOrDefault();
+            return dataFromDB;
         }
     }
 }
