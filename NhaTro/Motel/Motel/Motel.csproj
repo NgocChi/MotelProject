@@ -18,6 +18,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Rotativa" Version="1.7.3" />
+    <PackageReference Include="Rotativa.AspNetCore" Version="1.1.1" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="toastr" Version="2.1.1" />
@@ -33,6 +35,7 @@
     <Folder Include="Models\API\Bases\" />
     <Folder Include="Models\API\Rooms\" />
     <Folder Include="Models\API\Contacts\" />
+    <Folder Include="wwwroot\Rotativa\" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>

@@ -16,6 +16,7 @@ using Motel.Data;
 using Motel.Interfaces.Repositories;
 using Motel.Queries;
 using Motel.Repositories;
+using Rotativa.AspNetCore;
 using Web;
 
 namespace Motel
@@ -61,6 +62,7 @@ namespace Motel
             services.AddTransient<IDichVuPhongRepository, DichVuPhongRepository>();
             services.AddTransient<INhomNguoiDungRepository, NhomNguoiDungRepository>();
             services.AddTransient<IDienNuocRepository, DienNuocRepository>();
+            services.AddTransient<IPhanQuyenRepository, PhanQuyenRepository>();
 
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory looger)
@@ -84,6 +86,7 @@ namespace Motel
                      defaults: new { controller = "NhaTro", action = "Index" });
 
             });
+            RotativaConfiguration.Setup(env);
 
 
         }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
 using Motel.ViewModels;
+using Rotativa.AspNetCore;
 using Web;
 
 namespace Motel.Controllers
@@ -25,7 +26,7 @@ namespace Motel.Controllers
             this.PhongRepository = phongRepository;
             this.KhachHangRepository = khachHangRepository;
             _httpContextAccessor = httpContextAccessor;
-            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("UserData");
+            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("MotelData");
         }
         public IActionResult Index1(int trangThai = 0)
         {
@@ -168,5 +169,16 @@ namespace Motel.Controllers
             }
             return result;
         }
+
+        public IActionResult ExportPDF(int id = 0)
+        {
+            QuanLyDatPhongViewModel dp = new QuanLyDatPhongViewModel();
+            dp.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
+            return new ViewAsPdf("Index", dp)
+            {
+
+            };
+        }
+
     }
 }

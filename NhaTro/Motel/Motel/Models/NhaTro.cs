@@ -28,5 +28,9 @@ namespace Motel.Models
 
         [Column("Mota")]
         public string Mota { get; set; }
+
+        [Column("_MaChuTro")]
+        public int _MaChuTro { get; set; }
+
     }
 }

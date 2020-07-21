@@ -28,7 +28,7 @@ namespace Motel.Controllers
             this.PhongRepository = phongRepository;
             this.DienNuocRepository = dienNuocRepository;
             this._httpContextAccessor = httpContextAccessor;
-            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("UserData");
+            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("MotelData");
         }
 
         public IActionResult Index1(DateTime thangNam, int trangThai = 0)

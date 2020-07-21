@@ -34,7 +34,7 @@ namespace Motel.Controllers
             this.ChuTroRepository = chuTroRepository;
             this.DichVuPhongRepository = dichVuPhongRepository;
             this.DatPhongRepository = datPhongRepository;
-            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("UserData");
+            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("MotelData");
         }
         public IActionResult Index1(int trangThai = 0)
         {
@@ -86,6 +86,7 @@ namespace Motel.Controllers
                         }
                     }
                     await PhongRepository.UpdateTTP(hopdong.hopDongKhachHangPhong.hopDong._MaPH, 3);
+                    await DatPhongRepository.Delete(idDatPhong);
                 }
                 else
                 {
@@ -160,6 +161,7 @@ namespace Motel.Controllers
                 }
                 else
                 {
+                    model.hopDongKhachHangPhong.datPhong = new DatPhongViewModel();
                     model.listPhong = PhongRepository.GetsPTrong(_nhaTro, 0);
                 }
 

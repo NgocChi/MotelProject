@@ -22,12 +22,14 @@ namespace Motel.Controllers
         private readonly ITaiKhoanRepository Repository = null;
         private readonly INhaTroRepository NhaTroRepository = null;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private string _taikhoan = string.Empty;
 
         public DangNhapController(ITaiKhoanRepository repository, INhaTroRepository nhaTroRepository, IHttpContextAccessor httpContextAccessor)
         {
             this.Repository = repository;
             this.NhaTroRepository = nhaTroRepository;
             _httpContextAccessor = httpContextAccessor;
+            _taikhoan = _httpContextAccessor.HttpContext.Session.GetComplexData<string>("UserData");
         }
 
         [HttpGet]
@@ -42,14 +44,18 @@ namespace Motel.Controllers
         public IActionResult Login(TaiKhoanViewModel taikhoan)
         {
             QuanLyTaiKhoan model = new QuanLyTaiKhoan();
-            model.listNhaTro = NhaTroRepository.Gets();
+
             if (taikhoan.TenTaiKhoan == null)
                 return View(taikhoan);
 
             var user = Repository.DangNhap(taikhoan.TenTaiKhoan, taikhoan.MatKhau);
 
             if (user == null)
+            {
                 return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "Login", model) });
+            }
+            _httpContextAccessor.HttpContext.Session.SetComplexData("UserData", taikhoan.TenTaiKhoan);
+            model.listNhaTro = NhaTroRepository.GetsList(taikhoan.TenTaiKhoan);
             return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ChooseMotel", model) });
         }
 
@@ -58,9 +64,7 @@ namespace Motel.Controllers
         public IActionResult Choose(QuanLyTaiKhoan tk)
         {
 
-            _httpContextAccessor.HttpContext.Session.SetComplexData("UserData", tk._chooseMotel);
-            //if (tk._chooseMotel == 0)
-            //    return RedirectToAction("Login", "DangNhap");
+            _httpContextAccessor.HttpContext.Session.SetComplexData("MotelData", tk._chooseMotel);
             return RedirectToAction("Index", "Home");
         }
 
@@ -69,6 +73,7 @@ namespace Motel.Controllers
         {
             QuanLyTaiKhoan model = new QuanLyTaiKhoan();
             model.taikhoan = new TaiKhoanViewModel();
+            model.chuTro = new ChuTro();
             return View(model);
         }
 
@@ -93,7 +98,9 @@ namespace Motel.Controllers
                 kq = Repository.Create(taikh);
                 if (kq == 1)
                 {
-                    return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "Login", tk) });
+                    tk.chuTro._TenTaiKhoan = tk.taikhoan.TenTaiKhoan;
+                    Repository.CreateChuTro(tk.chuTro);
+                    return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", tk) });
                 }
                 else
                 {
@@ -106,6 +113,56 @@ namespace Motel.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddOrEdit(int id, [Bind("Ten", "DiaChi", "TongPhong", "PhongTrong", "Mota")] NhaTro nhaTroViewModel)
+        {
+            int kq = -1;
+            if (ModelState.IsValid)
+            {
+                if (id == 0)
+                {
+                    int _maChuTro = Repository.GetByTaiKhoan(_taikhoan).MaChuTro;
+                    nhaTroViewModel._MaChuTro = _maChuTro;
+                    kq = await NhaTroRepository.Create(nhaTroViewModel);
+                }
+                else
+                {
+                    try
+                    {
+                        nhaTroViewModel.MaNT = id;
+                        kq = await NhaTroRepository.Update(nhaTroViewModel);
+                    }
+                    catch
+                    {
+                        throw;
+                    }
+                }
+                QuanLyTaiKhoan nt = new QuanLyTaiKhoan();
+                nt.listNhaTro = NhaTroRepository.GetsList(_taikhoan);
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ChooseMotel", nt) });
+            }
+            return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", nhaTroViewModel) });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddOrEdit(int id)
+        {
+            IActionResult result;
+            if (id == 0)
+            {
+                return View(new NhaTro());
+            }
+            else
+            {
+                var kq = await NhaTroRepository.GetsById(id);
+                if (kq == null)
+                    result = NotFound();
+                result = View(kq);
+            }
+            return result;
         }
 
 

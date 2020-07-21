@@ -40,20 +40,21 @@
                                             Tác vụ
                                             <i class="fa fa-angle-down"></i>
                                         </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a data-remote="true" onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Chỉnh sửa</a>
-                                            </li>
-                                            <li>
-                                                <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = 0, idDatPhong = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
-                                            </li>
-                                            <li class="divider"></li>
-                                            <li>
-                                                <a>
-                                                    <i class="fas fa-file-word-o"></i> Giấy nhận cọc
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <div class="dropdown">
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="#" onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Chỉnh sửa</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = 0, idDatPhong = item.MaDP }, Context.Request.Scheme)','Nhận phòng')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li>
+                                                    <a asp-controller="DatPhong" asp-action="ExportPDF" asp-route-id="@item.MaDP"><i class="fas fa-handshake-o" aria-hidden="true"></i>Giay nhận cọc</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
                                     </div>
                                 </td>
                                 <td>@item.TenPhong</td>
@@ -83,20 +84,20 @@
                                             Tác vụ
                                             <i class="fa fa-angle-down"></i>
                                         </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a data-remote="true" onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Chỉnh sửa</a>
-                                            </li>
-                                            <li>
-                                                <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = 0, idDatPhong = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
-                                            </li>
-                                            <li class="divider"></li>
-                                            <li>
-                                                <a>
-                                                    <i class="fas fa-file-word-o"></i> Giấy nhận cọc
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <div class="dropdown">
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="#" onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Chỉnh sửa</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = 0, idDatPhong = item.MaDP }, Context.Request.Scheme)','Nhận phòng')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
+                                                </li>
+                                                <li class="divider"></li>
+                                                <li>
+                                                    <a asp-controller="DatPhong" asp-action="ExportPDF" asp-route-id="@item.MaDP"><i class="fas fa-handshake-o" aria-hidden="true"></i>Giay nhận cọc</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </td>
                                 <td>@item.TenPhong</td>
@@ -126,20 +127,20 @@
                                             Tác vụ
                                             <i class="fa fa-angle-down"></i>
                                         </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a data-remote="true" onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Chỉnh sửa</a>
-                                            </li>
-                                            <li>
-                                                <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = 0, idDatPhong = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
-                                            </li>
-                                            <li class="divider"></li>
-                                            <li>
-                                                <a>
-                                                    <i class="fas fa-file-word-o"></i> Giấy nhận cọc
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        <div class="dropdown">
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Chỉnh sửa</a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = 0, idDatPhong = item.MaDP }, Context.Request.Scheme)','Nhận phòng')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
+                                                </li>
+                                                <li>
+                                                    <a id="btn_nhangiaycoc" asp-controller="DatPhong" asp-action="ExportPDF" asp-route-id="@item.MaDP"><i class="fas fa-handshake-o" aria-hidden="true"></i>Giay nhận cọc</a>
+                                                    <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </td>
                                 <td>@item.TenPhong</td>
@@ -167,3 +168,24 @@
         </table>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#btn_nhangiaycoc').click(function () {
+            $.ajax({
+                type: "GET",
+                url: '/DatPhong/ExportPDF',
+                dataType: 'script',
+                data: {
+                    id: $('#txt_maDP').val(),
+                }
+
+            });
+        });
+    });
+    $('#GetPDF').click(function (e) {
+        window.open('@Url.Action("ShowPDF", "Controller")');
+    });
+</script>
+

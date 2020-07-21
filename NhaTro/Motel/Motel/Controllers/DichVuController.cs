@@ -28,7 +28,7 @@ namespace Motel.Controllers
             this.DonViRepository = donViRepository;
             this.NhaTroRepository = nhaTroRepository;
             this._httpContextAccessor = httpContextAccessor;
-            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("UserData");
+            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("MotelData");
 
         }
         public IActionResult Index()

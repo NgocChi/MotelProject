@@ -15,6 +15,8 @@ namespace Motel.ViewModels
 
         public TaiKhoanViewModel taikhoan { get; set; }
 
+        public ChuTro chuTro { get; set; }
+
         public int _chooseMotel { get; set; }
     }
 

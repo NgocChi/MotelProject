@@ -10,7 +10,7 @@ namespace Motel.Interfaces.Repositories
     public interface INhaTroRepository
     {
         IEnumerable<NhaTro> Gets();
-        IEnumerable<NhaTro> GetsList();
+        IEnumerable<NhaTro> GetsList(string tentaikhoan);
 
         Task<NhaTro> GetsById(int? id);
 
