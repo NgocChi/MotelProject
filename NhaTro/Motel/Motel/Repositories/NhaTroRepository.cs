@@ -22,9 +22,12 @@ namespace Motel.Repositories
         {
             return _appDBContext.NhaTros.ToList();
         }
-        public IEnumerable<NhaTro> GetsList()
+        public IEnumerable<NhaTro> GetsList(string tentaikhoan)
         {
             var query = from nt in _appDBContext.NhaTros
+                        join ct in _appDBContext.ChuTros on nt._MaChuTro equals ct.MaChuTro
+                        join tk in _appDBContext.TaiKhoans on ct._TenTaiKhoan equals tk.TenTaiKhoan
+                        where tk.TenTaiKhoan == tentaikhoan
                         select new NhaTro
                         {
                             MaNT = nt.MaNT,

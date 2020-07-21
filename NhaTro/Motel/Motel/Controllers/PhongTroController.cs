@@ -26,7 +26,7 @@ namespace Motel.Controllers
             this.NhaTroRepository = nhaTroRepository;
             this.LoaiPhongRepository = loaiPhongRepository;
             _httpContextAccessor = httpContextAccessor;
-            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("UserData");
+            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("MotelData");
         }
 
         public IActionResult Index1(int trangThai = 0)

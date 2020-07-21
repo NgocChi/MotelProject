@@ -1,0 +1,95 @@
+﻿
+@{
+    Layout = null;
+}
+@model NhaTro
+@using Motel.Models
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
+
+<form asp-controller="DangNhap" asp-action="AddOrEdit" asp-route-id="@Model.MaNT" onsubmit="return jQueryAjaxPostdemo(this);"
+      autocomplete="off" class="simple_form form-horizontal" novalidate="novalidate"
+      id="new_admin_building" accept-charset="UTF-8" data-remote="true">
+    <input name="utf8" type="hidden" value="✓">
+
+    <ul class="errors"></ul>
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">
+            Tên khu nhà
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-4">
+            <input class="string required bg-maxlength form-control"
+                   placeholder="Nhập tên Khu/Tòa nhà" maxlength="50" size="50" type="text"
+                   asp-for="Ten" name=@nameof(Model.Ten)
+                   id="Ten">
+            <div class="form-control-focus"></div>
+        </div>
+
+    </div>
+
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">
+            Địa chỉ
+            <span class="required" aria-required="true"> * </span>
+        </label>
+        <div class="col-md-10">
+            <textarea class="text required bg-maxlength form-control"
+                      asp-for="DiaChi" name=@nameof(Model.DiaChi)
+                      placeholder="Nhập địa chỉ" maxlength="255" id="DiaChi"></textarea>
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+
+    <div class="form-group form-md-line-input row">
+        <label class="col-md-2 control-label">Tổng số phòng</label>
+        <div class="col-md-4">
+            <input class="string required bg-maxlength form-control"
+                   value="0" disabled placeholder="Tổng số phòng"
+                   asp-for="TongPhong" name=@nameof(Model.TongPhong)
+                   maxlength="50" size="50" type="number"
+                   id="TongPhong">
+
+            <div class="form-control-focus"></div>
+        </div>
+        <label class="col-md-2 control-label">Số phòng trống</label>
+        <div class="col-md-4">
+            <input class="string required bg-maxlength form-control"
+                   value="0" disabled placeholder="Số phòng trống" maxlength="50"
+                   asp-for="PhongTrong" name=@nameof(Model.PhongTrong)
+                   size="50" type="number" id="PhongTrong">
+
+            <div class="form-control-focus"></div>
+        </div>
+
+    </div>
+
+    <div class="form-group form-md-line-input row">
+
+        <label class="col-md-2 control-label">Mô tả</label>
+        <div class="col-md-10">
+            <textarea class="text optional bg-maxlength form-control autosizeme"
+                      asp-for="Mota" name=@nameof(Model.Mota)
+                      placeholder="Nhập mô tả" maxlength="500"
+                      id="Mota"></textarea>
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+
+    <div class="form-actions margin-top-10">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>Hủy bỏ
+                </button>
+                <button name="button" type="submit" class="btn btn-default btnFormSubmit btn green">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i>  Lưu lại
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+

@@ -7,13 +7,11 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
-<form asp-controller="DangNhap" asp-action="CreateAccount" onsubmit="return jQueryAjaxPost(this);" class="simple_form form-horizontal" novalidate="novalidate"
+<form asp-controller="DangNhap" asp-action="CreateAccount" onsubmit="return jQueryAjaxPostSmall(this);" class="simple_form form-horizontal" novalidate="novalidate"
       id="new_admin_building" accept-charset="UTF-8" data-remote="true">
+    <span class="text-blue">Thông tin tài khoản</span>
     <div class="form-group form-md-line-input row">
-        <label class="col-md-2">
-            Tên tài khoản
-        </label>
-        <div class="col-md-10" data-validate="Valid email is required: ex@abc.xyz">
+        <div class="col-md-12" data-validate="Valid email is required: ex@abc.xyz">
             <input class="string required bg-maxlength form-control"
                    type="text" asp-for="taikhoan.TenTaiKhoan" name="taikhoan.TenTaiKhoan" placeholder="Tài khoản">
 
@@ -21,27 +19,50 @@
         </div>
     </div>
     <div class="form-group form-md-line-input row">
-        <label class="col-md-2">
-            Mật khẩu
-        </label>
-        <div class="col-md-10" data-validate="Lưu mật khẩu">
+        <div class="col-md-12" data-validate="Lưu mật khẩu">
             <input class="string required bg-maxlength form-control"
                    type="password" asp-for="taikhoan.MatKhau" name="taikhoan.MatKhau" placeholder="Mật khẩu">
             <div class="form-control-focus"></div>
         </div>
     </div>
-
     <div class="form-group form-md-line-input row">
-        <label class="col-md-2">
-            Mật khẩu mới
-        </label>
-        <div class="col-md-10" data-validate="Lưu mật khẩu">
+        <div class="col-md-12" data-validate="Lưu mật khẩu">
             <input class="string required bg-maxlength form-control"
                    type="password" asp-for="taikhoan.PrMatKhau" name="taikhoan.PrMatKhau" placeholder="Nhập lại mật khẩu">
             <div class="form-control-focus"></div>
         </div>
     </div>
+    <span class="text-blue">Thông tin chủ trọ</span>
+    <div class="form-group form-md-line-input row">
+        <div class="col-md-12">
+            <input class="string required bg-maxlength form-control"
+                   type="text" asp-for="chuTro.HoTen" name="chuTro.HoTen" placeholder="Họ tên">
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
 
+    <div class="form-group form-md-line-input row">
+        <div class="col-md-12">
+            <input class="string required bg-maxlength form-control"
+                   type="text" asp-for="chuTro.SoDienThoai" name="chuTro.SoDienThoai" placeholder="Số điện thoại">
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+    <div class="form-group form-md-line-input row">
+        <div class="col-md-12" data-validate="Valid email is required: ex@abc.xyz">
+            <input class="string required bg-maxlength form-control"
+                   type="text" asp-for="chuTro.Mail" name="chuTro.Mail" placeholder="Email">
+
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
+    <div class="form-group form-md-line-input row">
+        <div class="col-md-12">
+            <input class="string required bg-maxlength form-control"
+                   type="text" asp-for="chuTro.DiaChi" name="chuTro.DiaChi" placeholder="Địa chỉ">
+            <div class="form-control-focus"></div>
+        </div>
+    </div>
 
     <div class="form-actions margin-top-10">
         <div class="row">

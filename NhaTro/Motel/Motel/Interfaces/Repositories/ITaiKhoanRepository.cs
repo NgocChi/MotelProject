@@ -12,5 +12,9 @@ namespace Motel.Interfaces.Repositories
         int Create(TaiKhoan taiKhoan);
 
         IEnumerable<TaiKhoan> Gets();
+
+        int CreateChuTro(ChuTro ct);
+
+        ChuTro GetByTaiKhoan(string tk);
     }
 }

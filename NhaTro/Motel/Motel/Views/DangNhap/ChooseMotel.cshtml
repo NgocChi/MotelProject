@@ -15,7 +15,7 @@
             Chọn nhà trọ để quản lý
             <span class="required" aria-required="true"> * </span>
         </label>
-        <div class="col-md-9">
+        <div class="col-md-6">
             <select class="text required bg-maxlength form-control"
                     name="_chooseMotel" asp-for="_chooseMotel"
                     id="_MaNT" tabindex="-1" aria-hidden="true">
@@ -28,10 +28,17 @@
                 }
             </select>
         </div>
+        <div class="col-md-3">
+            <button name="button"
+                    onclick="ShowPopup('@Url.Action("AddOrEdit","DangNhap",new { id = 0}, Context.Request.Scheme)','Thêm mới')"
+                    type="button" class="btn btn-default btnFormSubmit btn green">
+                <i class="fa fa-plus" aria-hidden="true"></i>  Tạo nhà trọ
+            </button>
+        </div>
 
     </div>
 
-    <div class="form-actions margin-top-10">
+    <div class="form-actions margin-top-10" style="padding-top:20px;">
         <div class="row">
             <div class="col-md-12 text-right">
                 <button type="button" class="btn btn-default" data-dismiss="modal">

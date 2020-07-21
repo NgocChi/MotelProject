@@ -37,9 +37,27 @@ namespace Motel.Repositories
 
         }
 
+
+
+        public int CreateChuTro(ChuTro ct)
+        {
+            if (ct != null)
+            {
+                _appDBContext.ChuTros.Add(ct);
+                _appDBContext.SaveChanges();
+                return 1;
+            }
+            return 0;
+        }
+
         public IEnumerable<TaiKhoan> Gets()
         {
             return _appDBContext.TaiKhoans.ToList();
+        }
+
+        public ChuTro GetByTaiKhoan(string tk)
+        {
+            return _appDBContext.ChuTros.Where(t => t._TenTaiKhoan == tk).FirstOrDefault();
         }
 
 
