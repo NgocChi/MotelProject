@@ -11,6 +11,9 @@ namespace Motel.Models
     public class PhanQuyen
     {
         [Key]
+        [Column("ID")]
+        public int ID { get; set; }
+
         [Column("MaNhomNguoiDung")]
         public int MaNhomNguoiDung { get; set; }
 

@@ -266,15 +266,53 @@ jQueryAjaxChooseTTP = (url) => {
     return false;
 }
 
-jQueryAjaxChangeCombobox = (url) => {
+jQueryAjaxSaveChange = form => {
+    if (confirm("Bạn có chắc chắn muốn lưu thây đổi ?")) {
+        try {
+            $.ajax({
+                type: "POST",
+                url: form.action,
+                data: new FormData(form),
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    if (res.isValid) {
+                        $("#table_phong").html(res.html);
+                        $.notify('Lưu Thành công', {
+                            globalPosition: 'top-center', className: 'success', offset: {
+                                x: 50,
+                                y: 100
+                            }
+                        });
+                    }
+                    else {
+                        $("#table_phong").html(res.html);
+                        $.notify('Lưu thất bại', {
+                            globalPosition: 'top-center', className: 'denger', offset: {
+                                x: 50,
+                                y: 100
+                            }
+                        });
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        }
+        catch (e) {
+            console.log(e);
+        }
+    }
+
+    return false;
+}
+
+
+jQueryAjaxExportPDF = (url, name) => {
     try {
-        $.ajax({
-            type: "GET",
-            url: url,
-            success: function (res) {
-                $("#table_phong").html(res.html);
-            }
-        });
+
+        window.open(url, name);
     }
     catch (e) {
         console.log(e);

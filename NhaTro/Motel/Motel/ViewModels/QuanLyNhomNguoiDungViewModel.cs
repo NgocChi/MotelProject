@@ -10,6 +10,8 @@ namespace Motel.ViewModels
     {
         public IEnumerable<NhomNguoiDung> listNhomNguoiDung { get; set; }
         public List<PhanQuyenViewModel> listPhanQuyen { get; set; }
+
+        public int MaNhomNguoiDung { get; set; }
     }
 
     public class PhanQuyenViewModel : PhanQuyen

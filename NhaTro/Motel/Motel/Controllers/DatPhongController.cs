@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
 using Motel.ViewModels;
+using Rotativa.AspNetCore;
 using Web;
 
 namespace Motel.Controllers
@@ -168,5 +169,16 @@ namespace Motel.Controllers
             }
             return result;
         }
+
+        public IActionResult ExportPDF(int id = 0)
+        {
+            QuanLyDatPhongViewModel dp = new QuanLyDatPhongViewModel();
+            dp.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
+            return new ViewAsPdf("Index", dp)
+            {
+
+            };
+        }
+
     }
 }
