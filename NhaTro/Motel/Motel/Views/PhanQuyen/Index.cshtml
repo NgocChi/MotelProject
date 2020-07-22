@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_layout.cshtml";
 }
 
-@model QuanLyNhomNguoiDungViewModel
+@model CommonViewModel
 @using Motel.ViewModels
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
@@ -47,13 +47,13 @@
                         <div class="col-md-6">
 
                             <select class="form-control select2-hidden-accessible"
-                                    asp-for="MaNhomNguoiDung"
+                                    asp-for="qlPhanQuyenViewModel.MaNhomNguoiDung"
                                     id="cbb_nhomnguoidung" tabindex="-1" aria-hidden="true">
                                 @{
                                     <option value="0">
                                         ----
                                     </option>
-                                    foreach (var item in Model.listNhomNguoiDung)
+                                    foreach (var item in Model.qlPhanQuyenViewModel.listNhomNguoiDung)
                                     {
                                         <option value="@item.MaNhomNguoiDung">
                                             @item.TenNhomNguoiDung

@@ -19,5 +19,11 @@ namespace Motel.Models
 
         [Column("KeyControl")]
         public string KeyControl { get; set; }
+
+        [Column("ParentId")]
+        public int ParentId { get; set; }
+
+        [Column("Controller")]
+        public string Controller { get; set; }
     }
 }

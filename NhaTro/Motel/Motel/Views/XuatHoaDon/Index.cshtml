@@ -4,12 +4,12 @@
     Layout = "~/Views/Shared/_layout.cshtml";
 }
 @using Motel.ViewModels
-@model QuanLyHoaDonViewModel
+@model CommonViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
 <div id="view-all">
-    @await Html.PartialAsync("ViewAll", Model);
+    @await Html.PartialAsync("ViewAll", Model)
 </div>
 
 <script src="~/Form/jsController/popper-min.js"></script>

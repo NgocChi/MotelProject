@@ -1,4 +1,5 @@
 ﻿using DAL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Motel.Interfaces.Repositories;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web;
 using Web.Controls;
 
 namespace Motel.Controllers
@@ -18,19 +20,26 @@ namespace Motel.Controllers
     public class KhachHangController : Controller
     {
         private readonly IKhachHangRepository Repository = null;
-        public KhachHang khach;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private int _nhaTro = 0;
+        private string _taikhoan = string.Empty;
+        private readonly IPhanQuyenRepository PhanQuyenRepository = null;
 
-
-        public KhachHangController(IKhachHangRepository queries)
+        public KhachHangController(IKhachHangRepository queries, IPhanQuyenRepository phanQuyenRepository, IHttpContextAccessor httpContextAccessor)
         {
             this.Repository = queries;
+            _httpContextAccessor = httpContextAccessor;
+            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("MotelData");
+            this.PhanQuyenRepository = phanQuyenRepository;
+            _taikhoan = _httpContextAccessor.HttpContext.Session.GetComplexData<string>("UserData");
         }
 
         public ViewResult Index()
         {
-            KhachHangViewModel kh = new KhachHangViewModel();
-            kh.list = Repository.Gets();
-            return View(kh);
+            CommonViewModel model = new CommonViewModel();
+            model.qlKhachHangViewModel.list = Repository.Gets();
+            model.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+            return View(model);
         }
 
         [HttpPost]
@@ -56,9 +65,10 @@ namespace Motel.Controllers
                         throw;
                     }
                 }
-                KhachHangViewModel kh = new KhachHangViewModel();
-                kh.list = Repository.Gets();
-                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", kh) });
+                CommonViewModel model = new CommonViewModel();
+                model.qlKhachHangViewModel.list = Repository.Gets();
+                model.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", ViewModel) });
         }
@@ -87,11 +97,13 @@ namespace Motel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            KhachHangViewModel kh = new KhachHangViewModel();
+            CommonViewModel model = new CommonViewModel();
+
+            model.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
             if (id == 0)
             {
-                kh.list = Repository.Gets();
-                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", kh) });
+                model.qlKhachHangViewModel.list = Repository.Gets();
+                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
             else
             {
@@ -101,13 +113,13 @@ namespace Motel.Controllers
                     int kq = await Repository.Delete(id);
                     if (kq == 0)
                         return NotFound();
-                    kh.list = Repository.Gets();
-                    return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", kh) });
+                    model.qlKhachHangViewModel.list = Repository.Gets();
+                    return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
                 }
                 else
                 {
-                    kh.list = Repository.Gets();
-                    return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "ViewAll", kh) });
+                    model.qlKhachHangViewModel.list = Repository.Gets();
+                    return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
                 }
             }
         }

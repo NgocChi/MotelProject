@@ -1,5 +1,6 @@
 ﻿using Motel.Data;
 using Motel.Interfaces.Repositories;
+using Motel.Models;
 using Motel.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -24,16 +25,70 @@ namespace Motel.Repositories
                         select new DienNuocViewModel
                         {
                             NgayGhi = dn.NgayGhiSo,
+                            CSCuDien = dn.CSDienCu == null ? 0 : dn.CSDienCu,
+                            CSMoiDien = dn.CSDienMoi == null ? 0 : dn.CSDienMoi,
+                            CSCuNuoc = dn.CSNuocCu == null ? 0 : dn.CSNuocCu,
+                            CSMoiNuoc = dn.CSNuocMoi == null ? 0 : dn.CSNuocMoi,
+                            MaPhong = dn.MaPH,
+                            TieuThuDien = (dn.CSDienMoi - dn.CSDienCu) == null ? 0 : (dn.CSDienMoi - dn.CSDienCu),
+                            TieuThuNuoc = (dn.CSNuocMoi - dn.CSNuocCu) == null ? 0 : (dn.CSNuocMoi - dn.CSNuocCu)
+
+                        };
+            return query.FirstOrDefault();
+        }
+
+        public async Task<int> Create(DienNuoc phong)
+        {
+            if (phong != null)
+            {
+                _appDBContext.DienNuocs.Add(phong);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+
+        }
+        public async Task<int> Update(DienNuoc phong)
+        {
+
+            DienNuoc find = _appDBContext.DienNuocs.FirstOrDefault(p => p.MaPH == phong.MaPH);
+            if (find != null)
+            {
+                find.MaPH = phong.MaPH;
+                find.NgayGhiSo = phong.NgayGhiSo;
+                find.CSDienCu = phong.CSDienCu;
+                find.CSDienMoi = phong.CSDienMoi;
+                find.CSNuocCu = phong.CSNuocCu;
+                find.CSNuocMoi = phong.CSNuocMoi;
+                _appDBContext.DienNuocs.Update(find);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+
+        }
+
+        public async Task<DienNuoc> GetById(int id)
+        {
+            return await _appDBContext.DienNuocs.FindAsync(id);
+        }
+
+        public IEnumerable<DienNuocViewModel> Gets()
+        {
+            var query = from dn in _appDBContext.DienNuocs
+                        select new DienNuocViewModel
+                        {
+                            NgayGhi = dn.NgayGhiSo,
                             CSCuDien = dn.CSDienCu,
                             CSMoiDien = dn.CSDienMoi,
                             CSCuNuoc = dn.CSNuocCu,
                             CSMoiNuoc = dn.CSNuocMoi,
                             MaPhong = dn.MaPH,
-                            TieuThuDien = dn.CSDienMoi - dn.CSDienCu,
-                            TieuThuNuoc = dn.CSNuocMoi - dn.CSNuocCu
+                            TieuThuDien = (dn.CSDienMoi - dn.CSDienCu),
+                            TieuThuNuoc = (dn.CSNuocMoi - dn.CSNuocCu)
 
                         };
-            return query.FirstOrDefault();
+            return query;
         }
     }
 }

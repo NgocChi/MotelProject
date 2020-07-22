@@ -2,7 +2,7 @@
     Layout = null;
 }
 @using Motel.ViewModels
-@model QuanLyHoaDonViewModel
+@model CommonViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
@@ -37,7 +37,7 @@
             </thead>
 
             <tbody>
-                @foreach (var item in Model.listXuatHoaDon)
+                @foreach (var item in Model.qlXuatHoaDonViewModel.listXuatHoaDon)
                 {
                     @if (item.TonTai == true && item.TrangThai == false)
                     {
@@ -62,23 +62,25 @@
                                         Tác vụ
                                         <i class="fa fa-angle-down"></i>
                                     </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a data-remote="true"
-                                               onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Sửa hóa đơn</a>
-                                        </li>
-                                        <li>
-                                            <a data-remote="true"><i class="fas fa-handshake-o" aria-hidden="true"></i>Xuất hóa đơn</a>
-                                        </li>
-                                        <li class="divider"></li>
+                                    <div class="dropdown">
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a data-remote="true"
+                                                   onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Sửa hóa đơn</a>
+                                            </li>
+                                            <li>
+                                                <a data-remote="true"><i class="fas fa-handshake-o" aria-hidden="true"></i>In hóa đơn</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                        </ul>
+                                    </div>
 
-                                    </ul>
                                 </div>
                             </td>
                             <td>@item.ThangNam</td>
                             <td>@item.TenPhong</td>
-                            <td>@item.TenPhong</td>
-                            <td></td>
+                            <td>@item.TenKhachHang</td>
+                            <td>@item.LoaiHoaDon</td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -110,26 +112,24 @@
                                         Tác vụ
                                         <i class="fa fa-angle-down"></i>
                                     </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong , thangNam = Model.ThangNam}, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Xem lại hóa đơn</a>
-                                        </li>
-                                        <li>
-                                            <a data-remote="true"><i class="fas fa-handshake-o" aria-hidden="true"></i>Xuất hóa đơn</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li>
-                                            <a>
-                                                <i class="fas fa-file-word-o"></i> Giấy nhận cọc
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <div class="dropdown">
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a data-remote="true"
+                                                   onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Xem lại hóa đơn</a>
+                                            </li>
+                                            <li>
+                                                <a data-remote="true"><i class="fas fa-handshake-o" aria-hidden="true"></i>In hóa đơn</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </td>
                             <td>@item.ThangNam</td>
                             <td>@item.TenPhong</td>
-                            <td>@item.TenPhong</td>
-                            <td></td>
+                            <td>@item.TenKhachHang</td>
+                            <td>@item.LoaiHoaDon</td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -162,18 +162,22 @@
                                         Tác vụ
                                         <i class="fa fa-angle-down"></i>
                                     </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong , thangNam = Model.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Xuất hóa đơn</a>
-                                        </li>
+                                    <div class="dropdown">
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a data-remote="true"
+                                                   onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Xuất hóa đơn</a>
+                                            </li>
 
-                                    </ul>
+                                            <li class="divider"></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </td>k
                             <td>@item.ThangNam</td>
                             <td>@item.TenPhong</td>
-                            <td>@item.TenPhong</td>
-                            <td></td>
+                            <td>@item.TenKhachHang</td>
+                            <td>@item.LoaiHoaDon</td>
                             <td></td>
                             <td></td>
                             <td></td>

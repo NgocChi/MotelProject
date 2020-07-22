@@ -2,6 +2,10 @@
 @{
     Layout = null;
 }
+@using Motel.ViewModels
+@model CommonViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
 
 <div class="row" style="padding-bottom: 15px; margin-right: 0px; margin-left: 0px; padding-top: 15px; margin-bottom: 15px; border-bottom: 1px solid #e7ecf1; background-color: #EFF2F5">
     <div class="col-md-6">
@@ -43,7 +47,19 @@
             <!-- /.card-header -->
             <div class="card-body">
 
+                <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 bordered">
+                    <h4 class="widget-thumb-heading">Phòng trống/Tổng</h4>
+                    <div class="widget-thumb-wrap">
+                        <i class="widget-thumb-icon bg-purple fa fa-bed"></i>
+                        <div class="widget-thumb-body">
+                            <span class="widget-thumb-subtitle">Phòng/Căn hộ</span>
+                            <span class="widget-thumb-body-stat" data-counter="counterup" data-value="6/10">
 
+                                @Model.homeViewModel.TongPhongTrong / @Model.homeViewModel.TongPhong
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
 
             </div>

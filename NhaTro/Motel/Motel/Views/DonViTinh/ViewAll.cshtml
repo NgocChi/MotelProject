@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
     Layout = null;
 }
-@model DonViTinhViewModel
+@model CommonViewModel
 @using Motel.ViewModels
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
@@ -75,7 +75,7 @@
                             <tbody>
                                 @{
 
-                                    foreach (var item in Model.listDonViTinh)
+                                    foreach (var item in Model.donViTinhViewModel.listDonViTinh)
                                     {
                                         <tr class="item-1932 highlight">
                                             <td class="text-center" style="max-width:20px;">

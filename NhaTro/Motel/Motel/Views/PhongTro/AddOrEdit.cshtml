@@ -49,9 +49,11 @@
             <span class="required" aria-required="true"> * </span>
         </label>
         <div class="col-md-4">
-            <input asp-for="phong.Ten" name=phong.Ten id="Ten" class="string required bg-maxlength form-control"
-                   placeholder="Tên phòng" maxlength="50" size="50" type="text">
-            <div class="form-control-focus"></div>
+            <input class="string required bg-maxlength form-control"
+                   placeholder="Nhập tên Khu/Tòa nhà" maxlength="50" size="50" type="text"
+                   asp-for="phong.Ten" name=phong.Ten
+                   id="Ten">
+
         </div>
         <label class="col-md-2 control-label">Số tối đa</label>
         <div class="col-md-4">

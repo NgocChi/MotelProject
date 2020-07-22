@@ -9,7 +9,7 @@ namespace Motel.ViewModels
     public class QuanLyNhomNguoiDungViewModel
     {
         public IEnumerable<NhomNguoiDung> listNhomNguoiDung { get; set; }
-        public List<PhanQuyenViewModel> listPhanQuyen { get; set; }
+        public IEnumerable<PhanQuyenViewModel> listPhanQuyen { get; set; } = new List<PhanQuyenViewModel>();
 
         public int MaNhomNguoiDung { get; set; }
     }
@@ -19,5 +19,7 @@ namespace Motel.ViewModels
         public string TenManHinh { get; set; }
 
         public string KeyControl { get; set; }
+
+        public bool IsCheck { get; set; }
     }
 }

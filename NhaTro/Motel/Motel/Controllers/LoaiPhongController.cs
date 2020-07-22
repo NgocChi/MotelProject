@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
 using Motel.ViewModels;
+using Web;
 
 namespace Motel.Controllers
 {
@@ -14,17 +16,25 @@ namespace Motel.Controllers
     {
         private readonly ILoaiPhongRepository Repository = null;
         private readonly INhaTroRepository NhaTroRepository = null;
+        private string _taikhoan = string.Empty;
+        private readonly IPhanQuyenRepository PhanQuyenRepository = null;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public LoaiPhongController(ILoaiPhongRepository repository, INhaTroRepository nhaTroRepository)
+        public LoaiPhongController(IHttpContextAccessor httpContextAccessor, IPhanQuyenRepository phanQuyenRepository, ILoaiPhongRepository repository, INhaTroRepository nhaTroRepository)
         {
             this.Repository = repository;
             this.NhaTroRepository = nhaTroRepository;
+            _httpContextAccessor = httpContextAccessor;
+            this.PhanQuyenRepository = phanQuyenRepository;
+            _taikhoan = _httpContextAccessor.HttpContext.Session.GetComplexData<string>("UserData");
         }
         public ViewResult Index()
         {
-            QuanLyLoaiPhongViewModel model = new QuanLyLoaiPhongViewModel();
-            model.listLoaiPhong = Repository.GetsLoaiPhong();
-            return View(model);
+            CommonViewModel common = new CommonViewModel();
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+            common.qlLoaiPhongViewModel.listLoaiPhong = Repository.GetsLoaiPhong();
+
+            return View(common);
         }
 
         [HttpPost]
@@ -50,9 +60,10 @@ namespace Motel.Controllers
                         throw;
                     }
                 }
-                QuanLyLoaiPhongViewModel model = new QuanLyLoaiPhongViewModel();
-                model.listLoaiPhong = Repository.GetsLoaiPhong();
-                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                CommonViewModel common = new CommonViewModel();
+                common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+                common.qlLoaiPhongViewModel.listLoaiPhong = Repository.GetsLoaiPhong();
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", loaiph.loaiPhong) });
         }
@@ -81,11 +92,13 @@ namespace Motel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteLoaiPh(int id)
         {
-            QuanLyLoaiPhongViewModel model = new QuanLyLoaiPhongViewModel();
+            CommonViewModel common = new CommonViewModel();
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+
             if (id == 0)
             {
-                model.listLoaiPhong = Repository.GetsLoaiPhong();
-                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                common.qlLoaiPhongViewModel.listLoaiPhong = Repository.GetsLoaiPhong();
+                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
             }
             else
             {
@@ -95,13 +108,13 @@ namespace Motel.Controllers
                     int kq = await Repository.DeleteLoaiPh(id);
                     if (kq == 0)
                         return NotFound();
-                    model.listLoaiPhong = Repository.GetsLoaiPhong();
-                    return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                    common.qlLoaiPhongViewModel.listLoaiPhong = Repository.GetsLoaiPhong();
+                    return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
                 }
                 else
                 {
-                    model.listLoaiPhong = Repository.GetsLoaiPhong();
-                    return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                    common.qlLoaiPhongViewModel.listLoaiPhong = Repository.GetsLoaiPhong();
+                    return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
                 }
             }
         }

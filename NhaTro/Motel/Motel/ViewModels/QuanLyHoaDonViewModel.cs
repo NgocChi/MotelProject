@@ -8,6 +8,8 @@ namespace Motel.ViewModels
 {
     public class QuanLyHoaDonViewModel
     {
+        public List<ManHinh> listManHinh { get; set; }
+
         public IEnumerable<HoaDonViewModel> listXuatHoaDon { get; set; }
 
         public List<DichVu_ViewModel> listDichVu { get; set; }

@@ -11,6 +11,9 @@ namespace Motel.Models
     public class DienNuoc
     {
         [Key]
+        [Column("MaDienNuoc")]
+        public int MaDienNuoc { get; set; }
+
         [Column("NgayGhiSo")]
         public DateTime NgayGhiSo { get; set; }
 
