@@ -10,10 +10,12 @@ namespace Motel.Interfaces.Repositories
     {
         TaiKhoan DangNhap(string userName, string password);
         int Create(TaiKhoan taiKhoan);
+        int Update(TaiKhoan taiKhoan);
 
         IEnumerable<TaiKhoan> Gets();
 
         int CreateChuTro(ChuTro ct);
+
 
         ChuTro GetByTaiKhoan(string tk);
     }

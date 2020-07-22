@@ -9,7 +9,7 @@ namespace Motel.Interfaces.Repositories
 {
     public interface IPhanQuyenRepository
     {
-        List<PhanQuyenViewModel> GetsManHinh(int idMaNND);
+        IEnumerable<PhanQuyenViewModel> GetsManHinh(int idMaNND);
 
 
         int CheckForeignKey(int idMaNND, int idMaMH);

@@ -17,8 +17,11 @@ namespace Motel.Repositories
         {
             this._appDBContext = appDBContext;
         }
-
-        public List<PhanQuyenViewModel> GetsManHinh(int idMaNND)
+        public IEnumerable<ManHinh> Gets()
+        {
+            return _appDBContext.ManHinhs.ToList();
+        }
+        public IEnumerable<PhanQuyenViewModel> GetsManHinh(int idMaNND)
         {
             var query = from mh in _appDBContext.ManHinhs
                         join pq in _appDBContext.PhanQuyens.Where(t => t.MaNhomNguoiDung == idMaNND) on mh.MaManHinh equals pq.MaManHinh into result
@@ -30,6 +33,9 @@ namespace Motel.Repositories
                             TenManHinh = mh.TenManHinh,
                             KeyControl = mh.KeyControl,
                             MaManHinh = mh.MaManHinh,
+                            MaNhomNguoiDung = 0,
+                            ID = 0,
+                            IsCheck = false,
                             CoQuyen = (rs.CoQuyen == null || rs.CoQuyen == false) ? false : true
 
 

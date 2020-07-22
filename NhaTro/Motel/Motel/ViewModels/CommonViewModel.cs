@@ -33,6 +33,10 @@ namespace Motel.ViewModels
 
         public QuanLyHoaDonViewModel qlXuatHoaDonViewModel = new QuanLyHoaDonViewModel();
 
+        public HomeViewModel homeViewModel = new HomeViewModel();
+
+        public QuanLyDienNuocViewModel qlDienNuocViewModel = new QuanLyDienNuocViewModel();
+
 
 
     }

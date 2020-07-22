@@ -108,7 +108,7 @@ namespace Motel.Controllers
             model.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
             if (id == 0)
             {
-                model.listPhong = PhongRepository.GetsPhongTrong(0);
+                model.listPhong = PhongRepository.GetsPhongTrong(0).Where(t => t._MaNT == _nhaTro);
                 model.khachHangDatPhong = new KhachHangDatPhongViewModel();
                 model.khachHangDatPhong.datPhong = new DatPhong();
                 model.khachHangDatPhong.khachHang = new KhachHang();

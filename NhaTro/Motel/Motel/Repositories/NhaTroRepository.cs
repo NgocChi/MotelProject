@@ -47,6 +47,18 @@ namespace Motel.Repositories
             return await _appDBContext.NhaTros.FindAsync(id);
         }
 
+        public int ThongPhong(int nhaTro)
+        {
+            int query = _appDBContext.Phongs.Where(t => t._MaNT == nhaTro).Count();
+            return query;
+        }
+
+        public int ThongPhongTrong(int nhaTro)
+        {
+            int query = _appDBContext.Phongs.Where(t => t._MaNT == nhaTro && t._MaTTPH == 1).Count();
+            return query;
+        }
+
         public async Task<int> Create(NhaTro nhaTro)
         {
             if (nhaTro != null)

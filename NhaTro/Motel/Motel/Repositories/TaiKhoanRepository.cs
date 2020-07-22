@@ -37,6 +37,22 @@ namespace Motel.Repositories
 
         }
 
+        public int Update(TaiKhoan taikhoan)
+        {
+
+            var find = _appDBContext.TaiKhoans.FirstOrDefault(p => p.TenTaiKhoan == taikhoan.TenTaiKhoan);
+            if (find != null)
+            {
+                find._MaNND = taikhoan._MaNND;
+                _appDBContext.TaiKhoans.Update(taikhoan);
+                _appDBContext.SaveChanges();
+                return 1;
+            }
+            return 0;
+
+        }
+
+
 
 
         public int CreateChuTro(ChuTro ct)

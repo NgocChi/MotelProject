@@ -24,5 +24,9 @@ namespace Motel.Interfaces.Repositories
 
         int CheckForeignKey(int id);
 
+        int ThongPhongTrong(int nhaTro);
+
+        int ThongPhong(int nhaTro);
+
     }
 }

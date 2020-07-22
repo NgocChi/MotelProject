@@ -17,19 +17,25 @@ namespace Motel.Controllers
     public class HomeController : Controller
     {
         private readonly IPhanQuyenRepository PhanQuyenRepository = null;
+        private readonly INhaTroRepository NhaTroRepository = null;
         private string _taikhoan = string.Empty;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public HomeController(IPhanQuyenRepository phanQuyenRepository, IHttpContextAccessor httpContextAccessor)
+        private int _nhaTro = 0;
+        public HomeController(INhaTroRepository nhaTroRepository, IPhanQuyenRepository phanQuyenRepository, IHttpContextAccessor httpContextAccessor)
         {
             this.PhanQuyenRepository = phanQuyenRepository;
             _httpContextAccessor = httpContextAccessor;
+            this.NhaTroRepository = nhaTroRepository;
             _taikhoan = _httpContextAccessor.HttpContext.Session.GetComplexData<string>("UserData");
+            _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("MotelData");
         }
 
         public IActionResult Index()
         {
             CommonViewModel common = new CommonViewModel();
             common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+            common.homeViewModel.TongPhong = NhaTroRepository.ThongPhong(_nhaTro);
+            common.homeViewModel.TongPhongTrong = NhaTroRepository.ThongPhong(_nhaTro);
             return View(common);
 
         }

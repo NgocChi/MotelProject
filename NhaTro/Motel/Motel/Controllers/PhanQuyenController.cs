@@ -32,6 +32,7 @@ namespace Motel.Controllers
             CommonViewModel common = new CommonViewModel();
             common.qlPhanQuyenViewModel.listNhomNguoiDung = Repository.Gets();
             common.qlPhanQuyenViewModel.listPhanQuyen = PhanQuyenRepository.GetsManHinh(0);
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
             return View(common);
         }
 
@@ -39,6 +40,7 @@ namespace Motel.Controllers
         {
             CommonViewModel common = new CommonViewModel();
             common.qlPhanQuyenViewModel.listNhomNguoiDung = Repository.Gets();
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
             common.qlPhanQuyenViewModel.listPhanQuyen = PhanQuyenRepository.GetsManHinh(idNhomNguoiDung);
             common.qlPhanQuyenViewModel.MaNhomNguoiDung = idNhomNguoiDung;
             return View(common);
@@ -46,14 +48,14 @@ namespace Motel.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Save(int id, CommonViewModel model)
+        public async Task<IActionResult> Save(int id, QuanLyNhomNguoiDungViewModel model)
         {
 
             try
             {
                 if (id != 0)
                 {
-                    foreach (var item in model.qlPhanQuyenViewModel.listPhanQuyen)
+                    foreach (var item in model.listPhanQuyen)
                     {
                         int check = PhanQuyenRepository.CheckForeignKey(id, item.MaManHinh);
 
@@ -81,6 +83,7 @@ namespace Motel.Controllers
                 CommonViewModel common = new CommonViewModel();
                 common.qlPhanQuyenViewModel.listNhomNguoiDung = Repository.Gets();
                 common.qlPhanQuyenViewModel.listPhanQuyen = PhanQuyenRepository.GetsManHinh(id);
+                common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "Table", common) });
             }
             catch
