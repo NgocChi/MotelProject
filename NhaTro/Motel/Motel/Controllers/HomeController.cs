@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Web;
 using Motel.Models;
 using System.Collections.Generic;
+using Motel.ViewModels;
 
 namespace Motel.Controllers
 {
@@ -27,9 +28,9 @@ namespace Motel.Controllers
 
         public IActionResult Index()
         {
-            List<ManHinh> list = new List<ManHinh>();
-            list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
-            return View(list);
+            CommonViewModel common = new CommonViewModel();
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+            return View(common);
 
         }
 

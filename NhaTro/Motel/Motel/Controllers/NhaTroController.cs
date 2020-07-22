@@ -16,23 +16,25 @@ namespace Motel.Controllers
     {
         private readonly INhaTroRepository Repository = null;
         private readonly ITaiKhoanRepository TaiKhoanRepository = null;
-        NhaTroViewModel nt = null;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private string _taikhoan = string.Empty;
-        public NhaTroController(INhaTroRepository repository, IHttpContextAccessor httpContextAccessor, ITaiKhoanRepository taiKhoanRepository)
+        private readonly IPhanQuyenRepository PhanQuyenRepository = null;
+        public NhaTroController(IPhanQuyenRepository phanQuyenRepository, INhaTroRepository repository, IHttpContextAccessor httpContextAccessor, ITaiKhoanRepository taiKhoanRepository)
         {
             this.Repository = repository;
             this.TaiKhoanRepository = taiKhoanRepository;
-            nt = new NhaTroViewModel();
             _httpContextAccessor = httpContextAccessor;
+            this.PhanQuyenRepository = phanQuyenRepository;
             _taikhoan = _httpContextAccessor.HttpContext.Session.GetComplexData<string>("UserData");
         }
 
         public ViewResult Index()
         {
-            nt.listNhaTro = Repository.GetsList(_taikhoan);
-            ViewResult kq = View(nt);
-            return kq;
+            CommonViewModel common = new CommonViewModel();
+            common.nhaTroViewModel.listNhaTro = Repository.GetsList(_taikhoan);
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+            return View(common);
+
         }
 
         [HttpPost]
@@ -60,8 +62,8 @@ namespace Motel.Controllers
                         throw;
                     }
                 }
-                NhaTroViewModel nt = new NhaTroViewModel();
-                nt.listNhaTro = Repository.GetsList(_taikhoan);
+                CommonViewModel nt = new CommonViewModel();
+                nt.nhaTroViewModel.listNhaTro = Repository.GetsList(_taikhoan);
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", nhaTroViewModel) });
@@ -89,11 +91,11 @@ namespace Motel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            NhaTroViewModel nt = new NhaTroViewModel();
+            CommonViewModel nt = new CommonViewModel();
 
             if (id == 0)
             {
-                nt.listNhaTro = Repository.GetsList(_taikhoan);
+                nt.nhaTroViewModel.listNhaTro = Repository.GetsList(_taikhoan);
                 return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
             }
             else
@@ -104,12 +106,12 @@ namespace Motel.Controllers
                     int kq = await Repository.Delete(id);
                     if (kq == 0)
                         return NotFound();
-                    nt.listNhaTro = Repository.GetsList(_taikhoan);
+                    nt.nhaTroViewModel.listNhaTro = Repository.GetsList(_taikhoan);
                     return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
                 }
                 else
                 {
-                    nt.listNhaTro = Repository.GetsList(_taikhoan);
+                    nt.nhaTroViewModel.listNhaTro = Repository.GetsList(_taikhoan);
                     return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "ViewAll", nt) });
                 }
             }

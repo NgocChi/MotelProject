@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DAL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
 using Motel.ViewModels;
+using Web;
 
 namespace Motel.Controllers
 {
@@ -14,18 +16,26 @@ namespace Motel.Controllers
     {
         private readonly ILoaiDichVuRepository Repository = null;
         private readonly IDonViTinhRepository DonViRepository = null;
+        private string _taikhoan = string.Empty;
+        private readonly IPhanQuyenRepository PhanQuyenRepository = null;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public LoaiDichVuController(ILoaiDichVuRepository repository, IDonViTinhRepository donViRepository)
+        public LoaiDichVuController(IHttpContextAccessor httpContextAccessor, IPhanQuyenRepository phanQuyenRepository, ILoaiDichVuRepository repository, IDonViTinhRepository donViRepository)
         {
             this.Repository = repository;
             this.DonViRepository = donViRepository;
+            _httpContextAccessor = httpContextAccessor;
+            this.PhanQuyenRepository = phanQuyenRepository;
+            _taikhoan = _httpContextAccessor.HttpContext.Session.GetComplexData<string>("UserData");
 
         }
         public IActionResult Index()
         {
-            LoaiDichVuViewModel model = new LoaiDichVuViewModel();
-            model.listLoaiDichVu = Repository.Gets().ToList();
-            return View(model);
+            CommonViewModel common = new CommonViewModel();
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+            common.loaiDVViewModel.listLoaiDichVu = Repository.Gets().ToList();
+
+            return View(common);
         }
 
         [HttpPost]
@@ -51,9 +61,10 @@ namespace Motel.Controllers
                         throw;
                     }
                 }
-                LoaiDichVuViewModel model = new LoaiDichVuViewModel();
-                model.listLoaiDichVu = Repository.Gets();
-                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                CommonViewModel common = new CommonViewModel();
+                common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+                common.loaiDVViewModel.listLoaiDichVu = Repository.Gets();
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", loai.loaiDichVu) });
         }
@@ -83,19 +94,21 @@ namespace Motel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            LoaiDichVuViewModel model = new LoaiDichVuViewModel();
+            CommonViewModel common = new CommonViewModel();
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+
             if (id == 0)
             {
-                model.listLoaiDichVu = Repository.Gets();
-                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                common.loaiDVViewModel.listLoaiDichVu = Repository.Gets();
+                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
             }
             else
             {
                 int kq = await Repository.Delete(id);
                 if (kq == 0)
                     return NotFound();
-                model.listLoaiDichVu = Repository.Gets();
-                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                common.loaiDVViewModel.listLoaiDichVu = Repository.Gets();
+                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
 
             }
         }

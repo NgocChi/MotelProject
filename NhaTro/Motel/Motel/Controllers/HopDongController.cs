@@ -23,8 +23,10 @@ namespace Motel.Controllers
         private readonly IDichVuPhongRepository DichVuPhongRepository = null;
         private readonly IDatPhongRepository DatPhongRepository = null;
         private int _nhaTro = 0;
+        private string _taikhoan = string.Empty;
+        private readonly IPhanQuyenRepository PhanQuyenRepository = null;
 
-        public HopDongController(IHttpContextAccessor httpContextAccessor, IDatPhongRepository datPhongRepository, IDichVuPhongRepository dichVuPhongRepository, IChuTroRepository chuTroRepository, IHopDongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IDichVuRepository dichVuRepository)
+        public HopDongController(IPhanQuyenRepository phanQuyenRepository, IHttpContextAccessor httpContextAccessor, IDatPhongRepository datPhongRepository, IDichVuPhongRepository dichVuPhongRepository, IChuTroRepository chuTroRepository, IHopDongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IDichVuRepository dichVuRepository)
         {
             this.Repository = repository;
             this.PhongRepository = phongRepository;
@@ -35,32 +37,36 @@ namespace Motel.Controllers
             this.DichVuPhongRepository = dichVuPhongRepository;
             this.DatPhongRepository = datPhongRepository;
             _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("MotelData");
+            this.PhanQuyenRepository = phanQuyenRepository;
+            _taikhoan = _httpContextAccessor.HttpContext.Session.GetComplexData<string>("UserData");
         }
         public IActionResult Index1(int trangThai = 0)
         {
-            QuanLyHopDongViewModel hd = new QuanLyHopDongViewModel();
+            CommonViewModel common = new CommonViewModel();
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
             switch (trangThai)
             {
                 case 0:
-                    hd.listHopDong = Repository.Gets(_nhaTro);
+                    common.qlHopDongViewModel.listHopDong = Repository.Gets(_nhaTro);
                     break;
                 case 1:
-                    hd.listHopDong = Repository.Gets(_nhaTro).Where(t => t.NgayKetThuc >= DateTime.Now);
+                    common.qlHopDongViewModel.listHopDong = Repository.Gets(_nhaTro).Where(t => t.NgayKetThuc >= DateTime.Now);
                     break;
                 case 2:
-                    hd.listHopDong = Repository.Gets(_nhaTro).Where(t => t.NgayKetThuc < DateTime.Now);
+                    common.qlHopDongViewModel.listHopDong = Repository.Gets(_nhaTro).Where(t => t.NgayKetThuc < DateTime.Now);
                     break;
 
             }
-            return Json(new { html = Helper.RenderRazorViewToString(this, "Table", hd) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "Table", common) });
         }
 
 
         public IActionResult Index()
         {
-            QuanLyHopDongViewModel hd = new QuanLyHopDongViewModel();
-            hd.listHopDong = Repository.Gets(_nhaTro);
-            return View(hd);
+            CommonViewModel common = new CommonViewModel();
+            common.qlHopDongViewModel.listHopDong = Repository.Gets(_nhaTro);
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+            return View(common);
         }
 
 
@@ -124,9 +130,10 @@ namespace Motel.Controllers
                     }
 
                 }
-                QuanLyHopDongViewModel model = new QuanLyHopDongViewModel();
-                model.listHopDong = Repository.Gets(_nhaTro);
-                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                CommonViewModel common = new CommonViewModel();
+                common.qlHopDongViewModel.listHopDong = Repository.Gets(_nhaTro);
+                common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
             }
             catch
             {
@@ -139,41 +146,43 @@ namespace Motel.Controllers
         public async Task<IActionResult> AddOrEdit(int id, int idDatPhong, int idPhong = 0)
         {
             IActionResult result;
-            QuanLyHopDongViewModel model = new QuanLyHopDongViewModel();
-            model.listKhachHang = KhachHangRepository.Gets();
-            model.listDichVu = DichVuRepository.GetsByNhaTro(_nhaTro, idPhong);
-            model.listChuTro = ChuTroRepository.Gets();
-            model.hopDongKhachHangPhong = new HopDongKhachHang();
-            model.hopDongKhachHangPhong.hopDong = new HopDong();
-            model.hopDongKhachHangPhong.dichVuPhong = new DichVuPhong();
+            QuanLyHopDongViewModel hd = new QuanLyHopDongViewModel();
+
+            hd.listKhachHang = KhachHangRepository.Gets();
+            hd.listDichVu = DichVuRepository.GetsByNhaTro(_nhaTro, idPhong);
+            hd.listChuTro = ChuTroRepository.Gets();
+            hd.hopDongKhachHangPhong = new HopDongKhachHang();
+            hd.hopDongKhachHangPhong.hopDong = new HopDong();
+            hd.hopDongKhachHangPhong.dichVuPhong = new DichVuPhong();
             if (id == 0) // nếu thêm mới hợp đồng
             {
                 if (idDatPhong != 0) // nếu đã đặt phòng
                 {
-                    model.hopDongKhachHangPhong.datPhong = new DatPhongViewModel();
-                    model.hopDongKhachHangPhong.datPhong = DatPhongRepository.GetsByIdDP(idDatPhong);
-                    model.listPhong = PhongRepository.GetsPTrong(_nhaTro, model.hopDongKhachHangPhong.datPhong._MaPH);
-                    model.hopDongKhachHangPhong.hopDong._MaPH = model.hopDongKhachHangPhong.datPhong._MaPH;
-                    model.hopDongKhachHangPhong.hopDong._MaKH = model.hopDongKhachHangPhong.datPhong._MaKH;
-                    model.hopDongKhachHangPhong.hopDong.GiaPhong = model.hopDongKhachHangPhong.datPhong.Gia;
-                    model.hopDongKhachHangPhong.hopDong.TienDatCoc = model.hopDongKhachHangPhong.datPhong.GiaDatCoc;
-                    model.TongTien = model.hopDongKhachHangPhong.datPhong.GiaDatCoc + model.hopDongKhachHangPhong.datPhong.Gia - model.hopDongKhachHangPhong.datPhong.SoTienCoc;
+                    hd.hopDongKhachHangPhong.datPhong = new DatPhongViewModel();
+                    hd.hopDongKhachHangPhong.datPhong = DatPhongRepository.GetsByIdDP(idDatPhong);
+                    hd.listPhong = PhongRepository.GetsPTrong(_nhaTro, hd.hopDongKhachHangPhong.datPhong._MaPH);
+                    hd.hopDongKhachHangPhong.hopDong._MaPH = hd.hopDongKhachHangPhong.datPhong._MaPH;
+                    hd.hopDongKhachHangPhong.hopDong._MaKH = hd.hopDongKhachHangPhong.datPhong._MaKH;
+                    hd.hopDongKhachHangPhong.hopDong.GiaPhong = hd.hopDongKhachHangPhong.datPhong.Gia;
+                    hd.hopDongKhachHangPhong.hopDong.TienDatCoc = hd.hopDongKhachHangPhong.datPhong.GiaDatCoc;
+                    hd.TongTien = hd.hopDongKhachHangPhong.datPhong.GiaDatCoc + hd.hopDongKhachHangPhong.datPhong.Gia - hd.hopDongKhachHangPhong.datPhong.SoTienCoc;
                 }
                 else
                 {
-                    model.hopDongKhachHangPhong.datPhong = new DatPhongViewModel();
-                    model.listPhong = PhongRepository.GetsPTrong(_nhaTro, 0);
+                    hd.hopDongKhachHangPhong.datPhong = new DatPhongViewModel();
+                    hd.listPhong = PhongRepository.GetsPTrong(_nhaTro, 0);
                 }
 
-                result = View(model);
+                result = View(hd);
             }
             else // nếu edit hợp đồng
             {
-                model.listPhong = PhongRepository.GetsPTrong(_nhaTro, idPhong);
-                model.hopDongKhachHangPhong.hopDong = await Repository.GetById(id);
-                if (model.hopDongKhachHangPhong.hopDong == null)
+                hd.hopDongKhachHangPhong.datPhong = new DatPhongViewModel();
+                hd.listPhong = PhongRepository.GetsPTrong(_nhaTro, idPhong);
+                hd.hopDongKhachHangPhong.hopDong = await Repository.GetById(id);
+                if (hd.hopDongKhachHangPhong.hopDong == null)
                     result = NotFound();
-                result = View(model);
+                result = View(hd);
             }
             return result;
         }
@@ -182,19 +191,21 @@ namespace Motel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            QuanLyHopDongViewModel model = new QuanLyHopDongViewModel();
+            CommonViewModel common = new CommonViewModel();
             if (id == 0)
             {
-                model.listHopDong = Repository.Gets(_nhaTro);
-                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                common.qlHopDongViewModel.listHopDong = Repository.Gets(_nhaTro);
+                common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
             }
             else
             {
                 int kq = await Repository.Delete(id);
                 if (kq == 0)
                     return NotFound();
-                model.listHopDong = Repository.Gets(_nhaTro);
-                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                common.qlHopDongViewModel.listHopDong = Repository.Gets(_nhaTro);
+                common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
             }
         }
 

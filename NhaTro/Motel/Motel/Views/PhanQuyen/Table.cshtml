@@ -2,15 +2,16 @@
 @{
     Layout = null;
 }
-@model QuanLyNhomNguoiDungViewModel
+@model CommonViewModel
 @using Motel.ViewModels
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
-<form asp-controller="PhanQuyen" asp-action="Save" asp-route-id="@Model.MaNhomNguoiDung"
+<form asp-controller="PhanQuyen" asp-action="Save" asp-route-id="@Model.qlPhanQuyenViewModel.MaNhomNguoiDung"
       onsubmit="return jQueryAjaxSaveChange(this);"
       autocomplete="off">
     <div class="row">
+
 
         <div class="col-md-5">
             <div class="table-scrollable table-scrollable-agreement">
@@ -25,19 +26,26 @@
                         </tr>
                     </thead>
                     <tbody class="item-container-service-left">
-                        @for (int i = 0; i < Model.listPhanQuyen.Count(); i++)
+                        @for (int i = 0; i < Model.qlPhanQuyenViewModel.listPhanQuyen.Count(); i++)
                         {
-                            @if (Model.listPhanQuyen[i].CoQuyen == false)
+                            @if (Model.qlPhanQuyenViewModel.listPhanQuyen[i].CoQuyen == false)
                             {
                                 <tr>
                                     <td class="text-center">
                                         <a class="btn btn-circle btn-icon-only btn-default item-selection-service add-selection-service">
-                                            <input class="display-hide" type="checkbox" asp-for="@Model.listPhanQuyen[i].CoQuyen" /><span class="fa fa-plus" aria-hidden="true"></span>
-                                            <input class="display-hide" type="hidden" asp-for="@Model.listPhanQuyen[i].MaManHinh" />
+                                            <input class="display-hide" type="checkbox" name="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].CoQuyen" asp-for="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].CoQuyen" /><span class="fa fa-plus" aria-hidden="true"></span>
+                                            <input class="display-hide" type="hidden" name="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].MaManHinh" asp-for="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].MaManHinh" />
+                                            <input class="display-hide" type="hidden" name="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].KeyControl" asp-for="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].KeyControl" />
+                                            <input class="display-hide" type="hidden" name="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].TenManHinh" asp-for="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].TenManHinh" />
+
                                         </a>
 
                                     </td>
-                                    <td class="service-building-18142">@Model.listPhanQuyen[i].TenManHinh</td>
+                                    <td class="service-building-18142">
+                                        @Model.qlPhanQuyenViewModel.listPhanQuyen[i].TenManHinh
+
+                                    </td>
+
                                     <td class="stop-service hide text-center 18142">
                                         <div class="md-checkbox-inline">
                                             <div class="md-checkbox">
@@ -67,20 +75,26 @@
                         </tr>
                     </thead>
                     <tbody class="item-container-service-left">
-                        @for (int i = 0; i < Model.listPhanQuyen.Count(); i++)
+                        @for (int i = 0; i < Model.qlPhanQuyenViewModel.listPhanQuyen.Count(); i++)
                         {
-                            @if (Model.listPhanQuyen[i].CoQuyen == true)
+                            @if (Model.qlPhanQuyenViewModel.listPhanQuyen[i].CoQuyen == true)
                             {
                                 <tr>
                                     <td class="text-center">
                                         <a class="btn btn-circle btn-icon-only btn-default item-selection-service add-selection-service">
+                                            <input class="display-hide" type="checkbox" name="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].CoQuyen" asp-for="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].CoQuyen" />
+                                            <span class="fa fa-minus" aria-hidden="true"></span>
+                                            <input class="display-hide" type="hidden" name="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].MaManHinh" asp-for="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].MaManHinh" />
+                                            <input class="display-hide" type="hidden" name="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].KeyControl" asp-for="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].KeyControl" />
+                                            <input class="display-hide" type="hidden" name="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].TenManHinh" asp-for="@Model.qlPhanQuyenViewModel.listPhanQuyen[i].TenManHinh" />
 
-                                            <input class="display-hide" type="checkbox" asp-for="@Model.listPhanQuyen[i].CoQuyen" /><span class="fa fa-minus" aria-hidden="true"></span>
-                                            <input class="display-hide" type="hidden" asp-for="@Model.listPhanQuyen[i].MaManHinh" />
                                         </a>
 
                                     </td>
-                                    <td class="service-building-18142">@Model.listPhanQuyen[i].TenManHinh</td>
+                                    <td class="service-building-18142">
+                                        @Model.qlPhanQuyenViewModel.listPhanQuyen[i].TenManHinh
+
+                                    </td>
                                     <td class="stop-service hide text-center 18142">
                                         <div class="md-checkbox-inline">
                                             <div class="md-checkbox">

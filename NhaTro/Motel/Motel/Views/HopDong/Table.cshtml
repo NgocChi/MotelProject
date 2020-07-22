@@ -3,7 +3,7 @@
     Layout = null;
 }
 @using Motel.ViewModels
-@model QuanLyHopDongViewModel
+@model CommonViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
@@ -27,7 +27,7 @@
 
             <tbody>
                 @{
-                    foreach (var item in Model.listHopDong)
+                    foreach (var item in Model.qlHopDongViewModel.listHopDong)
                     {
                         @if (item.NgayKetThuc < DateTime.Now.AddDays(3) && item.NgayKetThuc > DateTime.Now)
                         {

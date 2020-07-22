@@ -2,7 +2,7 @@
     Layout = null;
 }
 @using Motel.ViewModels
-@model QuanLyHoaDonViewModel
+@model CommonViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
@@ -37,7 +37,7 @@
             </thead>
 
             <tbody>
-                @foreach (var item in Model.listXuatHoaDon)
+                @foreach (var item in Model.qlXuatHoaDonViewModel.listXuatHoaDon)
                 {
                     @if (item.TonTai == true && item.TrangThai == false)
                     {
@@ -65,7 +65,7 @@
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
                                             <a data-remote="true"
-                                               onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Sửa hóa đơn</a>
+                                               onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Sửa hóa đơn</a>
                                         </li>
                                         <li>
                                             <a data-remote="true"><i class="fas fa-handshake-o" aria-hidden="true"></i>Xuất hóa đơn</a>
@@ -77,8 +77,8 @@
                             </td>
                             <td>@item.ThangNam</td>
                             <td>@item.TenPhong</td>
-                            <td>@item.TenPhong</td>
-                            <td></td>
+                            <td>@item.TenKhachHang</td>
+                            <td>@item.LoaiHoaDon</td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -112,7 +112,7 @@
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong , thangNam = Model.ThangNam}, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Xem lại hóa đơn</a>
+                                            <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong , thangNam = Model.qlXuatHoaDonViewModel.ThangNam}, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Xem lại hóa đơn</a>
                                         </li>
                                         <li>
                                             <a data-remote="true"><i class="fas fa-handshake-o" aria-hidden="true"></i>Xuất hóa đơn</a>
@@ -128,8 +128,8 @@
                             </td>
                             <td>@item.ThangNam</td>
                             <td>@item.TenPhong</td>
-                            <td>@item.TenPhong</td>
-                            <td></td>
+                            <td>@item.TenKhachHang</td>
+                            <td>@item.LoaiHoaDon</td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -164,7 +164,7 @@
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
                                         <li>
-                                            <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong , thangNam = Model.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Xuất hóa đơn</a>
+                                            <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong , thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Xuất hóa đơn</a>
                                         </li>
 
                                     </ul>
@@ -172,8 +172,8 @@
                             </td>k
                             <td>@item.ThangNam</td>
                             <td>@item.TenPhong</td>
-                            <td>@item.TenPhong</td>
-                            <td></td>
+                            <td>@item.TenKhachHang</td>
+                            <td>@item.LoaiHoaDon</td>
                             <td></td>
                             <td></td>
                             <td></td>

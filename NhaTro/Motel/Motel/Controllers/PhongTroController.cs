@@ -20,42 +20,49 @@ namespace Motel.Controllers
         private readonly ILoaiPhongRepository LoaiPhongRepository = null;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private int _nhaTro = 0;
-        public PhongTroController(IPhongRepository repository, INhaTroRepository nhaTroRepository, ILoaiPhongRepository loaiPhongRepository, IHttpContextAccessor httpContextAccessor)
+        private string _taikhoan = string.Empty;
+        private readonly IPhanQuyenRepository PhanQuyenRepository = null;
+        public PhongTroController(IPhanQuyenRepository phanQuyenRepository, IPhongRepository repository, INhaTroRepository nhaTroRepository, ILoaiPhongRepository loaiPhongRepository, IHttpContextAccessor httpContextAccessor)
         {
             this.Repository = repository;
             this.NhaTroRepository = nhaTroRepository;
             this.LoaiPhongRepository = loaiPhongRepository;
             _httpContextAccessor = httpContextAccessor;
             _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("MotelData");
+            this.PhanQuyenRepository = phanQuyenRepository;
+            _taikhoan = _httpContextAccessor.HttpContext.Session.GetComplexData<string>("UserData");
         }
 
         public IActionResult Index1(int trangThai = 0)
         {
-            QuanLyPhongViewModel model = new QuanLyPhongViewModel();
+            CommonViewModel common = new CommonViewModel();
+            common.qlPhongViewModel.listPhong = Repository.Gets(_nhaTro);
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
             switch (trangThai)
             {
                 case 0:
-                    model.listPhong = Repository.Gets(_nhaTro);
+                    common.qlPhongViewModel.listPhong = Repository.Gets(_nhaTro);
                     break;
 
                 case 1:
-                    model.listPhong = Repository.Gets(_nhaTro).Where(t => t._MaTTPH == trangThai);
+                    common.qlPhongViewModel.listPhong = Repository.Gets(_nhaTro).Where(t => t._MaTTPH == trangThai);
                     break;
                 case 2:
-                    model.listPhong = Repository.Gets(_nhaTro).Where(t => t._MaTTPH == trangThai);
+                    common.qlPhongViewModel.listPhong = Repository.Gets(_nhaTro).Where(t => t._MaTTPH == trangThai);
                     break;
                 case 3:
-                    model.listPhong = Repository.Gets(_nhaTro).Where(t => t._MaTTPH == trangThai);
+                    common.qlPhongViewModel.listPhong = Repository.Gets(_nhaTro).Where(t => t._MaTTPH == trangThai);
                     break;
 
             }
-            return Json(new { html = Helper.RenderRazorViewToString(this, "Table", model) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "Table", common) });
         }
         public ActionResult Index()
         {
-            QuanLyPhongViewModel model = new QuanLyPhongViewModel();
-            model.listPhong = Repository.Gets(_nhaTro);
-            return View(model);
+            CommonViewModel common = new CommonViewModel();
+            common.qlPhongViewModel.listPhong = Repository.Gets(_nhaTro);
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+            return View(common);
 
         }
 
@@ -83,9 +90,9 @@ namespace Motel.Controllers
                         throw;
                     }
                 }
-                QuanLyPhongViewModel model = new QuanLyPhongViewModel();
-                model.listPhong = Repository.Gets(_nhaTro);
-                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                CommonViewModel common = new CommonViewModel();
+                common.qlPhongViewModel.listPhong = Repository.Gets(_nhaTro);
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", ph.phong) });
         }
@@ -118,11 +125,12 @@ namespace Motel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            QuanLyPhongViewModel model = new QuanLyPhongViewModel();
+            CommonViewModel common = new CommonViewModel();
+
             if (id == 0)
             {
-                model.listPhong = Repository.Gets();
-                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                common.qlPhongViewModel.listPhong = Repository.Gets(_nhaTro);
+                return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
             }
             else
             {
@@ -132,13 +140,13 @@ namespace Motel.Controllers
                     int kq = await Repository.Delete(id);
                     if (kq == 0)
                         return NotFound();
-                    model.listPhong = Repository.Gets(_nhaTro);
-                    return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                    common.qlPhongViewModel.listPhong = Repository.Gets(_nhaTro);
+                    return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
                 }
                 else
                 {
-                    model.listPhong = Repository.Gets(_nhaTro);
-                    return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
+                    common.qlPhongViewModel.listPhong = Repository.Gets(_nhaTro);
+                    return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
                 }
             }
         }

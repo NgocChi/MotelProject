@@ -4,7 +4,7 @@
 }
 
 @using Motel.ViewModels
-@model QuanLyPhongViewModel
+@model CommonViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
@@ -38,7 +38,7 @@
             <tbody>
                 @{
 
-                    foreach (var item in Model.listPhong)
+                    foreach (var item in Model.qlPhongViewModel.listPhong)
                     {
                         <tr class="item-1932 highlight">
                             <td class="text-center">
