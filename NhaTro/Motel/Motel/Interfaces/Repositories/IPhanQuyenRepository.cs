@@ -11,10 +11,13 @@ namespace Motel.Interfaces.Repositories
     {
         List<PhanQuyenViewModel> GetsManHinh(int idMaNND);
 
+
         int CheckForeignKey(int idMaNND, int idMaMH);
 
         Task<int> Create(PhanQuyen pquyen);
 
         Task<int> Update(PhanQuyen pquyen);
+
+        List<ManHinh> GetsManHinhPhanQuyen(string tentaikhoan);
     }
 }

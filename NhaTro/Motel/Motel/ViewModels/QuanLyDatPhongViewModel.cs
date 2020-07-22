@@ -16,6 +16,10 @@ namespace Motel.ViewModels
 
         public KhachHangDatPhongViewModel khachHangDatPhong { get; set; }
 
+        public List<ManHinh> listManHinh { get; set; }
+
+
+
     }
 
     public class KhachHangDatPhongViewModel
