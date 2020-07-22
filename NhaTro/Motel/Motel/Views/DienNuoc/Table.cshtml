@@ -22,14 +22,13 @@
                             </div>
                         </div>
                     </th>
-                    <th>Tên khu nhà</th>
-                    <th>Tầng</th>
-                    <th>Tên phòng</th>
-                    <th>Số người tối đa</th>
-                    <th>Diện tích</th>
-                    <th>Đơn giá</th>
-                    <th>Gía cọc</th>
-                    <th>Trạng thái</th>
+                    <th>Ngày ghi số</th>
+                    <th>Phòng</th>
+                    <th>CS Điện cũ</th>
+                    <th>CS Điện mới</th>
+                    <th>CS Nước cũ</th>
+                    <th>CS Nước mới</th>
+
                     <th></th>
 
                 </tr>
@@ -38,13 +37,13 @@
             <tbody>
                 @{
 
-                    foreach (var item in Model.qlPhongViewModel.listPhong)
+                    foreach (var item in Model.qlDienNuocViewModel.listDienNuoc)
                     {
                         <tr class="item-1932 highlight">
                             <td class="text-center">
 
                                 <a class="btn btn-circle btn-icon-only btn-default tooltips"
-                                   onclick="ShowPopup('@Url.Action("AddOrEdit","PhongTro",new { id = item.MaPH }, Context.Request.Scheme)','Chỉnh sửa')"
+                                   onclick="ShowPopup('@Url.Action("AddOrEdit","DienNuoc",new { id = item.NgayGhi }, Context.Request.Scheme)','Chỉnh sửa')"
                                    data-placement="top" data-original-title="Chỉnh sửa"><i class="fas fa-edit"></i></a>
 
                             </td>
@@ -58,19 +57,16 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>@item.TenNhaTro</td>
-                            <td>@item.Tang</td>
-                            <td>@item.Ten</td>
-                            <td>@item.SoNguoiToiDa</td>
-                            <td>@item.DienTich m2</td>
-                            <td>@item.Gia</td>
-                            <td>@item.GiaDatCoc</td>
-                            <td class="stop-service text-center 34079">
-                                @item.TrangThai
-                            </td>
+                            <td>@item.NgayGhi</td>
+                            <td></td>
+                            <td>@item.CSCuDien</td>
+                            <td>@item.CSMoiDien</td>
+                            <td>@item.CSCuNuoc m2</td>
+                            <td>@item.CSMoiNuoc</td>
+
                             <td class="text-center">
                                 <form asp-action="Delete"
-                                      asp-route-id="@item.MaPH"
+                                      asp-route-id="@item.NgayGhi"
                                       onsubmit="return jQueryAjaxDelete(this)">
                                     <button type="submit"
                                             class="btn red btn-circle btn-icon-only btn-default">

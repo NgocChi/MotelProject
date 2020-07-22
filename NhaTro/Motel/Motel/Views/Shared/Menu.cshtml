@@ -1,0 +1,179 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
+@using Motel.ViewModels
+@model CommonViewModel
+
+<div>
+    <nav class="mt-2">
+
+        <ul id="nana" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+
+
+
+            <li class="nav-item has-treeview">
+                <div class="nav-link ">
+                    <i class="fa fa-hotel"></i>
+                    <p>
+                        Nhà trọ
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </div>
+                <ul class="nav nav-treeview">
+                    @foreach (var item in Model.list)
+                    {
+                        @if (item.ParentId == 1)
+                        {
+                            <li class="nav-item">
+                                <div class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        @Html.ActionLink(item.TenManHinh, "Index", item.Controller.Trim())
+                                    </p>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </li>
+
+
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-bed"></i>
+                    <p>
+                        Phòng
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @foreach (var item in Model.list)
+                    {
+                        @if (item.ParentId == 2)
+                        {
+                            <li class="nav-item">
+                                <div class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        @Html.ActionLink(item.TenManHinh, "Index", item.Controller.Trim())
+                                    </p>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </li>
+
+
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class="fa fa-users"></i>
+                    <p>
+                        Người trọ
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @foreach (var item in Model.list)
+                    {
+                        @if (item.ParentId == 3)
+                        {
+                            <li class="nav-item">
+                                <div class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        @Html.ActionLink(item.TenManHinh, "Index", item.Controller.Trim())
+                                    </p>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </li>
+
+
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class="far fa-credit-card"></i>
+                    <p>
+                        Hóa đơn
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @foreach (var item in Model.list)
+                    {
+                        @if (item.ParentId == 4)
+                        {
+                            <li class="nav-item">
+                                <div class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        @Html.ActionLink(item.TenManHinh, "Index", item.Controller.Trim())
+                                    </p>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </li>
+
+
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class=" far fa-plus-square"></i>
+                    <p>
+                        Hệ thống
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    @foreach (var item in Model.list)
+                    {
+                        @if (item.ParentId == 5)
+                        {
+                            <li class="nav-item">
+                                <div class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        @Html.ActionLink(item.TenManHinh, "Index", item.Controller.Trim())
+                                    </p>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </li>
+
+
+            @*
+                <li class="nav-item has-treeview">
+                       <a href="#" class="nav-link">
+                           <i class="far fa-credit-card"></i>
+                           <p>
+                               Báo cáo
+                               <i class="right fas fa-angle-left"></i>
+                           </p>
+                       </a>
+                       <ul class="nav nav-treeview">
+                           <li class="nav-item">
+                               <a href="#" class="nav-link">
+                                   <i class="far fa-circle nav-icon"></i>
+                                   <p></p>
+                               </a>
+                           </li>
+
+                       </ul>
+                   </li>
+            *@
+
+        </ul>
+
+    </nav>
+
+</div>
+
+

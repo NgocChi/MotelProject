@@ -20,8 +20,10 @@ namespace Motel.Controllers
         private readonly IDienNuocRepository DienNuocRepository = null;
         private readonly IDichVuRepository DichVuRepository = null;
         private int _nhaTro = 0;
+        private string _taikhoan = string.Empty;
+        private readonly IPhanQuyenRepository PhanQuyenRepository = null;
 
-        public XuatHoaDonController(IHttpContextAccessor httpContextAccessor, IDichVuRepository dichVuRepository, IDienNuocRepository dienNuocRepository, IHoaDonRepository repository, IPhongRepository phongRepository)
+        public XuatHoaDonController(IPhanQuyenRepository phanQuyenRepository, IHttpContextAccessor httpContextAccessor, IDichVuRepository dichVuRepository, IDienNuocRepository dienNuocRepository, IHoaDonRepository repository, IPhongRepository phongRepository)
         {
             this.Repository = repository;
             this.DichVuRepository = dichVuRepository;
@@ -29,36 +31,40 @@ namespace Motel.Controllers
             this.DienNuocRepository = dienNuocRepository;
             this._httpContextAccessor = httpContextAccessor;
             _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("MotelData");
+            this.PhanQuyenRepository = phanQuyenRepository;
+            _taikhoan = _httpContextAccessor.HttpContext.Session.GetComplexData<string>("UserData");
         }
 
         public IActionResult Index1(DateTime thangNam, int trangThai = 0)
         {
-            QuanLyHoaDonViewModel hd = new QuanLyHoaDonViewModel();
-            hd.ThangNam = thangNam;
+            CommonViewModel common = new CommonViewModel();
+            common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, DateTime.Now);
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+            common.qlXuatHoaDonViewModel.ThangNam = DateTime.Now;
             switch (trangThai)
             {
                 case 0:
-                    hd.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam);
+                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam);
                     break;
                 case 1:
-                    hd.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam);
+                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam);
                     break;
                 case 2:
-                    hd.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam);
+                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam);
                     break;
 
             }
-            return Json(new { html = Helper.RenderRazorViewToString(this, "Table", hd) });
+            return Json(new { html = Helper.RenderRazorViewToString(this, "Table", common) });
         }
 
 
         public IActionResult Index()
         {
-            QuanLyHoaDonViewModel hd = new QuanLyHoaDonViewModel();
-            hd.ThangNam = DateTime.Now;
-            hd.listXuatHoaDon = Repository.Gets(_nhaTro, DateTime.Now);
-
-            return View(hd);
+            CommonViewModel common = new CommonViewModel();
+            common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, DateTime.Now);
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+            common.qlXuatHoaDonViewModel.ThangNam = DateTime.Now;
+            return View(common);
         }
 
         [HttpPost]
@@ -89,10 +95,11 @@ namespace Motel.Controllers
                 {
 
                 }
-                QuanLyHoaDonViewModel hd = new QuanLyHoaDonViewModel();
-                hd.ThangNam = DateTime.Now;
-                hd.listXuatHoaDon = Repository.Gets(_nhaTro, DateTime.Now);
-                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", hd) });
+                CommonViewModel common = new CommonViewModel();
+                common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, DateTime.Now);
+                common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+                common.qlXuatHoaDonViewModel.ThangNam = DateTime.Now;
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
             }
             catch
             {

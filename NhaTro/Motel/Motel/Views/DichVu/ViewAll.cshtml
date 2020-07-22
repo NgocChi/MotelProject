@@ -4,7 +4,7 @@
 }
 
 @using Motel.ViewModels
-@model DichVuViewModel
+@model CommonViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
@@ -73,7 +73,7 @@
                             <tbody>
                                 @{
 
-                                    foreach (var item in Model.listDichVu)
+                                    foreach (var item in Model.dichVuViewModel.listDichVu)
                                     {
                                         <tr class="item-1932 highlight">
                                             <td class="text-center" style="max-width:20px;">

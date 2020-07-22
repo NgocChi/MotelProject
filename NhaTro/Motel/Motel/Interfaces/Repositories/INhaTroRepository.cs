@@ -26,6 +26,9 @@ namespace Motel.Interfaces.Repositories
         int CheckForeignKey(int id);
 
         Task<InfoNhaTroResponse> GetInfoNhaTroById(int maNhaTro);
+        int ThongPhongTrong(int nhaTro);
+
+        int ThongPhong(int nhaTro);
 
     }
 }

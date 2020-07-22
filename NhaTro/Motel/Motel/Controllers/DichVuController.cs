@@ -20,8 +20,10 @@ namespace Motel.Controllers
         private readonly IDonViTinhRepository DonViRepository = null;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private int _nhaTro = 0;
+        private string _taikhoan = string.Empty;
+        private readonly IPhanQuyenRepository PhanQuyenRepository = null;
 
-        public DichVuController(IHttpContextAccessor httpContextAccessor, IDichVuRepository repository, IDonViTinhRepository donViRepository, ILoaiDichVuRepository loaiDVRepository, INhaTroRepository nhaTroRepository)
+        public DichVuController(IPhanQuyenRepository phanQuyenRepository, IHttpContextAccessor httpContextAccessor, IDichVuRepository repository, IDonViTinhRepository donViRepository, ILoaiDichVuRepository loaiDVRepository, INhaTroRepository nhaTroRepository)
         {
             this.Repository = repository;
             this.LoaiDVRepository = loaiDVRepository;
@@ -29,12 +31,15 @@ namespace Motel.Controllers
             this.NhaTroRepository = nhaTroRepository;
             this._httpContextAccessor = httpContextAccessor;
             _nhaTro = _httpContextAccessor.HttpContext.Session.GetComplexData<int>("MotelData");
+            this.PhanQuyenRepository = phanQuyenRepository;
+            _taikhoan = _httpContextAccessor.HttpContext.Session.GetComplexData<string>("UserData");
 
         }
         public IActionResult Index()
         {
-            DichVuViewModel model = new DichVuViewModel();
-            model.listDichVu = Repository.GetsByNhaTro(_nhaTro);
+            CommonViewModel model = new CommonViewModel();
+            model.dichVuViewModel.listDichVu = Repository.GetsByNhaTro(_nhaTro);
+            model.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
             return View(model);
         }
 
@@ -60,8 +65,9 @@ namespace Motel.Controllers
                         await Repository.Create(dv);
                     }
                 }
-                DichVuViewModel model = new DichVuViewModel();
-                model.listDichVu = Repository.GetsByNhaTro(_nhaTro);
+                CommonViewModel model = new CommonViewModel();
+                model.dichVuViewModel.listDichVu = Repository.GetsByNhaTro(_nhaTro);
+                model.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", loai.dichVu) });
@@ -81,8 +87,9 @@ namespace Motel.Controllers
                 {
                     throw;
                 }
-                DichVuViewModel model = new DichVuViewModel();
-                model.listDichVu = Repository.GetsByNhaTro(_nhaTro);
+                CommonViewModel model = new CommonViewModel();
+                model.dichVuViewModel.listDichVu = Repository.GetsByNhaTro(_nhaTro);
+                model.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "Edit", loai.dichVu) });
@@ -115,10 +122,12 @@ namespace Motel.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            DichVuViewModel model = new DichVuViewModel();
+            CommonViewModel model = new CommonViewModel();
+
+            model.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
             if (id == 0)
             {
-                model.listDichVu = Repository.GetsByNhaTro(_nhaTro);
+                model.dichVuViewModel.listDichVu = Repository.GetsByNhaTro(_nhaTro);
                 return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
             else
@@ -129,12 +138,12 @@ namespace Motel.Controllers
                     int kq = await Repository.Delete(id);
                     if (kq == 0)
                         return NotFound();
-                    model.listDichVu = Repository.GetsByNhaTro(_nhaTro);
+                    model.dichVuViewModel.listDichVu = Repository.GetsByNhaTro(_nhaTro);
                     return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
                 }
                 else
                 {
-                    model.listDichVu = Repository.GetsByNhaTro(_nhaTro);
+                    model.dichVuViewModel.listDichVu = Repository.GetsByNhaTro(_nhaTro);
                     return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
                 }
             }

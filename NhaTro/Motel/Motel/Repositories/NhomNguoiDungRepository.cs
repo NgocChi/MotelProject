@@ -19,5 +19,7 @@ namespace Motel.Repositories
         {
             return _appDBContext.NhomNguoiDungs.ToList();
         }
+
+
     }
 }
