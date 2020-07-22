@@ -106,7 +106,7 @@ namespace Motel.Repositories
             return p == null ? 1 : 0;
         }
 
-        public async Task<InfoNhaTroResponse> GetNhaTroByChuTro(int maNhaTro)
+        public async Task<InfoNhaTroResponse> GetInfoNhaTroById(int maNhaTro)
         {
             var result = new InfoNhaTroResponse();
 

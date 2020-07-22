@@ -39,7 +39,7 @@ namespace Motel.Controllers.API
                 task.SetResult(response);
             }
 
-            var dataFormDB = _nhaTroRepository.Gets();
+            var dataFormDB = _nhaTroRepository.Gets().Where(t=>t._MaChuTro == request.IdUser);
 
             response.NhaTroDtos = new List<NhaTroDto>();
             foreach (var item in dataFormDB)
