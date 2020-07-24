@@ -39,8 +39,8 @@
             <div class="card-body">
                 <div class="text-right">
                     <button onclick="ShowPopup('@Url.Action("AddOrEdit","PhongTro",new { id = 0}, Context.Request.Scheme)','Thêm mới')" class="btn green btn-outline btn-circle btn-sm tooltips" data-placement="top"><i class="fa fa-plus"></i>Thêm mới</button>
-                    <a class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Thêm nhiều" data-placement="top" data-remote="true" href="#"><i class="fa fa-plus-square"></i>Thêm nhiều</a>
-                    <a class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Nhập excel" data-placement="top" data-remote="true" href="#"><i class="fa fa-upload"></i>Nhập excel</a>
+                    <button onclick="ShowPopup('@Url.Action("AddList","PhongTro", Context.Request.Scheme)','Thêm nhiều')" class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Thêm nhiều" data-placement="top" data-remote="true" href="#"><i class="fa fa-plus-square"></i>Thêm nhiều</button>
+
 
                     <a class="btn green btn-outline btn-circle btn-sm tooltips" data-original-title="Tìm kiếm" data-placement="top" data-remote="true" href="#"><i class="fa fa-search"></i>Tìm kiếm</a>
                     <button data-toggle="confirmation" data-placement="left" type="submit" form="myForm"

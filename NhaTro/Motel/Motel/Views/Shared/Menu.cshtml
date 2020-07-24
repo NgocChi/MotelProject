@@ -14,7 +14,7 @@
 
 
 
-            <li class="nav-item has-treeview">
+            <li class="nav-item has-treeview ">
                 <div class="nav-link ">
                     <i class="fa fa-hotel"></i>
                     <p>
@@ -28,12 +28,13 @@
                         @if (item.ParentId == 1)
                         {
                             <li class="nav-item">
-                                <div class="nav-link">
+                                <a href="@Url.Action("Index", item.Controller.Trim())" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>
-                                        @Html.ActionLink(item.TenManHinh, "Index", item.Controller.Trim())
+                                        @*@Html.ActionLink(item.TenManHinh, "Index", item.Controller.Trim())*@
+                                        @item.TenManHinh
                                     </p>
-                                </div>
+                                </a>
                             </li>
                         }
                     }
@@ -175,5 +176,11 @@
     </nav>
 
 </div>
+<script>
+    $(document).ready(function () {
+        $('.nav.nav-pills.nav-sidebar.flex-column').find('[href="' + window.location.pathname + '"]').hasClass('nav-link').addClass('active');
+    })
+</script>
+
 
 

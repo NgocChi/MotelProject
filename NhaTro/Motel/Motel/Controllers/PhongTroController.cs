@@ -120,6 +120,34 @@ namespace Motel.Controllers
             }
             return result;
         }
+        [HttpGet]
+        public IActionResult AddList()
+        {
+            QuanLyPhongViewModel model = new QuanLyPhongViewModel();
+            model.listNhaTro = NhaTroRepository.Gets().Where(t => t.MaNT == _nhaTro);
+            model.listTrangThaiPhong = Repository.GetsTrangThaiPhong();
+            model.listLoaiPhong = LoaiPhongRepository.GetsLoaiPhong();
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddList(QuanLyPhongViewModel ph)
+        {
+            try
+            {
+                await Repository.CreateList(ph.phongViewModel);
+                await NhaTroRepository.UpdateSoLuongPhong(ph.phongViewModel._MaNT, ph.phongViewModel.SoPhongTrenTang);
+                CommonViewModel common = new CommonViewModel();
+                common.qlPhongViewModel.listPhong = Repository.Gets(_nhaTro);
+                return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
+            }
+            catch
+            {
+                return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddList", ph.phongViewModel) });
+            }
+
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

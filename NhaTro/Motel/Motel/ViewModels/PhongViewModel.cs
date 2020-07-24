@@ -20,5 +20,7 @@ namespace Motel.ViewModels
         public decimal Gia { get; set; }
 
         public decimal GiaDatCoc { get; set; }
+
+        public int SoPhongTrenTang { get; set; }
     }
 }

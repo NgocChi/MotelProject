@@ -359,7 +359,11 @@
 
     <script src="~/Form/jsController/notify-min.js"></script>
     <script src="~/Form/jsController/Controller/jsNhaTroController.js" asp-append-version="true"></script>
-
+    <script>
+        $(document).ready(function () {
+            $('.nav.nav-pills.nav-sidebar.flex-column').find('[href="' + window.location.pathname + '"]').parent().addClass('active');
+        })
+    </script>
     @RenderSection("Script", required: false)
 
 </body>

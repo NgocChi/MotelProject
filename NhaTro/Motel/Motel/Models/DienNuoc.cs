@@ -31,5 +31,8 @@ namespace Motel.Models
 
         [Column("MaPH")]
         public int MaPH { get; set; }
+
+        [Column("DaChotSo")]
+        public bool DaChotSo { get; set; }
     }
 }
