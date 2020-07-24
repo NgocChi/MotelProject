@@ -123,6 +123,31 @@ namespace Motel.Repositories
             return 0;
 
         }
+        public async Task<int> CreateList(PhongViewModel phong)
+        {
+            if (phong != null)
+            {
+                for (int i = 1; i <= phong.SoPhongTrenTang; i++)
+                {
+                    Phong p = new Phong();
+                    p.Tang = phong.Tang;
+                    p._MaNT = phong._MaNT;
+                    p.SoNguoiToiDa = phong.SoNguoiToiDa;
+                    p._MaTTPH = 1;
+                    p._MaLP = phong._MaLP;
+                    p.CSDien = 0;
+                    p.CSNuoc = 0;
+                    p.Ten = "Phòng " + phong.Tang + "0" + i;
+                    _appDBContext.Phongs.Add(p);
+
+                }
+                await _appDBContext.SaveChangesAsync();
+
+                return 1;
+            }
+            return 0;
+
+        }
         public async Task<int> Update(Phong phong)
         {
 

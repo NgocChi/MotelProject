@@ -24,6 +24,7 @@ namespace Motel.Interfaces.Repositories
         Task<int> UpdateTTP(int maph, int ttph);
 
         Task<int> Delete(int id);
+        Task<int> CreateList(PhongViewModel phong);
 
         int CheckForeignKey(int id);
 

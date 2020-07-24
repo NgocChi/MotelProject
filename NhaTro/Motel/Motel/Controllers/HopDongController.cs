@@ -149,7 +149,7 @@ namespace Motel.Controllers
             QuanLyHopDongViewModel hd = new QuanLyHopDongViewModel();
 
             hd.listKhachHang = KhachHangRepository.Gets();
-            hd.listDichVu = DichVuRepository.GetsByNhaTro(_nhaTro, idPhong);
+            hd.listDichVu = DichVuRepository.GetsByNhaTroDEMO(_nhaTro, id);
             hd.listChuTro = ChuTroRepository.Gets().Where(t => t._TenTaiKhoan == _taikhoan);
             hd.hopDongKhachHangPhong = new HopDongKhachHang();
             hd.hopDongKhachHangPhong.hopDong = new HopDong();
