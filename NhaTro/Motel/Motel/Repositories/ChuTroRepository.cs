@@ -23,5 +23,10 @@ namespace Motel.Repositories
             return _appDBContext.ChuTros.ToList();
         }
 
+        public ChuTro GetByTK(string tk)
+        {
+            return _appDBContext.ChuTros.Where(t => t._TenTaiKhoan == tk).FirstOrDefault();
+        }
+
     }
 }

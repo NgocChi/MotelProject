@@ -17,11 +17,10 @@
                     </th>
                     <th>Phòng</th>
                     <th>Tên người đại diện</th>
-                    <th>Thời hạn hợp đồng</th>
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
                     <th>Tiền đặt cọc</th>
-                    @*<th></th>*@
+                   <th></th>
                 </tr>
             </thead>
 
@@ -31,109 +30,103 @@
                     {
                         @if (item.NgayKetThuc < DateTime.Now.AddDays(3) && item.NgayKetThuc > DateTime.Now)
                         {
-                            <tr class="item-1932 highlight" style="background-color:gold;">
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs green dropdown-toggle" type="button"
-                                                data-toggle="dropdown" aria-expanded="false">
-                                            Tác vụ
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <div class="dropdown">
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = item.MaHopDong, idPhong = item._MaPH }, Context.Request.Scheme)','Chỉnh sửa')"><i class="icon-pencil"></i> Chỉnh sửa</a>
-                                                </li>
+                <tr class="item-1932 highlight" style="background-color:gold;">
+                    <td class="text-center">
+                        <div class="btn-group">
+                            <button class="btn btn-xs green dropdown-toggle" type="button"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                Tác vụ
+                                <i class="fa fa-angle-down"></i>
+                            </button>
+                            <div class="dropdown">
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = item.MaHopDong, idPhong = item._MaPH }, Context.Request.Scheme)','Chỉnh sửa')"><i class="icon-pencil"></i> Chỉnh sửa</a>
+                                    </li>
 
-                                                <li class="divider"></li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="fa fa-file-word-o"></i> Tải hợp đồng
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","HopDong",new { id = item.MaHopDong, idPhong = item._MaPH }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Tải hợp đồng</a>
+                                    </li>
+                                </ul>
+                            </div>
 
-                                    </div>
-                                </td>
-                                <td>@item.TenPhong</td>
-                                <td>@item.TenKhachHang</td>
-                                <td>@item.ThoiHanHopDong</td>
-                                <td>@item.NgayBatDau</td>
-                                <td>@item.NgayKetThuc</td>
-                                <td>@item.TienDatCoc</td>
+                        </div>
+                    </td>
+                    <td>@item.TenPhong</td>
+                    <td>@item.TenKhachHang</td>
+                    <td>@item.NgayBatDau</td>
+                    <td>@item.NgayKetThuc</td>
+                    <td>@item.TienDatCoc</td>
+                    <td>@item.GiaPhong</td>
 
-                            </tr>
+                </tr>
                         }
                         else if (item.NgayKetThuc < DateTime.Now)
                         {
-                            <tr class="item-1932 highlight" style="background-color:crimson;">
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs green dropdown-toggle" type="button"
-                                                data-toggle="dropdown" aria-expanded="false">
-                                            Tác vụ
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <div class="dropdown">
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = item.MaHopDong, idPhong = item._MaPH }, Context.Request.Scheme)','Chỉnh sửa')"><i class="icon-pencil"></i> Chỉnh sửa</a>
-                                                </li>
+            <tr class="item-1932 highlight" style="background-color:crimson;">
+                <td class="text-center">
+                    <div class="btn-group">
+                        <button class="btn btn-xs green dropdown-toggle" type="button"
+                                data-toggle="dropdown" aria-expanded="false">
+                            Tác vụ
+                            <i class="fa fa-angle-down"></i>
+                        </button>
+                        <div class="dropdown">
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = item.MaHopDong, idPhong = item._MaPH }, Context.Request.Scheme)','Chỉnh sửa')"><i class="icon-pencil"></i> Chỉnh sửa</a>
+                                </li>
 
-                                                <li class="divider"></li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="fa fa-file-word-o"></i> Tải hợp đồng
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>@item.TenPhong</td>
-                                <td>@item.TenKhachHang</td>
-                                <td>@item.ThoiHanHopDong</td>
-                                <td>@item.NgayBatDau</td>
-                                <td>@item.NgayKetThuc</td>
-                                <td>@item.TienDatCoc</td>
+                                <li class="divider"></li>
+                                <li>
+                                    <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","HopDong",new { id = item.MaHopDong, idPhong = item._MaPH }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Tải hợp đồng</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+                <td>@item.TenPhong</td>
+                <td>@item.TenKhachHang</td>
+                <td>@item.NgayBatDau</td>
+                <td>@item.NgayKetThuc</td>
+                <td>@item.TienDatCoc</td>
+                <td>@item.GiaPhong</td>
 
-                            </tr>
+            </tr>
                         }
                         else
                         {
-                            <tr class="item-1932 highlight">
-                                <td class="text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-xs green dropdown-toggle" type="button"
-                                                data-toggle="dropdown" aria-expanded="false">
-                                            Tác vụ
-                                            <i class="fa fa-angle-down"></i>
-                                        </button>
-                                        <div class="dropdown">
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = item.MaHopDong, idPhong = item._MaPH }, Context.Request.Scheme)','Chỉnh sửa')"><i class="icon-pencil"></i> Chỉnh sửa</a>
-                                                </li>
+            <tr class="item-1932 highlight">
+                <td class="text-center">
+                    <div class="btn-group">
+                        <button class="btn btn-xs green dropdown-toggle" type="button"
+                                data-toggle="dropdown" aria-expanded="false">
+                            Tác vụ
+                            <i class="fa fa-angle-down"></i>
+                        </button>
+                        <div class="dropdown">
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a data-remote="true" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = item.MaHopDong, idPhong = item._MaPH }, Context.Request.Scheme)','Chỉnh sửa')"><i class="icon-pencil"></i> Chỉnh sửa</a>
+                                </li>
 
-                                                <li class="divider"></li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="fa fa-file-word-o"></i> Tải hợp đồng
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>@item.TenPhong</td>
-                                <td>@item.TenKhachHang</td>
-                                <td>@item.ThoiHanHopDong</td>
-                                <td>@item.NgayBatDau</td>
-                                <td>@item.NgayKetThuc</td>
-                                <td>@item.TienDatCoc</td>
+                                <li class="divider"></li>
+                                <li>
+                                    <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","HopDong",new { id = item.MaHopDong, idPhong = item._MaPH }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Tải hợp đồng</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+                <td>@item.TenPhong</td>
+                <td>@item.TenKhachHang</td>
+                <td>@item.NgayBatDau</td>
+                <td>@item.NgayKetThuc</td>
+                <td>@item.TienDatCoc</td>
+                <td>@item.GiaPhong</td>
 
-                            </tr>
+            </tr>
                         }
 
                     }

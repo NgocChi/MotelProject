@@ -29,6 +29,11 @@ namespace Motel.Repositories
                             NgayBatDau = hd.NgayBatDau,
                             NgayKetThuc = hd.NgayKetThuc,
                             TienDatCoc = hd.TienDatCoc,
+                            GiaPhong = hd.GiaPhong,
+                            SoDienThoai = kh.SoDienThoai,
+                            CMND = kh.CMND,
+                            SoDien = hd.SoDien,
+                            SoNuoc = hd.SoNuoc,
                             _MaPH = hd._MaPH,
                             _MaKH = hd._MaKH,
                             TenKhachHang = kh.TenKH,
@@ -36,6 +41,32 @@ namespace Motel.Repositories
 
                         };
             return query.ToList();
+        }
+
+        public HopDongViewModel GetByIDHopDong(int idNhaTro, int idHopDong)
+        {
+            var query = from hd in _appDBContext.HopDongs
+                        join p in _appDBContext.Phongs on hd._MaPH equals p.MaPH
+                        join kh in _appDBContext.KhachHangs on hd._MaKH equals kh.MaKh
+                        where p._MaNT == idNhaTro
+                        select new HopDongViewModel
+                        {
+                            MaHopDong = hd.MaHopDong,
+                            NgayBatDau = hd.NgayBatDau,
+                            NgayKetThuc = hd.NgayKetThuc,
+                            TienDatCoc = hd.TienDatCoc,
+                            GiaPhong = hd.GiaPhong,
+                            SoDienThoai = kh.SoDienThoai,
+                            CMND = kh.CMND,
+                            SoDien = hd.SoDien,
+                            SoNuoc = hd.SoNuoc,
+                            _MaPH = hd._MaPH,
+                            _MaKH = hd._MaKH,
+                            TenKhachHang = kh.TenKH,
+                            TenPhong = p.Ten,
+
+                        };
+            return query.FirstOrDefault();
         }
 
         public async Task<int> Create(HopDong hopDong)
@@ -85,6 +116,11 @@ namespace Motel.Repositories
         public async Task<HopDong> GetById(int id)
         {
             return await _appDBContext.HopDongs.FindAsync(id);
+        }
+
+        public HopDong GetByIdHD(int id)
+        {
+            return _appDBContext.HopDongs.Find(id);
         }
     }
 }

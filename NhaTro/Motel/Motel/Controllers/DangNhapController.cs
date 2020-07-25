@@ -95,6 +95,7 @@ namespace Motel.Controllers
                 TaiKhoan taikh = new TaiKhoan();
                 taikh.TenTaiKhoan = tk.taikhoan.TenTaiKhoan;
                 taikh.MatKhau = tk.taikhoan.MatKhau;
+                taikh.LoaiTaiKhoan = true;
                 taikh._MaNND = 1;
                 kq = Repository.Create(taikh);
                 if (kq == 1)

@@ -50,7 +50,8 @@
                                                 </li>
                                                 <li class="divider"></li>
                                                 <li>
-                                                    <a asp-controller="DatPhong" asp-action="ExportPDF" asp-route-id="@item.MaDP"><i class="fas fa-handshake-o" aria-hidden="true"></i>Giay nhận cọc</a>
+                                                    <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Giay nhận cọc</a>
+
                                                 </li>
                                             </ul>
                                         </div>
@@ -94,7 +95,8 @@
                                                 </li>
                                                 <li class="divider"></li>
                                                 <li>
-                                                    <a asp-controller="DatPhong" asp-action="ExportPDF" asp-route-id="@item.MaDP"><i class="fas fa-handshake-o" aria-hidden="true"></i>Giay nhận cọc</a>
+                                                    <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Giay nhận cọc</a>
+
                                                 </li>
                                             </ul>
                                         </div>
@@ -136,8 +138,8 @@
                                                     <a onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = 0, idDatPhong = item.MaDP }, Context.Request.Scheme)','Nhận phòng')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
                                                 </li>
                                                 <li>
-                                                    <a id="btn_nhangiaycoc" asp-controller="DatPhong" asp-action="ExportPDF" asp-route-id="@item.MaDP"><i class="fas fa-handshake-o" aria-hidden="true"></i>Giay nhận cọc</a>
-                                                    <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
+                                                    <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Giay nhận cọc</a>
+
                                                 </li>
                                             </ul>
                                         </div>
@@ -170,22 +172,4 @@
 </div>
 
 
-<script>
-    $(document).ready(function () {
-        $('#btn_nhangiaycoc').click(function () {
-            $.ajax({
-                type: "GET",
-                url: '/DatPhong/ExportPDF',
-                dataType: 'script',
-                data: {
-                    id: $('#txt_maDP').val(),
-                }
-
-            });
-        });
-    });
-    $('#GetPDF').click(function (e) {
-        window.open('@Url.Action("ShowPDF", "Controller")');
-    });
-</script>
 

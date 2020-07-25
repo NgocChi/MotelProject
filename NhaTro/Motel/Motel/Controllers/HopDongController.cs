@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
 using Motel.ViewModels;
+using Rotativa.AspNetCore;
 using Web;
 
 namespace Motel.Controllers
@@ -207,6 +208,32 @@ namespace Motel.Controllers
                 common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
                 return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
             }
+        }
+
+        public IActionResult ExportPDF(int id = 0, int idPhong = 0)
+        {
+
+            ExportXuatHoaDon hd = new ExportXuatHoaDon();
+            hd.chuTro = ChuTroRepository.GetByTK(_taikhoan);
+            hd.listDichVu = DichVuRepository.GetsByNhaTroDEMO(_nhaTro, id);
+            hd.hopDongKhachHangPhong = new HopDongKhachHang();
+            hd.hopDongKhachHangPhong.datPhong = new DatPhongViewModel();
+            hd.hopDongKhachHangPhong.hopDong = Repository.GetByIDHopDong(_nhaTro, id);
+
+            //hd.listKhachHang = KhachHangRepository.Gets();
+            //hd.listDichVu = DichVuRepository.GetsByNhaTroDEMO(_nhaTro, id);
+            //hd.listChuTro = ChuTroRepository.Gets().Where(t => t._TenTaiKhoan == _taikhoan);
+            //hd.hopDongKhachHangPhong = new HopDongKhachHang();
+            //hd.hopDongKhachHangPhong.hopDong = new HopDong();
+            //hd.hopDongKhachHangPhong.dichVuPhong = new DichVuPhong();
+
+            //hd.hopDongKhachHangPhong.datPhong = new DatPhongViewModel();
+            //hd.listPhong = PhongRepository.GetsPTrong(_nhaTro, idPhong);
+            //hd.hopDongKhachHangPhong.hopDong = Repository.GetByIdHD(id);
+            return new ViewAsPdf("ExportPDF", hd)
+            {
+
+            };
         }
 
     }

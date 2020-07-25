@@ -17,5 +17,8 @@ namespace Motel.Interfaces.Repositories
 
         Task<int> Update(HopDong hd);
         Task<int> Delete(int id);
+
+        HopDong GetByIdHD(int id);
+        HopDongViewModel GetByIDHopDong(int idNhaTro, int idHopDong);
     }
 }

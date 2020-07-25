@@ -309,10 +309,10 @@ jQueryAjaxSaveChange = form => {
 }
 
 
-jQueryAjaxExportPDF = (url, name) => {
+jQueryAjaxExportPDF = (url) => {
     try {
 
-        window.open(url, name);
+        window.open(url, '_blank');
     }
     catch (e) {
         console.log(e);
