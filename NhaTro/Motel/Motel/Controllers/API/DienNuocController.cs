@@ -70,7 +70,7 @@ namespace Motel.Controllers.API
 
 
         [HttpPost]
-        [Route("GetListRoomNotInputElectrictyAndWater")]
+        [Route("UpdateInfoElectrictyAndWater")]
         public async Task<InfoElectrictyAndWaterResponse> UpdateInfoElectrictyAndWater([FromBody] InfoElectrictyAndWaterRequest request)
         {
             var response = new InfoElectrictyAndWaterResponse();

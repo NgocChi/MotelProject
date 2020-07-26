@@ -71,6 +71,20 @@ namespace Motel.Repositories
 
         }
 
+        public async Task<int> UpdateDienNuocHopDong(int maHD, int CSDien, int CSNuoc)
+        {
+            var hd = _appDBContext.HopDongs.FirstOrDefault(t => t.MaHopDong == maHD);
+            if(hd !=null)
+            {
+                hd.SoDien = CSDien;
+                hd.SoNuoc = CSNuoc;
+                _appDBContext.HopDongs.Update(hd);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+        }
+
         public async Task<DienNuoc> GetById(int id)
         {
             return await _appDBContext.DienNuocs.FindAsync(id);
@@ -112,6 +126,7 @@ namespace Motel.Repositories
                                  MaPhong = ph.MaPH,
                                  TenPhong = ph.Ten,
                                  DaChotSo = dn.DaChotSo,
+                                 NgayThangGhiSo = dn.NgayGhiSo,
                              };
 
             var response = new ElectrictyAndWaterResponse
@@ -129,10 +144,12 @@ namespace Motel.Repositories
         {
             var taskComplete = new TaskCompletionSource<ElectrictyAndWaterRoomsNotInputRespone>();
             var dataFromDB = from phong in _appDBContext.Phongs
+                             join hd in _appDBContext.HopDongs on phong.MaPH equals hd._MaPH
                              where !(from dn in _appDBContext.DienNuocs
                                      where request.NgayThangGhiSo.Year == dn.NgayGhiSo.Year &&
                                      request.NgayThangGhiSo.Month == dn.NgayGhiSo.Month
-                                     select dn.MaPH).Contains(phong.MaPH)
+                                     select dn.MaPH).Contains(phong.MaPH) &&
+                             hd.TrangThaiHD == true
                              select new PhongDto
                              {
                                  MaNhaTro = phong._MaNT,
@@ -161,7 +178,23 @@ namespace Motel.Repositories
                 CSNuocMoi = request.ElectrictyAndWaterDto.ChiSoNuocMoi,
                 NgayGhiSo = request.ElectrictyAndWaterDto.NgayThangGhiSo,
             };
-            var result = await Update(dienNuoc);
+
+           DienNuoc find = _appDBContext.DienNuocs.FirstOrDefault(p => p.MaPH == dienNuoc.MaPH
+           && p.NgayGhiSo.Year == dienNuoc.NgayGhiSo.Year && dienNuoc.NgayGhiSo.Month == p.NgayGhiSo.Month);
+
+            var result = -1;
+            if (find != null)
+            {
+                result = await Update(dienNuoc);
+            } 
+            else
+            {
+                result = await Create(dienNuoc);
+            }
+
+
+
+              
             if (result > 0)
             {
                 var response = new InfoElectrictyAndWaterResponse
@@ -169,6 +202,13 @@ namespace Motel.Repositories
                     Message = "OK",
                     StatusCode = 0,
                 };
+
+                var dataQuery = (from hd in _appDBContext.HopDongs
+                                 where hd._MaPH == dienNuoc.MaPH &&
+                                 hd.TrangThaiHD == true
+                                 select hd).FirstOrDefault();
+                if (dataQuery != null)
+                    await UpdateDienNuocHopDong(dataQuery.MaHopDong, dienNuoc.CSDienMoi, dienNuoc.CSNuocMoi);
                 return response;
             }
             else
@@ -186,7 +226,8 @@ namespace Motel.Repositories
         {
             var taskComplete = new TaskCompletionSource<ElectrictyAndWaterOldRespone>();
             var dataQuery = (from hd in _appDBContext.HopDongs
-                            where hd._MaPH == request.MaPhong
+                            where hd._MaPH == request.MaPhong &&
+                            hd.TrangThaiHD == true
                             select new ElectrictyAndWaterIndexDto
                             {
                                 ChiSoDien = hd.SoDien ?? 0,
@@ -197,7 +238,11 @@ namespace Motel.Repositories
             {
                 Message = "OK",
                 StatusCode = 0,
-                ElectrictyAndWaterIndexDto = dataQuery,
+                ElectrictyAndWaterIndexDto = dataQuery == null ? new ElectrictyAndWaterIndexDto
+                {
+                    ChiSoNuoc = 0,
+                    ChiSoDien = 0,
+                } : dataQuery,
             };
             taskComplete.SetResult(response);
             return taskComplete.Task;
