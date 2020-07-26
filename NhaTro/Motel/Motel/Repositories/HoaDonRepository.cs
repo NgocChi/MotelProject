@@ -22,20 +22,26 @@ namespace Motel.Repositories
         {
             var query = from hd in _appDBContext.HopDongs
                         join hdon in _appDBContext.HoaDons on hd.MaHopDong equals hdon._MaHD into result
+
                         from rs in result.DefaultIfEmpty()
                         join p in _appDBContext.Phongs on hd._MaPH equals p.MaPH
                         join kh in _appDBContext.KhachHangs on hd._MaKH equals kh.MaKh
-                        where p._MaNT == id
+
+                        where p._MaNT == id && hd.TrangThaiHD == true
                         select new HoaDonViewModel
                         {
+                            MaHD = rs.MaHD,
                             TenKhachHang = kh.TenKH,
                             _MaKhachHang = kh.MaKh,
                             TenPhong = p.Ten,
                             _MaPhong = p.MaPH,
                             _MaHopDong = hd.MaHopDong,
                             ThangNam = Thang,
-                            TonTai = (from hoadon in _appDBContext.HoaDons where hoadon._MaHD == hd.MaHopDong select hoadon.MaHD).Contains(hd.MaHopDong),
-                            TrangThai = false
+                            TonTai = rs._MaHD == null ? false : true,
+                            TrangThai = rs.TrangThai == null ? false : rs.TrangThai,
+                            ThanhTien = rs.ThanhTien,
+                            NgayThanhToan = rs.NgayThanhToan
+
 
 
 
@@ -53,12 +59,13 @@ namespace Motel.Repositories
             }
             return 0;
         }
-        public async Task<int> Update(HoaDon hd)
+        public async Task<int> UpdateThanhToan(int id)
         {
-            HoaDon find = _appDBContext.HoaDons.FirstOrDefault(p => p.MaHD == hd.MaHD);
+            HoaDon find = _appDBContext.HoaDons.Find(id);
             if (find != null)
             {
-
+                find.TrangThai = !find.TrangThai;
+                find.NgayThanhToan = DateTime.Now;
                 _appDBContext.HoaDons.Update(find);
                 await _appDBContext.SaveChangesAsync();
                 return 1;

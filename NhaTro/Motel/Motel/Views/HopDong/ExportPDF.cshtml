@@ -64,18 +64,18 @@
         </div>
         <div class="col-md-6 float-right">
             <h3>BÊN B: BÊN THUÊ NHÀ</h3>
-            <label class="control-label">Anh/Chị: hopDongKhachHangPhong.hopDong.te </label><br />
-            <label class="control-label">CMND: Đoàn Thị Ngọc Chi </label><br />
-            <label class="control-label">Số điện thoại: Đoàn Thị Ngọc Chi </label><br />
-            <label class="control-label">Địa chỉ thường trú: Đoàn Thị Ngọc Chi </label><br />
+            <label class="control-label">Anh/Chị: @Model.khachHang.TenKH </label><br />
+            <label class="control-label">CMND: @Model.khachHang.CMND  </label><br />
+            <label class="control-label">Số điện thoại: @Model.khachHang.SoDienThoai  </label><br />
+            <label class="control-label">Email: @Model.khachHang.Mail  </label><br />
         </div>
 
     </div>
 
     <i style="font-size:x-large;">HAI BÊN CÙNG THÕA THUẬN KÝ HỢP ĐỒNG VỚI NHỮNG NỘI DỤNG SAU:</i>
     <h4> Điều 1:</h4>
-    <p> Bên A đồng ý cho bên B thuê phòng: P102 - Nha BCD thuộc địa chỉ 298/Sư Vạn hạnh, quận 11 </p>
-    <p>Thời hạn thuê nhà là 12 Tháng kể từ ngày 14/07/2020 đến ngày 14/07/2021</p>
+    <p> Bên A đồng ý cho bên B thuê phòng:P102 - Nha BCD thuộc địa chỉ 298/Sư Vạn hạnh, quận 11 </p>
+    <p>Thời hạn thuê nhà là từ ngày @Model.hopDongKhachHangPhong.hopDong.NgayBatDau đến ngày @Model.hopDongKhachHangPhong.hopDong.NgayKetThuc</p>
     <h4> Điều 2:</h4>
     <p>
         Gía thuê dịch vụ, được tính hàng tháng
@@ -114,7 +114,7 @@
     </p>
     <p>Tiền thuê nhà, tiền dịch vụ bên B thanh toán cho bên A đầu tháng khi có hóa đơn tháng.</p>
     <p>
-        Bên B đặt cọc <span style="color:darkcyan;"> 2.000.000đ</span>  cho bên A.
+        Bên B đặt cọc <span style="color:darkcyan;"> @Model.hopDongKhachHangPhong.hopDong.TienDatCoc</span>  cho bên A.
         Tiền đặt cọc sẽ được trả lại đầy đủ cho bên thuê khi hết hợp đồng thuê phòng trọ và thanh toán đầy đủ tiền điện, nước, phí dịch vụ và các khoản khác liên quan.
     </p>
     <p>
@@ -140,7 +140,7 @@
             <br />
             <br />
             <br />
-            <p>ddđ</p>
+            <p>@Model.khachHang.TenKH</p>
 
         </div>
 

@@ -28,11 +28,9 @@ namespace Motel.ViewModels
         public decimal? TongTienDichVu { get; set; }
 
         public decimal? ThanhTienHoaDon { get; set; }
-
-
     }
 
-    public class HoaDonViewModel
+    public class HoaDonViewModel : HoaDon
     {
         public string TenPhong { get; set; }
 
@@ -49,8 +47,6 @@ namespace Motel.ViewModels
         public string LoaiHoaDon { get; set; }
 
         public string TenTrangThai { get; set; }
-
-        public bool TrangThai { get; set; }
 
         public bool TonTai { get; set; }
 

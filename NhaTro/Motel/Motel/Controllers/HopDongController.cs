@@ -92,10 +92,10 @@ namespace Motel.Controllers
                             dvp._MaDV = item.MaDV;
                             dvp._MaPH = hopdong.hopDongKhachHangPhong.hopDong._MaPH;
                             dvp._MaHD = kq;
+                            dvp.SoLuong = item.SoLuong;
                             await DichVuPhongRepository.Create(dvp);
                         }
                     }
-
                     hopdong.hopDongKhachHangPhong.taikhoanKH.LoaiTaiKhoan = false;
                     string tentk = TaiKhoanRepository.CreateTKKhachHang(hopdong.hopDongKhachHangPhong.taikhoanKH);
 
@@ -109,25 +109,22 @@ namespace Motel.Controllers
                 }
                 else
                 {
-
                     hopdong.hopDongKhachHangPhong.hopDong.MaHopDong = id;
                     kq = await Repository.Update(hopdong.hopDongKhachHangPhong.hopDong);
                     foreach (var item in hopdong.listDichVu)
                     {
                         if (item.IsCheck == true)
                         {
-
                             DichVuPhong dvp = new DichVuPhong();
                             dvp._MaDV = item.MaDV;
                             dvp._MaPH = hopdong.hopDongKhachHangPhong.hopDong._MaPH;
                             dvp._MaHD = id;
-                            dvp.SoLuong = item.SoLuong;
+                            dvp.SoLuong = (item.SoLuong == null || item.SoLuong == 0) ? 1 : item.SoLuong;
                             int check = DichVuPhongRepository.CheckExist(dvp);
                             if (check == 1)
                                 await DichVuPhongRepository.Create(dvp);
                             else
                                 await DichVuPhongRepository.Update(dvp);
-
                         }
                         else
                         {
@@ -141,7 +138,6 @@ namespace Motel.Controllers
                                 await DichVuPhongRepository.Delete(dvp);
                         }
                     }
-
                 }
                 CommonViewModel common = new CommonViewModel();
                 common.qlHopDongViewModel.listHopDong = Repository.Gets(_nhaTro);
@@ -152,7 +148,6 @@ namespace Motel.Controllers
             {
                 return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", hopdong) });
             }
-
         }
 
         [HttpGet]
@@ -194,6 +189,8 @@ namespace Motel.Controllers
                 hd.hopDongKhachHangPhong.datPhong = new DatPhongViewModel();
                 hd.listPhong = PhongRepository.GetsPTrong(_nhaTro, idPhong);
                 hd.hopDongKhachHangPhong.hopDong = await Repository.GetById(id);
+                hd.hopDongKhachHangPhong.taikhoanKH = TaiKhoanRepository.GetByTaiKhoanKH(hd.hopDongKhachHangPhong.hopDong._MaKH);
+
                 if (hd.hopDongKhachHangPhong.hopDong == null)
                     result = NotFound();
                 result = View(hd);
@@ -223,7 +220,7 @@ namespace Motel.Controllers
             }
         }
 
-        public IActionResult ExportPDF(int id = 0, int idPhong = 0)
+        public async Task<IActionResult> ExportPDF(int id = 0, int idPhong = 0)
         {
 
             ExportXuatHoaDon hd = new ExportXuatHoaDon();
@@ -232,6 +229,7 @@ namespace Motel.Controllers
             hd.hopDongKhachHangPhong = new HopDongKhachHang();
             hd.hopDongKhachHangPhong.datPhong = new DatPhongViewModel();
             hd.hopDongKhachHangPhong.hopDong = Repository.GetByIDHopDong(_nhaTro, id);
+            hd.khachHang = await KhachHangRepository.GetsById(hd.hopDongKhachHangPhong.hopDong._MaKH);
             return new ViewAsPdf("ExportPDF", hd)
             {
 

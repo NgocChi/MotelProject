@@ -89,6 +89,19 @@ namespace Motel.Repositories
             return _appDBContext.ChuTros.Where(t => t._TenTaiKhoan == tk).FirstOrDefault();
         }
 
+        public TaiKhoan GetByTaiKhoanKH(int idKH)
+        {
+            var query = from tk in _appDBContext.TaiKhoans
+                        join kh in _appDBContext.KhachHangs on tk.TenTaiKhoan equals kh.TenTaiKhoan
+                        where kh.MaKh == idKH
+                        select new TaiKhoan
+                        {
+                            TenTaiKhoan = tk.TenTaiKhoan,
+                            MatKhau = tk.MatKhau
+                        };
+            return query.FirstOrDefault();
+        }
+
 
     }
 }

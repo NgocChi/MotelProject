@@ -13,7 +13,7 @@ namespace Motel.Interfaces.Repositories
 
         Task<int> Create(HoaDon hd);
 
-        Task<int> Update(HoaDon hd);
+        Task<int> UpdateThanhToan(int id);
 
         Task<int> CreateCT(ChiTietHoaDon ct);
 

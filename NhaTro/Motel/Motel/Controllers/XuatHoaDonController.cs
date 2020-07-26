@@ -82,6 +82,8 @@ namespace Motel.Controllers
                     hoadon.hoaDon.ThanhTien = hoadon.ThanhTienHoaDon;
                     hoadon.hoaDon._MaHD = maHDong;
                     hoadon.hoaDon._MaPH = maPhong;
+                    hoadon.hoaDon.TrangThai = false;
+                    hoadon.hoaDon._MaLoaiHD = 1;
                     kq = await Repository.Create(hoadon.hoaDon);
                     foreach (var item in hoadon.listDichVu)
                     {
@@ -187,6 +189,18 @@ namespace Motel.Controllers
             {
 
             };
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ThanhToan(int id)
+        {
+            await Repository.UpdateThanhToan(id);
+            CommonViewModel common = new CommonViewModel();
+            common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, DateTime.Now);
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+            common.qlXuatHoaDonViewModel.ThangNam = DateTime.Now;
+            return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "Table", common) });
         }
     }
 }

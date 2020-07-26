@@ -61,7 +61,7 @@ namespace Motel.ViewModels
     public class ExportXuatHoaDon
     {
         public ChuTro chuTro { get; set; }
-
+        public KhachHang khachHang { get; set; }
         public List<DichVu_ViewModel> listDichVu { get; set; }
 
         public HopDongKhachHang hopDongKhachHangPhong { get; set; }

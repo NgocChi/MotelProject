@@ -14,23 +14,13 @@
                 <tr>
                     <th>
                     </th>
-                    <th class="text-center">
-                        <div class="md-checkbox-inline service-checkbox">
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                                <label for="todoCheck1"></label>
-                            </div>
-                        </div>
-                    </th>
+
                     <th class="text-center">
                     </th>
                     <th>Tháng/năm</th>
                     <th>Phòng</th>
                     <th>Người đại diện</th>
-                    <th>Loại hóa đơn</th>
                     <th>Thành tiền</th>
-                    <th>Thanh toán</th>
-                    <th>Ngày tạo</th>
                     <th>Ngày thanh toán</th>
                     <th>Trạng thái</th>
                 </tr>
@@ -41,21 +31,13 @@
                 {
                     @if (item.TonTai == true && item.TrangThai == false)
                     {
+                        <!--đã xuất hóa đơn chưa thanh toán-->
                         <tr class="item-1932 highlight">
                             <td class="text-center">
                                 <a class="btn btn-circle btn-icon-only btn-default yellow-crusta tooltips"
                                    data-toggle="collapse" data-target=".item-expand-6444-1" data-placement="top" data-original-title="Mở/đóng.<br><b style='color: #26C281;'>Màu xanh</b>: là hóa đơn đã thanh toán"><i class="fa fa-angle-down"></i></a>
                             </td>
-                            <td class="text-center">
-                                <div class="md-checkbox-inline service-checkbox">
-                                    <div class="icheck-primary d-inline ml-2">
-                                        <input type="checkbox" value="" name="todo2" id="ck-1932">
-                                        <label for="ck-1932">
-                                            <span></span><span class="check"></span><span class="box"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </td>
+
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
@@ -69,7 +51,7 @@
                                                    onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Sửa hóa đơn</a>
                                             </li>
                                             <li>
-                                                <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Tải hợp đồng</a>
+                                                <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>In hóa đơn</a>
                                             </li>
 
                                         </ul>
@@ -77,35 +59,37 @@
 
                                 </div>
                             </td>
-                            <td>@item.ThangNam</td>
+                            <td>@item.ThangNam.ToString("MM/yyyy")</td>
                             <td>@item.TenPhong</td>
                             <td>@item.TenKhachHang</td>
-                            <td>@item.LoaiHoaDon</td>
+                            <td>@item.ThanhTien</td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td class="text-center">
+                                <form asp-action="ThanhToan"
+                                      asp-route-id="@item.MaHD"
+                                      onclick="return jQueryAjaxCheckThanhToan(this)">
+                                    <div class="md-checkbox-inline service-checkbox">
+                                        <div class="icheck-primary d-inline ml-2">
+                                            <input type="checkbox" checked="@item.TrangThai" name="todo2" id="ck-1932">
+                                            <label for="ck-1932">
+                                                <span></span><span class="check"></span><span class="box"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
 
+                            </td>
                         </tr>
                     }
                     else if (item.TonTai == true && item.TrangThai == true)
                     {
+                        <!--đã xuất hóa đơn đã thanh toán-->
                         <tr class="item-1932 highlight">
                             <td class="text-center">
                                 <a class="btn btn-circle btn-icon-only btn-default green-jungle tooltips"
                                    data-toggle="collapse" data-target=".item-expand-6444-1" data-placement="top" data-original-title="Mở/đóng.<br><b style='color: #26C281;'>Màu xanh</b>: là hóa đơn đã thanh toán"><i class="fa fa-angle-down"></i></a>
                             </td>
-                            <td class="text-center">
-                                <div class="md-checkbox-inline service-checkbox">
-                                    <div class="icheck-primary d-inline ml-2">
-                                        <input type="checkbox" value="" name="todo2" id="ck-1932">
-                                        <label for="ck-1932">
-                                            <span></span><span class="check"></span><span class="box"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </td>
+
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
@@ -119,43 +103,46 @@
                                                    onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Xem lại hóa đơn</a>
                                             </li>
                                             <li>
-                                                <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Tải hợp đồng</a>
+                                                <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>In hóa đơn</a>
                                             </li>
 
                                         </ul>
                                     </div>
                                 </div>
                             </td>
-                            <td>@item.ThangNam</td>
+                            <td>@item.ThangNam.ToString("MM/yyyy")</td>
                             <td>@item.TenPhong</td>
                             <td>@item.TenKhachHang</td>
-                            <td>@item.LoaiHoaDon</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>@item.ThanhTien?.ToString("{0:C}")</td>
+                            <td>@item.NgayThanhToan</td>
+                            <td class="text-center">
+                                <form asp-action="ThanhToan"
+                                      asp-route-id="@item.MaHD"
+                                      onclick="return jQueryAjaxCheckThanhToan(this)">
+                                    <div class="md-checkbox-inline service-checkbox">
+                                        <div class="icheck-primary d-inline ml-2">
+                                            <input type="checkbox" disabled checked="@item.TrangThai" name="todo2" id="ck-1932">
+                                            <label for="ck-1932">
+                                                <span></span><span class="check"></span><span class="box"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </td>
 
                         </tr>
                     }
                     else
                     {
+                        <!--chưa xuất hóa đơn, chưa thanh toán-->
                         <tr class="item-1932 highlight">
                             <td class="text-center">
                                 <a class="btn btn-circle btn-icon-only btn-default white-stripe tooltips"
                                    data-toggle="collapse" data-target=".item-expand-6444-1" data-placement="top"
                                    data-original-title="Mở/đóng.<br><b style='color: #26C281;'>Màu xanh</b>: là hóa đơn đã thanh toán"><i class="fa fa-angle-down"></i></a>
                             </td>
-                            <td class="text-center">
-                                <div class="md-checkbox-inline service-checkbox">
-                                    <div class="icheck-primary d-inline ml-2">
-                                        <input type="checkbox" value="" name="todo2" id="ck-1932">
-                                        <label for="ck-1932">
-                                            <span></span><span class="check"></span><span class="box"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </td>
+
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
@@ -172,13 +159,10 @@
                                     </div>
                                 </div>
                             </td>k
-                            <td>@item.ThangNam</td>
-                            <td>@item.TenPhong</td>
+                            <td>@item.ThangNam.ToString("MM/yyyy")</td>
+                            <td>@item.TenPhong.ToString()</td>
                             <td>@item.TenKhachHang</td>
-                            <td>@item.LoaiHoaDon</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td>@item.ThanhTien</td>
                             <td></td>
                             <td></td>
 
