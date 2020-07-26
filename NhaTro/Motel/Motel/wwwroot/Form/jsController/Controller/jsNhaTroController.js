@@ -25,6 +25,7 @@ ShowPopupLarge = (url, tilte) => {
                 $("#myModallarge .modal-body").html(res);
                 $("#myModallarge").modal('show');
             }
+
         });
     }
     catch (e) {
@@ -185,12 +186,7 @@ jQueryAjaxPostLarge = form => {
                 }
                 else
                     $('#myModallarge .modal-body').html(res.html);
-                    $.notify('Thất bại', {
-                        globalPosition: 'top-center', className: 'info', offset: {
-                            x: 50,
-                            y: 100
-                        }
-                    });
+
             },
             error: function (err) {
                 console.log(err);
@@ -325,4 +321,47 @@ jQueryAjaxExportPDF = (url) => {
     }
     return false;
 }
+
+
+jQueryAjaxCheckThanhToan = form => {
+    try {
+        $.ajax({
+            type: "POST",
+            url: form.action,
+            data: new FormData(form),
+            contentType: false,
+            processData: false,
+            success: function (res) {
+                if (res.isValid) {
+                    $("#table_phong").html(res.html);
+                    $.notify('Thanh toán Thành công', {
+                        globalPosition: 'top-center', className: 'success', offset: {
+                            x: 50,
+                            y: 100
+                        }
+                    });
+                }
+                else {
+                    $("#table_phong").html(res.html);
+                    $.notify('Thanh toán thất bại', {
+                        globalPosition: 'top-center', className: 'denger', offset: {
+                            x: 50,
+                            y: 100
+                        }
+                    });
+                }
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+    catch (e) {
+        console.log(e);
+    }
+
+
+    return false;
+}
+
 

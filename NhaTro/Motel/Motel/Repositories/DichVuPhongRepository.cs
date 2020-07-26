@@ -34,7 +34,7 @@ namespace Motel.Repositories
                 find._MaDV = dvp._MaDV;
                 find._MaPH = dvp._MaPH;
                 find._MaHD = dvp._MaHD;
-                find.SoLuong = dvp.SoLuong == 0 ? 1 : dvp.SoLuong;
+                find.SoLuong = (dvp.SoLuong == 0 || dvp.SoLuong == null) ? 1 : dvp.SoLuong;
                 _appDBContext.DichVuPhongs.Update(find);
                 await _appDBContext.SaveChangesAsync();
                 return 1;

@@ -26,9 +26,6 @@ namespace Motel.Models
         [Column("_MaPH")]
         public int? _MaPH { get; set; }
 
-        [Column("_MaDVPH")]
-        public int? _MaDVPH { get; set; }
-
 
         [Column("_MaLoaiHD")]
         public int? _MaLoaiHD { get; set; }
@@ -39,5 +36,8 @@ namespace Motel.Models
 
         [Column("TrangThai")]
         public bool? TrangThai { get; set; }
+
+        [Column("NgayThanhToan")]
+        public DateTime? NgayThanhToan { get; set; }
     }
 }

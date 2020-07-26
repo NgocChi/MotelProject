@@ -6,13 +6,53 @@
 @model QuanLyHoaDonViewModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
+<style>
+    * {
+        box-sizing: border-box;
+        border-color: black;
+    }
 
-<form id="formHD" asp-controller="XuatHoaDon" asp-action="AddOrEdit"
-      asp-route-maHDong="@Model.hoaDon._MaHD"
-      asp-route-maPhong="@Model.hoaDon._MaPH"
-      asp-route-id="@Model.hoaDon.MaHD" onsubmit="return jQueryAjaxPostLarge(this);"
-      autocomplete="off">
-    <ul class="errors"></ul>
+    body {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: larger;
+    }
+
+    .header {
+        padding: 10px;
+        text-align: center;
+        font-size: 35px;
+    }
+
+    .column {
+        text-align: center;
+        float: left;
+        width: 50%;
+        padding: 10px;
+        padding-left: 20px;
+        height: 250px;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .content {
+        padding: 10px;
+        height: auto;
+    }
+
+    .footer {
+        padding: 10px;
+        text-align: center;
+        height: auto;
+    }
+</style>
+<form id="formHD">
+    
+    <h2 style="text-align:center;">------***------</h2>
+    <h2 style="text-align:center; color:#007c7e;">HÓA ĐƠN TIỀN NHÀ</h2>
 
     <div class="form-group form-md-line-input row">
         <label class="col-md-2 control-label">Tháng/năm</label>
@@ -107,9 +147,6 @@
                         <tbody class="services">
                             @for (int i = 0; i < Model.listDichVu.Count(); i++)
                             {
-
-
-
                                 @if (@Model.listDichVu[i].MacDinh == false)
                                 {
                                     <tr>

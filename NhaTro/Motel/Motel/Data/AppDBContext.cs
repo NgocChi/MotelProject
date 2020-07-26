@@ -24,7 +24,7 @@ namespace Motel.Data
 
         public DbSet<Phong> Phongs { get; set; }
 
-        public DbSet<PhieuThanhToan> PhieuThanhToans { get; set; }
+
         public DbSet<NhaTro> NhaTros { get; set; }
         public DbSet<LoaiPhong> LoaiPhongs { get; set; }
 
@@ -47,8 +47,6 @@ namespace Motel.Data
 
         public DbSet<LoaiDichVu> LoaiDichVus { get; set; }
 
-        public DbSet<ChiTietPhieuThanhToan> ChiTietPhieuThanhToans { get; set; }
-
         public DbSet<ManHinh> ManHinhs { get; set; }
 
         public DbSet<PhanQuyen> PhanQuyens { get; set; }
@@ -56,6 +54,8 @@ namespace Motel.Data
         public DbSet<NhomNguoiDung> NhomNguoiDungs { get; set; }
 
         public DbSet<ChiTietHoaDon> ChiTietHoaDons { get; set; }
+
+        public DbSet<ThongTinTamTru> ThongTinTamTrus { get; set; }
     }
 
 }

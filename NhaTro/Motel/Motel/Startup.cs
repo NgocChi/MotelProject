@@ -63,6 +63,7 @@ namespace Motel
             services.AddTransient<INhomNguoiDungRepository, NhomNguoiDungRepository>();
             services.AddTransient<IDienNuocRepository, DienNuocRepository>();
             services.AddTransient<IPhanQuyenRepository, PhanQuyenRepository>();
+            services.AddTransient<IThongTinTamTruRepository, ThongTinTamTruRepository>();
 
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory looger)
