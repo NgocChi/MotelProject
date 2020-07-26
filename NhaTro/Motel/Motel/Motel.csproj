@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Rotativa\" />
+    <Folder Include="wwwroot\Shared\img\" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
