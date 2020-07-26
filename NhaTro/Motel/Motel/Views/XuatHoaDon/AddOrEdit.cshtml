@@ -163,6 +163,7 @@
                                         <td>
                                             @if (@Model.listDichVu[i].Ten == "Điện")
                                             {
+                                                <input type="hidden" asp-for="dienNuoc.MaDienNuoc">
                                                 <div class="form-line-input" style="display: inline-flex;">
                                                     <input type="text" asp-for="dienNuoc.CSCuDien" id="start-electricity" readonly=""
                                                            class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số đầu">
@@ -260,17 +261,7 @@
                        placeholder="Thành tiền" type="text">
                 <div class="form-control-focus"></div>
             </div>
-            <label class="col-md-2 control-label">
-                <b>
-                    Thành toán
-                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Thành tiền = Tổng tiền - Khấu trừ"> [?] </span>
-                </b>
-            </label>
-            <div class="col-md-4">
-                <input id="txt_thanhtoan" class="string optional readonly form-control" readonly="readonly"
-                       placeholder="Thành tiền" type="text">
-                <div class="form-control-focus"></div>
-            </div>
+
         </div>
 
 
@@ -292,9 +283,7 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                     <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Hủy bỏ
                 </button>
-                <button name="button" type="submit" class="btn btn-default btnExportWithPrint btnFormSubmit btn blue">
-                    <i class="fa fa-money" aria-hidden="true"></i> Xuất &amp; In hóa đơn
-                </button>                <button name="button" type="submit" class="btn btn-default btnExportWithoutPrint btnFormSubmit btn green">
+                <button name="button" type="submit" class="btn btn-default btnExportWithoutPrint btnFormSubmit btn green">
                     <i class="fa fa-money" aria-hidden="true"></i> Xuất hóa đơn
                 </button>
             </div>

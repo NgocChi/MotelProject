@@ -50,5 +50,7 @@ namespace Motel.ViewModels
 
         public bool TonTai { get; set; }
 
+        public bool checkDienNuoc { get; set; }
+
     }
 }

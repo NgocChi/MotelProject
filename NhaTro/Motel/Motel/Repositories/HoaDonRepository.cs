@@ -21,16 +21,17 @@ namespace Motel.Repositories
         public IEnumerable<HoaDonViewModel> Gets(int id, DateTime Thang)
         {
             var query = from hd in _appDBContext.HopDongs
-                        join hdon in _appDBContext.HoaDons on hd.MaHopDong equals hdon._MaHD into result
-
+                        join hdon in _appDBContext.HoaDons.Where(t => t.NgayLap.Month == Thang.Month && t.NgayLap.Year == Thang.Year) on hd.MaHopDong equals hdon._MaHD into result
                         from rs in result.DefaultIfEmpty()
+                        join diennuoc in _appDBContext.DienNuocs.Where(t => t.NgayGhiSo.Month == Thang.Month && t.NgayGhiSo.Year == Thang.Year) on hd._MaPH equals diennuoc.MaPH into result1
+                        from rs1 in result1.DefaultIfEmpty()
                         join p in _appDBContext.Phongs on hd._MaPH equals p.MaPH
                         join kh in _appDBContext.KhachHangs on hd._MaKH equals kh.MaKh
 
                         where p._MaNT == id && hd.TrangThaiHD == true
                         select new HoaDonViewModel
                         {
-                            MaHD = rs.MaHD,
+                            MaHD = rs.MaHD == null ? 0 : rs.MaHD,
                             TenKhachHang = kh.TenKH,
                             _MaKhachHang = kh.MaKh,
                             TenPhong = p.Ten,
@@ -39,8 +40,9 @@ namespace Motel.Repositories
                             ThangNam = Thang,
                             TonTai = rs._MaHD == null ? false : true,
                             TrangThai = rs.TrangThai == null ? false : rs.TrangThai,
-                            ThanhTien = rs.ThanhTien,
-                            NgayThanhToan = rs.NgayThanhToan
+                            ThanhTien = rs.ThanhTien == null ? 0 : rs.ThanhTien,
+                            NgayThanhToan = rs.NgayThanhToan == null ? DateTime.Now : rs.NgayThanhToan,
+                            checkDienNuoc = rs1.MaDienNuoc == null ? false : true
 
 
 

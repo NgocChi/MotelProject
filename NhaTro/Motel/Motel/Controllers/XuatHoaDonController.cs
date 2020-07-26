@@ -21,12 +21,16 @@ namespace Motel.Controllers
         private readonly IDienNuocRepository DienNuocRepository = null;
         private readonly IDichVuRepository DichVuRepository = null;
         private int _nhaTro = 0;
+        private readonly IKhachHangRepository KhachHangRepository = null;
+        private readonly IChuTroRepository ChuTroRepository = null;
         private string _taikhoan = string.Empty;
         private readonly IPhanQuyenRepository PhanQuyenRepository = null;
 
-        public XuatHoaDonController(IPhanQuyenRepository phanQuyenRepository, IHttpContextAccessor httpContextAccessor, IDichVuRepository dichVuRepository, IDienNuocRepository dienNuocRepository, IHoaDonRepository repository, IPhongRepository phongRepository)
+        public XuatHoaDonController(IKhachHangRepository khachHangRepository, IChuTroRepository chuTroRepository, IPhanQuyenRepository phanQuyenRepository, IHttpContextAccessor httpContextAccessor, IDichVuRepository dichVuRepository, IDienNuocRepository dienNuocRepository, IHoaDonRepository repository, IPhongRepository phongRepository)
         {
             this.Repository = repository;
+            this.KhachHangRepository = khachHangRepository;
+            this.ChuTroRepository = chuTroRepository;
             this.DichVuRepository = dichVuRepository;
             this.PhongRepository = phongRepository;
             this.DienNuocRepository = dienNuocRepository;
@@ -48,10 +52,13 @@ namespace Motel.Controllers
                     common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam);
                     break;
                 case 1:
-                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam);
+                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam).Where(t => t.TonTai == false && t.TrangThai == false);
                     break;
                 case 2:
-                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam);
+                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam).Where(t => t.TonTai == true && t.TrangThai == false);
+                    break;
+                case 3:
+                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam).Where(t => t.TonTai == true && t.TrangThai == true);
                     break;
 
             }
@@ -85,6 +92,7 @@ namespace Motel.Controllers
                     hoadon.hoaDon.TrangThai = false;
                     hoadon.hoaDon._MaLoaiHD = 1;
                     kq = await Repository.Create(hoadon.hoaDon);
+                    await DienNuocRepository.UpdateChotSo(hoadon.dienNuoc.MaDienNuoc);
                     foreach (var item in hoadon.listDichVu)
                     {
                         ChiTietHoaDon ct = new ChiTietHoaDon();
@@ -149,43 +157,44 @@ namespace Motel.Controllers
             return View(model);
         }
 
-        public IActionResult ExportPDF(int id, int _MaKhachHang, int _MaPhong, int _MaHopDong, DateTime thangNam)
+        public async Task<IActionResult> ExportPDF(int id, int _MaKhachHang, int _MaPhong, int _MaHopDong, DateTime thangNam)
         {
-
-            QuanLyHoaDonViewModel model = new QuanLyHoaDonViewModel();
-            model.ThangNam = thangNam;
-            model.hoaDon = new HoaDon();
-            model.hoaDon._MaHD = _MaHopDong;
-            model.hoaDon._MaPH = _MaPhong;
-            model.phong = PhongRepository.GetByIdPhong(_MaPhong);
-            model.dienNuoc = DienNuocRepository.GetDienNuocByIdPhong(_MaPhong, thangNam);
-            model.listDichVu = DichVuRepository.GetsByIdPhongIdHopDong(_MaHopDong, _MaPhong);
-            model.TongTienDienNuoc = 0;
-            model.TongTienDichVu = 0;
-            model.ThanhTienHoaDon = 0;
-            foreach (var item in model.listDichVu)
+            ExportXuatHoaDon xhd = new ExportXuatHoaDon();
+            xhd.chuTro = ChuTroRepository.GetByTK(_taikhoan);
+            xhd.hoaDon = new HoaDon();
+            xhd.hoaDon._MaHD = _MaHopDong;
+            xhd.hoaDon._MaPH = _MaPhong;
+            xhd.ThangNam = thangNam;
+            xhd.phong = PhongRepository.GetByIdPhong(_MaPhong);
+            xhd.dienNuoc = DienNuocRepository.GetDienNuocByIdPhong(_MaPhong, thangNam);
+            xhd.listDichVu = DichVuRepository.GetsByIdPhongIdHopDong(_MaHopDong, _MaPhong);
+            xhd.TongTienDienNuoc = 0;
+            xhd.TongTienDichVu = 0;
+            xhd.ThanhTienHoaDon = 0;
+            xhd.khachHang = await KhachHangRepository.GetsById(_MaKhachHang);
+            foreach (var item in xhd.listDichVu)
             {
                 if (item.Ten == "Điện")
                 {
-                    item.ThanhTien = item.Gia * model.dienNuoc.TieuThuDien;
-                    model.TongTienDienNuoc += item.ThanhTien;
+                    item.ThanhTien = item.Gia * xhd.dienNuoc.TieuThuDien;
+                    xhd.TongTienDienNuoc += item.ThanhTien;
                 }
                 else if (item.Ten == "Nước")
                 {
-                    item.ThanhTien = item.Gia * model.dienNuoc.TieuThuNuoc;
-                    model.TongTienDienNuoc += item.ThanhTien;
+                    item.ThanhTien = item.Gia * xhd.dienNuoc.TieuThuNuoc;
+                    xhd.TongTienDienNuoc += item.ThanhTien;
                 }
                 else
                 {
                     item.ThanhTien = item.Gia * item.SoLuong;
-                    model.TongTienDichVu += item.ThanhTien;
+                    xhd.TongTienDichVu += item.ThanhTien;
                 }
             }
 
 
-            model.ThanhTienHoaDon = model.TongTienDichVu + model.TongTienDienNuoc + model.phong.Gia;
+            xhd.ThanhTienHoaDon = xhd.TongTienDichVu + xhd.TongTienDienNuoc + xhd.phong.Gia;
 
-            return new ViewAsPdf("ExportPDF", model)
+            return new ViewAsPdf("ExportPDF", xhd)
             {
 
             };

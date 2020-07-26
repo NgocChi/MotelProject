@@ -135,7 +135,8 @@ namespace Motel.Repositories
                             TenLoaiDV = ldv.TenLoaiDV,
                             DonGia = ldv.DonGia,
                             Mota = ldv.Mota,
-                            _MaDVi = ldv._MaDVi
+                            _MaDVi = ldv._MaDVi,
+                            MacDinh = ldv.MacDinh
 
 
                         };

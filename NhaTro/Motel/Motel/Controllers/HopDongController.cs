@@ -223,7 +223,7 @@ namespace Motel.Controllers
         public async Task<IActionResult> ExportPDF(int id = 0, int idPhong = 0)
         {
 
-            ExportXuatHoaDon hd = new ExportXuatHoaDon();
+            ExportHopDong hd = new ExportHopDong();
             hd.chuTro = ChuTroRepository.GetByTK(_taikhoan);
             hd.listDichVu = DichVuRepository.GetsByNhaTroDEMO(_nhaTro, id);
             hd.hopDongKhachHangPhong = new HopDongKhachHang();
