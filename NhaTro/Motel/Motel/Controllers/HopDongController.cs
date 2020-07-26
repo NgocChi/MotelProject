@@ -23,13 +23,15 @@ namespace Motel.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IDichVuPhongRepository DichVuPhongRepository = null;
         private readonly IDatPhongRepository DatPhongRepository = null;
+        private readonly ITaiKhoanRepository TaiKhoanRepository = null;
         private int _nhaTro = 0;
         private string _taikhoan = string.Empty;
         private readonly IPhanQuyenRepository PhanQuyenRepository = null;
 
-        public HopDongController(IPhanQuyenRepository phanQuyenRepository, IHttpContextAccessor httpContextAccessor, IDatPhongRepository datPhongRepository, IDichVuPhongRepository dichVuPhongRepository, IChuTroRepository chuTroRepository, IHopDongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IDichVuRepository dichVuRepository)
+        public HopDongController(ITaiKhoanRepository taiKhoanRepository, IPhanQuyenRepository phanQuyenRepository, IHttpContextAccessor httpContextAccessor, IDatPhongRepository datPhongRepository, IDichVuPhongRepository dichVuPhongRepository, IChuTroRepository chuTroRepository, IHopDongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IDichVuRepository dichVuRepository)
         {
             this.Repository = repository;
+            this.TaiKhoanRepository = taiKhoanRepository;
             this.PhongRepository = phongRepository;
             this.KhachHangRepository = khachHangRepository;
             this.DichVuRepository = dichVuRepository;
@@ -80,6 +82,7 @@ namespace Motel.Controllers
             {
                 if (id == 0)
                 {
+                    hopdong.hopDongKhachHangPhong.hopDong.TrangThaiHD = true;
                     kq = await Repository.Create(hopdong.hopDongKhachHangPhong.hopDong);
                     foreach (var item in hopdong.listDichVu)
                     {
@@ -92,6 +95,15 @@ namespace Motel.Controllers
                             await DichVuPhongRepository.Create(dvp);
                         }
                     }
+
+                    hopdong.hopDongKhachHangPhong.taikhoanKH.LoaiTaiKhoan = false;
+                    string tentk = TaiKhoanRepository.CreateTKKhachHang(hopdong.hopDongKhachHangPhong.taikhoanKH);
+
+                    KhachHang khachHang = new KhachHang();
+                    khachHang.MaKh = hopdong.hopDongKhachHangPhong.hopDong._MaKH;
+                    khachHang.TenTaiKhoan = tentk;
+                    await KhachHangRepository.UpdateTKhoan(khachHang);
+                    //
                     await PhongRepository.UpdateTTP(hopdong.hopDongKhachHangPhong.hopDong._MaPH, 3);
                     await DatPhongRepository.Delete(idDatPhong);
                 }
@@ -149,12 +161,13 @@ namespace Motel.Controllers
             IActionResult result;
             QuanLyHopDongViewModel hd = new QuanLyHopDongViewModel();
 
-            hd.listKhachHang = KhachHangRepository.Gets();
+            hd.listKhachHang = KhachHangRepository.Gets().Where(t => t._MaNT == _nhaTro);
             hd.listDichVu = DichVuRepository.GetsByNhaTroDEMO(_nhaTro, id);
             hd.listChuTro = ChuTroRepository.Gets().Where(t => t._TenTaiKhoan == _taikhoan);
             hd.hopDongKhachHangPhong = new HopDongKhachHang();
             hd.hopDongKhachHangPhong.hopDong = new HopDong();
             hd.hopDongKhachHangPhong.dichVuPhong = new DichVuPhong();
+            hd.hopDongKhachHangPhong.taikhoanKH = new TaiKhoan();
             if (id == 0) // nếu thêm mới hợp đồng
             {
                 if (idDatPhong != 0) // nếu đã đặt phòng
@@ -219,17 +232,6 @@ namespace Motel.Controllers
             hd.hopDongKhachHangPhong = new HopDongKhachHang();
             hd.hopDongKhachHangPhong.datPhong = new DatPhongViewModel();
             hd.hopDongKhachHangPhong.hopDong = Repository.GetByIDHopDong(_nhaTro, id);
-
-            //hd.listKhachHang = KhachHangRepository.Gets();
-            //hd.listDichVu = DichVuRepository.GetsByNhaTroDEMO(_nhaTro, id);
-            //hd.listChuTro = ChuTroRepository.Gets().Where(t => t._TenTaiKhoan == _taikhoan);
-            //hd.hopDongKhachHangPhong = new HopDongKhachHang();
-            //hd.hopDongKhachHangPhong.hopDong = new HopDong();
-            //hd.hopDongKhachHangPhong.dichVuPhong = new DichVuPhong();
-
-            //hd.hopDongKhachHangPhong.datPhong = new DatPhongViewModel();
-            //hd.listPhong = PhongRepository.GetsPTrong(_nhaTro, idPhong);
-            //hd.hopDongKhachHangPhong.hopDong = Repository.GetByIdHD(id);
             return new ViewAsPdf("ExportPDF", hd)
             {
 

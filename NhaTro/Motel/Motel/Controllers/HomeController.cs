@@ -34,8 +34,8 @@ namespace Motel.Controllers
         {
             CommonViewModel common = new CommonViewModel();
             common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
-            common.homeViewModel.TongPhong = NhaTroRepository.ThongPhong(_nhaTro);
-            common.homeViewModel.TongPhongTrong = NhaTroRepository.ThongPhong(_nhaTro);
+            common.homeViewModel.TongPhong = NhaTroRepository.TongPhong(_nhaTro);
+            common.homeViewModel.TongPhongTrong = NhaTroRepository.TongPhongTrong(_nhaTro);
             return View(common);
 
         }

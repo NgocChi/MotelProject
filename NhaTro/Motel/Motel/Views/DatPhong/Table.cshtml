@@ -33,6 +33,7 @@
 
                         @if (item.NgayHetHan < DateTime.Now.AddDays(3) && item.NgayHetHan > DateTime.Now)
                         {
+                            <!--Gân hết hạn-->
                             <tr class="item-1932 highlight" style="background-color:gold;">
                                 <td class="text-center">
                                     <div class="btn-group">
@@ -78,6 +79,7 @@
                         }
                         else if (item.NgayHetHan < DateTime.Now)
                         {
+                            <!-- hết hạn-->
                             <tr class="item-1932 highlight" style="background-color:crimson;">
                                 <td class="text-center">
                                     <div class="btn-group">
@@ -90,14 +92,7 @@
                                                 <li>
                                                     <a href="#" onclick="ShowPopup('@Url.Action("AddOrEdit","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i> Chỉnh sửa</a>
                                                 </li>
-                                                <li>
-                                                    <a href="#" onclick="ShowPopupLarge('@Url.Action("AddOrEdit","HopDong",new { id = 0, idDatPhong = item.MaDP }, Context.Request.Scheme)','Nhận phòng')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Nhận phòng</a>
-                                                </li>
-                                                <li class="divider"></li>
-                                                <li>
-                                                    <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","DatPhong",new { id = item.MaDP }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Giay nhận cọc</a>
 
-                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -122,6 +117,7 @@
                         }
                         else
                         {
+                            <!-- còn nhiều hạn-->
                             <tr class="item-1932 highlight">
                                 <td class="text-center">
                                     <div class="btn-group">

@@ -36,6 +36,19 @@ namespace Motel.Repositories
             return 0;
 
         }
+        public string CreateTKKhachHang(TaiKhoan taikhoan)
+        {
+
+            var find = _appDBContext.TaiKhoans.FirstOrDefault(p => p.TenTaiKhoan == taikhoan.TenTaiKhoan);
+            if (find == null)
+            {
+                _appDBContext.TaiKhoans.Add(taikhoan);
+                _appDBContext.SaveChanges();
+                return taikhoan.TenTaiKhoan;
+            }
+            return string.Empty;
+
+        }
 
         public int Update(TaiKhoan taikhoan)
         {

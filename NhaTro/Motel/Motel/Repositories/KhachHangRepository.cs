@@ -59,6 +59,19 @@ namespace Motel.Repositories
             }
             return 0;
         }
+        public async Task<int> UpdateTKhoan(KhachHang khach)
+        {
+            KhachHang find = await _appDBContext.KhachHangs.FindAsync(khach.MaKh);
+            if (find != null)
+            {
+
+                find.TenTaiKhoan = khach.TenTaiKhoan;
+                _appDBContext.KhachHangs.Update(find);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
+        }
 
         public async Task<int> Delete(int id)
         {

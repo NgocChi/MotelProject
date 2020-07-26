@@ -18,5 +18,7 @@ namespace Motel.Interfaces.Repositories
 
 
         ChuTro GetByTaiKhoan(string tk);
+
+        string CreateTKKhachHang(TaiKhoan taikhoan);
     }
 }

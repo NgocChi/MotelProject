@@ -47,5 +47,7 @@ namespace Motel.ViewModels
 
         public DichVuPhong dichVuPhong { get; set; }
 
+        public TaiKhoan taikhoanKH { get; set; }
+
     }
 }

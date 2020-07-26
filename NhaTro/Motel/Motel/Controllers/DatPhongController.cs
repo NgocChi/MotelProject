@@ -74,6 +74,9 @@ namespace Motel.Controllers
                 {
                     if (datPhong.khachHangDatPhong.datPhong._MaKH == 0)
                     {
+
+                        //
+                        datPhong.khachHangDatPhong.khachHang._MaNT = _nhaTro;
                         int makh = await KhachHangRepository.Create(datPhong.khachHangDatPhong.khachHang);
                         datPhong.khachHangDatPhong.datPhong._MaKH = makh;
                     }
@@ -106,7 +109,7 @@ namespace Motel.Controllers
             IActionResult result;
             QuanLyDatPhongViewModel model = new QuanLyDatPhongViewModel();
 
-            model.listKhachHang = KhachHangRepository.Gets();
+            model.listKhachHang = KhachHangRepository.Gets().Where(t => t._MaNT == _nhaTro);
             model.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
             if (id == 0)
             {
