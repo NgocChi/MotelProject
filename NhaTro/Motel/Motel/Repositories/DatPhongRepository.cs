@@ -112,6 +112,7 @@ namespace Motel.Repositories
         public DatPhongViewModel GetsByIdDP(int id)
         {
             var query = from dp in _appDBContext.DatPhongs
+                        join kh in _appDBContext.KhachHangs on dp._MaKH equals kh.MaKh
                         join p in _appDBContext.Phongs on dp._MaPH equals p.MaPH
                         join loai in _appDBContext.LoaiPhongs on p._MaLP equals loai.MaLP
                         where dp.MaDP == id
@@ -121,6 +122,8 @@ namespace Motel.Repositories
                             NgayDat = dp.NgayDat,
                             NgayHetHan = dp.NgayHetHan,
                             SoTienCoc = dp.SoTienCoc,
+                            SoDienThoai = kh.SoDienThoai,
+                            TenKhachHang = kh.TenKH,
                             _MaPH = dp._MaPH,
                             Gia = loai.Gia,
                             GiaDatCoc = loai.GiaDatCoc,

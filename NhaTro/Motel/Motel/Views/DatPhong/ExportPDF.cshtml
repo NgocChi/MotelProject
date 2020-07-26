@@ -3,7 +3,136 @@
     Layout = null;
 }
 @using Motel.ViewModels
-@model QuanLyDatPhongViewModel
+@model ExportDatCocPhong
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
+<html>
+<head>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Shared/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bbootstrap 4 -->
+    <link rel="stylesheet" href="~/Shared/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="~/Shared/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="~/Shared/plugins/jqvmap/jqvmap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Shared/dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="~/Shared/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="~/Shared/plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="~/Shared/plugins/summernote/summernote-bs4.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            border-color: black;
+        }
+
+        body {
+            font-family:'Times New Roman', Times, serif;
+            font-size: x-large;
+        }
+
+        .header {
+            padding: 10px;
+            text-align: center;
+            font-size: 35px;
+        }
+
+        .column {
+            text-align: center;
+            float: left;
+            width: 50%;
+            padding: 10px;
+            padding-left: 20px;
+            height: 250px;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .content {
+            padding: 10px;
+            height: auto;
+        }
+
+        .footer {
+            padding: 10px;
+            text-align: center;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align:center;"> CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h2>
+    <h2 style="text-align:center;"> Độc lập – Tự do – Hạnh phúc</h2>
+    <h2 style="text-align:center;">------***------</h2>
+    <div class="header">
+        <h2 style="text-align:center; color:#007c7e;">GIẤY ĐẶT CỌC PHÒNG</h2>
+    </div>
+
+    <div class="row">
+        <div class="column">
+            <h4>Thông tin khách thuê</h4>
+            <p>Tên: @Model.datPhong.TenKhachHang</p>
+            <p>Số điện thoại: @Model.datPhong.SoDienThoai</p>
+        </div>
+        <div class="column">
+            <h4>Thông tin chủ trọ</h4>
+            <p>Tên: @Model.chuTro.HoTen</p>
+            <p>Số điện thoại: @Model.chuTro.SoDienThoai</p>
+            <p>Email: @Model.chuTro.Mail</p>
+            <p>Địa chỉ: @Model.chuTro.DiaChi</p>
+        </div>
+
+    </div>
+
+    <div class="content">
+        <h3 style="text-align:center; color:#007c7e;">Thông tin đặt phòng</h3>
+        <div>
+            <p>Phòng: @Model.datPhong.TenPhong </p>
+            <p>Ngày đặt cọc: @Model.datPhong.NgayDat</p>
+        </div>
+        <div>
+            <p>Số tiền cọc: @Model.datPhong.SoTienCoc đ</p>
+            <p>Ngày đến nhận phòng: @Model.datPhong.NgayHetHan</p>
+        </div>
+        <p>Nếu khách hàng không đến nhận phòng đúng hạn thì phòng cọc sẽ bị hủy, vui lòng đến nhận phòng trước ngày @Model.datPhong.NgayHetHan . Xin cảm ơn!</p>
+    </div>
+    <i style="padding-right:10px;">............Ngày...Tháng...Năm...</i>
+    <div class="footer">
+
+        <div class="column">
+            <h4>Chữ ký khách hàng</h4>
+            <i> (Ký, ghi rõ họ tên)</i>
+            <br />
+            <br />
+            <br />
+            <p>@Model.datPhong.TenKhachHang</p>
+        </div>
+        <div class="column">
+            <h4>Chữ ký chủ trọ</h4>
+            <i> (Ký, ghi rõ họ tên)</i>
+            <br />
+            <br />
+            <br />
+            <p>@Model.chuTro.HoTen</p>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

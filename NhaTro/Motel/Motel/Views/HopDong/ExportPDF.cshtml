@@ -1,0 +1,320 @@
+﻿
+@{
+    Layout = null;
+}
+@using Motel.ViewModels
+@model ExportXuatHoaDon
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, YourProjetcName
+<style>
+    * {
+        box-sizing: border-box;
+        border-color: black;
+    }
+
+    body {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: larger;
+    }
+
+    .header {
+        padding: 10px;
+        text-align: center;
+        font-size: 35px;
+    }
+
+    .column {
+        text-align: center;
+        float: left;
+        width: 50%;
+        padding: 10px;
+        padding-left: 20px;
+        height: 250px;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .content {
+        padding: 10px;
+        height: auto;
+    }
+
+    .footer {
+        padding: 10px;
+        text-align: center;
+        height: auto;
+    }
+</style>
+<form autocomplete="off">
+    <h2 style="text-align:center;"> CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h2>
+    <h2 style="text-align:center;"> Độc lập – Tự do – Hạnh phúc</h2>
+    <h2 style="text-align:center;">------***------</h2>
+    <h1 style="text-align:center; color:#007c7e;">HỢP ĐỒNG THUÊ PHÒNG TRỌ</h1>
+    <div class="form-group form-md-line-input row">
+        <div class="col-md-6">
+            <h3>BÊN A: BÊN CHO THUÊ</h3>
+            <label class="control-label">Anh/Chị: @Model.chuTro.HoTen </label><br />
+            <label class="control-label">Số điện thoại: @Model.chuTro.SoDienThoai </label><br />
+            <label class="control-label">Mail: @Model.chuTro.Mail </label><br />
+            <label class="control-label">Địa chỉ thường trú: @Model.chuTro.DiaChi </label><br />
+        </div>
+        <div class="col-md-6 float-right">
+            <h3>BÊN B: BÊN THUÊ NHÀ</h3>
+            <label class="control-label">Anh/Chị: hopDongKhachHangPhong.hopDong.te </label><br />
+            <label class="control-label">CMND: Đoàn Thị Ngọc Chi </label><br />
+            <label class="control-label">Số điện thoại: Đoàn Thị Ngọc Chi </label><br />
+            <label class="control-label">Địa chỉ thường trú: Đoàn Thị Ngọc Chi </label><br />
+        </div>
+
+    </div>
+
+    <i style="font-size:x-large;">HAI BÊN CÙNG THÕA THUẬN KÝ HỢP ĐỒNG VỚI NHỮNG NỘI DỤNG SAU:</i>
+    <h4> Điều 1:</h4>
+    <p> Bên A đồng ý cho bên B thuê phòng: P102 - Nha BCD thuộc địa chỉ 298/Sư Vạn hạnh, quận 11 </p>
+    <p>Thời hạn thuê nhà là 12 Tháng kể từ ngày 14/07/2020 đến ngày 14/07/2021</p>
+    <h4> Điều 2:</h4>
+    <p>
+        Gía thuê dịch vụ, được tính hàng tháng
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-center">Tên dịch vụ</th>
+                    <th class="text-center">Đơn giá</th>
+                    <th class="text-center">Đơn vị</th>
+                    <th class="amount text-center">Số lượng</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.listDichVu.Count(); i++)
+                {
+                    @if (@Model.listDichVu[i].IsCheck == true)
+                    {
+                        <tr>
+                            <td class="service-building-18142">@Model.listDichVu[i].Ten</td>
+                            <td class="text-center ">
+                                @Model.listDichVu[i].Gia
+                            </td>
+                            <td class="text-center">
+                                <div class="unit181422">@Model.listDichVu[i].TenDonVi</div>
+                                <input type="hidden">
+                            </td>
+                            <td class="amount hide text-center ">
+                                @Model.listDichVu[i].SoLuong
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+    </p>
+    <p>Tiền thuê nhà, tiền dịch vụ bên B thanh toán cho bên A đầu tháng khi có hóa đơn tháng.</p>
+    <p>
+        Bên B đặt cọc <span style="color:darkcyan;"> 2.000.000đ</span>  cho bên A.
+        Tiền đặt cọc sẽ được trả lại đầy đủ cho bên thuê khi hết hợp đồng thuê phòng trọ và thanh toán đầy đủ tiền điện, nước, phí dịch vụ và các khoản khác liên quan.
+    </p>
+    <p>
+        Bên B ngưng hợp đồng trước thời hạn thì phải chịu mất tiền đặt cọc.
+        Bên A ngưng hợp đồng (lấy lại nhà) trước thời hạn thì bồi thường gấp đôi số tiền bên B đã đặt cọc.
+    </p>
+    <h4> Điều 3: Điều khoản thi hành</h4>
+    <p>Hợp đồng này có hiệu lực kể từ ngày ký.  </p>
+    <i style="padding-right:10px;">..........Ngày...Tháng...Năm...</i>
+    <div class="footer">
+
+        <div class="column">
+            <p style="font-size:x-large;">Chữ ký bên A</p>
+            <i> (Ký, ghi rõ họ tên)</i>
+            <br />
+            <br />
+            <br />
+            <p>@Model.chuTro.HoTen</p>
+        </div>
+        <div class="column">
+            <p style="font-size:x-large;">Chữ ký bên B</p>
+            <i> (Ký, ghi rõ họ tên)</i>
+            <br />
+            <br />
+            <br />
+            <p>ddđ</p>
+
+        </div>
+
+    </div>
+
+</form>
+
+
+<script>
+    $(function () {
+        $("#btn_phong").change(function () {
+
+            var k = $("#btn_phong option:selected").text();
+            var indexGia = k.indexOf("-", 0);
+            var indexCoc = k.indexOf("-", indexGia + 1);
+            var Gia = k.substring(indexGia + 1, indexCoc)
+            var Coc = k.substring(indexCoc + 1)
+
+            $("#giaPhong").val(Gia);
+            $("#tienDatCoc").val(Coc);
+            $("#tongThuTien").val(parseFloat(Gia) + parseFloat(Coc));
+
+        });
+    });
+
+    $(document).ready(function () {
+        $('#datetimepicker').datetimepicker();
+        $('#endDate').datepicker();
+        $(".form_datetime").datetimepicker({
+            autoclose: true,
+            isRTL: App.isRTL(),
+            language: 'vi',
+            format: "dd/mm/yyyy hh:ii",
+            pickerPosition: (App.isRTL() ? "bottom-right" : "bottom-left")
+        });
+
+        $(".show-main-modal").click(function () {
+            $("#main-modal").modal("show");
+        });
+
+        $("#show-second-modal").click(function () {
+            $("#second-modal").modal("hide");
+            $("#main-modal").modal("show");
+        });
+
+        $(".radio-agreement_type").change(function () {
+            if ($(this).val() == 1) {
+                /* Hiển thị phần chọn phòng */
+                $(".selected-room-container").show();
+            }
+
+            if ($(this).val() == 3) {
+                /* Ẩn thị phần chọn phòng */
+                $(".selected-room-container").hide();
+            }
+        });
+
+
+        $("#room_agreement, #startDate").change(function () {
+            caculatePrePayment(false);
+        });
+
+        caculatePrePayment(true);
+
+        function caculatePrePayment(isFirst) {
+
+            var room_name = $("#room_agreement option:selected").text();
+            if (room_name.indexOf(" - ") > 0) {
+                var strs = room_name.split(" - ");
+                if (strs.length == 4) {
+                    if (!isFirst) {
+                        $('#unit-price-room').val(format_money(parseInt(strs[3].replace(/\./g, '')), false));
+                        $('#admin_agreement_down_payment').val(format_money(parseInt(strs[3].replace(/\./g, '')), false));
+                    }
+                }
+                else {
+                    if (!isFirst) {
+                        $('#unit-price-room').val(0);
+                        $('#admin_agreement_down_payment').val(0);
+                    }
+                }
+            }
+            else {
+                if (!isFirst) {
+                    $('#unit-price-room').val(0);
+                    $('#admin_agreement_down_payment').val(0);
+                }
+            }
+        }
+
+        $("#admin_agreement_billing_cycle").change(function () {
+            //TODO: Điều kiện theo đơn vị
+            if (parseInt($(this).val()) > parseInt($("#duration").val())) {
+                //toastr.error('Thời hạn hợp đồng phải lớn hơn kỳ thanh toán');
+            }
+        });
+
+        $("#startDate, #duration, #durationUnit").change(function () {
+            //TODO: Điều kiện theo đơn vị
+            if (parseInt($("#admin_agreement_billing_cycle").val()) > parseInt($("#duration").val())) {
+                //toastr.error('Thời hạn hợp đồng phải lớn hơn kỳ thanh toán');
+            }
+
+            var duration = $('#duration').val() || 0;
+            var durationUnit = $('#durationUnit').val() || 1;
+            var durationUnitText = $('#durationUnitText');
+
+            if (duration != "") {
+                var startDate = $('#startDate').val();
+                var dt1 = parseInt(startDate.substring(0, 2));
+                var mon1 = parseInt(startDate.substring(3, 5)) - 1;
+                var yr1 = parseInt(startDate.substring(6, 10));
+                var time = new Date(yr1, mon1, dt1);
+
+                if (durationUnit == "0") {
+                    time.setDate(time.getDate() + parseInt(duration));
+                    durationUnitText.html("Ngày");
+                }
+                else if (durationUnit == "1") {
+                    time.setMonth(time.getMonth() + parseInt(duration));
+                    durationUnitText.html("Tháng");
+                }
+                else if (durationUnit == "2") {
+                    time.setFullYear(time.getFullYear() + parseInt(duration));
+                    durationUnitText.html("Năm");
+                }
+                else {
+                    time.setMonth(time.getMonth() + parseInt(duration));
+                    durationUnitText.html("Tháng");
+                }
+
+                dd = ("0" + time.getDate()).slice(-2);
+                mm = ("0" + (time.getMonth() + 1)).slice(-2);
+                yy = time.getFullYear();
+                var endDate = dd + "/" + mm + "/" + yy + startDate.substring(10, startDate.length);
+                $("#endDate").val(endDate);
+            } else {
+                $("#endDate").val("");
+            }
+            ;
+            checkStartDateEndDate();
+        });
+
+        $("#endDate").change(function () {
+            checkStartDateEndDate();
+        });
+
+        function checkStartDateEndDate() {
+            var startDate = convertStringToDate($('#startDate').val());
+            var endDate = convertStringToDate($('#endDate').val());
+            if (endDate.getTime() < startDate.getTime()) {
+                toastr.error('Ngày kết thúc phải lớn hơn ngày bắt đầu')
+            }
+        }
+        function format_money(cost, has_unit) {
+            var price = cost.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+            if (cost.toString() != null) {
+                if (has_unit == true) {
+                    price = price + 'đ';
+                }
+                else {
+                    price = price;
+                }
+            }
+
+            return price;
+        }
+
+        function convertStringToDate(str) {
+            var dt1 = parseInt(str.substring(0, 2));
+            var mon1 = parseInt(str.substring(3, 5)) - 1;
+            var yr1 = parseInt(str.substring(6, 10));
+            var date = new Date(yr1, mon1, dt1);
+            return date;
+        }
+    });
+</script>

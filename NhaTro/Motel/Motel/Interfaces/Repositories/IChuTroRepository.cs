@@ -9,5 +9,7 @@ namespace Motel.Interfaces.Repositories
     public interface IChuTroRepository
     {
         IEnumerable<ChuTro> Gets();
+
+        ChuTro GetByTK(string tk);
     }
 }

@@ -185,6 +185,12 @@ jQueryAjaxPostLarge = form => {
                 }
                 else
                     $('#myModallarge .modal-body').html(res.html);
+                    $.notify('Thất bại', {
+                        globalPosition: 'top-center', className: 'info', offset: {
+                            x: 50,
+                            y: 100
+                        }
+                    });
             },
             error: function (err) {
                 console.log(err);
@@ -309,10 +315,10 @@ jQueryAjaxSaveChange = form => {
 }
 
 
-jQueryAjaxExportPDF = (url, name) => {
+jQueryAjaxExportPDF = (url) => {
     try {
 
-        window.open(url, name);
+        window.open(url, '_blank');
     }
     catch (e) {
         console.log(e);

@@ -37,7 +37,7 @@ namespace Motel.Controllers
         public ViewResult Index()
         {
             CommonViewModel model = new CommonViewModel();
-            model.qlKhachHangViewModel.list = Repository.Gets();
+            model.qlKhachHangViewModel.list = Repository.Gets().Where(t => t._MaNT == _nhaTro);
             model.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
             return View(model);
         }
@@ -51,6 +51,7 @@ namespace Motel.Controllers
             {
                 if (id == 0)
                 {
+                    ViewModel.khachHang._MaNT = _nhaTro;
                     kq = await Repository.Create(ViewModel.khachHang);
                 }
                 else
@@ -66,7 +67,7 @@ namespace Motel.Controllers
                     }
                 }
                 CommonViewModel model = new CommonViewModel();
-                model.qlKhachHangViewModel.list = Repository.Gets();
+                model.qlKhachHangViewModel.list = Repository.Gets().Where(t => t._MaNT == _nhaTro);
                 model.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
@@ -102,7 +103,7 @@ namespace Motel.Controllers
             model.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
             if (id == 0)
             {
-                model.qlKhachHangViewModel.list = Repository.Gets();
+                model.qlKhachHangViewModel.list = Repository.Gets().Where(t => t._MaNT == _nhaTro);
                 return Json(new { html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
             }
             else
@@ -113,12 +114,12 @@ namespace Motel.Controllers
                     int kq = await Repository.Delete(id);
                     if (kq == 0)
                         return NotFound();
-                    model.qlKhachHangViewModel.list = Repository.Gets();
+                    model.qlKhachHangViewModel.list = Repository.Gets().Where(t => t._MaNT == _nhaTro);
                     return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
                 }
                 else
                 {
-                    model.qlKhachHangViewModel.list = Repository.Gets();
+                    model.qlKhachHangViewModel.list = Repository.Gets().Where(t => t._MaNT == _nhaTro);
                     return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "ViewAll", model) });
                 }
             }

@@ -9,6 +9,7 @@ using Motel.Interfaces.Repositories;
 using Microsoft.AspNetCore.Http;
 using Web;
 using Motel.Models;
+using Rotativa.AspNetCore;
 
 namespace Motel.Controllers
 {
@@ -144,6 +145,48 @@ namespace Motel.Controllers
 
             model.ThanhTienHoaDon = model.TongTienDichVu + model.TongTienDienNuoc + model.phong.Gia;
             return View(model);
+        }
+
+        public IActionResult ExportPDF(int id, int _MaKhachHang, int _MaPhong, int _MaHopDong, DateTime thangNam)
+        {
+
+            QuanLyHoaDonViewModel model = new QuanLyHoaDonViewModel();
+            model.ThangNam = thangNam;
+            model.hoaDon = new HoaDon();
+            model.hoaDon._MaHD = _MaHopDong;
+            model.hoaDon._MaPH = _MaPhong;
+            model.phong = PhongRepository.GetByIdPhong(_MaPhong);
+            model.dienNuoc = DienNuocRepository.GetDienNuocByIdPhong(_MaPhong, thangNam);
+            model.listDichVu = DichVuRepository.GetsByIdPhongIdHopDong(_MaHopDong, _MaPhong);
+            model.TongTienDienNuoc = 0;
+            model.TongTienDichVu = 0;
+            model.ThanhTienHoaDon = 0;
+            foreach (var item in model.listDichVu)
+            {
+                if (item.Ten == "Điện")
+                {
+                    item.ThanhTien = item.Gia * model.dienNuoc.TieuThuDien;
+                    model.TongTienDienNuoc += item.ThanhTien;
+                }
+                else if (item.Ten == "Nước")
+                {
+                    item.ThanhTien = item.Gia * model.dienNuoc.TieuThuNuoc;
+                    model.TongTienDienNuoc += item.ThanhTien;
+                }
+                else
+                {
+                    item.ThanhTien = item.Gia * item.SoLuong;
+                    model.TongTienDichVu += item.ThanhTien;
+                }
+            }
+
+
+            model.ThanhTienHoaDon = model.TongTienDichVu + model.TongTienDienNuoc + model.phong.Gia;
+
+            return new ViewAsPdf("ExportPDF", model)
+            {
+
+            };
         }
     }
 }

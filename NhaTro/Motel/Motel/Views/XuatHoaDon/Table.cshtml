@@ -69,9 +69,9 @@
                                                    onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Sửa hóa đơn</a>
                                             </li>
                                             <li>
-                                                <a data-remote="true"><i class="fas fa-handshake-o" aria-hidden="true"></i>In hóa đơn</a>
+                                                <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Tải hợp đồng</a>
                                             </li>
-                                            <li class="divider"></li>
+
                                         </ul>
                                     </div>
 
@@ -119,9 +119,9 @@
                                                    onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Xem lại hóa đơn</a>
                                             </li>
                                             <li>
-                                                <a data-remote="true"><i class="fas fa-handshake-o" aria-hidden="true"></i>In hóa đơn</a>
+                                                <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>Tải hợp đồng</a>
                                             </li>
-                                            <li class="divider"></li>
+
                                         </ul>
                                     </div>
                                 </div>
@@ -168,8 +168,6 @@
                                                 <a data-remote="true"
                                                    onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Xuất hóa đơn</a>
                                             </li>
-
-                                            <li class="divider"></li>
                                         </ul>
                                     </div>
                                 </div>

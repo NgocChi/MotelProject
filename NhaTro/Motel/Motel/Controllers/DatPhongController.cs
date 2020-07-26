@@ -19,12 +19,14 @@ namespace Motel.Controllers
         private readonly IPhongRepository PhongRepository = null;
         private readonly IKhachHangRepository KhachHangRepository = null;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IChuTroRepository ChuTroRepository = null;
         private int _nhaTro = 0;
         private string _taikhoan = string.Empty;
         private readonly IPhanQuyenRepository PhanQuyenRepository = null;
-        public DatPhongController(IPhanQuyenRepository phanQuyenRepository, IDatPhongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IHttpContextAccessor httpContextAccessor)
+        public DatPhongController(IChuTroRepository chuTroRepository, IPhanQuyenRepository phanQuyenRepository, IDatPhongRepository repository, IPhongRepository phongRepository, IKhachHangRepository khachHangRepository, IHttpContextAccessor httpContextAccessor)
         {
             this.Repository = repository;
+            this.ChuTroRepository = chuTroRepository;
             this.PhongRepository = phongRepository;
             this.KhachHangRepository = khachHangRepository;
             _httpContextAccessor = httpContextAccessor;
@@ -72,6 +74,9 @@ namespace Motel.Controllers
                 {
                     if (datPhong.khachHangDatPhong.datPhong._MaKH == 0)
                     {
+
+                        //
+                        datPhong.khachHangDatPhong.khachHang._MaNT = _nhaTro;
                         int makh = await KhachHangRepository.Create(datPhong.khachHangDatPhong.khachHang);
                         datPhong.khachHangDatPhong.datPhong._MaKH = makh;
                     }
@@ -104,7 +109,7 @@ namespace Motel.Controllers
             IActionResult result;
             QuanLyDatPhongViewModel model = new QuanLyDatPhongViewModel();
 
-            model.listKhachHang = KhachHangRepository.Gets();
+            model.listKhachHang = KhachHangRepository.Gets().Where(t => t._MaNT == _nhaTro);
             model.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
             if (id == 0)
             {
@@ -181,9 +186,10 @@ namespace Motel.Controllers
 
         public IActionResult ExportPDF(int id = 0)
         {
-            QuanLyDatPhongViewModel dp = new QuanLyDatPhongViewModel();
-            dp.listDatPhong = Repository.GetsByMaNhaTro(_nhaTro);
-            return new ViewAsPdf("Index", dp)
+            ExportDatCocPhong dp = new ExportDatCocPhong();
+            dp.chuTro = ChuTroRepository.GetByTK(_taikhoan);
+            dp.datPhong = Repository.GetsByIdDP(id);
+            return new ViewAsPdf("ExportPDF", dp)
             {
 
             };

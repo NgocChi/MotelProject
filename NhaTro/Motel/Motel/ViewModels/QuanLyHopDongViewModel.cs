@@ -30,6 +30,11 @@ namespace Motel.ViewModels
 
         public string TenKhachHang { get; set; }
 
+        public string SoDienThoai { get; set; }
+
+
+        public string CMND { get; set; }
+
         public int ThoiHanHopDong { get; set; }
 
     }
@@ -41,6 +46,8 @@ namespace Motel.ViewModels
         public HopDong hopDong { get; set; }
 
         public DichVuPhong dichVuPhong { get; set; }
+
+        public TaiKhoan taikhoanKH { get; set; }
 
     }
 }

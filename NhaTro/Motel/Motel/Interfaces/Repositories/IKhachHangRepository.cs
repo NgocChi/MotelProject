@@ -11,7 +11,7 @@ namespace Motel.Interfaces.Repositories
     {
         IEnumerable<KhachHang> Gets();
 
-
+        Task<int> UpdateTKhoan(KhachHang khach);
         Task<KhachHang> GetsById(int? id);
 
         Task<int> Create(KhachHang khach);

@@ -41,7 +41,10 @@ namespace Motel.Models
         [Column("_TenTaiKhoan")]
         public string TenTaiKhoan { get; set; }
 
-        [Column("_MaNguoiThan")] 
+        [Column("_MaNguoiThan")]
         public int? MaNguoiThan { get; set; }
+
+        [Column("_MaNT")]
+        public int? _MaNT { get; set; }
     }
 }
