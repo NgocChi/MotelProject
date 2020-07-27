@@ -69,6 +69,7 @@ namespace Motel.Repositories
                             TenDonVi = dvt.TenDonVi,
                             TenNhaTro = nt.Ten,
                             SoLuong = rs.SoLuong,
+                            MacDinh = dv.MacDinh,
                             IsCheck = (from dvp in _appDBContext.DichVuPhongs where dvp._MaHD == idHopDong select dvp._MaDV).Contains(dv.MaDV)
                         };
             return query.ToList();

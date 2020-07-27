@@ -123,6 +123,7 @@ namespace Motel.Controllers
         public IActionResult AddOrEdit(int id, int _MaKhachHang, int _MaPhong, int _MaHopDong, DateTime thangNam)
         {
             QuanLyHoaDonViewModel model = new QuanLyHoaDonViewModel();
+            model.Key = id == 0 ? "add" : "edit";
             model.ThangNam = thangNam;
             model.hoaDon = new HoaDon();
             model.hoaDon._MaHD = _MaHopDong;

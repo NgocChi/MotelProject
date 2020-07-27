@@ -33,6 +33,13 @@
                     foreach (var item in Model.qlDienNuocViewModel.listDienNuoc)
                     {
                         <tr class="item-1932 highlight">
+                            <td class="text-center">
+
+                                <a class="btn btn-circle btn-icon-only btn-default tooltips"
+                                   onclick="ShowPopup('@Url.Action("AddOrEdit","DienNuoc",new { id = item.MaDienNuoc }, Context.Request.Scheme)','Chỉnh sửa')"
+                                   data-placement="top" data-original-title="Chỉnh sửa"><i class="fas fa-edit"></i></a>
+
+                            </td>
                             <td>@item.NgayGhi</td>
                             <td>@item.TenPhong</td>
                             <td>@item.CSCuDien</td>
@@ -42,7 +49,7 @@
 
                             <td class="text-center">
                                 <form asp-action="Delete"
-                                      asp-route-id="@item.NgayGhi"
+                                      asp-route-id="@item.MaDienNuoc"
                                       onsubmit="return jQueryAjaxDelete(this)">
                                     <button type="submit"
                                             class="btn red btn-circle btn-icon-only btn-default">
