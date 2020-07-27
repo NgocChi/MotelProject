@@ -38,6 +38,7 @@
     <Folder Include="wwwroot\Rotativa\" />
     <Folder Include="Models\API\Motels\" />
     <Folder Include="Models\API\ElectrictyAndWaters\" />
+    <Folder Include="wwwroot\Shared\img\" />
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>

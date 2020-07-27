@@ -18,6 +18,8 @@ namespace Motel.Interfaces.Repositories
 
         Task<int> Update(DienNuoc dn);
 
+        Task<int> UpdateChotSo(int idDN);
+
         Task<DienNuoc> GetById(int id);
         Task<ElectrictyAndWaterResponse> GetListElectrictyAndWaterByTime(ElectrictyAndWaterRequest request);
         Task<ElectrictyAndWaterRoomsNotInputRespone> GetListRoomNotInputElectrictyAndWater(ElectrictyAndWaterRoomsNotInputRequest request);

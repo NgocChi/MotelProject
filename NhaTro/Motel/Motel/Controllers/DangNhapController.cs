@@ -38,6 +38,12 @@ namespace Motel.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult DangXuat()
+        {
+            return RedirectToAction("Login", "DangNhap");
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]

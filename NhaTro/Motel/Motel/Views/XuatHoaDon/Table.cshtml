@@ -48,7 +48,7 @@
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <a data-remote="true"
-                                                   onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Sửa hóa đơn</a>
+                                                   onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = item.MaHD, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Sửa hóa đơn</a>
                                             </li>
                                             <li>
                                                 <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>In hóa đơn</a>
@@ -100,7 +100,7 @@
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <a data-remote="true"
-                                                   onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Xem lại hóa đơn</a>
+                                                   onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = item.MaHD, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Xem lại hóa đơn</a>
                                             </li>
                                             <li>
                                                 <a onclick="jQueryAjaxExportPDF('@Url.Action("ExportPDF","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)')"><i class="fas fa-handshake-o" aria-hidden="true"></i>In hóa đơn</a>
@@ -113,12 +113,10 @@
                             <td>@item.ThangNam.ToString("MM/yyyy")</td>
                             <td>@item.TenPhong</td>
                             <td>@item.TenKhachHang</td>
-                            <td>@item.ThanhTien?.ToString("{0:C}")</td>
+                            <td>@item.ThanhTien</td>
                             <td>@item.NgayThanhToan</td>
                             <td class="text-center">
-                                <form asp-action="ThanhToan"
-                                      asp-route-id="@item.MaHD"
-                                      onclick="return jQueryAjaxCheckThanhToan(this)">
+                                <form>
                                     <div class="md-checkbox-inline service-checkbox">
                                         <div class="icheck-primary d-inline ml-2">
                                             <input type="checkbox" disabled checked="@item.TrangThai" name="todo2" id="ck-1932">
@@ -151,14 +149,24 @@
                                     </button>
                                     <div class="dropdown">
                                         <ul class="dropdown-menu">
-                                            <li>
-                                                <a data-remote="true"
-                                                   onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Xuất hóa đơn</a>
-                                            </li>
+                                            @if (item.checkDienNuoc)
+                                            {
+                                                <li>
+                                                    <a data-remote="true"
+                                                       onclick="ShowPopupLarge('@Url.Action("AddOrEdit","XuatHoaDon",new { id = 0, _MaKhachHang = item._MaKhachHang, _MaPhong = item._MaPhong, _MaHopDong = item._MaHopDong, thangNam = Model.qlXuatHoaDonViewModel.ThangNam }, Context.Request.Scheme)','Chỉnh sửa')"><i class="fas fa-edit"></i>Xuất hóa đơn</a>
+                                                </li>
+                                            }
+                                            else
+                                            {
+                                                <li>
+                                                    <a data-remote="true"><i></i>Chưa nhập điện nước</a>
+                                                </li>
+                                            }
+
                                         </ul>
                                     </div>
                                 </div>
-                            </td>k
+                            </td>
                             <td>@item.ThangNam.ToString("MM/yyyy")</td>
                             <td>@item.TenPhong.ToString()</td>
                             <td>@item.TenKhachHang</td>

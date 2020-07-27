@@ -3,7 +3,7 @@
     Layout = null;
 }
 @using Motel.ViewModels
-@model QuanLyHoaDonViewModel
+@model ExportXuatHoaDon
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 <style>
@@ -29,7 +29,7 @@
         width: 50%;
         padding: 10px;
         padding-left: 20px;
-        height: 250px;
+        height: auto;
     }
 
     .row:after {
@@ -43,6 +43,11 @@
         height: auto;
     }
 
+    th, td {
+        text-align: center;
+        padding: 10px;
+    }
+
     .footer {
         padding: 10px;
         text-align: center;
@@ -50,88 +55,44 @@
     }
 </style>
 <form id="formHD">
-    
+
     <h2 style="text-align:center;">------***------</h2>
-    <h2 style="text-align:center; color:#007c7e;">HÓA ĐƠN TIỀN NHÀ</h2>
+    <h2 style="text-align:center; ">HÓA ĐƠN TIỀN NHÀ</h2>
 
     <div class="form-group form-md-line-input row">
-        <label class="col-md-2 control-label">Tháng/năm</label>
-        <div class="col-md-4">
-            <input as="datepicker" asp-for="ThangNam" class="form-control date-picker" placeholder="Nhập năm"
-                   data-date-format="mm/yyyy" type="text">
+        <div class="column" style="text-align:left">
+            <h3>Thông tin khách hàng</h3>
+            <label class="control-label">Họ tên: @Model.khachHang.TenKH </label><br />
+            <label class="control-label">Địa chỉ phòng: @Model.phong.Ten </label><br />
 
-            <div class="form-control-focus"></div>
         </div>
+        <div class="column" style="text-align:left">
+            <h3>Thông tin hóa đơn</h3>
+            <label class="control-label">Tháng năm: @Model.ThangNam </label><br />
 
-        <label class="col-md-2 control-label">Mã hợp đồng</label>
-        <div class="col-md-4">
-            <input as="string" class="form-control" value="#HĐG0000006457" disabled="disabled"
-                   type="text" name="admin_bill[agreement_id]" id="admin_bill_agreement_id">
+            <label class="control-label">Loại hóa đơn: Hóa đơn hàng tháng</label><br />
         </div>
-
     </div>
-    <div class="form-group form-md-line-input row">
-        <label class="col-md-2 control-label">Ngày thanh toán</label>
-        <div class="col-md-4">
-            <input as="datepicker" class="form-control date-picker" placeholder="Nhập năm" data-date-format="mm/yyyy"
-                   disabled="disabled" type="text" value="07/2020" name="admin_bill[month_year]" id="admin_bill_month_year">
-            <div class="form-control-focus"></div>
-        </div>
-
-        <label class="col-md-2 control-label">Mã hóa đơn</label>
-        <div class="col-md-4">
-            <input class="string optional disabled form-control" disabled="disabled" placeholder="Mã hóa đơn"
-                   type="text" value="#HĐN0000031225" name="admin_bill[code]" id="admin_bill_code">
-            <div class="form-control-focus"></div>
-        </div>
-
-    </div>
-
-
-    <div class="form-group form-md-line-input no-margin-bottom" style="display: none;">
-        <label class="col-md-2 control-label"></label>
-        <div class="col-md-4"></div>
-        <label class="col-md-6 control-label">Tổng tiền trả trước còn lại trước đó: <b class="prepayment-remain-before">0đ</b></label>
-        <input type="hidden" name="admin_bill[pre_payment]" value="0">
-    </div>
-
+    <br />
     <fieldset>
         <div class="form-group">
             <div class="col-md-12">
                 <div class="table-scrollable">
                     <table class="table table-bordered table-hover service-table">
                         <thead>
-
                         </thead>
                         <tbody class="services">
                             <tr>
                                 <td>
-                                    Tiền nhà
-                                    <input type="hidden">
-                                    <input type="hidden" class="formula-type-service service-input">
+                                    Tiền phòng:
                                 </td>
                                 <td>
-                                    Phòng
-                                    <input type="hidden">
-                                </td>
-                                <td>
-
-                                    <input type="number" asp-for="phong.Gia" class="form-control number-format unit-price-service service-input"
-                                           ,="" autocomplete="off">
-                                </td>
-                                <td>
-                                    <input value="1" class="form-control amount-service service-input text-center" readonly="">
-                                </td>
-                                <td>
-                                    <input asp-for="phong.Gia" class="form-control number-format-negative subtotal-service service-input tooltips"
-                                           readonly="" data-placement="top" data-original-title="2.000.000 * 1 = 2.000.000">
+                                    @Model.phong.Gia
                                 </td>
                             </tr>
-
                         </tbody>
                     </table>
                 </div>
-
                 <div class="table-scrollable">
                     <table class="table table-bordered table-hover service-table">
                         <thead>
@@ -140,7 +101,6 @@
                                 <th width="80">Đơn vị</th>
                                 <th>Đơn giá (đ)</th>
                                 <th width="270">Số lượng</th>
-                                <th width="20" style="display: none;">Trả trước (đ)</th>
                                 <th width="185">Thành tiền (đ)</th>
                             </tr>
                         </thead>
@@ -151,31 +111,19 @@
                                 {
                                     <tr>
                                         <td>
-
                                             @Model.listDichVu[i].Ten
-                                            <input type="hidden" asp-for="@Model.listDichVu[i].Ten">
-                                            <input type="hidden" asp-for="@Model.listDichVu[i]._MaDichVuPhong">
-
                                         </td>
                                         <td>
                                             @Model.listDichVu[i].TenDonVi
-                                            <input type="hidden" asp-for="@Model.listDichVu[i].TenDonVi">
                                         </td>
                                         <td>
-
-
-                                            <input type="hidden" asp-for="@Model.listDichVu[i].Gia">
-                                            <input type="text" id="txt_gia" value="@Model.listDichVu[i].Gia" class="form-control number-format unit-price-service service-input" ,="" autocomplete="off">
+                                            @Model.listDichVu[i].Gia
                                         </td>
                                         <td>
-                                            <input type="text" id="txt_soluong" value="@Model.listDichVu[i].SoLuong" class="form-control number-format-navigative amount-service service-input text-center" v autocomplete="off">
-                                            <input type="hidden" asp-for="@Model.listDichVu[i].SoLuong">
-
+                                            @Model.listDichVu[i].SoLuong
                                         </td>
-
                                         <td>
-                                            <input type="hidden" asp-for="@Model.listDichVu[i].ThanhTien">
-                                            <input type="text" id="txt_tongdv" value="@Model.listDichVu[i].ThanhTien" class="form-control number-format-negative subtotal-service service-input tooltips" readonly="" data-placement="top" data-original-title="100.000 * 1 = 100.000">
+                                            @Model.listDichVu[i].ThanhTien
                                         </td>
                                     </tr>
                                 }
@@ -184,158 +132,71 @@
                                     <tr>
                                         <td>
                                             @Model.listDichVu[i].Ten
-                                            <input type="hidden" asp-for="@Model.listDichVu[i].Ten">
-                                            <input type="hidden" asp-for="@Model.listDichVu[i]._MaDichVuPhong">
-
                                         </td>
                                         <td>
                                             @Model.listDichVu[i].TenDonVi
-                                            <input type="hidden" asp-for="@Model.listDichVu[i].TenDonVi">
                                         </td>
                                         <td>
-
-                                            <input type="hidden" asp-for="@Model.listDichVu[i].Gia">
-                                            <input type="text" value="@Model.listDichVu[i].Gia" class="form-control number-format unit-price-service service-input" ,="" autocomplete="off">
+                                            @Model.listDichVu[i].Gia
                                         </td>
                                         <td>
                                             @if (@Model.listDichVu[i].Ten == "Điện")
                                             {
                                                 <div class="form-line-input" style="display: inline-flex;">
-                                                    <input type="text" asp-for="dienNuoc.CSCuDien" id="start-electricity" readonly=""
-                                                           class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số đầu">
-                                                    <input type="text" asp-for="dienNuoc.CSMoiDien" id="end-electricity" readonly=""
-                                                           class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số cuối">
-                                                    <input type="text" asp-for="dienNuoc.TieuThuDien" id="amount-electricity" readonly=""
-                                                           class="form-control number-format-navigative amount-service service-input text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số tiêu thụ">
+                                                    <div>@Model.dienNuoc.TieuThuDien</div>
                                                 </div>
                                             }
                                             else
                                             {
                                                 <div class="form-line-input" style="display: inline-flex;">
-                                                    <input type="text" asp-for="dienNuoc.CSCuNuoc" id="start-electricity" readonly=""
-                                                           class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số đầu">
-                                                    <input type="text" asp-for="dienNuoc.CSMoiNuoc" id="end-electricity" readonly=""
-                                                           class="form-control number-format-clear-empty-keep-zero text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số cuối">
-                                                    <input type="text" asp-for="dienNuoc.TieuThuNuoc" id="amount-electricity" readonly=""
-                                                           class="form-control number-format-navigative amount-service service-input text-center tooltips" autocomplete="off" data-placement="top" data-original-title="Số tiêu thụ">
+                                                    <div>@Model.dienNuoc.TieuThuNuoc</div>
                                                 </div>
                                             }
-                                            <!-- Số lượng không chỉnh cho trường hợp công thức và cố định -->
-
                                         </td>
-
                                         <td>
-                                            <input type="hidden" asp-for="@Model.listDichVu[i].ThanhTien">
-                                            <input type="text" class="form-control number-format-negative subtotal-service service-input tooltips"
-                                                   value="@Model.listDichVu[i].ThanhTien" readonly="" data-placement="top" data-original-title="4.000 * 0 = 0">
+                                            @Model.listDichVu[i].ThanhTien
                                         </td>
                                     </tr>
                                 }
-
                             }
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-
-        <div class="form-group form-md-line-input row">
-            <label class="col-md-2 control-label">
-                Tổng tiền Phòng:
-                <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Tiền phòng"> [?] </span>
-            </label>
-            <div class="col-md-4">
-                <input type="text" id="txt_tongtienphong" asp-for="phong.Gia" class="form-control number-format" readonly="">
-                <input type="hidden" asp-for="phong.MaPH">
-                <div class="form-control-focus"></div>
-            </div>
-            <label class="col-md-2 control-label">
-                Tổng tiền dịch vụ
-                <span class="required tooltips" aria-required="true" data-placement="top"
-                      data-original-title="Tổng tiền tất cả dịch vụ sử dụng phía trên"> [?] </span>
-            </label>
-            <div class="col-md-4">
-                <input id="txt_tongtiendv" asp-for="TongTienDichVu" class="string optional form-control number-format"
-                       autocomplete="off" readonly="readonly" type="text">
-                <input type="hidden" asp-for="TongTienDichVu">
-                <div class="form-control-focus"></div>
-            </div>
-
-        </div>
-
-        <div class="form-group form-md-line-input row">
-            <label class="col-md-2 control-label">
-                Tổng tiền điện nước:
-                <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Tổng tiền điện nước"> [?] </span>
-            </label>
-            <div class="col-md-4">
-                <input type="hidden" asp-for="TongTienDienNuoc">
-                <input id="txt_tongtiendiennuoc" asp-for="TongTienDienNuoc" class="string optional readonly form-control" readonly="readonly" type="text">
-                <div class="form-control-focus"></div>
-            </div>
-            <label class="col-md-2 control-label">
-                Chi phí khác
-                <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Chi phí khác phát sinh"> [?] </span>
-            </label>
-            <div class="col-md-4">
-                <input id="txt_chiphikhac" class="string optional readonly form-control" placeholder="Chi phí khác" type="text">
-                <div class="form-control-focus"></div>
-            </div>
-
-        </div>
-
-        <div class="form-group form-md-line-input row">
-            <label class="col-md-2 control-label">
-                <b>
-                    Thành tiền
-                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Thành tiền = Tổng tiền - Khấu trừ"> [?] </span>
-                </b>
-            </label>
-            <div class="col-md-4">
-                <input type="hidden" asp-for="ThanhTienHoaDon">
-                <input id="txt_thanhtien" asp-for="ThanhTienHoaDon" class="string optional readonly form-control" readonly="readonly"
-                       placeholder="Thành tiền" type="text">
-                <div class="form-control-focus"></div>
-            </div>
-            <label class="col-md-2 control-label">
-                <b>
-                    Thành toán
-                    <span class="required tooltips" aria-required="true" data-placement="top" data-original-title="Thành tiền = Tổng tiền - Khấu trừ"> [?] </span>
-                </b>
-            </label>
-            <div class="col-md-4">
-                <input id="txt_thanhtoan" class="string optional readonly form-control" readonly="readonly"
-                       placeholder="Thành tiền" type="text">
-                <div class="form-control-focus"></div>
-            </div>
-        </div>
-
-
     </fieldset>
-
-    <div class="form-group form-md-line-input">
-        <div class="col-md-12 mt10">
-            <label class="col-md-2 control-label tooltips" data-placement="top" data-original-title="Ghi chú lại hóa đơn, các chi tiết để sau làm thông tin tham chiếu">Chú thích</label>
-            <div class="col-md-10">
-                <textarea class="text optional bg-maxlength form-control autosizeme bill_note" id="bill_note" placeholder="Nhập ghi chú" maxlength="500" name="admin_bill[description]"></textarea>
-                <div class="form-control-focus"></div>
-            </div>
-        </div>
+    <br />
+    <div class="form-group form-md-line-input row">
+        <label class="control-label">Tổng tiền Phòng: @Model.phong.Gia </label><br />
+        <label class="control-label">Tổng tiền dịch vụ: @Model.TongTienDichVu </label><br />
+        <label class="control-label">Tổng tiền điện nước: @Model.TongTienDienNuoc </label><br />
+        <h4 class="control-label">Thành tiền: @Model.ThanhTienHoaDon </h4><br />
     </div>
 
-    <div class="form-actions margin-top-10">
-        <div class="row">
-            <div class="col-md-12 text-right">
-                <button type="button" class="btn btn-default" data-dismiss="modal">
-                    <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i> Hủy bỏ
-                </button>
-                <button name="button" type="submit" class="btn btn-default btnExportWithPrint btnFormSubmit btn blue">
-                    <i class="fa fa-money" aria-hidden="true"></i> Xuất &amp; In hóa đơn
-                </button>                <button name="button" type="submit" class="btn btn-default btnExportWithoutPrint btnFormSubmit btn green">
-                    <i class="fa fa-money" aria-hidden="true"></i> Xuất hóa đơn
-                </button>
-            </div>
+
+
+
+    <i style="padding-right:10px;">..........Ngày...Tháng...Năm.......</i>
+    <div class="footer">
+
+        <div class="column">
+            <p style="font-size:x-large;">Người nộp</p>
+            <i> (Ký, ghi rõ họ tên)</i>
+            <br />
+            <br />
+            <br />
+            <p>@Model.khachHang.TenKH</p>
         </div>
+        <div class="column">
+            <p style="font-size:x-large;">Người thu</p>
+            <i> (Ký, ghi rõ họ tên)</i>
+            <br />
+            <br />
+            <br />
+            <p>@Model.chuTro.HoTen</p>
+
+        </div>
+
     </div>
 
 </form>

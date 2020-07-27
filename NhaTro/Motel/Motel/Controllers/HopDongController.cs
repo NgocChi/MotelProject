@@ -82,11 +82,19 @@ namespace Motel.Controllers
             {
                 if (id == 0)
                 {
+                    hopdong.hopDongKhachHangPhong.taikhoanKH.LoaiTaiKhoan = false;
+                    string tentk = TaiKhoanRepository.CreateTKKhachHang(hopdong.hopDongKhachHangPhong.taikhoanKH);
+
+                    KhachHang khachHang = new KhachHang();
+                    khachHang.MaKh = hopdong.hopDongKhachHangPhong.hopDong._MaKH;
+                    khachHang.TenTaiKhoan = tentk;
+                    await KhachHangRepository.UpdateTKhoan(khachHang);
+                    //
                     hopdong.hopDongKhachHangPhong.hopDong.TrangThaiHD = true;
                     kq = await Repository.Create(hopdong.hopDongKhachHangPhong.hopDong);
                     foreach (var item in hopdong.listDichVu)
                     {
-                        if (item.IsCheck == true)
+                        if (item.IsCheck == true || item.MacDinh == true)
                         {
                             DichVuPhong dvp = new DichVuPhong();
                             dvp._MaDV = item.MaDV;
@@ -96,13 +104,7 @@ namespace Motel.Controllers
                             await DichVuPhongRepository.Create(dvp);
                         }
                     }
-                    hopdong.hopDongKhachHangPhong.taikhoanKH.LoaiTaiKhoan = false;
-                    string tentk = TaiKhoanRepository.CreateTKKhachHang(hopdong.hopDongKhachHangPhong.taikhoanKH);
 
-                    KhachHang khachHang = new KhachHang();
-                    khachHang.MaKh = hopdong.hopDongKhachHangPhong.hopDong._MaKH;
-                    khachHang.TenTaiKhoan = tentk;
-                    await KhachHangRepository.UpdateTKhoan(khachHang);
                     //
                     await PhongRepository.UpdateTTP(hopdong.hopDongKhachHangPhong.hopDong._MaPH, 3);
                     await DatPhongRepository.Delete(idDatPhong);
@@ -113,7 +115,7 @@ namespace Motel.Controllers
                     kq = await Repository.Update(hopdong.hopDongKhachHangPhong.hopDong);
                     foreach (var item in hopdong.listDichVu)
                     {
-                        if (item.IsCheck == true)
+                        if (item.IsCheck == true || item.MacDinh == true)
                         {
                             DichVuPhong dvp = new DichVuPhong();
                             dvp._MaDV = item.MaDV;
@@ -223,7 +225,7 @@ namespace Motel.Controllers
         public async Task<IActionResult> ExportPDF(int id = 0, int idPhong = 0)
         {
 
-            ExportXuatHoaDon hd = new ExportXuatHoaDon();
+            ExportHopDong hd = new ExportHopDong();
             hd.chuTro = ChuTroRepository.GetByTK(_taikhoan);
             hd.listDichVu = DichVuRepository.GetsByNhaTroDEMO(_nhaTro, id);
             hd.hopDongKhachHangPhong = new HopDongKhachHang();

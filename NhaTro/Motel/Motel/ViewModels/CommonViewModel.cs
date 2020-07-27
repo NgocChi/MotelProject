@@ -37,6 +37,8 @@ namespace Motel.ViewModels
 
         public QuanLyDienNuocViewModel qlDienNuocViewModel = new QuanLyDienNuocViewModel();
 
+        public QuanLyTaiKhoan qlTaiKhoan = new QuanLyTaiKhoan();
+
     }
 
     public class ExportFilePDF
@@ -51,14 +53,31 @@ namespace Motel.ViewModels
         public DatPhongViewModel datPhong { get; set; }
     }
 
-    public class ExportHopDong
+    public class ExportXuatHoaDon
     {
         public ChuTro chuTro { get; set; }
+        public KhachHang khachHang { get; set; }
+        public List<DichVu_ViewModel> listDichVu { get; set; }
 
-        public DatPhongViewModel datPhong { get; set; }
+        public HoaDon hoaDon { get; set; }
+
+        public decimal TongTien { get; set; }
+
+        public DateTime ThangNam { get; set; }
+
+        public PhongViewModel phong { get; set; }
+
+        public ChiTietHoaDon ctHoaDon { get; set; }
+
+        public DienNuocViewModel dienNuoc { get; set; }
+
+        public decimal? TongTienDienNuoc { get; set; }
+        public decimal? TongTienDichVu { get; set; }
+
+        public decimal? ThanhTienHoaDon { get; set; }
     }
 
-    public class ExportXuatHoaDon
+    public class ExportHopDong
     {
         public ChuTro chuTro { get; set; }
         public KhachHang khachHang { get; set; }

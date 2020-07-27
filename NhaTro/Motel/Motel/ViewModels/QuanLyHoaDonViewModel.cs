@@ -24,6 +24,9 @@ namespace Motel.ViewModels
 
         public DateTime ThangNam { get; set; }
 
+        public int TrangThai { get; set; }
+
+        public string Key { get; set; }
         public decimal? TongTienDienNuoc { get; set; }
         public decimal? TongTienDichVu { get; set; }
 
@@ -49,6 +52,8 @@ namespace Motel.ViewModels
         public string TenTrangThai { get; set; }
 
         public bool TonTai { get; set; }
+
+        public bool checkDienNuoc { get; set; }
 
     }
 }
