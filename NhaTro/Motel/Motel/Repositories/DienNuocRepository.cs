@@ -92,14 +92,17 @@ namespace Motel.Repositories
         public IEnumerable<DienNuocViewModel> Gets()
         {
             var query = from dn in _appDBContext.DienNuocs
+                        join phong in _appDBContext.Phongs on dn.MaPH equals phong.MaPH
                         select new DienNuocViewModel
                         {
+
                             NgayGhi = dn.NgayGhiSo,
                             CSCuDien = dn.CSDienCu,
                             CSMoiDien = dn.CSDienMoi,
                             CSCuNuoc = dn.CSNuocCu,
                             CSMoiNuoc = dn.CSNuocMoi,
                             MaPhong = dn.MaPH,
+                            TenPhong = phong.Ten,
                             TieuThuDien = (dn.CSDienMoi - dn.CSDienCu),
                             TieuThuNuoc = (dn.CSNuocMoi - dn.CSNuocCu)
 

@@ -14,14 +14,7 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th class="text-center">
-                        <div class="md-checkbox-inline service-checkbox">
-                            <div class="icheck-primary d-inline ml-2">
-                                <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                                <label for="todoCheck1"></label>
-                            </div>
-                        </div>
-                    </th>
+
                     <th>Ngày ghi số</th>
                     <th>Phòng</th>
                     <th>CS Điện cũ</th>
@@ -40,28 +33,11 @@
                     foreach (var item in Model.qlDienNuocViewModel.listDienNuoc)
                     {
                         <tr class="item-1932 highlight">
-                            <td class="text-center">
-
-                                <a class="btn btn-circle btn-icon-only btn-default tooltips"
-                                   onclick="ShowPopup('@Url.Action("AddOrEdit","DienNuoc",new { id = item.NgayGhi }, Context.Request.Scheme)','Chỉnh sửa')"
-                                   data-placement="top" data-original-title="Chỉnh sửa"><i class="fas fa-edit"></i></a>
-
-                            </td>
-                            <td class="text-center">
-                                <div class="md-checkbox-inline service-checkbox">
-                                    <div class="icheck-primary d-inline ml-2">
-                                        <input type="checkbox" value="" name="todo2" id="ck-1932">
-                                        <label for="ck-1932">
-                                            <span></span><span class="check"></span><span class="box"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </td>
                             <td>@item.NgayGhi</td>
-                            <td></td>
+                            <td>@item.TenPhong</td>
                             <td>@item.CSCuDien</td>
                             <td>@item.CSMoiDien</td>
-                            <td>@item.CSCuNuoc m2</td>
+                            <td>@item.CSCuNuoc</td>
                             <td>@item.CSMoiNuoc</td>
 
                             <td class="text-center">
