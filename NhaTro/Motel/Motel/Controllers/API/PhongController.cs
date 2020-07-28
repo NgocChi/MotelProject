@@ -22,7 +22,7 @@ namespace Motel.Controllers.API
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetPhongDangHoatDongByKhachThue")]
         public async Task<ListPhongResponse> GetPhongDangHoatDongByKhachThue([FromBody] ListPhongRequest request)
         {

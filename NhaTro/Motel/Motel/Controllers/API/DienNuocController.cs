@@ -21,7 +21,7 @@ namespace Motel.Controllers.API
             _dienNuocRepository = dienNuocRepository;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetListElectrictyAndWaterByTime")]
         public async Task<ElectrictyAndWaterResponse> GetListElectrictyAndWaterByTime([FromBody] ElectrictyAndWaterRequest request)
         {
@@ -45,7 +45,7 @@ namespace Motel.Controllers.API
         }
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetListRoomNotInputElectrictyAndWater")]
         public async Task<ElectrictyAndWaterRoomsNotInputRespone> GetListRoomNotInputElectrictyAndWater([FromBody] ElectrictyAndWaterRoomsNotInputRequest request)
         {
@@ -94,7 +94,7 @@ namespace Motel.Controllers.API
 
 
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetElectrictyAndWaterOld")]
         public async Task<ElectrictyAndWaterOldRespone> GetElectrictyAndWaterOld([FromBody] ElectrictyAndWaterOldRequest request)
         {
