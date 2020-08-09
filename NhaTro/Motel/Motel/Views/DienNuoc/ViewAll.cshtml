@@ -40,6 +40,31 @@
                 <div class="text-right">
                     <button onclick="ShowPopup('@Url.Action("AddOrEdit","DienNuoc",new { id = 0}, Context.Request.Scheme)','Thêm mới')" class="btn green btn-outline btn-circle btn-sm tooltips" data-placement="top"><i class="fa fa-plus"></i>Thêm mới</button>
                 </div>
+                <div class="text-left">
+                    <div class="row">
+                        <div class="col-md-3" style="padding-top:10px;">
+                            <div class="row">
+                                <label class="col-md-2 control-label">Từ</label>
+                                <div class="col-md-10">
+                                    <div class="input-group date form_datetime">
+
+                                        <input onchange="jQueryAjaxChangeDate('@Url.Action("IndexChange","DienNuoc", Context.Request.Scheme)')"
+                                               class="string required bg-maxlength form-control"
+                                               asp-for="qlDienNuocViewModel.ThangNam"
+                                               maxlength="50" size="50" type="date"
+                                               id="Date">
+                                        <div class="form-control-focus"></div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
 
                 <div id="table_phong">
                     @await Html.PartialAsync("Table", Model)

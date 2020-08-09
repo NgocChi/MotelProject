@@ -100,7 +100,7 @@ namespace Motel.Controllers
                             dvp._MaDV = item.MaDV;
                             dvp._MaPH = hopdong.hopDongKhachHangPhong.hopDong._MaPH;
                             dvp._MaHD = kq;
-                            dvp.SoLuong = item.SoLuong;
+                            dvp.SoLuong = (item.SoLuong == null || item.SoLuong == 0) ? 1 : item.SoLuong;
                             await DichVuPhongRepository.Create(dvp);
                         }
                     }

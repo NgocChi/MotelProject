@@ -11,7 +11,7 @@ namespace Motel.Interfaces.Repositories
     {
         DienNuocViewModel GetDienNuocByIdPhong(int idPhong, DateTime ngayghi);
 
-        IEnumerable<DienNuocViewModel> Gets();
+        IEnumerable<DienNuocViewModel> Gets(DateTime ThangNam, int nhatro);
 
         Task<int> Create(DienNuoc dn);
 

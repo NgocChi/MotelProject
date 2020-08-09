@@ -40,8 +40,11 @@ namespace Motel.Controllers
             _taikhoan = _httpContextAccessor.HttpContext.Session.GetComplexData<string>("UserData");
         }
 
-        public IActionResult Index1(DateTime thangNam, int trangThai = 0)
+        public IActionResult Index1(int trangThai = 0)
         {
+            DateTime tn = DateTime.Parse("1/1/0001 12:00:00 AM");
+            DateTime date = _httpContextAccessor.HttpContext.Session.GetComplexData<DateTime>("Date") == tn ? DateTime.Now : _httpContextAccessor.HttpContext.Session.GetComplexData<DateTime>("Date");
+
             CommonViewModel common = new CommonViewModel();
             common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, DateTime.Now);
             common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
@@ -49,16 +52,16 @@ namespace Motel.Controllers
             switch (trangThai)
             {
                 case 0:
-                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam);
+                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, date);
                     break;
                 case 1:
-                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam).Where(t => t.TonTai == false && t.TrangThai == false);
+                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, date).Where(t => t.TonTai == false && t.TrangThai == false);
                     break;
                 case 2:
-                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam).Where(t => t.TonTai == true && t.TrangThai == false);
+                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, date).Where(t => t.TonTai == true && t.TrangThai == false);
                     break;
                 case 3:
-                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, thangNam).Where(t => t.TonTai == true && t.TrangThai == true);
+                    common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, date).Where(t => t.TonTai == true && t.TrangThai == true);
                     break;
 
             }
@@ -211,6 +214,18 @@ namespace Motel.Controllers
             common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
             common.qlXuatHoaDonViewModel.ThangNam = DateTime.Now;
             return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "Table", common) });
+        }
+
+        [HttpGet]
+        public IActionResult ChangeDate(DateTime thangNam)
+        {
+
+            _httpContextAccessor.HttpContext.Session.SetComplexData("Date", thangNam);
+            CommonViewModel common = new CommonViewModel();
+            common.qlXuatHoaDonViewModel.listXuatHoaDon = Repository.Gets(_nhaTro, DateTime.Now);
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+            return View(common);
+
         }
     }
 }

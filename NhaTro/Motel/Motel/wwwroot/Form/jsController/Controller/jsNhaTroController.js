@@ -364,4 +364,23 @@ jQueryAjaxCheckThanhToan = form => {
     return false;
 }
 
+jQueryAjaxChangeDate = (url) => {
+    try {
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: {
+                thangNam: $('#Date').val(),
+            },
+            success: function (res) {
+                $("#table_phong").html(res.html);
+            }
+        });
+    }
+    catch (e) {
+        console.log(e);
+    }
+    return false;
+}
+
 

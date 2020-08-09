@@ -35,6 +35,7 @@ namespace Motel.Repositories
                             SoNguoiToiDa = p.SoNguoiToiDa,
                             TenNhaTro = nt.Ten,
                             TrangThai = ttp.Ten,
+                            MaTrangThai = p._MaTTPH,
                             TenLoaiPhong = lp.Ten,
                             Gia = lp.Gia,
                             GiaDatCoc = lp.GiaDatCoc,

@@ -53,7 +53,7 @@ namespace Motel.Repositories
         public async Task<int> Update(DienNuoc phong)
         {
 
-            DienNuoc find = _appDBContext.DienNuocs.FirstOrDefault(p => p.MaPH == phong.MaPH);
+            DienNuoc find = _appDBContext.DienNuocs.FirstOrDefault(p => p.MaDienNuoc == phong.MaDienNuoc);
             if (find != null)
             {
                 find.MaPH = phong.MaPH;
@@ -89,13 +89,15 @@ namespace Motel.Repositories
             return await _appDBContext.DienNuocs.FindAsync(id);
         }
 
-        public IEnumerable<DienNuocViewModel> Gets()
+        public IEnumerable<DienNuocViewModel> Gets(DateTime ThangNam, int nhatro)
         {
             var query = from dn in _appDBContext.DienNuocs
                         join phong in _appDBContext.Phongs on dn.MaPH equals phong.MaPH
+                        where dn.NgayGhiSo.Year == ThangNam.Year && dn.NgayGhiSo.Month == ThangNam.Month && phong._MaNT == nhatro
                         select new DienNuocViewModel
                         {
-
+                            DaChotSo = dn.DaChotSo,
+                            MaDienNuoc = dn.MaDienNuoc,
                             NgayGhi = dn.NgayGhiSo,
                             CSCuDien = dn.CSDienCu,
                             CSMoiDien = dn.CSDienMoi,

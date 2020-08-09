@@ -33,24 +33,42 @@ namespace Motel.Controllers
         public IActionResult Index()
         {
             CommonViewModel common = new CommonViewModel();
-            common.qlDienNuocViewModel.listDienNuoc = DienNuocRepository.Gets();
+            common.qlDienNuocViewModel.ThangNam = DateTime.Now;
+            common.qlDienNuocViewModel.listDienNuoc = DienNuocRepository.Gets(DateTime.Now, _nhaTro);
             common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
             return View(common);
+        }
+        public IActionResult IndexChange(DateTime thangNam)
+
+        {
+            CommonViewModel common = new CommonViewModel();
+            common.qlDienNuocViewModel.listDienNuoc = DienNuocRepository.Gets(thangNam, _nhaTro);
+            common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
+            return Json(new { html = Helper.RenderRazorViewToString(this, "Table", common) });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddOrEdit(QuanLyDienNuocViewModel ph)
+        public async Task<IActionResult> AddOrEdit(int id, QuanLyDienNuocViewModel ph)
         {
             int kq = -1;
             if (ModelState.IsValid)
             {
-                kq = await DienNuocRepository.Create(ph.dienNuoc);
-
+                if (id == 0)
+                {
+                    kq = await DienNuocRepository.Create(ph.dienNuoc);
+                }
+                else
+                {
+                    ph.dienNuoc.MaDienNuoc = id;
+                    kq = await DienNuocRepository.Update(ph.dienNuoc);
+                }
                 CommonViewModel common = new CommonViewModel();
-                common.qlDienNuocViewModel.listDienNuoc = DienNuocRepository.Gets();
+                common.qlDienNuocViewModel.ThangNam = DateTime.Now;
+                common.qlDienNuocViewModel.listDienNuoc = DienNuocRepository.Gets(common.qlDienNuocViewModel.ThangNam, _nhaTro);
                 common.list = PhanQuyenRepository.GetsManHinhPhanQuyen(_taikhoan);
                 return Json(new { IsValid = true, html = Helper.RenderRazorViewToString(this, "ViewAll", common) });
+
             }
             return Json(new { IsValid = false, html = Helper.RenderRazorViewToString(this, "AddOrEdit", ph.dienNuoc) });
         }

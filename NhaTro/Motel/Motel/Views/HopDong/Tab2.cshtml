@@ -26,7 +26,7 @@
                 <tbody class="item-container-service-left">
                     @for (int i = 0; i < Model.listDichVu.Count(); i++)
                     {
-                        @if (@Model.listDichVu[i].IsCheck == false || @Model.listDichVu[i].MacDinh == false)
+                        @if (@Model.listDichVu[i].IsCheck == false && (@Model.listDichVu[i].MacDinh == false || @Model.listDichVu[i].MacDinh == null))
                         {
                             <tr>
                                 <td class="text-center">
@@ -81,6 +81,7 @@
                             <tr>
                                 <td class="text-center">
                                     <a class="btn btn-circle btn-icon-only btn-default item-selection-service remove-selection-service">
+
                                         <input class="display-hide" type="checkbox" asp-for="@Model.listDichVu[i].IsCheck" /><span class="fa fa-minus" aria-hidden="true"></span>
                                         <input class="display-hide" type="hidden" asp-for="@Model.listDichVu[i].MaDV" />
                                         <input class="display-hide" type="hidden" asp-for="@Model.listDichVu[i].MacDinh" />

@@ -13,6 +13,8 @@ namespace Motel.ViewModels
 
         public string TrangThai { get; set; }
 
+        public int? MaTrangThai { get; set; }
+
         public string TenLoaiPhong { get; set; }
 
         public int DienTich { get; set; }

@@ -65,9 +65,25 @@
                             <td>@item.DienTich m2</td>
                             <td>@item.Gia</td>
                             <td>@item.GiaDatCoc</td>
-                            <td class="stop-service text-center 34079">
-                                @item.TrangThai
-                            </td>
+                            @if (item.MaTrangThai == 2)
+                            {
+                                <td style="background-color:yellow;" class="stop-service text-center 34079">
+                                    @item.TrangThai
+                                </td>
+                            }
+                            @if (item.MaTrangThai == 3)
+                            {
+                                <td style="background-color:green;" class="stop-service text-center 34079">
+                                    @item.TrangThai
+                                </td>
+                            }
+                            @if (item.MaTrangThai == 1)
+                            {
+                                <td class="stop-service text-center 34079">
+                                    @item.TrangThai
+                                </td>
+                            }
+
                             <td class="text-center">
                                 <form asp-action="Delete"
                                       asp-route-id="@item.MaPH"

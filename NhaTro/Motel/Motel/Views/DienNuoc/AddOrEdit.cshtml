@@ -12,7 +12,7 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, YourProjetcName
 
-<form class="simple_form form-horizontal" asp-controller="DienNuoc" asp-action="AddOrEdit" onsubmit="return jQueryAjaxPost(this);" novalidate="novalidate"
+<form class="simple_form form-horizontal" asp-controller="DienNuoc" asp-action="AddOrEdit" asp-route-id="@Model.dienNuoc.MaDienNuoc" onsubmit="return jQueryAjaxPost(this);" novalidate="novalidate"
       id="new_admin_building" accept-charset="UTF-8" data-remote="true">
     <input name="utf8" type="hidden" value="✓">
     <ul class="errors"></ul>
@@ -35,8 +35,8 @@
             </select>
             <div class="form-control-focus"></div>
         </div>
-        <label class="control-label">Ngày bắt đầu</label>
-        <div>
+        <label class="col-md-2 control-label">Ngày bắt đầu</label>
+        <div class="col-md-4">
             <div class="input-group date form_datetime">
                 <input class="string required bg-maxlength form-control"
                        placeholder="Ngày bắt đầu"
@@ -48,6 +48,10 @@
             </div>
         </div>
 
+
+    </div>
+
+    <div class="form-group form-md-line-input row">
         <label class="col-md-2 control-label">
             Chỉ số điện cũ
             <span class="required" aria-required="true"> * </span>
@@ -58,9 +62,7 @@
                    placeholder="Tên phòng" maxlength="50" size="50" min="0" type="number">
             <div class="form-control-focus"></div>
         </div>
-    </div>
 
-    <div class="form-group form-md-line-input row">
         <label class="col-md-2 control-label">
             Chỉ số điện mới
             <span class="required" aria-required="true"> * </span>
@@ -71,6 +73,10 @@
                    placeholder="Tên phòng" maxlength="50" size="50" min="0" type="number">
             <div class="form-control-focus"></div>
         </div>
+
+    </div>
+
+    <div class="form-group form-md-line-input row">
         <label class="col-md-2 control-label">
             Chỉ số nước cũ
             <span class="required" aria-required="true"> * </span>
@@ -81,9 +87,6 @@
                    placeholder="Tên phòng" maxlength="50" size="50" min="0" type="number">
             <div class="form-control-focus"></div>
         </div>
-    </div>
-
-    <div class="form-group form-md-line-input row">
         <label class="col-md-2 control-label">
             Chỉ số nước mới
             <span class="required" aria-required="true"> * </span>

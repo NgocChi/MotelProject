@@ -34,165 +34,100 @@
                 </div>
             </div>
             <!-- /.card-header -->
-            <form>
-                <div class="card-body">
 
-                    <div class="text-left">
-                        <div class="row">
-                            <div class="col-md-3" style="padding-top:10px;">
-                                <div class="row">
-                                    <label class="col-md-2 control-label">Từ</label>
-                                    <div class="col-md-10">
-                                        <div class="input-group date form_datetime">
-                                            <input class="string required bg-maxlength form-control"
-                                                   asp-for="qlXuatHoaDonViewModel.ThangNam"
-                                                   name="qlXuatHoaDonViewModel.ThangNam"
-                                                   maxlength="50" size="50" type="date"
-                                                   id="Date">
-                                            <div class="form-control-focus"></div>
+            <div class="card-body">
 
-
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col-md-9 md-radio-inline" style="padding-top:18px;">
-
-                                <label class="bold" style="margin-right: 10px;">Trạng thái:</label>
-                                <div class="md-radio">
-                                    <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","XuatHoaDon",new {  thangNam = Model.qlXuatHoaDonViewModel.ThangNam, trangThai = 0}, Context.Request.Scheme)')"
-                                           id="radio0" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="0" checked="" type="radio">
-
-                                    <label for="radio0">
-                                        <span class=""></span>
-                                        <span class="check"></span>
-                                        <span class="box"></span>  Tất cả
-                                    </label>
-                                </div>
-                                <div class="md-radio">
-                                    <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","XuatHoaDon",new {  thangNam = Model.qlXuatHoaDonViewModel.ThangNam, trangThai = 1}, Context.Request.Scheme)')"
-                                           id="radio1" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="1" checked="" type="radio">
-                                    <label for="radio1">
-                                        <span class=""></span>
-                                        <span class="check"></span>
-                                        <span class="box"></span>  Chưa xuất hóa đơn
-                                    </label>
-                                </div>
-                                <div class="md-radio">
-                                    <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","XuatHoaDon",new { thangNam = Model.qlXuatHoaDonViewModel.ThangNam, trangThai = 2}, Context.Request.Scheme)')"
-                                           id="radio2" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="2" type="radio">
-                                    <label for="radio2">
-                                        <span class=""></span>
-                                        <span class="check"></span>
-                                        <span class="box"></span> Chưa thanh toán
-                                    </label>
-                                </div>
-                                <div class="md-radio">
-                                    <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","XuatHoaDon",new { thangNam = Model.qlXuatHoaDonViewModel.ThangNam,  trangThai = 3}, Context.Request.Scheme)')"
-                                           id="radio3" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="3" type="radio">
-                                    <label for="radio3">
-                                        <span></span>
-                                        <span class="check"></span>
-                                        <span class="box"></span> Đã thanh toán
-                                    </label>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-                    </div>
-
-                    <div id="table_phong">
-                        @await Html.PartialAsync("Table", Model)
-                    </div>
-
+                <div class="text-left">
                     <div class="row">
-                        <div class="card-tools">
-                            <ul class="pagination pagination-sm">
-                                <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
-                                <li class="page-item"><a href="#" class="page-link">1</a></li>
-                                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
-                            </ul>
+                        <div class="col-md-3" style="padding-top:10px;">
+                            <div class="row">
+                                <label class="col-md-2 control-label">Từ</label>
+                                <div class="col-md-10">
+                                    <div class="input-group date form_datetime">
+
+                                        <input onchange="jQueryAjaxChangeDate('@Url.Action("ChangeDate","XuatHoaDon", Context.Request.Scheme)')"
+                                               onload="jQueryAjaxChangeDate('@Url.Action("ChangeDate","XuatHoaDon", Context.Request.Scheme)')"
+                                               class="string required bg-maxlength form-control"
+                                               asp-for="qlXuatHoaDonViewModel.ThangNam"
+                                               name="qlXuatHoaDonViewModel.ThangNam"
+                                               maxlength="50" size="50" type="date"
+                                               id="Date">
+                                        <div class="form-control-focus"></div>
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
+                        <div class="col-md-9 md-radio-inline" style="padding-top:18px;">
+
+                            <label class="bold" style="margin-right: 10px;">Trạng thái:</label>
+                            <div class="md-radio">
+                                <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","XuatHoaDon",new {  trangThai = 0}, Context.Request.Scheme)')"
+                                       id="radio0" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="0" checked="" type="radio">
+
+                                <label for="radio0">
+                                    <span class=""></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span>  Tất cả
+                                </label>
+                            </div>
+                            <div class="md-radio">
+                                <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","XuatHoaDon",new {   trangThai = 1}, Context.Request.Scheme)')"
+                                       id="radio1" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="1" checked="" type="radio">
+                                <label for="radio1">
+                                    <span class=""></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span>  Chưa xuất hóa đơn
+                                </label>
+                            </div>
+                            <div class="md-radio">
+                                <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","XuatHoaDon",new {  trangThai = 2}, Context.Request.Scheme)')"
+                                       id="radio2" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="2" type="radio">
+                                <label for="radio2">
+                                    <span class=""></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span> Chưa thanh toán
+                                </label>
+                            </div>
+                            <div class="md-radio">
+                                <input onclick="jQueryAjaxChooseTTP('@Url.Action("Index1","XuatHoaDon",new {  trangThai = 3}, Context.Request.Scheme)')"
+                                       id="radio3" name="radio_TTHD" class="md-radiobtn radio-agreement-type" value="3" type="radio">
+                                <label for="radio3">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span> Đã thanh toán
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div id="table_phong">
+                    @await Html.PartialAsync("Table", Model)
+                </div>
+
+                <div class="row">
+                    <div class="card-tools">
+                        <ul class="pagination pagination-sm">
+                            <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
+                            <li class="page-item"><a href="#" class="page-link">1</a></li>
+                            <li class="page-item"><a href="#" class="page-link">2</a></li>
+                            <li class="page-item"><a href="#" class="page-link">3</a></li>
+                            <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
+                        </ul>
                     </div>
                 </div>
-            </form>
+            </div>
+
 
         </div>
         <!-- /.col -->
     </div>
 </div>
-<script>
-    $("#datepicker").datepicker({
-        format: "mm-yyyy",
-        viewMode: "months",
-        minViewMode: "months"
-    });
-    $(document).ready(function () {
-        $('#radio0').change(function () {
-            $.ajax({
-                type: "GET",
-                url: '/XuatHoaDon/Index1',
-                dataType: 'script',
-                data: {
-                    thangNam: $('#Date').val(),
-                    trangThai: 0
-                },
-                success: function (res) {
-                    $("#table_phong").html(res);
-                }
 
-            });
-        });
-        $('#radio1').change(function () {
-            $.ajax({
-                type: "GET",
-                url: '/XuatHoaDon/Index1',
-                dataType: 'script',
-                data: {
-                    thangNam: $('#Date').val(),
-                    trangThai: 1
-                },
-                success: function (res) {
-                    $("#table_phong").html(res);
-                }
-
-            });
-        });
-        $('#radio2').change(function () {
-            $.ajax({
-                type: "GET",
-                url: '/XuatHoaDon/Index1',
-                dataType: 'script',
-                data: {
-                    thangNam: $('#Date').val(),
-                    trangThai: 2
-                },
-                success: function (res) {
-                    $("#table_phong").html(res);
-                }
-
-            });
-        });
-        $('#radio3').change(function () {
-            $.ajax({
-                type: "GET",
-                url: '/XuatHoaDon/Index1',
-                dataType: 'script',
-                data: {
-                    thangNam: $('#Date').val(),
-                    trangThai: 3
-                },
-                success: function (res) {
-                    $("#table_phong").html(res);
-                }
-
-            });
-        });
-    });
-</script>

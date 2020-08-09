@@ -24,5 +24,7 @@ namespace Motel.ViewModels
         public int? TieuThuDien { get; set; }
 
         public int? TieuThuNuoc { get; set; }
+
+        public bool? DaChotSo { get; set; }
     }
 }

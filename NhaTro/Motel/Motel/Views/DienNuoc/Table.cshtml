@@ -34,11 +34,17 @@
                     {
                         <tr class="item-1932 highlight">
                             <td class="text-center">
+                                @if (item.DaChotSo == true)
+                                {
 
-                                <a class="btn btn-circle btn-icon-only btn-default tooltips"
-                                   onclick="ShowPopup('@Url.Action("AddOrEdit","DienNuoc",new { id = item.MaDienNuoc }, Context.Request.Scheme)','Chỉnh sửa')"
-                                   data-placement="top" data-original-title="Chỉnh sửa"><i class="fas fa-edit"></i></a>
-
+                                    <a style="background-color:aquamarine;" data-remote="true"><i></i>Đã chốt số.</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-circle btn-icon-only btn-default tooltips"
+                                       onclick="ShowPopup('@Url.Action("AddOrEdit","DienNuoc",new { id = item.MaDienNuoc }, Context.Request.Scheme)','Chỉnh sửa')"
+                                       data-placement="top" data-original-title="Chỉnh sửa"><i class="fas fa-edit"></i></a>
+                                }
                             </td>
                             <td>@item.NgayGhi</td>
                             <td>@item.TenPhong</td>

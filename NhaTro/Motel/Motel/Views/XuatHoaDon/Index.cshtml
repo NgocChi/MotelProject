@@ -33,5 +33,28 @@
 <link href="~/Form/css/pricing-min.css" rel="stylesheet" />
 <link href="~/Form/css/search-min.css" rel="stylesheet" />
 <script src="~/Form/plugins/layout/bootstrap-min.js"></script>
+<script>
+    $("#datepicker").datepicker({
+        format: "mm-yyyy",
+        viewMode: "months",
+        minViewMode: "months"
+    });
+    $(document).ready(function () {
+        $('#Date').change(function () {
+            $.ajax({
+                type: "GET",
+                url: '/XuatHoaDon/ChangeDate',
+                dataType: 'script',
+                data: {
+                    thangNam: $('#Date').val(),
+                },
+                success: function (res) {
+                    $("#table_phong").html(res);
+                }
+
+            });
+        });
+    });
+</script>
 
 

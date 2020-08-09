@@ -13,5 +13,7 @@ namespace Motel.ViewModels
         public IEnumerable<PhongViewModel> listPhong { get; set; }
 
         public DienNuoc dienNuoc { get; set; }
+
+        public DateTime ThangNam { get; set; }
     }
 }
