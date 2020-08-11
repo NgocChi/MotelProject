@@ -20,7 +20,7 @@ namespace Motel.Controllers.API
             this._hopDongRepository = hopDongRepository;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetThongTinHopDongByIdMaPhong")]
         public async Task<HopDongInfoResponse> GetThongTinHopDongByIdMaPhong([FromBody] HopDongInfoRequest request)
         {

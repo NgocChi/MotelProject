@@ -19,7 +19,7 @@ namespace Motel.Controllers.API
             _nhaTroRepository = nhaTroRepository;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetNhaTroByChuTro")]
         public Task<ListNhaTroResponse> GetNhaTroByChuTro([FromBody] ListNhaTroRequest request)
         {
@@ -58,7 +58,7 @@ namespace Motel.Controllers.API
             return task.Task;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("GetInfoNhaTroById")]
         public async Task<InfoNhaTroResponse> GetInfoNhaTroById([FromBody] InfoNhaTroRequest request)
         {

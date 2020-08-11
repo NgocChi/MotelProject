@@ -120,10 +120,12 @@ namespace Motel.Repositories
         }
 
 
+
         public HopDong GetByIdHD(int id)
         {
             return _appDBContext.HopDongs.Find(id);
 	    }
+
         public HopDongInfoResponse GetThongTinHopDongByIdMaPhong(int maHopDong)
         {
             var data = (from hd in _appDBContext.HopDongs
@@ -141,6 +143,11 @@ namespace Motel.Repositories
                        }).FirstOrDefault();
 
             return data;
+
+        }
+        public HopDong GetByIdHD(int id)
+        {
+            return _appDBContext.HopDongs.Find(id);
 
         }
     }

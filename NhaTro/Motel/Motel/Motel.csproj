@@ -37,13 +37,17 @@
     <Folder Include="Models\API\Contacts\" />
     <Folder Include="wwwroot\Rotativa\" />
 
+
     <Folder Include="wwwroot\Shared\img\" />
+
 
     <Folder Include="Models\API\Motels\" />
 
 
 
     <Folder Include="Models\API\ElectrictyAndWaters\" />
+
+    <Folder Include="wwwroot\Shared\img\" />
 
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">

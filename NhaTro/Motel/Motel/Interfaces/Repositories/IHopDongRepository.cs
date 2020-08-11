@@ -25,5 +25,7 @@ namespace Motel.Interfaces.Repositories
 
         HopDongInfoResponse GetThongTinHopDongByIdMaPhong(int maHopDong);
 
+
+
     }
 }
