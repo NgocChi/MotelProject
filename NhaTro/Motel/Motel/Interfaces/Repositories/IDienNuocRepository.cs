@@ -1,4 +1,5 @@
 ﻿using Motel.Models;
+using Motel.Models.API.ElectrictyAndWaters;
 using Motel.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,5 +21,6 @@ namespace Motel.Interfaces.Repositories
         Task<int> UpdateChotSo(int idDN);
 
         Task<DienNuoc> GetById(int id);
+        Task<ElectrictyAndWaterResponse> GetListElectrictyAndWaterByTime(ElectrictyAndWaterRequest request);
     }
 }

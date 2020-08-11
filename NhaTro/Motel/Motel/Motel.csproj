@@ -36,11 +36,15 @@
     <Folder Include="Models\API\Rooms\" />
     <Folder Include="Models\API\Contacts\" />
     <Folder Include="wwwroot\Rotativa\" />
-<<<<<<< HEAD
+
     <Folder Include="wwwroot\Shared\img\" />
-=======
+
     <Folder Include="Models\API\Motels\" />
->>>>>>> api_tamtm
+
+
+
+    <Folder Include="Models\API\ElectrictyAndWaters\" />
+
   </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>

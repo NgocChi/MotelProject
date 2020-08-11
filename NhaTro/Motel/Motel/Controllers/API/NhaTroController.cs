@@ -77,7 +77,7 @@ namespace Motel.Controllers.API
                 return response;
 
             }
-
+            
             var dataFormDb = await _nhaTroRepository.GetInfoNhaTroById(request.MaNhaTro);
             if (dataFormDb != null)
             {

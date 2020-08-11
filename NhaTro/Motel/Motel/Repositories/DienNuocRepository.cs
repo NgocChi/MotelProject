@@ -1,6 +1,7 @@
 ﻿using Motel.Data;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
+using Motel.Models.API.ElectrictyAndWaters;
 using Motel.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -110,6 +111,36 @@ namespace Motel.Repositories
 
                         };
             return query;
+        }
+
+        public async Task<ElectrictyAndWaterResponse> GetListElectrictyAndWaterByTime(ElectrictyAndWaterRequest request)
+        {
+           
+            var dataFromDB = from dn in _appDBContext.DienNuocs
+                             join ph in _appDBContext.Phongs on dn.MaPH equals ph.MaPH
+                             join nt in _appDBContext.NhaTros on ph._MaNT equals nt.MaNT
+                             where nt.MaNT == request.MaNhaTro &&
+                             dn.NgayGhiSo.Year == request.YearTimeInput &&
+                             dn.NgayGhiSo.Month == request.DayTimeInput
+                             select new ElectrictyAndWaterDto
+                             {
+                                 ChiSoDienCu = dn.CSDienCu,
+                                 ChiSoDienMoi = dn.CSDienMoi,
+                                 ChiSoNuocCu = dn.CSNuocCu,
+                                 ChiSoNuocMoi = dn.CSNuocMoi,
+                                 MaPhong = ph.MaPH,
+                                 TenPhong = ph.Ten,
+                             };
+
+            var response = new ElectrictyAndWaterResponse
+            {
+                Message = "OK",
+                StatusCode = 0,
+                DaChotSo = false,
+                ElectrictyAndWaterDtos = dataFromDB.ToList(),
+            };
+
+            return response;
         }
     }
 }
