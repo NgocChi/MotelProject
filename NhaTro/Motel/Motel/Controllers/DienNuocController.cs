@@ -61,7 +61,7 @@ namespace Motel.Controllers
                 else
                 {
                     ph.dienNuoc.MaDienNuoc = id;
-                    kq = await DienNuocRepository.Update(ph.dienNuoc);
+                    kq = await DienNuocRepository.UpdateDN(ph.dienNuoc);
                 }
                 CommonViewModel common = new CommonViewModel();
                 common.qlDienNuocViewModel.ThangNam = DateTime.Now;

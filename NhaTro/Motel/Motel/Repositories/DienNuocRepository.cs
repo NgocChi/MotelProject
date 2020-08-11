@@ -52,14 +52,31 @@ namespace Motel.Repositories
             return 0;
 
         }
-        public async Task<int> Update(DienNuoc phong)
+        public async Task<int> UpdateDN(DienNuoc phong)
         {
 
 
             DienNuoc find = _appDBContext.DienNuocs.FirstOrDefault(p => p.MaDienNuoc == phong.MaDienNuoc);
+            if (find != null)
+            {
+                find.MaPH = phong.MaPH;
+                find.NgayGhiSo = phong.NgayGhiSo;
+                find.CSDienCu = phong.CSDienCu;
+                find.CSDienMoi = phong.CSDienMoi;
+                find.CSNuocCu = phong.CSNuocCu;
+                find.CSNuocMoi = phong.CSNuocMoi;
+                _appDBContext.DienNuocs.Update(find);
+                await _appDBContext.SaveChangesAsync();
+                return 1;
+            }
+            return 0;
 
-            //DienNuoc find = _appDBContext.DienNuocs.FirstOrDefault(p => p.MaPH == phong.MaPH
-            //&& p.NgayGhiSo.Year == phong.NgayGhiSo.Year && phong.NgayGhiSo.Month == p.NgayGhiSo.Month);
+        }
+        public async Task<int> Update(DienNuoc phong)
+        {
+
+            DienNuoc find = _appDBContext.DienNuocs.FirstOrDefault(p => p.MaPH == phong.MaPH
+            && p.NgayGhiSo.Year == phong.NgayGhiSo.Year && phong.NgayGhiSo.Month == p.NgayGhiSo.Month);
 
             if (find != null)
             {
@@ -94,7 +111,7 @@ namespace Motel.Repositories
         public async Task<int> UpdateDienNuocHopDong(int maHD, int CSDien, int CSNuoc)
         {
             var hd = _appDBContext.HopDongs.FirstOrDefault(t => t.MaHopDong == maHD);
-            if(hd !=null)
+            if (hd != null)
             {
                 hd.SoDien = CSDien;
                 hd.SoNuoc = CSNuoc;
@@ -204,14 +221,14 @@ namespace Motel.Repositories
                 NgayGhiSo = request.ElectrictyAndWaterDto.NgayThangGhiSo,
             };
 
-           DienNuoc find = _appDBContext.DienNuocs.FirstOrDefault(p => p.MaPH == dienNuoc.MaPH
-           && p.NgayGhiSo.Year == dienNuoc.NgayGhiSo.Year && dienNuoc.NgayGhiSo.Month == p.NgayGhiSo.Month);
+            DienNuoc find = _appDBContext.DienNuocs.FirstOrDefault(p => p.MaPH == dienNuoc.MaPH
+            && p.NgayGhiSo.Year == dienNuoc.NgayGhiSo.Year && dienNuoc.NgayGhiSo.Month == p.NgayGhiSo.Month);
 
             var result = -1;
             if (find != null)
             {
                 result = await Update(dienNuoc);
-            } 
+            }
             else
             {
                 result = await Create(dienNuoc);
@@ -219,7 +236,7 @@ namespace Motel.Repositories
 
 
 
-              
+
             if (result > 0)
             {
                 var response = new InfoElectrictyAndWaterResponse
@@ -251,13 +268,13 @@ namespace Motel.Repositories
         {
             var taskComplete = new TaskCompletionSource<ElectrictyAndWaterOldRespone>();
             var dataQuery = (from hd in _appDBContext.HopDongs
-                            where hd._MaPH == request.MaPhong &&
-                            hd.TrangThaiHD == true
-                            select new ElectrictyAndWaterIndexDto
-                            {
-                                ChiSoDien = hd.SoDien ?? 0,
-                                ChiSoNuoc = hd.SoNuoc ?? 0,
-                            }).FirstOrDefault();
+                             where hd._MaPH == request.MaPhong &&
+                             hd.TrangThaiHD == true
+                             select new ElectrictyAndWaterIndexDto
+                             {
+                                 ChiSoDien = hd.SoDien ?? 0,
+                                 ChiSoNuoc = hd.SoNuoc ?? 0,
+                             }).FirstOrDefault();
 
             var response = new ElectrictyAndWaterOldRespone
             {
