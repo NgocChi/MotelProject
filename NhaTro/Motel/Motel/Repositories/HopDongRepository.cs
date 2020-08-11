@@ -1,6 +1,7 @@
 ﻿using Motel.Data;
 using Motel.Interfaces.Repositories;
 using Motel.Models;
+using Motel.Models.API.Contacts;
 using Motel.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -118,6 +119,24 @@ namespace Motel.Repositories
             return await _appDBContext.HopDongs.FindAsync(id);
         }
 
+        public HopDongInfoResponse GetThongTinHopDongByIdMaPhong(int maHopDong)
+        {
+            var data = (from hd in _appDBContext.HopDongs
+                       join ph in _appDBContext.Phongs on hd._MaPH equals ph.MaPH
+                       join nt in _appDBContext.NhaTros on ph._MaNT equals nt.MaNT
+                       select new HopDongInfoResponse
+                       {
+                           DiaChi = nt.DiaChi,
+                           NgayBatDau = hd.NgayBatDau,
+                           NgayKetThuc = hd.NgayKetThuc,
+                           TenNhaTro = nt.Ten,
+                           TenPhong = ph.Ten,
+                           Message = "OK",
+                           StatusCode = 0,
+                       }).FirstOrDefault();
+
+            return data;
+        }
         public HopDong GetByIdHD(int id)
         {
             return _appDBContext.HopDongs.Find(id);

@@ -200,6 +200,21 @@ namespace Motel.Repositories
             return p == null && hd == null ? 1 : 0;
         }
 
+        public IEnumerable<(int MaPhong, string TenPhong, int MaNhaTro, string TenNhaTro)> GetPhongDangHoatDongByKhachThue(int maKhachThue)
+        {
+            var listData = (from phong in _appDBContext.Phongs
+                       join nhatro in _appDBContext.NhaTros on phong._MaNT equals nhatro.MaNT
+                       join hd in _appDBContext.HopDongs on phong.MaPH equals hd._MaPH
+                       where phong._MaTTPH == 3 && hd._MaKH == maKhachThue //phong dang hoat dong
+                       select new { MaPhong = phong.MaPH, TenPhong = phong.Ten, MaNhaTro = nhatro.MaNT, TenNhaTro = nhatro.Ten }).ToList();
+           
+            List<(int MaPhong, string TenPhong, int MaNhaTro, string TenNhaTro)> result = new List<(int MaPhong, string TenPhong, int MaNhaTro, string TenNhaTro)>();
+            foreach (var item in listData)
+            {
+                result.Add((item.MaPhong, item.TenPhong, item.MaNhaTro, item.TenNhaTro));
+            }
+            return result;
+        }
         public PhongViewModel GetByIdPhong(int idPhong)
         {
             var query = from p in _appDBContext.Phongs

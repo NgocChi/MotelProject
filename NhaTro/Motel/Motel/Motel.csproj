@@ -8,7 +8,10 @@
   <ItemGroup>
     <PackageReference Include="jQuery.UI.Combined" Version="1.12.1" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.App">
+      <PrivateAssets Condition="'%(PackageReference.Version)' == ''">all</PrivateAssets>
+      <Publish Condition="'%(PackageReference.Version)' == ''">true</Publish>
+    </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
@@ -29,10 +32,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\API\Bases\" />
+    <Folder Include="Models\API\Rooms\" />
+    <Folder Include="Models\API\Contacts\" />
     <Folder Include="wwwroot\Rotativa\" />
+    <Folder Include="Models\API\Motels\" />
+    <Folder Include="Models\API\ElectrictyAndWaters\" />
     <Folder Include="wwwroot\Shared\img\" />
   </ItemGroup>
-
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
