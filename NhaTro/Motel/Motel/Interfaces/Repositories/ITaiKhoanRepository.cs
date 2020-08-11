@@ -14,6 +14,7 @@ namespace Motel.Interfaces.Repositories
 
         IEnumerable<TaiKhoan> Gets();
 
+        int GetIdUserByTenTaiKhoan(string tenTaiKhoan, bool loaiTaiKhoan);
         int CreateChuTro(ChuTro ct);
 
 

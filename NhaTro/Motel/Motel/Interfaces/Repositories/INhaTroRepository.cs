@@ -1,4 +1,5 @@
 ﻿using Motel.Models;
+using Motel.Models.API.Motels;
 using Motel.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -24,9 +25,13 @@ namespace Motel.Interfaces.Repositories
 
         int CheckForeignKey(int id);
 
+
         int TongPhongTrong(int nhaTro);
 
         int TongPhong(int nhaTro);
+
+        Task<InfoNhaTroResponse> GetInfoNhaTroById(int maNhaTro);
+
 
     }
 }

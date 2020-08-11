@@ -28,6 +28,7 @@ namespace Motel.Interfaces.Repositories
 
         int CheckForeignKey(int id);
 
+        IEnumerable<(int MaPhong, string TenPhong, int MaNhaTro, string TenNhaTro)> GetPhongDangHoatDongByKhachThue(int maKhachThue);
         PhongViewModel GetByIdPhong(int idPhong);
 
     }

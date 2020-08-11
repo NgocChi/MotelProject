@@ -1,4 +1,5 @@
 ﻿using Motel.Models;
+using Motel.Models.API.Contacts;
 using Motel.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,11 @@ namespace Motel.Interfaces.Repositories
         Task<int> Update(HopDong hd);
         Task<int> Delete(int id);
 
+
         HopDong GetByIdHD(int id);
         HopDongViewModel GetByIDHopDong(int idNhaTro, int idHopDong);
+
+        HopDongInfoResponse GetThongTinHopDongByIdMaPhong(int maHopDong);
+
     }
 }
